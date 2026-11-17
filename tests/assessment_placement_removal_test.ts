@@ -12,10 +12,14 @@ testCase('placement removal parses exact retry commands and durable receipts', (
   const command = { removalId: id, expectedRevision: 2 };
   expect(parsePlacementRemovalCommand(command)).toStrictEqual(command);
   for (
-    const value of [null, {}, { ...command, extra: true }, { ...command, expectedRevision: 0 }, {
-      ...command,
-      expectedRevision: 1.5,
-    }, { ...command, removalId: 'bad' }]
+    const value of [
+      null,
+      {},
+      { ...command, extra: true },
+      { ...command, expectedRevision: 0 },
+      { ...command, expectedRevision: 1.5 },
+      { ...command, removalId: 'bad' },
+    ]
   ) {
     expect(parsePlacementRemovalCommand(value)).toStrictEqual(null);
   }

@@ -138,12 +138,11 @@ async function advanceAndRespond(
   publishId: Parameters<typeof advanceCanvasPublish>[1]['publishId'],
   serviceOptions: Pick<CanvasPublishServiceOptions, 'fetchImpl' | 'requestTimeoutMs'>,
 ): Promise<Response> {
-  const advanced = await advanceCanvasPublish(auth, {
-    assessmentId,
-    publishId,
-    storage: resolveStorage(ctx),
-    runtime: ctx,
-  }, { ...serviceOptions, signal: ctx.req.signal });
+  const advanced = await advanceCanvasPublish(
+    auth,
+    { assessmentId, publishId, storage: resolveStorage(ctx), runtime: ctx },
+    { ...serviceOptions, signal: ctx.req.signal },
+  );
   if (!advanced.ok) {
     if (advanced.error._tag === 'CanvasPublishNotFound') {
       return Response.json(
@@ -192,23 +191,32 @@ function authorizedExportFailure(
   const decision = result.decision;
   switch (decision._tag) {
     case 'PreflightStale':
-      return Response.json({
-        error: 'PreflightStale',
-        message: 'The assessment or export requirements changed after preflight.',
-        preflight: decision.preflight,
-      }, { status: 409 });
+      return Response.json(
+        {
+          error: 'PreflightStale',
+          message: 'The assessment or export requirements changed after preflight.',
+          preflight: decision.preflight,
+        },
+        { status: 409 },
+      );
     case 'PreflightBlocked':
-      return Response.json({
-        error: 'PreflightBlocked',
-        message: 'Resolve or explicitly accept the listed export consequences before publishing.',
-        preflight: decision.preflight,
-      }, { status: 422 });
+      return Response.json(
+        {
+          error: 'PreflightBlocked',
+          message: 'Resolve or explicitly accept the listed export consequences before publishing.',
+          preflight: decision.preflight,
+        },
+        { status: 422 },
+      );
     case 'WarningsNotAcknowledged':
-      return Response.json({
-        error: 'WarningsNotAcknowledged',
-        message: 'Acknowledge the current export warnings before publishing.',
-        preflight: decision.preflight,
-      }, { status: 409 });
+      return Response.json(
+        {
+          error: 'WarningsNotAcknowledged',
+          message: 'Acknowledge the current export warnings before publishing.',
+          preflight: decision.preflight,
+        },
+        { status: 409 },
+      );
     case 'EvidenceMismatch':
       return Response.json(
         { error: decision._tag, message: decision.message },

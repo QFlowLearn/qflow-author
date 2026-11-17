@@ -60,11 +60,13 @@ export async function processNativeQtiAnalysis(input: {
   for await (const event of streamQtiPackageImport(archive)) {
     input.signal?.throwIfAborted();
     if (event.kind === 'summary') completed = event;
-    else {entries.push({
+    else {
+      entries.push({
         href: event.item.href,
         title: event.item.title,
         identifier: event.item.identifier,
-      });}
+      });
+    }
   }
   if (!completed || !entries.length) {
     throw new Error('QTI package contains no valid question inventory.');

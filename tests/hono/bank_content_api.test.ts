@@ -112,10 +112,10 @@ it(
             expect(missing.status).toBe(404);
             await missing.body?.cancel();
             for (
-              const [endpoint, status] of [['/api/source-intake/inspect', 415], [
-                '/api/source-intake/execute',
-                400,
-              ]] as const
+              const [endpoint, status] of [
+                ['/api/source-intake/inspect', 415],
+                ['/api/source-intake/execute', 400],
+              ] as const
             ) {
               const malformed = await request(endpoint, {});
               expect(malformed.status).toBe(status);

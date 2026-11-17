@@ -49,7 +49,7 @@ export const ItemLanguageSection: FunctionalComponent<SectionProps> = ({ control
   const helpId = `item-language-help-${instanceId}`;
   const describedBy = error ? `${helpId} ${errorId}` : helpId;
   return (
-    <div class='ds-form-control gap-1'>
+    <div class='flex flex-col gap-1'>
       <label for={inputId}>{control.messages.label}</label>
       <Input
         id={inputId}

@@ -26,8 +26,12 @@ export function blackboardOrganizationPackage(
         <QUESTIONLIST><QUESTION id="q1" class="QUESTION_MULTIPLECHOICE"/></QUESTIONLIST>
         <QUESTION_MULTIPLECHOICE id="q1">
           <BODY><TEXT>${
-        container === 'imscc' ? 'Shared question' : i === 0 ? 'Cell nucleus' : 'Energy explanation'
-      }</TEXT></BODY>
+            container === 'imscc'
+              ? 'Shared question'
+              : i === 0
+              ? 'Cell nucleus'
+              : 'Energy explanation'
+          }</TEXT></BODY>
           <ANSWER id="a" position="1"><TEXT>Correct answer</TEXT></ANSWER>
           <ANSWER id="b" position="2"><TEXT>Other answer</TEXT></ANSWER>
           <GRADABLE><CORRECTANSWER answer_id="a"/></GRADABLE>

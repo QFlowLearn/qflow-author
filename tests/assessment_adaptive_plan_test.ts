@@ -69,10 +69,11 @@ testCase('persisted adaptive plans require every reachable block and distinct pl
       questionCount: 15,
     },
     audience: 'Grade 6 science',
-    levels: [{ id: 'easy', label: 'Easy' }, { id: 'moderate', label: 'Moderate' }, {
-      id: 'hard',
-      label: 'Hard',
-    }],
+    levels: [
+      { id: 'easy', label: 'Easy' },
+      { id: 'moderate', label: 'Moderate' },
+      { id: 'hard', label: 'Hard' },
+    ],
     blocks,
   };
   if (!(parseAdaptivePlan(document))) expect.unreachable('Expected parseAdaptivePlan(document)');

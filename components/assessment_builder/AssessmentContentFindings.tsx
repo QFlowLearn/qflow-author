@@ -50,7 +50,7 @@ export default function AssessmentContentFindings(
     <details class='text-sm' data-assessment-findings>
       <summary
         ref={summaryRef}
-        class='w-fit cursor-pointer rounded py-1 text-base-content underline decoration-base-content/30 underline-offset-4 focus-visible:outline focus-visible:outline-2'
+        class='w-fit cursor-pointer rounded-sm py-1 text-base-content underline decoration-base-content/30 underline-offset-4 focus-visible:outline focus-visible:outline-2'
       >
         {i18n.t('assessments.findings.count', { count: visible.length })}
       </summary>

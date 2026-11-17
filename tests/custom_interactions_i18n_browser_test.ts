@@ -26,10 +26,10 @@ const customInitial = {
 const portableInitial = {
   responseIdentifier: 'RESPONSE-PCI-Ω',
   portableCustomTypeIdentifier: 'urn:example:pci:type/π',
-  portableDataAttributes: [{ name: 'data-one', value: 'ONE-Ω' }, {
-    name: 'data-two',
-    value: 'TWO-Ω',
-  }],
+  portableDataAttributes: [
+    { name: 'data-one', value: 'ONE-Ω' },
+    { name: 'data-two', value: 'TWO-Ω' },
+  ],
   portableInteractionMarkup: '<pci-root data-x="&amp;">HTML-漢字</pci-root>',
 };
 const keys = [
@@ -298,7 +298,7 @@ function App({config}) { const [c,setC]=useState(config.custom), [p,setP]=useSta
           }
           if (
             en.t('driver.customInteractionMarkupExample') !==
-              i18n.t('driver.customInteractionMarkupExample')
+            i18n.t('driver.customInteractionMarkupExample')
           ) {
             if (
               !((await custom.locator('textarea').getAttribute('placeholder')) !==
@@ -313,7 +313,7 @@ function App({config}) { const [c,setC]=useState(config.custom), [p,setP]=useSta
           }
           if (
             en.t('driver.portableCustomMarkupExample') !==
-              i18n.t('driver.portableCustomMarkupExample')
+            i18n.t('driver.portableCustomMarkupExample')
           ) {
             if (
               !((await portable.locator('textarea').getAttribute('placeholder')) !==
@@ -410,7 +410,7 @@ function App({config}) { const [c,setC]=useState(config.custom), [p,setP]=useSta
           }
           if (
             en.t('driver.customInteractionMarkupExample') !==
-              i18n.t('driver.customInteractionMarkupExample')
+            i18n.t('driver.customInteractionMarkupExample')
           ) {
             if (
               !((await custom.locator('textarea').getAttribute('placeholder')) !==
@@ -425,7 +425,7 @@ function App({config}) { const [c,setC]=useState(config.custom), [p,setP]=useSta
           }
           if (
             en.t('driver.portableCustomMarkupExample') !==
-              i18n.t('driver.portableCustomMarkupExample')
+            i18n.t('driver.portableCustomMarkupExample')
           ) {
             if (
               !((await portable.locator('textarea').getAttribute('placeholder')) !==
@@ -485,19 +485,19 @@ function App({config}) { const [c,setC]=useState(config.custom), [p,setP]=useSta
           customCardinality: 'ordered',
           customClassName: 'EDITED-CLASS',
           customDefinition: 'https://example.test/new',
-          customAttributes: [{ name: 'data-edited', value: 'EDITED-VALUE' }, {
-            name: 'data-three',
-            value: 'THREE',
-          }],
+          customAttributes: [
+            { name: 'data-edited', value: 'EDITED-VALUE' },
+            { name: 'data-three', value: 'THREE' },
+          ],
           customInteractionMarkup: '<edited-custom>Ω</edited-custom>',
         });
         expect(JSON.parse(await portable.locator('[data-state]').innerText())).toStrictEqual({
           responseIdentifier: 'RESPONSE-PCI-Ω',
           portableCustomTypeIdentifier: 'urn:edited',
-          portableDataAttributes: [{ name: 'data-edited', value: 'EDITED-VALUE' }, {
-            name: 'data-three',
-            value: 'THREE',
-          }],
+          portableDataAttributes: [
+            { name: 'data-edited', value: 'EDITED-VALUE' },
+            { name: 'data-three', value: 'THREE' },
+          ],
           portableInteractionMarkup: '<edited-pci>Ω</edited-pci>',
         });
       } finally {

@@ -74,10 +74,11 @@ testCase(
         itemLanguage: newAuthoringItemLanguage(),
         title: 'Weighted',
         bodyHtml: '<p>Choose Alpha.</p>',
-        choices: [{ id: 'A', text: 'Alpha' }, { id: 'B', text: 'Beta' }, {
-          id: 'C',
-          text: 'Gamma',
-        }],
+        choices: [
+          { id: 'A', text: 'Alpha' },
+          { id: 'B', text: 'Beta' },
+          { id: 'C', text: 'Gamma' },
+        ],
         correctId: 'A',
         responseIdentifier: 'ANSWER',
         maximumScore: maximum,
@@ -101,12 +102,19 @@ testCase(
       for (
         const [draft, rows] of [
           [single, [[{ ANSWER: 'A' }, maximum], [{ ANSWER: 'C' }, 0], [{ ANSWER: null }, 0]]],
-          [{ ...multiple, responseMode: 'all_or_nothing' }, [[{ ANSWER: ['A', 'B'] }, maximum], [{
-            ANSWER: ['A'],
-          }, 0]]],
-          [{ ...multiple, responseMode: 'partial' }, [[{ ANSWER: ['A'] }, half], [{
-            ANSWER: ['A', 'C'],
-          }, half], [{ ANSWER: ['A', 'B', 'C'] }, maximum]]],
+          [{ ...multiple, responseMode: 'all_or_nothing' }, [
+            [{ ANSWER: ['A', 'B'] }, maximum],
+            [{
+              ANSWER: ['A'],
+            }, 0],
+          ]],
+          [{ ...multiple, responseMode: 'partial' }, [
+            [{ ANSWER: ['A'] }, half],
+            [{
+              ANSWER: ['A', 'C'],
+            }, half],
+            [{ ANSWER: ['A', 'B', 'C'] }, maximum],
+          ]],
           [dropdown, [[{ ANSWER: 'A' }, maximum], [{ ANSWER: 'B' }, 0]]],
           [{
             ...dropdown,

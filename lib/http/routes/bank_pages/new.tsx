@@ -35,7 +35,7 @@ const methods = {
               value={collectionId}
             />
           )}
-          <label class='ds-form-control gap-1'>
+          <label class='flex flex-col gap-1'>
             <span>{i18n.t('items.drafts.type')}</span>
             <Select name='type' defaultValue='single_select'>
               {QUESTION_TYPES.map((type) => (

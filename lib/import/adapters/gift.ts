@@ -424,13 +424,12 @@ function buildCloze(
       title: title || 'Cloze',
       bodyHtml,
       inlineChoices: inlineSlots,
-      responseMode: inlineSlots.some((slot) =>
-          slot.options.some((opt) =>
-            opt.score != null && opt.score !== 0 && opt.score !== 1
+      responseMode:
+        inlineSlots.some((slot) =>
+            slot.options.some((opt) => opt.score != null && opt.score !== 0 && opt.score !== 1)
           )
-        )
-        ? 'partial'
-        : 'all_or_nothing',
+          ? 'partial'
+          : 'all_or_nothing',
       tags,
     };
   }

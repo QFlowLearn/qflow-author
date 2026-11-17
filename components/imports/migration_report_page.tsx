@@ -445,7 +445,7 @@ function BulkToolbar({ i18n }: { i18n: I18n }) {
         </Button>
       </div>
       <div class='grid gap-3 sm:grid-cols-2'>
-        <label class='ds-form-control gap-1'>
+        <label class='flex flex-col gap-1'>
           <span class='text-xs font-medium'>{i18n.t('imports.report.tags')}</span>
           <div class='flex gap-2'>
             <Input name='tags' size='sm' />
@@ -454,7 +454,7 @@ function BulkToolbar({ i18n }: { i18n: I18n }) {
             </Button>
           </div>
         </label>
-        <label class='ds-form-control gap-1'>
+        <label class='flex flex-col gap-1'>
           <span class='text-xs font-medium'>{i18n.t('imports.report.questionType')}</span>
           <div class='flex gap-2'>
             <Select name='typeId' size='sm'>
@@ -574,11 +574,11 @@ function ReviewCard({
                   name={`itemVersion:${item.id}`}
                   value={itemVersionToken(item)}
                 />
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-xs font-medium'>{i18n.t('imports.report.titleLabel')}</span>
                   <Input name='title' value={item.title} />
                 </label>
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-xs font-medium'>{i18n.t('imports.report.bodyLabel')}</span>
                   <Textarea
                     name='bodyHtml'
@@ -600,7 +600,7 @@ function ReviewCard({
                   name={`itemVersion:${item.id}`}
                   value={itemVersionToken(item)}
                 />
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-xs font-medium'>
                     {i18n.t('imports.report.blueprintTarget')}
                   </span>

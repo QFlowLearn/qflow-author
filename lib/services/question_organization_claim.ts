@@ -124,12 +124,10 @@ export async function claimOrganizationBatch(
           decision = { kind: 'protected' };
         } else if (current.topic?.value?.state === 'assigned') {
           const id = current.topic.value.valueIds[0];
-          decision =
-            current.topic.value.valueIds.length === 1 && context.definition.topics.some((topic) =>
-                topic.id === id
-              )
-              ? { kind: 'preserved', topicId: id }
-              : { kind: 'protected' };
+          decision = current.topic.value.valueIds.length === 1 &&
+              context.definition.topics.some((topic) => topic.id === id)
+            ? { kind: 'preserved', topicId: id }
+            : { kind: 'protected' };
         } else if (current.topic && current.topic.origin !== 'ai') decision = { kind: 'protected' };
         else {
           const source = item.source === null ? null : parseOrganizationSource(item.source);

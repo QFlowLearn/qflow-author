@@ -116,7 +116,7 @@ export function HottextContent(props: HottextContentProps) {
                     )}
                   <span>{i18n.t('driver.correct')}</span>
                 </label>
-                <label class='ds-form-control min-w-0'>
+                <label class='flex flex-col min-w-0'>
                   <span class='text-xs'>{i18n.t('driver.hottextSpan', { number: idx + 1 })}</span>
                   <Input
                     size='sm'

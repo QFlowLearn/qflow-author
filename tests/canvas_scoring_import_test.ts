@@ -21,9 +21,8 @@ test('Canvas percentage scoring retains authored points and answer keys through 
         correctId: 'A',
       });
       expect(
-        buildMigrationAnalysis(imported, { adapter: qti12Adapter, sniff }, {
-          _tag: 'Assessment',
-        }).items[0].readiness,
+        buildMigrationAnalysis(imported, { adapter: qti12Adapter, sniff }, { _tag: 'Assessment' })
+          .items[0].readiness,
       ).toBe('ready');
       const preview = buildQtiPreviewXml(item.draft);
       const exported = prepareQuestionXmlDownload(item.draft, 'canvas-roundtrip');
@@ -61,9 +60,8 @@ test('Canvas scoring refuses invalid point metadata and unsupported source progr
     const sniff = await qti12Adapter.sniff(source);
     const imported = await qti12Adapter.parse(source);
     expect(
-      buildMigrationAnalysis(imported, { adapter: qti12Adapter, sniff }, {
-        _tag: 'Assessment',
-      }).items[0].readiness,
+      buildMigrationAnalysis(imported, { adapter: qti12Adapter, sniff }, { _tag: 'Assessment' })
+        .items[0].readiness,
     ).toBe('blocked');
   }
 });

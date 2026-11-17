@@ -150,7 +150,7 @@ function CatalogEditor(
         {i18n.t('catalog.catalogNumber', { number: index + 1 })}
       </legend>
       <div class='flex items-end gap-3'>
-        <label class='ds-form-control flex-1' htmlFor={`catalog-${index}-id`}>
+        <label class='flex flex-col flex-1' htmlFor={`catalog-${index}-id`}>
           <span>{i18n.t('catalog.id')}</span>
           <Input
             id={`catalog-${index}-id`}
@@ -237,7 +237,7 @@ function CardEditor(
     <fieldset class='border-t border-base-300 pt-4 space-y-3'>
       <legend class='sr-only'>{i18n.t('catalog.cardNumber', { number: cardIndex + 1 })}</legend>
       <div class='grid gap-3 sm:grid-cols-2'>
-        <label class='ds-form-control' htmlFor={`${path}-support`}>
+        <label class='flex flex-col' htmlFor={`${path}-support`}>
           <span>{i18n.t('catalog.support')}</span>
           <Select
             id={`${path}-support`}
@@ -259,7 +259,7 @@ function CardEditor(
           </Select>
         </label>
         {card.support.kind === 'custom' && (
-          <label class='ds-form-control' htmlFor={`${path}-custom-support`}>
+          <label class='flex flex-col' htmlFor={`${path}-custom-support`}>
             <span>{i18n.t('catalog.customSupportName')}</span>
             <Input
               id={`${path}-custom-support`}
@@ -297,7 +297,7 @@ function CardEditor(
 
       {entries.length === 0 && (
         <div class='rounded-md bg-base-200 p-3 space-y-3'>
-          <div class='ds-form-control'>
+          <div class='flex flex-col'>
             <span id={`${path}-direct-content-label`}>
               {card.support.value === 'glossary-on-screen'
                 ? i18n.t('catalog.definition')
@@ -400,7 +400,7 @@ function EntryEditor(
           <span>{i18n.t('catalog.defaultEntry')}</span>
         </label>
       </div>
-      <div class='ds-form-control'>
+      <div class='flex flex-col'>
         <span id={`${id}-content-label`}>
           {isGlossary
             ? i18n.t('catalog.definition')
@@ -454,7 +454,7 @@ function FileEditors(
       <legend class='text-sm font-medium'>{label}</legend>
       {files.map((file, index) => (
         <div key={index} class='grid gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(10rem,0.45fr)_auto]'>
-          <label class='ds-form-control' htmlFor={`${id}-file-${index}-href`}>
+          <label class='flex flex-col' htmlFor={`${id}-file-${index}-href`}>
             <span>{i18n.t('catalog.fileReference')}</span>
             <Input
               id={`${id}-file-${index}-href`}
@@ -468,7 +468,7 @@ function FileEditors(
                 ))}
             />
           </label>
-          <label class='ds-form-control' htmlFor={`${id}-file-${index}-mime`}>
+          <label class='flex flex-col' htmlFor={`${id}-file-${index}-mime`}>
             <span>{i18n.t('catalog.mimeType')}</span>
             <Input
               id={`${id}-file-${index}-mime`}
@@ -488,10 +488,7 @@ function FileEditors(
             size='sm'
             variant='ghost'
             aria-label={i18n.t('catalog.removeFileNamed', { name: file.href || String(index + 1) })}
-            onClick={() =>
-              onChange(files.filter((_value, candidate) =>
-                candidate !== index
-              ))}
+            onClick={() => onChange(files.filter((_value, candidate) => candidate !== index))}
           >
             {i18n.t('catalog.removeFile')}
           </Button>
@@ -522,7 +519,7 @@ export function LanguageField(
   const invalid = value.trim().length > 0 && !isValidLanguageTag(value);
   const errorId = `${id}-error`;
   return (
-    <label class='ds-form-control' htmlFor={id}>
+    <label class='flex flex-col' htmlFor={id}>
       <span>{label}{required ? ` (${i18n.t('catalog.required')})` : ''}</span>
       <Input
         id={id}
@@ -567,7 +564,7 @@ function StylesheetEditor(
           </legend>
           <div class='grid gap-3 sm:grid-cols-2'>
             {(['href', 'type', 'media', 'title'] as const).map((field) => (
-              <label key={field} class='ds-form-control' htmlFor={`stylesheet-${index}-${field}`}>
+              <label key={field} class='flex flex-col' htmlFor={`stylesheet-${index}-${field}`}>
                 <span>
                   {field === 'href'
                     ? i18n.t('catalog.fileReference')

@@ -54,13 +54,17 @@ const DOCUMENT: AssessmentExportDocument = {
 
 const ITEMS_XML = Object.fromEntries(['one', 'two'].map((id) => [
   id,
-  exportQti3TestItemXml('single_select', {
-    type: 'single_select',
-    title: `Question ${id}`,
-    bodyHtml: `<p>Question ${id}: choose Alpha.</p>`,
-    choices: [{ id: 'A', text: 'Alpha' }, { id: 'B', text: 'Beta' }],
-    correctId: 'A',
-  }, { identifier: `item-${id}` }),
+  exportQti3TestItemXml(
+    'single_select',
+    {
+      type: 'single_select',
+      title: `Question ${id}`,
+      bodyHtml: `<p>Question ${id}: choose Alpha.</p>`,
+      choices: [{ id: 'A', text: 'Alpha' }, { id: 'B', text: 'Beta' }],
+      correctId: 'A',
+    },
+    { identifier: `item-${id}` },
+  ),
 ]));
 
 const CONTENT_LOSSES = [

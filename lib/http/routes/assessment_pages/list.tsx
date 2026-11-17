@@ -270,11 +270,11 @@ export default function AssessmentsIndex(
                 method='get'
               >
                 <input type='hidden' name='sort' value={sort} />
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-sm font-medium'>{i18n.t('list.filters.titleLabel')}</span>
                   <Input name='q' value={q} placeholder={i18n.t('list.filters.titlePlaceholder')} />
                 </label>
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-sm font-medium'>{i18n.t('list.filters.keywordsLabel')}</span>
                   <Input
                     name='tags'
@@ -403,7 +403,7 @@ export default function AssessmentsIndex(
                           )}
                           {r.delivery && (
                             <div class='flex flex-wrap items-center gap-2 text-xs text-base-content/65'>
-                              <span class='inline-flex items-center rounded border border-success/30 bg-success/10 px-2 py-0.5 font-medium text-success'>
+                              <span class='inline-flex items-center rounded-sm border border-success/30 bg-success/10 px-2 py-0.5 font-medium text-success'>
                                 {i18n.t('list.table.published')}
                               </span>
                               <span>{formatTableDate(r.delivery.publishedAt, i18n)}</span>

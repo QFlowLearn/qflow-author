@@ -7,7 +7,7 @@ type Props = Omit<JSX.SelectHTMLAttributes<HTMLSelectElement>, 'size'> & {
 export default function Select({ size = 'md', class: cls, children, ...rest }: Props) {
   const classes = [
     'ds-select',
-    'ds-select-bordered',
+    '',
     'peer',
     'block',
     'w-full',

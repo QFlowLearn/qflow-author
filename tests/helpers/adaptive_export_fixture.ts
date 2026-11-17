@@ -27,10 +27,11 @@ export function adaptiveExportFixture(questionCount = 100) {
       questionCount,
     },
     audience: 'Synthetic test audience',
-    levels: [{ id: 'one', label: 'Introductory' }, { id: 'two', label: 'Intermediate' }, {
-      id: 'three',
-      label: 'Advanced',
-    }],
+    levels: [
+      { id: 'one', label: 'Introductory' },
+      { id: 'two', label: 'Intermediate' },
+      { id: 'three', label: 'Advanced' },
+    ],
     blocks,
   });
   if (!plan) expect.unreachable('Expected plan');

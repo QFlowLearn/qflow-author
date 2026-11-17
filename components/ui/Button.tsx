@@ -19,7 +19,7 @@ export default function Button(
 ) {
   const classes = variant === 'text'
     ? [
-      'inline-flex min-h-8 items-center rounded px-1 font-normal underline decoration-base-content/40 underline-offset-4 hover:bg-base-200 hover:decoration-current focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+      'inline-flex min-h-8 items-center rounded-sm px-1 font-normal underline decoration-base-content/40 underline-offset-4 hover:bg-base-200 hover:decoration-current focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
       cls || '',
     ].filter(Boolean).join(' ')
     : [

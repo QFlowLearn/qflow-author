@@ -4,7 +4,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 import { readdir, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import ts from 'typescript';
+import { API } from 'typescript/unstable/sync';
+import * as ts from 'typescript/unstable/ast';
 import { runCommand } from './process_command.ts';
 function object(value: unknown): Record<string, unknown> {
   if (!isRecord(value)) throw Error('Invalid dependency metadata.');
@@ -13,7 +14,7 @@ function object(value: unknown): Record<string, unknown> {
 /** Check pinned tools, one Preact runtime and Deno/Fresh/JSR-free emitted module dependencies. */
 export async function checkDependencies(): Promise<void> {
   const config = object(JSON.parse(await readFile('package.json', 'utf8')));
-  if (process.versions.node !== '24.22.0' || config.packageManager !== 'pnpm@10.34.3') {
+  if (process.versions.node !== '26.12.0' || config.packageManager !== 'pnpm@12.21.0') {
     throw Error('Pinned runtime tools differ.');
   }
   for (const kind of ['dependencies', 'devDependencies']) {
@@ -28,8 +29,8 @@ export async function checkDependencies(): Promise<void> {
     }
   }
   const version = await runCommand('pnpm', ['--version']);
-  if (!version.success || new TextDecoder().decode(version.stdout).trim() !== '10.34.3') {
-    throw Error('Use pnpm 10.34.3.');
+  if (!version.success || new TextDecoder().decode(version.stdout).trim() !== '12.21.0') {
+    throw Error('Use pnpm 12.21.0.');
   }
   const result = await runCommand('pnpm', ['list', 'preact', '--depth', 'Infinity', '--json']);
   if (!result.success) throw Error('Cannot inspect dependency graph.');
@@ -52,34 +53,39 @@ export async function checkDependencies(): Promise<void> {
   if (versions.size !== 1 || !versions.has('10.29.1')) {
     throw Error('Expected exactly one Preact 10.29.1 runtime.');
   }
-  async function inspect(directory: string): Promise<void> {
+  const paths: string[] = [];
+  async function collect(directory: string): Promise<void> {
     for (const entry of await readdir(directory, { withFileTypes: true })) {
       const path = resolve(directory, entry.name);
-      if (entry.isDirectory()) {
-        await inspect(path);
-        continue;
-      }
-      if (!/\.js$/.test(path)) continue;
-      const file = ts.createSourceFile(
-        path,
-        await readFile(path, 'utf8'),
-        ts.ScriptTarget.Latest,
-        true,
-        ts.ScriptKind.JS,
-      );
-      function inspectNode(node: ts.Node) {
-        if (
-          (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier &&
-          ts.isStringLiteral(node.moduleSpecifier) &&
-          /^(?:fresh(?:\/|$)|@fresh\/|jsr:|npm:)/.test(node.moduleSpecifier.text)
-        ) throw Error('Retired runtime in emitted graph.');
-        ts.forEachChild(node, inspectNode);
-      }
-      inspectNode(file);
+      if (entry.isDirectory()) await collect(path);
+      else if (/\.js$/.test(path)) paths.push(path);
     }
   }
-  await inspect('.cloudflare/output/v1/workers/default/assets');
-  await inspect('.cloudflare/output/v1/workers');
+  await collect('.cloudflare/output/v1/workers');
+  const api = new API();
+  try {
+    const snapshot = api.updateSnapshot({ openFiles: paths });
+    try {
+      for (const path of paths) {
+        const file = snapshot.getDefaultProjectForFile(path)?.program.getSourceFile(path);
+        if (!file) throw Error('Missing emitted module syntax tree: ' + path);
+        function inspectNode(node: ts.Node) {
+          if (
+            (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) &&
+            node.moduleSpecifier &&
+            ts.isStringLiteral(node.moduleSpecifier) &&
+            /^(?:fresh(?:\/|$)|@fresh\/|jsr:|npm:)/.test(node.moduleSpecifier.text)
+          ) throw Error('Retired runtime in emitted graph.');
+          node.forEachChild(inspectNode);
+        }
+        inspectNode(file);
+      }
+    } finally {
+      snapshot.dispose();
+    }
+  } finally {
+    api.close();
+  }
   console.log(
     'Pinned Node/pnpm and one Preact 10 runtime verified; emitted imports contain no retired framework/runtime dependencies.',
   );

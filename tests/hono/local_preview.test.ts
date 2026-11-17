@@ -31,10 +31,10 @@ afterAll(async () => {
 it('HTTP preview ingress preserves HTTPS cookies and accepts only the configured browser origin', async () => {
   if (!runtime) throw Error('Preview runtime did not start.');
   for (
-    const [origin, expected] of [[browserOrigin, 200], [
-      'https://attacker.example.test',
-      403,
-    ]] as const
+    const [origin, expected] of [
+      [browserOrigin, 200],
+      ['https://attacker.example.test', 403],
+    ] as const
   ) {
     const response = await runtime.dispatchFetch('http://127.0.0.1:5173/password/forgot', {
       method: 'POST',

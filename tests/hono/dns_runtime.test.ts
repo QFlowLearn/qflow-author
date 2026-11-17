@@ -75,10 +75,11 @@ describe('production DNS adapter under workerd', () => {
           ipv4: ['203.0.113.10'],
           ipv6: ['2001:db8::10'],
         },
-        requests: [{ name: 'qflow-dns.example.test', type: 'TXT' }, {
-          name: 'qflow-dns.example.test',
-          type: 'A',
-        }, { name: 'qflow-dns.example.test', type: 'AAAA' }],
+        requests: [
+          { name: 'qflow-dns.example.test', type: 'TXT' },
+          { name: 'qflow-dns.example.test', type: 'A' },
+          { name: 'qflow-dns.example.test', type: 'AAAA' },
+        ],
       });
       expect(requests).toEqual([
         { name: 'qflow-dns.example.test', type: 'TXT' },

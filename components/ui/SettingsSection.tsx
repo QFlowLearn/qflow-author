@@ -26,7 +26,7 @@ export default function SettingsSection(
           id={`settings-heading-${id}`}
           aria-expanded={open}
           aria-controls={`settings-panel-${id}`}
-          class='flex min-h-11 w-full items-center justify-between gap-3 rounded-sm py-3 text-start text-sm font-semibold text-base-content hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+          class='flex min-h-11 w-full items-center justify-between gap-3 rounded-xs py-3 text-start text-sm font-semibold text-base-content hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
           onClick={() => setOpen((current) => !current)}
         >
           <span>{label}</span>

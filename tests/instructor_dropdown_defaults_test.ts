@@ -27,11 +27,10 @@ testCase('workspace answer order applies to actual new dropdown slots and canoni
   // Dropdown ordering belongs to the slots, not the generic flat-choice field.
   expect(draft.shuffle).toStrictEqual(false);
   const written = writeQflowQti3AssessmentItemResult(
-    toQti3InlineChoiceAuthoringItem({
-      ...draft,
-      title: 'Dropdown default',
-      inlineChoices: draft.inlineChoices ?? [],
-    }, { lang: draft.itemLanguage }),
+    toQti3InlineChoiceAuthoringItem(
+      { ...draft, title: 'Dropdown default', inlineChoices: draft.inlineChoices ?? [] },
+      { lang: draft.itemLanguage },
+    ),
   );
   if (!written.ok) throw new Error('Expected usable dropdown default.');
   const parsed = parseQtiXml(written.xml);

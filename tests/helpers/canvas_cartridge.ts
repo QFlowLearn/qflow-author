@@ -16,8 +16,8 @@ export async function canvasCartridge(input: {
       <resource identifier="QUIZ" type="imsqti_xmlv1p2/imscc_xmlv1p1/assessment"><file href="QUIZ/assessment_qti.xml"/><dependency identifierref="CANVAS_META"/></resource>
       <resource identifier="CANVAS_META" type="associatedcontent/imscc_xmlv1p1/learning-application-resource" href="QUIZ/assessment_meta.xml">
         <file href="QUIZ/assessment_meta.xml"/>${
-      input.nativeXml === null ? '' : `<file href="${nativePath}"/>`
-    }
+          input.nativeXml === null ? '' : `<file href="${nativePath}"/>`
+        }
       </resource>${input.extraResources ?? ''}
     </resources></manifest>`;
   const encode = (value: string) => new TextEncoder().encode(value);

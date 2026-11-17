@@ -72,12 +72,10 @@ globalThis.mount=(c)=>render(h(App,{config:c}),document.getElementById('root'));
             width: 640,
             height: 480,
           },
-          graphicOrderHotspots: [{
-            id: 'HOTSPOT-A',
-            shape: 'rect',
-            coords: '10,20,30,40',
-            label: 'LABEL-A',
-          }, { id: 'HOTSPOT-B', shape: 'circle', coords: '50,60,7', label: 'LABEL-B' }],
+          graphicOrderHotspots: [
+            { id: 'HOTSPOT-A', shape: 'rect', coords: '10,20,30,40', label: 'LABEL-A' },
+            { id: 'HOTSPOT-B', shape: 'circle', coords: '50,60,7', label: 'LABEL-B' },
+          ],
           graphicOrderCorrectOrder: ['HOTSPOT-A', 'HOTSPOT-B'],
         },
       }]),

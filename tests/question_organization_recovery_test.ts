@@ -129,11 +129,12 @@ testCase('manual removal before processing survives source-driven filing', async
     await withOrganizationWorkspace(async (f) => {
       for (const action of ['AddItems', 'RemoveItems'] as const) {
         if (
-          !((await applyBankCollectionCommand(f.ctx, crypto.randomUUID(), {
-            _tag: action,
-            collectionId: f.destinationId,
-            questionIds: f.ids,
-          }, { database: db, now })).ok)
+          !((await applyBankCollectionCommand(
+            f.ctx,
+            crypto.randomUUID(),
+            { _tag: action, collectionId: f.destinationId, questionIds: f.ids },
+            { database: db, now },
+          )).ok)
         ) {
           expect.unreachable(
             'Expected (await applyBankCollectionCommand(f.ctx, crypto.randomUUID(), { _tag: action, collectionId',

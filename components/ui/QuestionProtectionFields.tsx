@@ -21,7 +21,7 @@ export default function QuestionProtectionFields(props: {
   if (props.questions.length === 0) return null;
   return (
     <details class='space-y-3' onToggle={(event) => setOpen(event.currentTarget.open)}>
-      <summary class='min-h-12 cursor-pointer rounded px-2 py-3 hover:bg-base-200/60'>
+      <summary class='min-h-12 cursor-pointer rounded-sm px-2 py-3 hover:bg-base-200/60'>
         <strong>{i18n.t('assessments.partSettings.fixedQuestions')}</strong>{' '}
         <span class='text-sm text-base-content/70'>
           {i18n.t('assessments.partSettings.fixedQuestionCount', {
@@ -40,7 +40,7 @@ export default function QuestionProtectionFields(props: {
               <label
                 key={question.id}
                 for={`${id}-${question.id}`}
-                class='flex min-h-12 items-start gap-3 rounded px-2 py-3 hover:bg-base-200/40'
+                class='flex min-h-12 items-start gap-3 rounded-sm px-2 py-3 hover:bg-base-200/40'
               >
                 <Checkbox
                   id={`${id}-${question.id}`}

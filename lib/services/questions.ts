@@ -268,7 +268,7 @@ function assertVariantPublication(
   };
   if (
     canonicalJsonStringify(projectJsonPersistenceObject(input.metadata ?? {})) !==
-      canonicalJsonStringify(expectedMetadata)
+    canonicalJsonStringify(expectedMetadata)
   ) {
     throw new VariantQuestionContentMismatchError();
   }

@@ -53,11 +53,13 @@ export default createLocalWorker(${JSON.stringify(local?.origin.origin)});`;
     }
   }
   if (databaseUrl === null) env.QFLOW_DB = { type: 'json', value: null };
-  else {env.QFLOW_DB = {
+  else {
+    env.QFLOW_DB = {
       type: 'hyperdrive',
       id: '00000000000000000000000000000000',
       dev: { connectionString: databaseUrl },
-    };}
+    };
+  }
   if (overrides?.workflows) {
     for (const [name, binding] of Object.entries(env)) {
       if (binding.type === 'workflow') delete env[name];

@@ -179,7 +179,7 @@ export default function SessionsPage({ data, i18n }: { data: Data; i18n: I18n })
         </div>
       )}
 
-      <div class='ds-card ds-card-bordered'>
+      <div class='ds-card ds-card-border'>
         <div class='ds-card-body space-y-4'>
           <h2 class='text-lg font-medium'>{i18n.t('settings.sessions.deviceTitle')}</h2>
           {data.sessions.length === 0

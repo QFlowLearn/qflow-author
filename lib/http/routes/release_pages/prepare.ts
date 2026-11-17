@@ -12,12 +12,16 @@ const methods = {
         form.getAll(key).length !== 1 || typeof form.get(key) !== 'string'
       )
     ) return new Response(ctx.state.i18n.t('releases.error.invalid_input'), { status: 400 });
-    const result = await prepareBankRelease(requireAuthContext(ctx.state), {
-      releaseId: ctx.params.id,
-      version: Number(form.get('version')),
-      digest: String(form.get('digest')),
-      preparationId: String(form.get('preparationId')),
-    }, { storage: resolveStorage(ctx) });
+    const result = await prepareBankRelease(
+      requireAuthContext(ctx.state),
+      {
+        releaseId: ctx.params.id,
+        version: Number(form.get('version')),
+        digest: String(form.get('digest')),
+        preparationId: String(form.get('preparationId')),
+      },
+      { storage: resolveStorage(ctx) },
+    );
     if (!result.ok) {
       return new Response(ctx.state.i18n.t(`releases.error.${result.code}`), {
         status: releaseFailureStatus(result.code),

@@ -64,12 +64,11 @@ function parseSourceBlock(value: unknown): SourceBlock {
     : parsePositiveInteger(record.page, 'Source block page must be a positive integer.');
   switch (record.kind) {
     case 'heading':
-      assertSourceBlockKeys(record, ['id', 'kind', 'level', 'text', 'page'], [
-        'id',
-        'kind',
-        'level',
-        'text',
-      ]);
+      assertSourceBlockKeys(
+        record,
+        ['id', 'kind', 'level', 'text', 'page'],
+        ['id', 'kind', 'level', 'text'],
+      );
       return {
         id,
         kind: 'heading',

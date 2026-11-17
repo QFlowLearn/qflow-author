@@ -260,9 +260,7 @@ export default function QuestionOrganizationSetup(
                 <BankField key={topic.id} label={topic.label || i18n.t('items.browse.topic')}>
                   <Select
                     name={`destination-${topic.id}`}
-                    value={filing.find((f) =>
-                      f.topicId === topic.id
-                    )?.collectionId ?? ''}
+                    value={filing.find((f) => f.topicId === topic.id)?.collectionId ?? ''}
                     onChange={(e) =>
                       setFiling([
                         ...filing.filter((f) => f.topicId !== topic.id),

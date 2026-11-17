@@ -70,9 +70,8 @@ export async function loadReleasePreview(
         ),
       );
     const rows = manifest.items.map((item, index) => {
-      const newer = latest.find((row) =>
-        row.id === item.questionId
-      )?.revisionId !== item.revisionId;
+      const newer =
+        latest.find((row) => row.id === item.questionId)?.revisionId !== item.revisionId;
       const correction = item.eligibility.kind === 'attestation_required' &&
         item.eligibility.review?.state === 'changes_requested';
       return {

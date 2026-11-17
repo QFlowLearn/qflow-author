@@ -2,13 +2,13 @@ import { sourceFiles } from './source_files.ts';
 import { runCommand } from './process_command.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-/** The pinned dprint plugins use the exact versions and preset of the previous formatter. */
+/** Format Git-visible source with the pinned dprint engine and plugins. */
 export async function format(write: boolean): Promise<void> {
   const paths = (await sourceFiles()).filter((path) =>
     /\.(?:[cm]?[jt]s|[jt]sx|jsonc?|md)$/.test(path) && !path.startsWith('tests/fixtures/')
   );
   const result = await runCommand(process.execPath, [
-    fileURLToPath(import.meta.resolve('dprint/bin.js')),
+    fileURLToPath(import.meta.resolve('dprint/bin.cjs')),
     write ? 'fmt' : 'check',
     '--config',
     'dprint.json',

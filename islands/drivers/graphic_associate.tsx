@@ -311,7 +311,7 @@ export function GraphicAssociateContent(props: GraphicAssociateContentProps) {
               key={spot.id}
               selected={spot.id === activeHotspotId}
             >
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicAssociateId')}</span>
                 <Input
                   value={spot.id}
@@ -328,7 +328,7 @@ export function GraphicAssociateContent(props: GraphicAssociateContentProps) {
                   placeholder='A'
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicAssociateShape')}</span>
                 <Select
                   value={spot.shape}
@@ -336,17 +336,18 @@ export function GraphicAssociateContent(props: GraphicAssociateContentProps) {
                   aria-describedby={props.fieldHasIssue('choices')
                     ? `${issueId}-choices`
                     : undefined}
-                  onInput={(e) => props.updateGraphicAssociateHotspotShape(
-                    spot.id,
-                    (e.target as HTMLSelectElement).value as GraphicAssociateHotspot['shape'],
-                  )}
+                  onInput={(e) =>
+                    props.updateGraphicAssociateHotspotShape(
+                      spot.id,
+                      (e.target as HTMLSelectElement).value as GraphicAssociateHotspot['shape'],
+                    )}
                 >
                   <option value='rect'>{i18n.t('driver.graphicAssociateRect')}</option>
                   <option value='circle'>{i18n.t('driver.graphicAssociateCircle')}</option>
                   <option value='poly'>{i18n.t('driver.graphicAssociatePoly')}</option>
                 </Select>
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicAssociateCoords')}</span>
                 <Input
                   value={spot.coords}

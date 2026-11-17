@@ -40,9 +40,11 @@ test('Sakai content packaging resolves and migrates the declared assessment and 
     bodyHtml: '<p>Explain why the result changes.</p>',
   });
   expect(parsed.assets.find((asset) => asset.path === 'image.png')?.data).toEqual(image);
-  const analysis = buildMigrationAnalysis(parsed, { adapter: qti12Adapter, sniff }, {
-    _tag: 'Assessment',
-  });
+  const analysis = buildMigrationAnalysis(
+    parsed,
+    { adapter: qti12Adapter, sniff },
+    { _tag: 'Assessment' },
+  );
   expect(analysis.items[0].readiness).toBe('ready');
   expect(analysis.summary.globalWarnings?.map((warning) => warning.code)).toContain(
     'QTI_ASSESSMENT_STRUCTURE_FLATTENED',

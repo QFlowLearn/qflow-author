@@ -108,10 +108,10 @@ export default function AuditLogPage({ data, i18n }: { data: Data; i18n: I18n })
         </p>
       </div>
 
-      <form method='get' class='ds-card ds-card-bordered'>
+      <form method='get' class='ds-card ds-card-border'>
         <div class='ds-card-body space-y-4'>
           <div class='grid gap-4 md:grid-cols-2'>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('settings.audit.user')}</span>
               <Select name='userId' size='sm' defaultValue={data.userId ?? ''}>
                 <option value=''>{i18n.t('settings.audit.allUsers')}</option>
@@ -122,7 +122,7 @@ export default function AuditLogPage({ data, i18n }: { data: Data; i18n: I18n })
                 ))}
               </Select>
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('settings.audit.action')}</span>
               <Select name='action' size='sm' defaultValue={data.action ?? ''}>
                 <option value=''>{i18n.t('settings.audit.allActions')}</option>
@@ -143,7 +143,7 @@ export default function AuditLogPage({ data, i18n }: { data: Data; i18n: I18n })
         </div>
       </form>
 
-      <div class='ds-card ds-card-bordered'>
+      <div class='ds-card ds-card-border'>
         <div class='ds-card-body space-y-4'>
           <h2 class='text-lg font-medium'>{i18n.t('settings.audit.recent')}</h2>
           {data.logs.length === 0

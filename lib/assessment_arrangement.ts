@@ -112,11 +112,12 @@ function parseArrangeRequest(value: unknown): AssessmentArrangeRequest {
 
 function parseCanvasMove(value: unknown): AssessmentCanvasMove {
   const record = parseRecord(value, 'Canvas move must be an object.');
-  assertExactKeys(record, ['partId', 'placementId', 'position'], [
-    'partId',
-    'placementId',
-    'position',
-  ], 'canvas move');
+  assertExactKeys(
+    record,
+    ['partId', 'placementId', 'position'],
+    ['partId', 'placementId', 'position'],
+    'canvas move',
+  );
   const partId = parseUuid(record.partId, 'Canvas move part ID must be a UUID.');
   const placementId = parseUuid(record.placementId, 'Canvas move placement ID must be a UUID.');
   if (
@@ -136,11 +137,12 @@ function parsePart(
 ): ParsedAssessmentPart {
   const label = `assessment part ${index + 1}`;
   const record = parseRecord(value, `${capitalize(label)} must be an object.`);
-  assertExactKeys(record, ['id', 'title', 'placements', 'options'], [
-    'id',
-    'title',
-    'placements',
-  ], label);
+  assertExactKeys(
+    record,
+    ['id', 'title', 'placements', 'options'],
+    ['id', 'title', 'placements'],
+    label,
+  );
   const id = parseUuid(record.id, `${capitalize(label)} ID must be a UUID.`);
   const title = parseBoundedString(
     record.title,

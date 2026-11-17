@@ -138,23 +138,20 @@ export function BankEnrichmentVocabulary(
             <summary class='cursor-pointer py-2 font-medium break-words'>
               {subject.label || i18n.t('items.organize.untitledSubject')}{' '}
               <span class='text-sm font-normal text-base-content/75'>
-                ({draft.topics.filter((t) =>
-                  t.subjectId === subject.id
-                ).length})
+                ({draft.topics.filter((t) => t.subjectId === subject.id).length})
               </span>
             </summary>
             <div class='divide-y divide-base-300'>
-              {draft.topics.filter((t) =>
-                t.subjectId === subject.id
-              ).map((topic) => row(topic, 'topic'))}
+              {draft.topics.filter((t) => t.subjectId === subject.id).map((topic) =>
+                row(topic, 'topic')
+              )}
             </div>
             <Button
               type='button'
               variant='ghost'
               size='sm'
               disabled={draft.topics.length >= 250}
-              onClick={() =>
-                add('topic', subject.id)}
+              onClick={() => add('topic', subject.id)}
             >
               {i18n.t('items.organize.addTopic')}
             </Button>

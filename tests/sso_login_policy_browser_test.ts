@@ -98,10 +98,10 @@ testCase('Login Policy browser flow covers localized states and actions', {
           requests.push({ endpoint: 'verification', body });
           await new Promise((r) => setTimeout(r, 250));
           if (mode === 'dns-failure') {
-            return Response.json({
-              error: 'dns_verification_failed',
-              params: { domain: 'google.example.com' },
-            }, { status: 422 });
+            return Response.json(
+              { error: 'dns_verification_failed', params: { domain: 'google.example.com' } },
+              { status: 422 },
+            );
           }
           return Response.json({ record });
         }

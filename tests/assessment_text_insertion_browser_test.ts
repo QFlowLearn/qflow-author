@@ -193,7 +193,7 @@ testCase(
                       document.querySelector<HTMLTextAreaElement>('textarea[name=text]')?.value ===
                         expected &&
                       document.querySelector('textarea[name=text]')?.closest('article')
-                          ?.querySelector<HTMLButtonElement>('button[type=submit]')?.disabled ===
+                        ?.querySelector<HTMLButtonElement>('button[type=submit]')?.disabled ===
                         false,
                     text,
                   );

@@ -153,15 +153,14 @@ testCase(
             policy: {
               versionId: f.versionId,
               classifier: { kind: 'source_only' },
-              filing: [{ topicId: 'cells', collectionId: f.destinationId }, {
-                topicId: 'energy',
-                collectionId: f.originId,
-              }],
-              sourceMappings: [{ sourceId: f.sourceId, sectionKey: 'cells', topicId: 'cells' }, {
-                sourceId: f.sourceId,
-                sectionKey: 'energy',
-                topicId: 'energy',
-              }],
+              filing: [
+                { topicId: 'cells', collectionId: f.destinationId },
+                { topicId: 'energy', collectionId: f.originId },
+              ],
+              sourceMappings: [
+                { sourceId: f.sourceId, sectionKey: 'cells', topicId: 'cells' },
+                { sourceId: f.sourceId, sectionKey: 'energy', topicId: 'energy' },
+              ],
             },
           }, now())).ok)
         ) {

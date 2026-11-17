@@ -10,9 +10,11 @@ test('multi-question migration attaches blocking diagnostics to their own genera
   };
   const sniff = await qti12Adapter.sniff(source);
   const parsed = await qti12Adapter.parse(source);
-  const analysis = buildMigrationAnalysis(parsed, { adapter: qti12Adapter, sniff }, {
-    _tag: 'Assessment',
-  });
+  const analysis = buildMigrationAnalysis(
+    parsed,
+    { adapter: qti12Adapter, sniff },
+    { _tag: 'Assessment' },
+  );
   expect(analysis.items.map((item) => item.readiness)).toEqual(['blocked', 'blocked', 'ready']);
   for (const item of analysis.items.slice(0, 2)) {
     expect(item.warnings.map((warning) => warning.code)).toEqual(expect.arrayContaining([

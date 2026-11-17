@@ -122,7 +122,7 @@ export function MatchContent(props: MatchContentProps) {
           heading={
             <div class='flex items-center gap-2'>
               <strong>{i18n.t('driver.sources')}</strong>
-              <span class='rounded border border-base-300 bg-base-200 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
+              <span class='rounded-sm border border-base-300 bg-base-200 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
                 {i18n.t('driver.itemCount', { count: props.sources.length })}
               </span>
             </div>
@@ -201,7 +201,7 @@ export function MatchContent(props: MatchContentProps) {
           heading={
             <div class='flex items-center gap-2'>
               <strong>{i18n.t('driver.targets')}</strong>
-              <span class='rounded border border-base-300 bg-base-100 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
+              <span class='rounded-sm border border-base-300 bg-base-100 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
                 {i18n.t('driver.itemCount', { count: props.targets.length })}
               </span>
             </div>
@@ -278,7 +278,7 @@ export function MatchContent(props: MatchContentProps) {
       <section class='space-y-2 border-t border-base-300 pt-3'>
         <div class='flex items-center justify-between gap-2'>
           <strong>{i18n.t('driver.correctPairs')}</strong>
-          <span class='rounded border border-base-300 bg-base-200 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
+          <span class='rounded-sm border border-base-300 bg-base-200 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
             {i18n.t('driver.matchCount', { count: props.pairs.length })}
           </span>
         </div>

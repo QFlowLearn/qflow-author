@@ -38,18 +38,18 @@ async function completeWorkflow(
   const instance = await introspectWorkflowInstance(binding, run.executionId);
   try {
     expect(
-      (await dispatchPendingWorkflowJobs({ bindings }, {
-        jobIds: [run.id],
-        tenantId: run.tenantId,
-      })).ok,
+      (await dispatchPendingWorkflowJobs(
+        { bindings },
+        { jobIds: [run.id], tenantId: run.tenantId },
+      )).ok,
     ).toBe(true);
     await instance.waitForStatus('complete');
     expect(await instance.getOutput()).toEqual({ _tag: 'Completed', jobId: run.id, attempts: 1 });
     expect(
-      (await dispatchPendingWorkflowJobs({ bindings }, {
-        jobIds: [run.id],
-        tenantId: run.tenantId,
-      })).ok,
+      (await dispatchPendingWorkflowJobs(
+        { bindings },
+        { jobIds: [run.id], tenantId: run.tenantId },
+      )).ok,
     ).toBe(true);
   } finally {
     await instance.dispose();
@@ -112,14 +112,15 @@ it(
 
         // Simulate loss of the publisher after commit and before any organization dispatch.
         // A fresh Hyperdrive client can recover every frozen job from PostgreSQL alone.
-        const pending = await withHyperdriveDatabase({ bindings }, (database) =>
-          database.select().from(organizationRuns).where(
-            eq(organizationRuns.tenantId, f.ctx.tenantId),
-          ));
+        const pending = await withHyperdriveDatabase(
+          { bindings },
+          (database) =>
+            database.select().from(organizationRuns).where(
+              eq(organizationRuns.tenantId, f.ctx.tenantId),
+            ),
+        );
         expect(pending).toHaveLength(20);
-        expect(pending.every((run) =>
-          run.state === 'queued'
-        )).toBe(true);
+        expect(pending.every((run) => run.state === 'queued')).toBe(true);
         const frozen = await db.select().from(organizationItems).where(
           eq(organizationItems.tenantId, f.ctx.tenantId),
         );

@@ -90,9 +90,11 @@ testCase(
         expect(queued.value.selection.rows[outsideId].difficulty).toStrictEqual({
           state: 'outside',
         });
-        const queuedOverview = await browse.page(ctx, { ...query(), view: 'overview' }, {
-          locale: 'en-US',
-        });
+        const queuedOverview = await browse.page(
+          ctx,
+          { ...query(), view: 'overview' },
+          { locale: 'en-US' },
+        );
         if (
           !(queuedOverview.ok && queuedOverview.value.kind === 'overview' &&
             queuedOverview.value.enrichment.selection)

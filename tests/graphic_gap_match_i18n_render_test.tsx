@@ -72,12 +72,10 @@ function view(locale: InterfaceLocale, choices = true, targets = true, hasBackgr
           }]
           : []}
         graphicTargets={targets
-          ? [{ id: 'T1', shape: 'circle', coords: '10,20,30', matchMax: 0 }, {
-            id: 'T2',
-            shape: 'rect',
-            coords: '40,50,60,70',
-            matchMax: 2,
-          }]
+          ? [
+            { id: 'T1', shape: 'circle', coords: '10,20,30', matchMax: 0 },
+            { id: 'T2', shape: 'rect', coords: '40,50,60,70', matchMax: 2 },
+          ]
           : []}
         graphicCorrectPairs={[{ targetId: 'T1', choiceId: 'A' }]}
         setGraphicBackground={noop}

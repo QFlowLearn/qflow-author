@@ -71,18 +71,22 @@ testCase(
             }
             throw new Error('Organization did not complete within four steps');
           };
-          const preview = await workspace.preview(f.ctx, {
-            operationId: crypto.randomUUID(),
-            collectionId: f.originId,
-            expectedVersion: 1,
-            definition: { ...enrichmentDefinitionFixture(), difficulty: [] },
-            filing: [{ topicId: 'cells', collectionId: f.destinationId }],
-            sourceMappings: [{
-              sourceId: firstSource.sourceId,
-              sectionKey: firstSource.sectionKey,
-              topicId: 'cells',
-            }],
-          }, { kind: 'source_only' });
+          const preview = await workspace.preview(
+            f.ctx,
+            {
+              operationId: crypto.randomUUID(),
+              collectionId: f.originId,
+              expectedVersion: 1,
+              definition: { ...enrichmentDefinitionFixture(), difficulty: [] },
+              filing: [{ topicId: 'cells', collectionId: f.destinationId }],
+              sourceMappings: [{
+                sourceId: firstSource.sourceId,
+                sectionKey: firstSource.sectionKey,
+                topicId: 'cells',
+              }],
+            },
+            { kind: 'source_only' },
+          );
           if (!(preview.ok)) expect.unreachable('Expected preview.ok');
           await finish(preview.value);
           expect(

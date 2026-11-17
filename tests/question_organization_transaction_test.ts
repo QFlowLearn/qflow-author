@@ -141,11 +141,12 @@ testCase(
         expect(rows.find((r) => r.questionId === f.ids[1])?.state).toStrictEqual('outdated');
         expect(rows.find((r) => r.questionId === f.ids[2])?.state).toStrictEqual('applied');
         // An explicit same-value Add is still a human ownership change.
-        const human = await applyBankCollectionCommand(f.ctx, crypto.randomUUID(), {
-          _tag: 'AddItems',
-          collectionId: f.destinationId,
-          questionIds: [f.ids[2]],
-        }, { database: db, now });
+        const human = await applyBankCollectionCommand(
+          f.ctx,
+          crypto.randomUUID(),
+          { _tag: 'AddItems', collectionId: f.destinationId, questionIds: [f.ids[2]] },
+          { database: db, now },
+        );
         if (!(human.ok)) expect.unreachable('Expected human.ok');
         if (!((await completeOrganizationUndoForTest(db, f.ctx, f.runId, now())).ok)) {
           expect.unreachable(

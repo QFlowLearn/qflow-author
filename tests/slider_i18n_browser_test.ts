@@ -230,10 +230,10 @@ globalThis.mount=(c)=>render(h(App,{config:c}),document.getElementById('root'));
         await field(i18n.t('driver.sliderMappedValue')).nth(0).fill('-7');
         await field(i18n.t('driver.sliderMappedValue')).nth(1).fill('');
         s = await state();
-        expect(s.mappings).toStrictEqual([{ mapKey: 11, mappedValue: -7 }, {
-          mapKey: 0,
-          mappedValue: 0,
-        }]);
+        expect(s.mappings).toStrictEqual([
+          { mapKey: 11, mappedValue: -7 },
+          { mapKey: 0, mappedValue: 0 },
+        ]);
         await field(i18n.t('driver.sliderMapKey')).nth(1).fill('22');
         await page.getByRole('button', {
           name: i18n.t('driver.sliderRemoveMapping', { number: 1 }),
@@ -253,10 +253,10 @@ globalThis.mount=(c)=>render(h(App,{config:c}),document.getElementById('root'));
         await page.getByRole('button', { name: `+ ${i18n.t('driver.sliderAddMapping')}` })
           .click();
         s = await state();
-        expect(s.mappings).toStrictEqual([{ mapKey: 22, mappedValue: 0 }, {
-          mapKey: 0,
-          mappedValue: 1,
-        }]);
+        expect(s.mappings).toStrictEqual([
+          { mapKey: 22, mappedValue: 0 },
+          { mapKey: 0, mappedValue: 1 },
+        ]);
         expect(
           await page.getByRole('button', {
             name: i18n.t('driver.sliderRemoveMapping', { number: 1 }),

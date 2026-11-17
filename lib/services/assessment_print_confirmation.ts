@@ -74,10 +74,10 @@ export async function confirmPrintPack(
     if (
       !source.ok ||
       await printSourceDigest(
-          source.value,
-          stored.snapshot.configuration,
-          current.value.prepared,
-        ) !== stored.snapshot.sourceDigest
+        source.value,
+        stored.snapshot.configuration,
+        current.value.prepared,
+      ) !== stored.snapshot.sourceDigest
     ) return { ok: false, code: 'stale_preview' };
     const prepared = preflightPrint(stored.snapshot.source, stored.snapshot.configuration);
     if (prepared.preflight.outcome !== 'ready') return { ok: false, code: 'snapshot_corrupt' };

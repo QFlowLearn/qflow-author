@@ -127,15 +127,14 @@ export function GapMatchContent(props: GapMatchContentProps) {
                     variant='danger-ghost'
                     type='button'
                     disabled={props.gaps.length <= 1}
-                    onClick={() =>
-                      props.removeGap(gap.id)}
+                    onClick={() => props.removeGap(gap.id)}
                   >
                     {i18n.t('driver.remove')}
                   </Button>
                 </div>
               </div>
               <div class='grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(16rem,28rem)] md:items-end'>
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span>{i18n.t('driver.blankLabel')}</span>
                   <Input
                     size='sm'
@@ -145,7 +144,7 @@ export function GapMatchContent(props: GapMatchContentProps) {
                     placeholder={i18n.t('driver.blank', { number: idx + 1 })}
                   />
                 </label>
-                <label class='ds-form-control' data-choice-selection>
+                <label class='flex flex-col' data-choice-selection>
                   <span>{i18n.t('driver.correctAnswer')}</span>
                   <Select
                     size='sm'
@@ -205,7 +204,7 @@ export function GapMatchContent(props: GapMatchContentProps) {
                     : 'md:grid-cols-[8rem_minmax(0,1fr)_9rem_auto]'
                 }`}
               >
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('driver.identifier')}</span>
                   <Input
                     value={choice.id}
@@ -214,7 +213,7 @@ export function GapMatchContent(props: GapMatchContentProps) {
                     placeholder='A'
                   />
                 </label>
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('driver.text')}</span>
                   <Input
                     value={choice.text ?? ''}
@@ -226,7 +225,7 @@ export function GapMatchContent(props: GapMatchContentProps) {
                     placeholder={i18n.t('driver.optionText')}
                   />
                 </label>
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('driver.maxAssociations')}</span>
                   <Input
                     type='number'

@@ -104,7 +104,7 @@ it('sample QA download is locale-independent', async () => {
     if (result.type !== 'text/markdown; charset=utf-8') throw new Error('unexpected content type');
     if (
       result.disposition !==
-        attachmentContentDisposition(qaReportFilename(SAMPLE_QTI_MIGRATION_RUN))
+      attachmentContentDisposition(qaReportFilename(SAMPLE_QTI_MIGRATION_RUN))
     ) {
       throw new Error('unexpected content disposition');
     }

@@ -111,7 +111,7 @@ export function HotspotContent(props: HotspotContentProps) {
                   choice.id === activeChoiceId ? 'ring-1 ring-primary/40' : ''
                 }`}
               >
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('driver.identifier')}</span>
                   <Input
                     size='sm'
@@ -124,7 +124,7 @@ export function HotspotContent(props: HotspotContentProps) {
                     placeholder='A'
                   />
                 </label>
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('driver.shape')}</span>
                   <Select
                     size='sm'
@@ -142,7 +142,7 @@ export function HotspotContent(props: HotspotContentProps) {
                     <option value='poly'>{i18n.t('driver.polygon')}</option>
                   </Select>
                 </label>
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('driver.coordinates')}</span>
                   <Input
                     size='sm'

@@ -62,10 +62,11 @@ testCase(
             itemLanguage: newAuthoringItemLanguage(),
             title: 'Choose Alpha and Beta',
             bodyHtml: '<p>Choose Alpha and Beta.</p>',
-            choices: [{ id: 'A', text: 'Alpha' }, { id: 'B', text: 'Beta' }, {
-              id: 'C',
-              text: 'Other',
-            }],
+            choices: [
+              { id: 'A', text: 'Alpha' },
+              { id: 'B', text: 'Beta' },
+              { id: 'C', text: 'Other' },
+            ],
             correctIds: ['A', 'B'],
             responseMode: 'partial',
           },
@@ -357,10 +358,16 @@ testCase(
           for (const xml of [savedMulti.qtiXml, multiPreview.xml]) {
             if (!xml) expect.unreachable('Expected xml');
             for (
-              const [responses, score] of [[['A'], 1.25], [['A', 'B'], 2.5], [['C'], 0], [[
-                'A',
-                'C',
-              ], 1.25], [['A', 'B', 'C'], 2.5]] as const
+              const [responses, score] of [
+                [['A'], 1.25],
+                [['A', 'B'], 2.5],
+                [['C'], 0],
+                [[
+                  'A',
+                  'C',
+                ], 1.25],
+                [['A', 'B', 'C'], 2.5],
+              ] as const
             ) {
               const result = scoreQtiItemServerSide({
                 itemXml: xml,

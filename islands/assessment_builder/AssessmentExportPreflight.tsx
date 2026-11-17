@@ -401,8 +401,9 @@ function ExportChanges({ i18n, items }: {
   if (manual === 0 && changed === 0) return null;
   return (
     <ul class='list-disc pl-5'>
-      {manual > 0 && <li>{i18n.t('delivery.preflight.manualGradingSummary', { count: manual })}
-      </li>}
+      {manual > 0 && (
+        <li>{i18n.t('delivery.preflight.manualGradingSummary', { count: manual })}</li>
+      )}
       {changed > 0 && (
         <li>{i18n.t('delivery.preflight.interactionChangesSummary', { count: changed })}</li>
       )}

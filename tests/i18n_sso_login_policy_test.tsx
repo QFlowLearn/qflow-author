@@ -185,10 +185,13 @@ testCase('Login Policy pending presenter renders every live phase', () => {
 testCase('SSO mutation errors retain legacy prose with additive codes', async () => {
   const cases = [
     [oidcHandler, '/api/sso/oidc', 'PATCH', { error: 'Invalid payload.', code: 'invalid_payload' }],
-    [policyHandler, '/api/sso/policy', 'PATCH', {
-      error: 'Invalid payload.',
-      code: 'invalid_payload',
-    }, { loginPolicy: 'invalid' }],
+    [
+      policyHandler,
+      '/api/sso/policy',
+      'PATCH',
+      { error: 'Invalid payload.', code: 'invalid_payload' },
+      { loginPolicy: 'invalid' },
+    ],
     [domainHandler, '/api/sso/domain-verification', 'PATCH', {
       error: 'Invalid payload.',
       code: 'invalid_payload',

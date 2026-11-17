@@ -39,9 +39,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24.22.0
+          node-version: 26.12.0
       - name: Install pinned pnpm
-        run: npm install --global pnpm@10.34.3
+        run: npm install --global pnpm@12.21.0
       - parallel:
           - name: Install frozen dependencies
             run: pnpm install --frozen-lockfile
@@ -96,9 +96,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24.22.0
+          node-version: 26.12.0
       - name: Install pinned pnpm
-        run: npm install --global pnpm@10.34.3
+        run: npm install --global pnpm@12.21.0
       - name: Install frozen dependencies
         run: pnpm install --frozen-lockfile
       - name: Apply DB migrations
@@ -159,9 +159,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24.22.0
+          node-version: 26.12.0
       - name: Install pinned pnpm
-        run: npm install --global pnpm@10.34.3
+        run: npm install --global pnpm@12.21.0
       - name: Install frozen dependencies
         run: pnpm install --frozen-lockfile
       - parallel:
@@ -236,9 +236,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24.22.0
+          node-version: 26.12.0
       - name: Install pinned pnpm
-        run: npm install --global pnpm@10.34.3
+        run: npm install --global pnpm@12.21.0
       - name: Install frozen dependencies
         run: pnpm install --frozen-lockfile
       - parallel:

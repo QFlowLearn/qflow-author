@@ -34,7 +34,7 @@ export default function SettingsRail(props: {
       hidden={!props.open}
       aria-labelledby={`${props.id}-heading`}
       class={props.open
-        ? 'flex max-h-[calc(100dvh-8rem)] w-full min-w-0 scroll-mt-24 flex-col rounded border border-base-300 bg-base-100'
+        ? 'flex max-h-[calc(100dvh-8rem)] w-full min-w-0 scroll-mt-24 flex-col rounded-sm border border-base-300 bg-base-100'
         : 'hidden'}
       onKeyDown={(event) => {
         if (event.key !== 'Escape' || event.defaultPrevented) return;

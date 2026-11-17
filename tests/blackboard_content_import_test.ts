@@ -17,10 +17,10 @@ test('Blackboard HTML and images retain content and original package-relative re
   });
   const source = {
     filename: 'blackboard.zip',
-    bytes: await writeZip([{ name: 'pools/questions.dat', data: new TextEncoder().encode(xml) }, {
-      name: 'pools/images/map image.png',
-      data: png,
-    }]),
+    bytes: await writeZip([
+      { name: 'pools/questions.dat', data: new TextEncoder().encode(xml) },
+      { name: 'pools/images/map image.png', data: png },
+    ]),
   };
   const imported = await blackboardAdapter.parse(source);
   expect(imported.items[0].draft.bodyHtml).toContain('<strong>bold</strong>');

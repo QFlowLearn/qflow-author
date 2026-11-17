@@ -164,7 +164,7 @@ export function ImageInsertPopover(
         >
           <div class='flex flex-col gap-3'>
             <h2 id={titleId} class='font-semibold'>{i18n.t('editor.imageTitle')}</h2>
-            <label class='ds-form-control' htmlFor={urlId}>
+            <label class='flex flex-col' htmlFor={urlId}>
               <span>{i18n.t('editor.imageUrl')}</span>
               <Input
                 id={urlId}
@@ -184,7 +184,7 @@ export function ImageInsertPopover(
             <div class='text-center text-xs text-base-content/60 dark:text-base-content/60'>
               {i18n.t('editor.imageOrUpload')}
             </div>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('editor.imageSelectFile')}</span>
               <Input
                 type='file'
@@ -192,7 +192,7 @@ export function ImageInsertPopover(
                 onChange={handleFileChange}
               />
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('editor.imageAlt')}</span>
               <Input
                 value={alt}
@@ -219,7 +219,7 @@ export function ImageInsertPopover(
               />
               <span>{i18n.t('editor.imageDecorative')}</span>
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('editor.imageLongDescription')}</span>
               <Textarea
                 value={longDescription}

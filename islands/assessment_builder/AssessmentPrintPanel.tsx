@@ -152,7 +152,9 @@ export default function AssessmentPrintPanel(
             >
               <fieldset disabled={!editable} class='space-y-4'>
                 <div>
-                  <label for='paper-title' class='ds-label'>{i18n.t('print.title')}</label>
+                  <label for='paper-title' class='flex items-center justify-between py-2'>
+                    {i18n.t('print.title')}
+                  </label>
                   <Input
                     id='paper-title'
                     name='title'
@@ -163,7 +165,7 @@ export default function AssessmentPrintPanel(
                   />
                 </div>
                 <div>
-                  <label for='paper-instructions' class='ds-label'>
+                  <label for='paper-instructions' class='flex items-center justify-between py-2'>
                     {i18n.t('print.instructions')}
                   </label>
                   <Textarea
@@ -359,8 +361,7 @@ export default function AssessmentPrintPanel(
                       name='paper'
                       value={paper}
                       checked={configuration.paper === paper}
-                      onChange={() =>
-                        change({ paper })}
+                      onChange={() => change({ paper })}
                     />
                     {paper === 'a4' ? 'A4' : 'Letter'}
                   </label>
@@ -368,7 +369,9 @@ export default function AssessmentPrintPanel(
               </div>
             </fieldset>
             <div>
-              <label class='ds-label' for='paper-lines'>{i18n.t('print.responseLines')}</label>
+              <label class='flex items-center justify-between py-2' for='paper-lines'>
+                {i18n.t('print.responseLines')}
+              </label>
               <Input
                 id='paper-lines'
                 name='responseLines'
@@ -380,7 +383,9 @@ export default function AssessmentPrintPanel(
               />
             </div>
             <div>
-              <label class='ds-label' for='paper-locale'>{i18n.t('print.labelsLanguage')}</label>
+              <label class='flex items-center justify-between py-2' for='paper-locale'>
+                {i18n.t('print.labelsLanguage')}
+              </label>
               <Select
                 id='paper-locale'
                 name='locale'
@@ -404,7 +409,10 @@ export default function AssessmentPrintPanel(
             </div>
             {writtenPlacements.map((finding) => (
               <div key={finding.placementId}>
-                <label class='ds-label' for={`paper-lines-${finding.placementId}`}>
+                <label
+                  class='flex items-center justify-between py-2'
+                  for={`paper-lines-${finding.placementId}`}
+                >
                   {finding.title || i18n.t('print.content')}
                 </label>
                 <Input

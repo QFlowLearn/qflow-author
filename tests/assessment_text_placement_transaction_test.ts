@@ -92,11 +92,12 @@ testCase(
           expect(parseQuestionOrderPreview(preview.value, inserted.version, mixed.parts))
             .toStrictEqual(preview.value);
           for (
-            const changes of [{ content: { kind: 'text', text: 'Changed' } }, {
-              beforeQuestionNumber: 1,
-            }, {
-              placementId: first.id,
-            }, { html: '<script/>' }]
+            const changes of [
+              { content: { kind: 'text', text: 'Changed' } },
+              { beforeQuestionNumber: 1 },
+              { placementId: first.id },
+              { html: '<script/>' },
+            ]
           ) {
             expect(parseQuestionOrderPreview(
               {

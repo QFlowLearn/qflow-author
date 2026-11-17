@@ -142,7 +142,7 @@ export default function ItemBankDetailView(data: ItemBankDetailViewData) {
                     label={i18n.t('items.detail.reviewer', { revision: data.detail.revision })}
                     payload={data.memberPickerPayload}
                   />
-                  <label class='ds-form-control w-full gap-1'>
+                  <label class='flex flex-col w-full gap-1'>
                     <span>{i18n.t('items.detail.reviewNote')}</span>
                     <Textarea name='changeReason' maxLength={4000} rows={2} />
                   </label>
@@ -230,7 +230,7 @@ export default function ItemBankDetailView(data: ItemBankDetailViewData) {
                       <form method='post' class='space-y-2'>
                         <input type='hidden' name='action' value='comment' />
                         <input type='hidden' name='requestId' value={request.id} />
-                        <label class='ds-form-control gap-1'>
+                        <label class='flex flex-col gap-1'>
                           <span class='text-xs font-medium text-base-content/70'>
                             {i18n.t('items.detail.addComment')}
                           </span>
@@ -243,7 +243,7 @@ export default function ItemBankDetailView(data: ItemBankDetailViewData) {
                       request.reviewer.userId === data.currentUserId && (
                       <form method='post' class='space-y-2 rounded-lg bg-base-200/45 p-3'>
                         <input type='hidden' name='requestId' value={request.id} />
-                        <label class='ds-form-control gap-1'>
+                        <label class='flex flex-col gap-1'>
                           <span class='text-xs font-medium text-base-content/70'>
                             {i18n.t('items.detail.decisionNote')}
                           </span>
@@ -310,7 +310,7 @@ export default function ItemBankDetailView(data: ItemBankDetailViewData) {
               : null}
           />
 
-          <details class='ds-card ds-card-bordered'>
+          <details class='ds-card ds-card-border'>
             <summary class='cursor-pointer px-5 py-4 font-medium'>
               {i18n.t('items.detail.canonicalSource')}
             </summary>
@@ -321,7 +321,7 @@ export default function ItemBankDetailView(data: ItemBankDetailViewData) {
         </main>
 
         <aside class='space-y-4 xl:sticky xl:top-4 xl:self-start'>
-          <section class='ds-card ds-card-bordered'>
+          <section class='ds-card ds-card-border'>
             <div class='ds-card-body gap-4 p-4'>
               <h2 class='font-medium'>{i18n.t('items.detail.bankDetails')}</h2>
               <dl class='grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-sm'>
@@ -396,7 +396,7 @@ export default function ItemBankDetailView(data: ItemBankDetailViewData) {
           </section>
 
           {data.detail.duplicateItems.length > 0 && (
-            <section class='ds-card ds-card-bordered border-warning/45'>
+            <section class='ds-card ds-card-border border-warning/45'>
               <div class='ds-card-body gap-3 p-4'>
                 <div>
                   <h2 class='font-medium'>{i18n.t('items.detail.exactDuplicates')}</h2>

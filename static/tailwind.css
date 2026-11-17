@@ -1,11 +1,94 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss" source(none);
+
+@source "../lib/http";
+@source "../islands";
+@source "../components";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@plugin "daisyui" {
+  prefix: "ds-";
+  themes: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "wireframe";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-base-100: #ffffff;
+  --color-base-200: #eff4ff;
+  --color-base-300: #c6c6cd;
+  --color-base-content: #0b1c30;
+  --color-primary: #000000;
+  --color-primary-content: #ffffff;
+  --color-secondary: #445c9d;
+  --color-secondary-content: #ffffff;
+  --color-accent: #ffb95f;
+  --color-accent-content: #2a1700;
+  --color-neutral: #0b1c30;
+  --color-neutral-content: #eaf1ff;
+  --color-info: #445c9d;
+  --color-info-content: #ffffff;
+  --color-success: #445c9d;
+  --color-success-content: #ffffff;
+  --color-warning: #ffb95f;
+  --color-warning-content: #2a1700;
+  --color-error: #ba1a1a;
+  --color-error-content: #ffffff;
+  --radius-selector: 0.25rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: false;
+  prefersdark: false;
+  color-scheme: dark;
+  --color-base-100: #131b2e;
+  --color-base-200: #213145;
+  --color-base-300: #565e74;
+  --color-base-content: #eaf1ff;
+  --color-primary: #bec6e0;
+  --color-primary-content: #131b2e;
+  --color-secondary: #b3c5ff;
+  --color-secondary-content: #001849;
+  --color-accent: #ffb95f;
+  --color-accent-content: #2a1700;
+  --color-neutral: #eaf1ff;
+  --color-neutral-content: #131b2e;
+  --color-info: #b3c5ff;
+  --color-info-content: #001849;
+  --color-success: #b3c5ff;
+  --color-success-content: #001849;
+  --color-warning: #ffb95f;
+  --color-warning-content: #2a1700;
+  --color-error: #ffdad6;
+  --color-error-content: #93000a;
+  --radius-selector: 0.25rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
 
 @layer base {
   *,
   ::before,
   ::after {
-    border-color: var(--border, #d4d4d4);
+    border-color: var(--qf-border, #d4d4d4);
   }
+}
+
+@utility container {
+  max-width: none;
 }

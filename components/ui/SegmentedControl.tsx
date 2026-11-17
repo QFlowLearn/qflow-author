@@ -32,7 +32,7 @@ export default function SegmentedControl(
             key={option.value}
             type='button'
             class={[
-              'min-h-9 rounded border px-3 text-sm font-medium transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary',
+              'min-h-9 rounded-sm border px-3 text-sm font-medium transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary',
               selected
                 ? 'border-secondary bg-base-100 text-secondary qf-layer-shadow'
                 : 'border-transparent text-base-content/65 hover:bg-base-100 hover:text-base-content',

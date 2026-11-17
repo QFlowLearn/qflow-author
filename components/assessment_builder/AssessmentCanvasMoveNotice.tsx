@@ -17,9 +17,10 @@ export default function AssessmentCanvasMoveNotice(props: {
   let message = '';
   if (status.kind === 'saved') {
     const partIndex = props.parts.findIndex((part) => part.id === status.move.partId);
-    const itemIndex = props.parts[partIndex]?.placements.findIndex((placement) =>
-      placement.id === status.move.placementId
-    ) ?? -1;
+    const itemIndex =
+      props.parts[partIndex]?.placements.findIndex((placement) =>
+        placement.id === status.move.placementId
+      ) ?? -1;
     if (itemIndex >= 0) {
       message = i18n.t('assessments.builder.moveSaved', {
         title: props.items[status.move.placementId]?.title ??

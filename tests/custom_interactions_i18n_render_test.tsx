@@ -345,10 +345,10 @@ for (const locale of locales) {
           expect.unreachable("Expected textareaValue(portableHtml, '<pci-root>HTML-Ω</pci-root>')");
         }
         for (
-          const [html, names, values] of [[customHtml, ['data-foo', 'ext-mode'], [
-            'bar-Ω',
-            'enabled',
-          ]], [portableHtml, ['data-mode', 'data-foo'], ['test-Ω', 'bar']]] as const
+          const [html, names, values] of [
+            [customHtml, ['data-foo', 'ext-mode'], ['bar-Ω', 'enabled']],
+            [portableHtml, ['data-mode', 'data-foo'], ['test-Ω', 'bar']],
+          ] as const
         ) {
           for (let index = 0; index < 2; index++) {
             const number = index + 1;

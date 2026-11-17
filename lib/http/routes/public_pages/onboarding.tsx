@@ -22,7 +22,7 @@ export default function OnboardingPage(
         </p>
       </div>
       {error && <p role='alert'>{i18n.t('help.onboarding.unknownAction')}</p>}
-      <form class='ds-card ds-card-bordered max-w-2xl' method='post'>
+      <form class='ds-card ds-card-border max-w-2xl' method='post'>
         <div class='ds-card-body space-y-4'>
           <div class='rounded-lg border border-base-200 p-4'>
             <h2 class='text-lg font-medium'>{i18n.t('help.onboarding.demo.title')}</h2>

@@ -47,7 +47,7 @@ export function ToolbarButton(
       data-state={active ? 'on' : 'off'}
       onMouseDown={(event) => event.preventDefault()}
       onClick={onClick}
-      class='outline-none focus-visible:outline-none flex h-8 min-w-[2rem] items-center justify-center rounded-md px-1.5 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-neutral-800 dark:focus-visible:ring-neutral-300 disabled:pointer-events-none text-neutral-900 dark:text-neutral-50 disabled:text-neutral-900/40 dark:disabled:text-neutral-50/40 bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-800 data-[state=on]:bg-neutral-200 dark:data-[state=on]:bg-neutral-700'
+      class='outline-hidden focus-visible:outline-hidden flex h-8 min-w-[2rem] items-center justify-center rounded-md px-1.5 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-neutral-800 dark:focus-visible:ring-neutral-300 disabled:pointer-events-none text-neutral-900 dark:text-neutral-50 disabled:text-neutral-900/40 dark:disabled:text-neutral-50/40 bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-800 data-[state=on]:bg-neutral-200 dark:data-[state=on]:bg-neutral-700'
     >
       {label}
     </button>

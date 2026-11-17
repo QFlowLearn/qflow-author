@@ -10,28 +10,33 @@ testCase(
   'part settings drafts preserve omissions, explicit zero and all feedback identities',
   () => {
     for (
-      const options of [{}, { timeLimits: {} }, { timeLimits: { minTime: 0 } }, {
-        navigationMode: 'linear',
-        submissionMode: 'simultaneous',
-        timeLimits: { minTime: 30, maxTime: 300 },
-        instructionsHtml: '<p>Keep instructions</p>',
-        feedback: [
-          {
-            id: '11111111-1111-4111-8111-111111111111',
-            access: 'atEnd',
-            showHide: 'show',
-            outcomeIdentifier: 'SCORE',
-            html: '<p>First</p>',
-          },
-          {
-            id: '22222222-2222-4222-8222-222222222222',
-            access: 'during',
-            showHide: 'hide',
-            outcomeIdentifier: 'SECOND',
-            html: '<p>Second</p>',
-          },
-        ],
-      }] satisfies PartOptions[]
+      const options of [
+        {},
+        { timeLimits: {} },
+        { timeLimits: { minTime: 0 } },
+        {
+          navigationMode: 'linear',
+          submissionMode: 'simultaneous',
+          timeLimits: { minTime: 30, maxTime: 300 },
+          instructionsHtml: '<p>Keep instructions</p>',
+          feedback: [
+            {
+              id: '11111111-1111-4111-8111-111111111111',
+              access: 'atEnd',
+              showHide: 'show',
+              outcomeIdentifier: 'SCORE',
+              html: '<p>First</p>',
+            },
+            {
+              id: '22222222-2222-4222-8222-222222222222',
+              access: 'during',
+              showHide: 'hide',
+              outcomeIdentifier: 'SECOND',
+              html: '<p>Second</p>',
+            },
+          ],
+        },
+      ] satisfies PartOptions[]
     ) {
       const draft = createPartSettingsDraft(options);
       const parsed = parsePartSettingsDraft(draft);

@@ -8,7 +8,6 @@ export default function Input({ size = 'md', class: cls, type, ...rest }: Props)
   const isFile = type === 'file';
   const classes = [
     isFile ? 'ds-file-input' : 'ds-input',
-    isFile ? 'ds-file-input-bordered' : 'ds-input-bordered',
     'block',
     'w-full',
     !isFile && size === 'xs' ? 'ds-input-xs' : !isFile && size === 'sm' ? 'ds-input-sm' : '',

@@ -231,10 +231,10 @@ export default function QuestionTextAssistance(
         // A presentation command changes only the setting, never existing question content.
         const wasProtected = protectedFields.current;
         const draft = current.current.content.draft;
-        apply({ draft: { ...draft, shuffle: question.shuffle ?? draft.shuffle }, findings }, {
-          ...previous,
-          question,
-        });
+        apply(
+          { draft: { ...draft, shuffle: question.shuffle ?? draft.shuffle }, findings },
+          { ...previous, question },
+        );
         if (wasProtected) {
           protectedFields.current = true;
           setStatus('edited');

@@ -47,7 +47,7 @@ export const MultiSelectSection: FunctionalComponent<SectionProps> = ({ controls
         <span class='text-xs font-medium uppercase tracking-wide text-base-content/60'>
           {t('driver.rightRail.selectionConstraints')}
         </span>
-        <span class='rounded border border-base-300 bg-base-200 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
+        <span class='rounded-sm border border-base-300 bg-base-200 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
           {t('driver.rightRail.minMaxSummary', { min: minSummary, max: maxSummary })}
         </span>
       </div>
@@ -148,7 +148,7 @@ export const MatchSection: FunctionalComponent<SectionProps> = ({ controls }) =>
         <span class='text-xs font-medium uppercase tracking-wide text-base-content/60'>
           {t('driver.rightRail.associationConstraints')}
         </span>
-        <span class='rounded border border-base-300 bg-base-200 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
+        <span class='rounded-sm border border-base-300 bg-base-200 px-1.5 py-0.5 text-[10px] font-medium text-base-content/80'>
           {t('driver.rightRail.minMaxSummary', { min: minSummary, max: maxSummary })}
         </span>
       </div>
@@ -603,7 +603,7 @@ export const PortableCustomSection: FunctionalComponent<SectionProps> = ({ contr
         placeholder='string'
       />
       {controls.portableCardinality && (
-        <label class='ds-form-control gap-1'>
+        <label class='flex flex-col gap-1'>
           <span>{t('driver.rightRail.portableResponseCardinality')}</span>
           <Select
             value={controls.portableCardinality.value}

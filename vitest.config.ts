@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config';
 import { testFiles } from './tools/testing/files.ts';
 
 export default defineConfig({
-  esbuild: { jsx: 'automatic', jsxImportSource: 'preact' },
+  oxc: { jsx: { runtime: 'automatic', importSource: 'preact' } },
   test: {
     allowOnly: false,
     include: [...testFiles],

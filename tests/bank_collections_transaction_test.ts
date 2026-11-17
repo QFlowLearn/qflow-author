@@ -87,10 +87,10 @@ testCase(
             apply(collection(first), operation),
             apply(collection(first), operation),
           ]);
-          expect(results).toStrictEqual([{ ok: true, collectionId: first }, {
-            ok: true,
-            collectionId: first,
-          }]);
+          expect(results).toStrictEqual([
+            { ok: true, collectionId: first },
+            { ok: true, collectionId: first },
+          ]);
           expect(await apply(collection(first, 'Changed'), operation)).toStrictEqual({
             ok: false,
             code: 'operation_conflict',
@@ -237,10 +237,10 @@ testCase(
           }
           const list = await listBankCollections(ctx);
           if (!(list.ok)) expect.unreachable('Expected list.ok');
-          expect(list.collections.map((row) => [row.id, row.name])).toStrictEqual([[
-            second,
-            'Biology / Genetics',
-          ], [first, 'Renamed']]);
+          expect(list.collections.map((row) => [row.id, row.name])).toStrictEqual([
+            [second, 'Biology / Genetics'],
+            [first, 'Renamed'],
+          ]);
         },
       );
       await runStep(

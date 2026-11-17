@@ -38,8 +38,8 @@ function sourceXml(): Uint8Array {
     <question type="multichoice">
       <name><text>Cell case ${index + 1}</text></name>
       <questiontext format="html"><text>Case ${
-    index + 1
-  }: which structure contains DNA?</text></questiontext>
+        index + 1
+      }: which structure contains DNA?</text></questiontext>
       <single>true</single>
       <answer fraction="100"><text>Nucleus</text></answer>
       <answer fraction="0"><text>Cell wall</text></answer>
@@ -71,15 +71,19 @@ export async function withOrganizationScaleImport(
         createdAt: new Date(),
         updatedAt: new Date(),
       })));
-      const batch = await enqueueMigrationBatch(ctx, {
-        idempotencyKey: crypto.randomUUID(),
-        purpose: 'recover_existing',
-        destination: { _tag: 'WorkspaceBank', collectionId: originId },
-        sources: [{
-          source: { filename: 'cells-10000.xml', mime: 'application/xml', bytes: sourceXml() },
-          adapter: { id: 'moodle_xml', version: '1' },
-        }],
-      }, { storage });
+      const batch = await enqueueMigrationBatch(
+        ctx,
+        {
+          idempotencyKey: crypto.randomUUID(),
+          purpose: 'recover_existing',
+          destination: { _tag: 'WorkspaceBank', collectionId: originId },
+          sources: [{
+            source: { filename: 'cells-10000.xml', mime: 'application/xml', bytes: sourceXml() },
+            adapter: { id: 'moodle_xml', version: '1' },
+          }],
+        },
+        { storage },
+      );
       const runId = batch.runs[0].id;
       const [dispatch] = await db.select().from(workflowDispatches).where(
         eq(workflowDispatches.jobId, runId),

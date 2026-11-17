@@ -139,7 +139,7 @@ function ConversionGenerationInner(
           allowedQuestionTypes={['single_select', 'multi_select', 'text_entry']}
         />
         <div class='max-w-xs'>
-          <label class='ds-form-control gap-1'>
+          <label class='flex flex-col gap-1'>
             <span class='text-xs font-medium'>{i18n.t('imports.generation.mode')}</span>
             <Select name='mode' value='fast'>
               <option value='fast'>{i18n.t('imports.generation.fast')}</option>

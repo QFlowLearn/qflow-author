@@ -112,7 +112,7 @@ export default function ItemEditorInspector(
           <Fragment key={section.id}>{section.content}</Fragment>
         ))}
         {blueprint?._tag === 'Defined' && (
-          <label class='ds-form-control gap-1'>
+          <label class='flex flex-col gap-1'>
             <span id={`${planTargetId}-label`}>{i18n.t('inspector.planTarget')}</span>
             <Select
               aria-labelledby={`${planTargetId}-label`}
@@ -143,7 +143,7 @@ export default function ItemEditorInspector(
             </span>
           </label>
         )}
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span id={`${titleId}-label`}>{i18n.t('inspector.title')}</span>
           <Input
             data-settings-field='title'
@@ -185,7 +185,7 @@ export default function ItemEditorInspector(
                 class='rounded-md border border-base-300 p-3 space-y-3'
               >
                 <div class='grid gap-3 sm:grid-cols-2'>
-                  <label class='ds-form-control'>
+                  <label class='flex flex-col'>
                     <span>{i18n.t('inspector.code')}</span>
                     <Input
                       value={standard.code ?? ''}
@@ -194,7 +194,7 @@ export default function ItemEditorInspector(
                         updateStandard(index, { code: (event.target as HTMLInputElement).value })}
                     />
                   </label>
-                  <label class='ds-form-control'>
+                  <label class='flex flex-col'>
                     <span>{i18n.t('inspector.provider')}</span>
                     <Input
                       value={standard.providerId ?? ''}
@@ -205,7 +205,7 @@ export default function ItemEditorInspector(
                         })}
                     />
                   </label>
-                  <label class='ds-form-control sm:col-span-2'>
+                  <label class='flex flex-col sm:col-span-2'>
                     <span>{i18n.t('inspector.standardLabel')}</span>
                     <Input
                       value={standard.label ?? ''}
@@ -214,7 +214,7 @@ export default function ItemEditorInspector(
                         updateStandard(index, { label: (event.target as HTMLInputElement).value })}
                     />
                   </label>
-                  <label class='ds-form-control sm:col-span-2'>
+                  <label class='flex flex-col sm:col-span-2'>
                     <span>{i18n.t('inspector.guid')}</span>
                     <Input
                       value={standard.standardId ?? ''}
@@ -225,7 +225,7 @@ export default function ItemEditorInspector(
                         })}
                     />
                   </label>
-                  <label class='ds-form-control sm:col-span-2'>
+                  <label class='flex flex-col sm:col-span-2'>
                     <span>{i18n.t('inspector.uri')}</span>
                     <Input
                       value={standard.uri ?? ''}

@@ -46,11 +46,7 @@ export function OrganizationOutlineTopics(props: {
           <Select
             name='outline-subject'
             aria-label={i18n.t('items.organization.outlineSubject')}
-            value={props.definition.subjects.some((s) =>
-                s.id === subjectId
-              )
-              ? subjectId
-              : ''}
+            value={props.definition.subjects.some((s) => s.id === subjectId) ? subjectId : ''}
             onChange={(event) => {
               setSubjectId(event.currentTarget.value);
               setError(null);

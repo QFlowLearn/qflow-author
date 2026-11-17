@@ -61,12 +61,11 @@ export function useBankProposals(input: {
     if (!open || input.searchLoading) return;
     const controller = new AbortController();
     async function inspect() {
-      const result = await requestProposal(input.assessmentId, {
-        kind: 'inspect',
-        selection: input.scope,
-        excludedQuestions,
-        mode,
-      }, { signal: controller.signal });
+      const result = await requestProposal(
+        input.assessmentId,
+        { kind: 'inspect', selection: input.scope, excludedQuestions, mode },
+        { signal: controller.signal },
+      );
       if (controller.signal.aborted) return;
       setLoaded({
         key,
@@ -93,14 +92,18 @@ export function useBankProposals(input: {
     active.current = controller;
     setAction({ kind: 'pending', change });
     try {
-      const result = await requestProposal(input.assessmentId, {
-        kind: 'draw',
-        selection: change.selection,
-        excludedQuestions,
-        mode: drawMode,
-        versionId,
-        counts,
-      }, { signal: controller.signal });
+      const result = await requestProposal(
+        input.assessmentId,
+        {
+          kind: 'draw',
+          selection: change.selection,
+          excludedQuestions,
+          mode: drawMode,
+          versionId,
+          counts,
+        },
+        { signal: controller.signal },
+      );
       if (controller.signal.aborted) return;
       if (result.kind === 'proposal' && input.onAccept(change, result)) {
         setAction({ kind: 'idle' });

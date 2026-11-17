@@ -173,7 +173,7 @@ function LocalizedPreview(
   return (
     <div
       class={`qti-preview qti-preview--${mode} ${
-        mode === 'bank' ? '' : 'ds-card ds-card-bordered border-base-200/70 bg-base-100'
+        mode === 'bank' ? '' : 'ds-card ds-card-border border-base-200/70 bg-base-100'
       }`}
       data-qti-preview-host='true'
     >

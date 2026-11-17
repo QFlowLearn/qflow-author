@@ -273,21 +273,21 @@ export default function MembersPage({ data, i18n }: { data: Data; i18n: I18n }) 
           <div>
             {i18n.t('settings.members.tempPasswordHelp')}
           </div>
-          <div class='font-mono bg-base-200 rounded px-3 py-2 inline-block'>
+          <div class='font-mono bg-base-200 rounded-sm px-3 py-2 inline-block'>
             {data.credentials.password}
           </div>
         </div>
       )}
 
-      <form method='post' class='ds-card ds-card-bordered'>
+      <form method='post' class='ds-card ds-card-border'>
         <div class='ds-card-body space-y-4'>
           <h2 class='text-lg font-medium'>{i18n.t('settings.members.addMember')}</h2>
           <input type='hidden' name='action' value='create' />
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('settings.members.email')}</span>
             <Input name='email' type='email' autoComplete='email' required />
           </label>
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('settings.members.role')}</span>
             <Select name='role' size='sm' defaultValue='member'>
               {ROLE_OPTIONS.map((opt) => (
@@ -304,7 +304,7 @@ export default function MembersPage({ data, i18n }: { data: Data; i18n: I18n }) 
         </div>
       </form>
 
-      <div class='ds-card ds-card-bordered'>
+      <div class='ds-card ds-card-border'>
         <div class='ds-card-body space-y-4'>
           <h2 class='text-lg font-medium'>{i18n.t('settings.members.currentMembers')}</h2>
           {data.members.length === 0 && (

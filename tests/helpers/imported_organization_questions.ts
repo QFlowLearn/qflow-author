@@ -69,29 +69,34 @@ export async function withImportedOrganizationQuestions(
       ),
       adapterId: 'moodle_xml',
     };
-  const batch = await enqueueMigrationBatch(ctx, {
-    idempotencyKey: crypto.randomUUID(),
-    destination: { _tag: 'WorkspaceBank', collectionId },
-    purpose: 'recover_existing',
-    sources: [{
-      source: {
-        filename: fixture.filename,
-        mime: fixture.mime,
-        bytes: fixture.bytes,
-      },
-      adapter: { id: fixture.adapterId, version: '1' },
-    }],
-  }, { storage });
+  const batch = await enqueueMigrationBatch(
+    ctx,
+    {
+      idempotencyKey: crypto.randomUUID(),
+      destination: { _tag: 'WorkspaceBank', collectionId },
+      purpose: 'recover_existing',
+      sources: [{
+        source: {
+          filename: fixture.filename,
+          mime: fixture.mime,
+          bytes: fixture.bytes,
+        },
+        adapter: { id: fixture.adapterId, version: '1' },
+      }],
+    },
+    { storage },
+  );
   try {
     const runId = batch.runs[0].id;
     const [dispatch] = await db.select().from(workflowDispatches).where(
       eq(workflowDispatches.jobId, runId),
     );
     expect(
-      (await runSourceMigrationWorkflow({ jobId: runId, workflowExecutionId: dispatch.id }, {
-        do: (_name, _config, operation) => operation(),
-        sleep: () => Promise.resolve(),
-      }, { database: db, storage }))._tag,
+      (await runSourceMigrationWorkflow(
+        { jobId: runId, workflowExecutionId: dispatch.id },
+        { do: (_name, _config, operation) => operation(), sleep: () => Promise.resolve() },
+        { database: db, storage },
+      ))._tag,
     ).toStrictEqual('Completed');
     const run = await getMigrationRun(ctx, runId);
     if (!run) expect.unreachable('Expected run');

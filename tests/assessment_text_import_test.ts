@@ -39,10 +39,10 @@ testCase(
     ]);
     expect(migrationDestinationWarnings({ _tag: 'Assessment' }, parsed)).toStrictEqual([]);
     expect(
-      migrationDestinationWarnings({ _tag: 'WorkspaceBank', collectionId: null }, {
-        ...parsed,
-        parts: [{ ...parsed.parts[0], placements: [parsed.parts[0].placements[1]] }],
-      }).map((warning) => [warning.code, warning.path]),
+      migrationDestinationWarnings(
+        { _tag: 'WorkspaceBank', collectionId: null },
+        { ...parsed, parts: [{ ...parsed.parts[0], placements: [parsed.parts[0].placements[1]] }] },
+      ).map((warning) => [warning.code, warning.path]),
     ).toStrictEqual([['BANK_PART_CONTEXT_UNSUPPORTED', undefined]]);
     expect(
       migrationDestinationWarnings({ _tag: 'WorkspaceBank', collectionId: null }, parsed).map((
@@ -94,11 +94,12 @@ testCase('stored mixed import placements parse exact owners and reject invalid c
   };
   expect(runPartsFromJson({ parts: [part] })).toStrictEqual([part]);
   for (
-    const content of [null, {}, { kind: 'text', text: '' }, {
-      kind: 'text',
-      text: 'Valid',
-      html: '<script/>',
-    }]
+    const content of [
+      null,
+      {},
+      { kind: 'text', text: '' },
+      { kind: 'text', text: 'Valid', html: '<script/>' },
+    ]
   ) {
     expect(() => runPartsFromJson({ parts: [{ ...part, placements: [{ content }] }] }))
       .toThrowError(Error);

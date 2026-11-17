@@ -63,8 +63,7 @@ export default function BankQuestionChooser(props: {
                   name={`${id}-mode`}
                   value={mode}
                   checked={proposals.mode === mode}
-                  onChange={() =>
-                    proposals.setMode(mode)}
+                  onChange={() => proposals.setMode(mode)}
                 />
                 {i18n.t(`assessments.builder.proposal.mode.${mode}`)}
               </label>

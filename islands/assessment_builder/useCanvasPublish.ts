@@ -158,16 +158,19 @@ export function useCanvasPublish(input: Input) {
     if (lease === null) return;
     setPublishState({ _tag: 'Submitting', command });
     try {
-      const result = await createCanvasPublish({
-        assessmentId: input.assessmentId,
-        publishId: command.publishId,
-        connectionId: command.connectionId,
-        targetId: input.selection.targetId,
-        destination: command.destination,
-        preflightId: input.preflight.preflightId,
-        acknowledgement: input.preflight.acknowledgementToken,
-        selection: input.selection.requirements,
-      }, { signal: lease.signal });
+      const result = await createCanvasPublish(
+        {
+          assessmentId: input.assessmentId,
+          publishId: command.publishId,
+          connectionId: command.connectionId,
+          targetId: input.selection.targetId,
+          destination: command.destination,
+          preflightId: input.preflight.preflightId,
+          acknowledgement: input.preflight.acknowledgementToken,
+          selection: input.selection.requirements,
+        },
+        { signal: lease.signal },
+      );
       if (lease.signal.aborted) return;
       if (result.ok) recordPublish(setPublishesState, result.value);
       setPublishState(

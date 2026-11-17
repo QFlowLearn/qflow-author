@@ -344,9 +344,10 @@ testCase(
                     await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
                   ).toStrictEqual(true);
                   const violations = await page.evaluate(async () =>
-                    (await globalThis.axe.run({ include: [['[data-answer-feedback]']] }, {
-                      runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] },
-                    })).violations.map((entry) => entry.id)
+                    (await globalThis.axe.run(
+                      { include: [['[data-answer-feedback]']] },
+                      { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] } },
+                    )).violations.map((entry) => entry.id)
                   );
                   expect(violations).toStrictEqual([]);
                 }

@@ -58,9 +58,13 @@ testCase(
     expect(parseItemEditorFailureCode(409, { error: 'stale_parent_revision', message: 'HOSTILE' }))
       .toStrictEqual('stale_revision');
     for (
-      const input of [null, [], 'stale_parent_revision', { message: 'stale_parent_revision' }, {
-        error: 'HOSTILE',
-      }]
+      const input of [
+        null,
+        [],
+        'stale_parent_revision',
+        { message: 'stale_parent_revision' },
+        { error: 'HOSTILE' },
+      ]
     ) {
       expect(parseItemEditorFailureCode(409, input)).toStrictEqual('save_failed');
     }

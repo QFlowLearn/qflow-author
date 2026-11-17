@@ -25,10 +25,12 @@ testCase('remembered settings reject content, incompatible types and custom scor
   expect(parseAuthoringSettingsPatch('single_select', { shuffle: false })).toStrictEqual({
     shuffle: false,
   });
-  expect(parseAuthoringPreferences([{ typeId: 'single_select', settings: {} }, {
-    typeId: 'single_select',
-    settings: {},
-  }])).toStrictEqual(null);
+  expect(
+    parseAuthoringPreferences([
+      { typeId: 'single_select', settings: {} },
+      { typeId: 'single_select', settings: {} },
+    ]),
+  ).toStrictEqual(null);
 });
 testCase(
   'explicit differences remember cosmetic settings without copying content or unchanged imported settings',

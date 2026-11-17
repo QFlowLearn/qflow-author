@@ -363,10 +363,10 @@ testCase('signed-out and account locale browser contract uses authoritative loca
       const accountErrorsA: string[] = [];
       const accountErrorsB: string[] = [];
       for (
-        const [accountPage, accountErrors] of [[pageA, accountErrorsA], [
-          pageB,
-          accountErrorsB,
-        ]] as const
+        const [accountPage, accountErrors] of [
+          [pageA, accountErrorsA],
+          [pageB, accountErrorsB],
+        ] as const
       ) {
         accountPage.on('pageerror', (error) => accountErrors.push(error.message));
         accountPage.on('console', (message) => {

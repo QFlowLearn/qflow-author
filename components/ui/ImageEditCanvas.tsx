@@ -196,7 +196,7 @@ export default function ImageEditCanvas(
             <button
               key={handle}
               type='button'
-              class='absolute h-5 w-5 rounded-full border-2 border-neutral bg-base-100 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+              class='absolute h-5 w-5 rounded-full border-2 border-neutral bg-base-100 shadow-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
               style={handleStyle(handle, cropBox)}
               aria-label={i18n.t(`editor.cropHandle${handle.toUpperCase()}`)}
               disabled={disabled}

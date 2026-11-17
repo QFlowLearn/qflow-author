@@ -320,17 +320,21 @@ testCase(
       expect((await getMigrationRun(ctx, batch.runs[0].id))?.approval._tag).toStrictEqual('Draft');
       await expect(
         Promise.resolve().then(() =>
-          enqueueMigrationBatch(ctx, {
-            ...command,
-            sources: command.sources.map((entry, index) =>
-              index === 0
-                ? {
-                  ...entry,
-                  source: { ...entry.source, filename: 'different-choice.xml' },
-                }
-                : entry
-            ),
-          }, { storage })
+          enqueueMigrationBatch(
+            ctx,
+            {
+              ...command,
+              sources: command.sources.map((entry, index) =>
+                index === 0
+                  ? {
+                    ...entry,
+                    source: { ...entry.source, filename: 'different-choice.xml' },
+                  }
+                  : entry
+              ),
+            },
+            { storage },
+          )
         ),
       ).rejects.toBeInstanceOf(MigrationBatchConflictError);
 
@@ -476,13 +480,19 @@ testCase(
       const aligned = await getMigrationRun(ctx, valid.id);
       const alignedItem = aligned?.items[0];
       if (!alignedItem) throw new Error('Aligned migration item was not found.');
-      await updateMigrationItems(ctx, valid.id, [alignedItem.id], { kind: 'accept' }, {
-        [alignedItem.id]: {
-          contentHash: alignedItem.contentHash,
-          contextHash: alignedItem.contextHash,
-          decision: alignedItem.decision,
+      await updateMigrationItems(
+        ctx,
+        valid.id,
+        [alignedItem.id],
+        { kind: 'accept' },
+        {
+          [alignedItem.id]: {
+            contentHash: alignedItem.contentHash,
+            contextHash: alignedItem.contextHash,
+            decision: alignedItem.decision,
+          },
         },
-      });
+      );
       expect((await submitMigrationRunForApproval(ctx, valid.id)).approval._tag).toStrictEqual(
         'Submitted',
       );

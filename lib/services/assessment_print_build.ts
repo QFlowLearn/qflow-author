@@ -98,7 +98,7 @@ export async function buildPrintPack(
   ) return await fail('snapshot_corrupt');
   if (
     await printSourceDigest(snapshot.source, snapshot.configuration, snapshot.assets) !==
-      snapshot.sourceDigest
+    snapshot.sourceDigest
   ) return await fail('snapshot_corrupt');
   const prepared = preflightPrint(snapshot.source, snapshot.configuration);
   if (prepared.preflight.outcome !== 'ready') return await fail('snapshot_corrupt');

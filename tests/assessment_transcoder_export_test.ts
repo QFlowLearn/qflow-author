@@ -271,10 +271,10 @@ async function buildTranscoderPackageInput(options: { maximumScore?: number } = 
           title: 'Weighted choice',
           bodyHtml: qti3TrustedXmlFragment('<p>Pick the first president.</p>'),
           responseCardinality: 'single',
-          choices: [{ identifier: 'A', text: 'John Adams' }, {
-            identifier: 'B',
-            text: 'George Washington',
-          }],
+          choices: [
+            { identifier: 'A', text: 'John Adams' },
+            { identifier: 'B', text: 'George Washington' },
+          ],
           correctResponse: ['B'],
           maximumScore: options.maximumScore,
         })

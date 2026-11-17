@@ -10,9 +10,10 @@ export const questionsApiRoute = defineHttpRoute('/api/assessments/:id/questions
 async function handle(ctx: HttpRequest) {
   const input = parseAssessmentQuestionCommand(await ctx.req.json().catch(() => null));
   if (!input.ok) {
-    return Response.json({ error: 'invalid_request', message: input.message, issues: [] }, {
-      status: 400,
-    });
+    return Response.json(
+      { error: 'invalid_request', message: input.message, issues: [] },
+      { status: 400 },
+    );
   }
   const result = await saveAssessmentQuestion(
     requireAuthContext(ctx.state),

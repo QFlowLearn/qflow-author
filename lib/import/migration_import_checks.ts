@@ -66,9 +66,8 @@ export async function loadMigrationImportChecks(
     groups.push({
       kind: definition.kind,
       count: rows[0]?.total ?? 0,
-      packageFindings: globalWarnings.filter((warning) =>
-        definition.codeSet.has(warning.code)
-      ).length,
+      packageFindings:
+        globalWarnings.filter((warning) => definition.codeSet.has(warning.code)).length,
       members: rows.map((row) => ({ id: row.id, position: row.position })),
     });
   }

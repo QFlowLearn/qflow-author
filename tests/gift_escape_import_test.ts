@@ -3,10 +3,13 @@ import { giftAdapter } from '../lib/import/adapters/gift.ts';
 import { expectImportedScore } from './helpers/lms_import.ts';
 test('GIFT reserved characters remain literal through import, preview and export', async () => {
   for (
-    const [escaped, literal] of [['C\\#', 'C#'], ['x\\=y', 'x=y'], ['A\\~B', 'A~B'], [
-      'a\\{b\\}',
-      'a{b}',
-    ], ['a\\\\b', 'a\\b']]
+    const [escaped, literal] of [
+      ['C\\#', 'C#'],
+      ['x\\=y', 'x=y'],
+      ['A\\~B', 'A~B'],
+      ['a\\{b\\}', 'a{b}'],
+      ['a\\\\b', 'a\\b'],
+    ]
   ) {
     const result = await giftAdapter.parse({
       filename: 'escaped.gift',

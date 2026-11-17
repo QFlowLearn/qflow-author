@@ -226,7 +226,8 @@ testCase(
                 await release.promise;
                 await route.fulfill({ json: { composition: null } }).catch(() => {});
                 completed.resolve();
-              } else {await route.fulfill({
+              } else {
+                await route.fulfill({
                   json: {
                     composition: {
                       type: 'text_entry',
@@ -238,7 +239,8 @@ testCase(
                       complete: false,
                     },
                   },
-                });}
+                });
+              }
             },
           );
           try {

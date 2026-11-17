@@ -94,7 +94,7 @@ export default function EditorSettingsPage({ data, i18n }: { data: Data; i18n: I
         <h1 class='text-3xl font-medium'>{i18n.t('settings.editor.title')}</h1>
         <p class='text-sm text-base-content/70'>{i18n.t('settings.editor.subtitle')}</p>
       </div>
-      <form class='ds-card ds-card-bordered max-w-xl' method='post'>
+      <form class='ds-card ds-card-border max-w-xl' method='post'>
         <div class='ds-card-body space-y-4'>
           {data._tag === 'Saved' && data.success && (
             <div class='ds-alert text-sm' role='status'>{i18n.t('settings.editor.saved')}</div>

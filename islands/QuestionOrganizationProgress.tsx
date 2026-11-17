@@ -87,9 +87,11 @@ export default function QuestionOrganizationProgress(
     setBusy(true);
     setError(null);
     request.current = new AbortController();
-    const result = await submitEnrichmentAction(location.href, { action, ...fields }, {
-      signal: request.current.signal,
-    });
+    const result = await submitEnrichmentAction(
+      location.href,
+      { action, ...fields },
+      { signal: request.current.signal },
+    );
     if (request.current.signal.aborted) return;
     if (result && 'url' in result) {
       location.assign(result.url);

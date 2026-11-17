@@ -25,14 +25,18 @@ testCase('end_attempt import round-trip: fixture → draft → qti3 export → r
 
   const parsed = parseItemXml(xml);
   const draft = draftOfType<EndAttemptDraft>(parsed, 'end_attempt');
-  const rebuilt = exportQti3TestItemXml('end_attempt', {
-    title: draft.title,
-    promptHtml: draft.promptHtml,
-    bodyHtml: draft.bodyHtml,
-    responseIdentifier: draft.responseIdentifier,
-    endAttemptTitle: draft.endAttemptTitle,
-    endAttemptCountAttempt: draft.endAttemptCountAttempt,
-  }, { identifier: 'item-end-attempt-roundtrip' });
+  const rebuilt = exportQti3TestItemXml(
+    'end_attempt',
+    {
+      title: draft.title,
+      promptHtml: draft.promptHtml,
+      bodyHtml: draft.bodyHtml,
+      responseIdentifier: draft.responseIdentifier,
+      endAttemptTitle: draft.endAttemptTitle,
+      endAttemptCountAttempt: draft.endAttemptCountAttempt,
+    },
+    { identifier: 'item-end-attempt-roundtrip' },
+  );
   await assertQtiXmlWellFormed(rebuilt);
 
   const reparsed = parseItemXml(rebuilt);

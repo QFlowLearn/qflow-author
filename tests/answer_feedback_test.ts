@@ -101,9 +101,10 @@ testCase(
       placements: [{ id: 'placement', itemId: 'question' }],
     }];
     expect(() =>
-      requireAssessmentAnswerFeedbackRelease({ assessment: { id: 'assessment' }, parts }, {
-        question: xml(),
-      })
+      requireAssessmentAnswerFeedbackRelease(
+        { assessment: { id: 'assessment' }, parts },
+        { question: xml() },
+      )
     ).toThrowError(Error);
     for (const policy of ['never', 'after-submit'] as const) {
       const configured = [{ ...parts[0], options: { answerFeedbackRelease: policy } }];

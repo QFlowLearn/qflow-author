@@ -21,8 +21,7 @@ than assuming a named individual.
 ## Product and language QA
 
 - [ ] Test locale labels by their self-name (`English (United States)`, `English (United Kingdom)`,
-      `Español (España)`, `Español
-      (Latinoamérica)`, `Svenska`).
+      `Español (España)`, `Español (Latinoamérica)`, `Svenska`).
 - [ ] Review terminology against `TRANSLATION_GUIDE.md`: compare `es-ES` and `es-419` regional
       choices and check `sv-SE` assessment terminology in context.
 - [ ] Keep Spanish and Swedish marked as Beta until each locale meets the promotion requirements.

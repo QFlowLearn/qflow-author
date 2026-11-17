@@ -272,10 +272,10 @@ export function buildPackageManifestXml(
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns="http://www.imsglobal.org/xsd/qti/qtiv3p0/imscp_v1p1"${
-    hasStandards ? ` xmlns:csm="${CSM_NAMESPACE}"` : ''
-  }${
-    hasTags ? ` xmlns:lom="${LOM_NAMESPACE}"` : ''
-  } xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  hasStandards ? ` xmlns:csm="${CSM_NAMESPACE}"` : ''
+}${
+  hasTags ? ` xmlns:lom="${LOM_NAMESPACE}"` : ''
+} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/qtiv3p0/imscp_v1p1 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqtiv3p0_imscpv1p2_v1p0.xsd${
     hasStandards
       ? ` ${CSM_NAMESPACE} https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqtiv3p0_csmv1p1_v1p0.xsd`
@@ -292,8 +292,10 @@ export function buildPackageManifestXml(
     <resource identifier="test-1" type="imsqti_test_xmlv3p0" href="${testHref}">
       <file href="${testHref}"/>
 ${
-    items.map((iid) => `      <dependency identifierref="${xmlEscape(String(iid))}"/>`).join('\n')
-  }${assessmentDependencies}
+  items.map((iid) => `      <dependency identifierref="${xmlEscape(String(iid))}"/>`).join(
+    '\n',
+  )
+}${assessmentDependencies}
     </resource>
 ${itemResources}
 ${assetResources}

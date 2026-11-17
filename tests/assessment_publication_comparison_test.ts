@@ -6,13 +6,17 @@ import { summarizeAdaptiveRoute } from '../lib/assessment_adaptive_route_summary
 import { exportQti3TestItemXml } from './qti3_writer_test_helpers.ts';
 
 function question(title: string, answer = 'A') {
-  return exportQti3TestItemXml('single_select', {
-    type: 'single_select',
-    title,
-    bodyHtml: '<p>Pick one.</p>',
-    choices: [{ id: 'A', text: 'One' }, { id: 'B', text: 'Two' }],
-    correctId: answer,
-  }, { identifier: title });
+  return exportQti3TestItemXml(
+    'single_select',
+    {
+      type: 'single_select',
+      title,
+      bodyHtml: '<p>Pick one.</p>',
+      choices: [{ id: 'A', text: 'One' }, { id: 'B', text: 'Two' }],
+      correctId: answer,
+    },
+    { identifier: title },
+  );
 }
 testCase('publication review identifies question additions removals and answer edits', () => {
   const bytes = zipSync({

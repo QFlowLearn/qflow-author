@@ -17,7 +17,7 @@ export function RevisionComparison({ data, i18n }: {
 }) {
   if (data.detail.revision < 2) return null;
   return (
-    <section id='comparison' class='ds-card ds-card-bordered'>
+    <section id='comparison' class='ds-card ds-card-border'>
       <div class='ds-card-body gap-4'>
         <div>
           <h2 class='text-lg font-medium'>{i18n.t('items.detail.comparison')}</h2>
@@ -33,7 +33,7 @@ export function RevisionComparison({ data, i18n }: {
               {[...itemDetailQueryParams({ ...data.query, comparison: null })].map((
                 [name, value],
               ) => <Input key={name} type='hidden' name={name} value={value} />)}
-              <label class='ds-form-control min-w-44 gap-1'>
+              <label class='flex flex-col min-w-44 gap-1'>
                 <span class='text-xs font-medium text-base-content/70'>
                   {i18n.t('items.detail.earlierRevision')}
                 </span>
@@ -46,7 +46,7 @@ export function RevisionComparison({ data, i18n }: {
                   required
                 />
               </label>
-              <label class='ds-form-control min-w-44 gap-1'>
+              <label class='flex flex-col min-w-44 gap-1'>
                 <span class='text-xs font-medium'>
                   {i18n.t('items.detail.laterRevision')}
                 </span>

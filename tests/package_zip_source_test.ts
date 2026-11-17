@@ -31,10 +31,10 @@ for (const level of [0, 6] as const) {
 }
 
 testCase('package ZIP reads bounded ranges and leaves unrelated asset bytes unread', async () => {
-  const zip = zipSync({
-    'large.bin': new Uint8Array(2 * 1024 * 1024),
-    'question.xml': encode('<question/>'),
-  }, { level: 0 });
+  const zip = zipSync(
+    { 'large.bin': new Uint8Array(2 * 1024 * 1024), 'question.xml': encode('<question/>') },
+    { level: 0 },
+  );
   const reads: { offset: number; length: number }[] = [];
   const source = await openPackageZip({
     size: zip.length,
@@ -101,10 +101,12 @@ testCase(
   async () => {
     const bytes = zipSync({ 'a.xml': encode('123'), 'b.xml': encode('456') });
     for (
-      const budget of [{ ...limits, maxEntries: 1 }, { ...limits, maxDirectoryBytes: 1 }, {
-        ...limits,
-        maxTotalBytes: 5,
-      }, { ...limits, maxEntryBytes: 2 }]
+      const budget of [
+        { ...limits, maxEntries: 1 },
+        { ...limits, maxDirectoryBytes: 1 },
+        { ...limits, maxTotalBytes: 5 },
+        { ...limits, maxEntryBytes: 2 },
+      ]
     ) {
       await expect(Promise.resolve().then(() => openPackageZip(bytesSource(bytes), budget))).rejects
         .toSatisfy((caught: unknown) =>

@@ -80,7 +80,7 @@ export default function AssessmentContentEditorFields(props: {
     required = true,
   ) {
     return (
-      <label class='ds-form-control gap-2'>
+      <label class='flex flex-col gap-2'>
         <span class='text-sm font-medium'>{label}</span>
         {multiline
           ? (
@@ -184,12 +184,22 @@ export default function AssessmentContentEditorFields(props: {
       return (
         <div class='space-y-4'>
           <p class='text-sm text-base-content/70'>{content.networkNotice}</p>
-          {field(i18n.t('assessments.contentEditor.title'), content.title, (title) =>
-            change({ ...content, title }))}
-          {field(i18n.t('assessments.contentEditor.url'), content.url, (url) =>
-            change({ ...content, url }))}
-          {field(i18n.t('assessments.contentEditor.transcript'), content.transcript, (transcript) =>
-            change({ ...content, transcript }), true)}
+          {field(
+            i18n.t('assessments.contentEditor.title'),
+            content.title,
+            (title) => change({ ...content, title }),
+          )}
+          {field(
+            i18n.t('assessments.contentEditor.url'),
+            content.url,
+            (url) => change({ ...content, url }),
+          )}
+          {field(
+            i18n.t('assessments.contentEditor.transcript'),
+            content.transcript,
+            (transcript) => change({ ...content, transcript }),
+            true,
+          )}
         </div>
       );
   }

@@ -110,16 +110,19 @@ export async function prepareBankRelease(
       }
       xml[item.revisionId] = revision.qtiXml;
     }
-    const collected = await collectPackageAssets({ _tag: 'Items', itemsXml: xml }, {
-      getUploadId: uploadIdFromUrl,
-      getUpload: async (id) => {
-        const [upload] = await deps.database.select().from(uploadsTable).where(
-          and(eq(uploadsTable.id, id), eq(uploadsTable.tenantId, ctx.tenantId)),
-        );
-        return upload ? { ...upload, type: upload.mimeType } : null;
+    const collected = await collectPackageAssets(
+      { _tag: 'Items', itemsXml: xml },
+      {
+        getUploadId: uploadIdFromUrl,
+        getUpload: async (id) => {
+          const [upload] = await deps.database.select().from(uploadsTable).where(
+            and(eq(uploadsTable.id, id), eq(uploadsTable.tenantId, ctx.tenantId)),
+          );
+          return upload ? { ...upload, type: upload.mimeType } : null;
+        },
+        readUploadFile: (upload) => deps.storage.readObject(upload.path),
       },
-      readUploadFile: (upload) => deps.storage.readObject(upload.path),
-    });
+    );
     if (!collected.ok) {
       const unavailable = collected.error.reason === 'upload_unavailable' &&
         !(collected.error.cause instanceof StorageObjectNotFoundError);

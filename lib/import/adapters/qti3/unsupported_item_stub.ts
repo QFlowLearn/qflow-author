@@ -37,9 +37,10 @@ export function buildUnsupportedItemStub(
         if (sanitized) bodyHtml = sanitized;
       }
       const responseDecls = findAllDescendantsByLocalName(root, 'qti-response-declaration');
-      const responseDecl = responseDecls.find((decl) =>
-        (attr(decl, 'identifier') ?? '').toUpperCase() === 'RESPONSE'
-      ) ?? responseDecls[0];
+      const responseDecl =
+        responseDecls.find((decl) =>
+          (attr(decl, 'identifier') ?? '').toUpperCase() === 'RESPONSE'
+        ) ?? responseDecls[0];
       if (responseDecl) {
         responseIdentifier = (attr(responseDecl, 'identifier') ?? '').trim() || responseIdentifier;
         customBaseType = (attr(responseDecl, 'base-type') ?? '').trim() || customBaseType;

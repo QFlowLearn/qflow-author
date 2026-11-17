@@ -20,10 +20,12 @@ testCase(
         maximumScore: null,
       });
     for (
-      const value of [{}, { answerChoiceOrder: true }, { answerChoiceOrder: 'shuffle' }, {
-        answerChoiceOrder: 'authored',
-        assessmentId: 'x',
-      }]
+      const value of [
+        {},
+        { answerChoiceOrder: true },
+        { answerChoiceOrder: 'shuffle' },
+        { answerChoiceOrder: 'authored', assessmentId: 'x' },
+      ]
     ) {
       expect(() => parseInstructorDefaults(value)).toThrowError(Error);
     }

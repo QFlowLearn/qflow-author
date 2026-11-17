@@ -155,7 +155,7 @@ export default function ImportsIndex(
 
       <form class='rounded-lg border border-base-300 bg-base-100 p-4' method='get'>
         <div class='grid gap-4 sm:grid-cols-[minmax(0,20rem)_auto] sm:items-end'>
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('imports.filter.status')}</span>
             <Select name='status' defaultValue={status}>
               <option value=''>{i18n.t('imports.filter.all')}</option>

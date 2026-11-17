@@ -36,7 +36,7 @@ export default function SnapshotView(
               payload={payload}
               playerCatalog={playerCatalog}
             />
-            <div class='ds-card ds-card-bordered'>
+            <div class='ds-card ds-card-border'>
               <div class='ds-card-body space-y-4'>
                 {title ? <p class='text-base font-medium'>{title}</p> : null}
                 <div class='flex flex-wrap gap-2'>

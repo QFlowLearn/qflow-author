@@ -61,11 +61,11 @@ function browserEntrySource(): string {
     import { useState } from 'preact/hooks';
     import { I18nProvider } from ${JSON.stringify(`${root}/lib/i18n/context.tsx`)};
     import QuestionTypePicker from ${
-    JSON.stringify(`${root}/islands/assessment_builder/QuestionTypePicker.tsx`)
-  };
+      JSON.stringify(`${root}/islands/assessment_builder/QuestionTypePicker.tsx`)
+    };
     import ImportPicker from ${
-    JSON.stringify(`${root}/islands/assessment_builder/ImportPicker.tsx`)
-  };
+      JSON.stringify(`${root}/islands/assessment_builder/ImportPicker.tsx`)
+    };
     const rootNode = document.getElementById('root');
     const config = globalThis.__PICKER_CONFIG__;
     function PickerApp() {

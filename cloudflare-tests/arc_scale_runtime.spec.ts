@@ -60,19 +60,23 @@ it(
         const response = await fetch('http://127.0.0.1:8879/arc-all-7787-qti3.zip');
         assert(response.ok);
         const source = new Uint8Array(await response.arrayBuffer());
-        const batch = await enqueueMigrationBatch(ctx, {
-          idempotencyKey: crypto.randomUUID(),
-          purpose: 'recover_existing',
-          destination: { _tag: 'WorkspaceBank', collectionId: null },
-          sources: [{
-            source: {
-              filename: 'arc-all-7787-qti3.zip',
-              mime: 'application/zip',
-              bytes: source,
-            },
-            adapter: { id: 'qti3', version: '1' },
-          }],
-        }, { storage });
+        const batch = await enqueueMigrationBatch(
+          ctx,
+          {
+            idempotencyKey: crypto.randomUUID(),
+            purpose: 'recover_existing',
+            destination: { _tag: 'WorkspaceBank', collectionId: null },
+            sources: [{
+              source: {
+                filename: 'arc-all-7787-qti3.zip',
+                mime: 'application/zip',
+                bytes: source,
+              },
+              adapter: { id: 'qti3', version: '1' },
+            }],
+          },
+          { storage },
+        );
         assertEquals(batch.runs.length, 1);
         const runId = batch.runs[0].id;
         const [dispatch] = await db.select({ id: workflowDispatches.id }).from(workflowDispatches)

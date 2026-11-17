@@ -65,8 +65,8 @@ it(
               expect(saved.status()).toBe(200);
               await page.waitForFunction(() =>
                 document.querySelector('[data-qflow-root="BlueprintPanel"]')?.getAttribute(
-                    'data-qflow-state',
-                  ) === 'ready' &&
+                  'data-qflow-state',
+                ) === 'ready' &&
                 document.querySelector('[data-qflow-root="BlueprintPanel"]')?.textContent?.includes(
                   'Identify a French city',
                 )

@@ -53,13 +53,17 @@ const document: AssessmentExportDocument = {
 const itemsXml = Object.fromEntries(
   itemIds.map((id) => [
     id,
-    exportQti3TestItemXml('single_select', {
-      type: 'single_select',
-      title: id,
-      bodyHtml: `<p>${id}: choose Alpha.</p>`,
-      choices: [{ id: 'A', text: 'Alpha' }, { id: 'B', text: 'Beta' }],
-      correctId: 'A',
-    }, { identifier: `item-${id}` }),
+    exportQti3TestItemXml(
+      'single_select',
+      {
+        type: 'single_select',
+        title: id,
+        bodyHtml: `<p>${id}: choose Alpha.</p>`,
+        choices: [{ id: 'A', text: 'Alpha' }, { id: 'B', text: 'Beta' }],
+        correctId: 'A',
+      },
+      { identifier: `item-${id}` },
+    ),
   ]),
 );
 const OMITTED = 'qflow.export.part_question_shuffle_omitted';

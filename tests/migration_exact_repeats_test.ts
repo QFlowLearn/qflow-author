@@ -77,24 +77,32 @@ testCase(
           contextHash: item.contextHash,
           decision: item.decision,
         };
-        await updateMigrationItems(ctx, id, [item.id], {
-          kind: 'edit',
-          title: item.title,
-          bodyHtml: '<p>A changed passage.</p>',
-        }, { [item.id]: version });
+        await updateMigrationItems(
+          ctx,
+          id,
+          [item.id],
+          { kind: 'edit', title: item.title, bodyHtml: '<p>A changed passage.</p>' },
+          { [item.id]: version },
+        );
         const edited = await getMigrationReviewPage(ctx, id, 1, true);
         if (!(edited?.exactRepeats)) expect.unreachable('Expected edited?.exactRepeats');
         expect(edited.exactRepeats.compared).toStrictEqual(128);
         expect(edited.exactRepeats.repeats).toStrictEqual(26);
         const reject = edited.run.items.find((item) => item.position === 101);
         if (!reject) expect.unreachable('Expected reject');
-        await updateMigrationItems(ctx, id, [reject.id], { kind: 'reject' }, {
-          [reject.id]: {
-            contentHash: reject.contentHash,
-            contextHash: reject.contextHash,
-            decision: reject.decision,
+        await updateMigrationItems(
+          ctx,
+          id,
+          [reject.id],
+          { kind: 'reject' },
+          {
+            [reject.id]: {
+              contentHash: reject.contentHash,
+              contextHash: reject.contextHash,
+              decision: reject.decision,
+            },
           },
-        });
+        );
         const rejected = await getMigrationReviewPage(ctx, id, 1, false);
         if (!(rejected?.exactRepeats)) expect.unreachable('Expected rejected?.exactRepeats');
         expect(rejected.exactRepeats.total).toStrictEqual(130);

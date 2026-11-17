@@ -112,7 +112,7 @@ test(
                   ).not.toBeNull();
                   await page.waitForFunction(() =>
                     document.querySelector('[aria-busy="false"] > div > canvas[aria-label]') !==
-                      null
+                    null
                   );
                   if (!await next.isEnabled()) break;
                   const text = await page.getByRole('status').filter({ hasText: /[0-9]/ }).last()

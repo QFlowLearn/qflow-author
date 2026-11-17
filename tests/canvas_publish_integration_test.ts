@@ -253,12 +253,11 @@ testCase('Canvas publishing is package-backed, idempotent, receipted, and recove
       requestFingerprint: await sha256Hex(new TextEncoder().encode('second request')),
     });
     const recovery = recoverableCanvasFetch();
-    const interrupted = await advanceCanvasPublish(auth, {
-      assessmentId: assessment.id,
-      publishId: secondPublishId,
-      storage,
-      runtime,
-    }, { fetchImpl: recovery.fetch });
+    const interrupted = await advanceCanvasPublish(
+      auth,
+      { assessmentId: assessment.id, publishId: secondPublishId, storage, runtime },
+      { fetchImpl: recovery.fetch },
+    );
     if (!(interrupted.ok)) expect.unreachable('Expected interrupted.ok');
     expect(interrupted.attempt.state._tag).toStrictEqual('RetryUpload');
     if (interrupted.attempt.state._tag !== 'RetryUpload') throw new Error('Expected retry.');
@@ -322,12 +321,11 @@ testCase('Canvas publishing is package-backed, idempotent, receipted, and recove
     );
     expect(Array.from(packageBytes)).toStrictEqual(Array.from(exported.bytes));
 
-    const recovered = await advanceCanvasPublish(auth, {
-      assessmentId: assessment.id,
-      publishId: secondPublishId,
-      storage,
-      runtime,
-    }, { fetchImpl: recovery.fetch });
+    const recovered = await advanceCanvasPublish(
+      auth,
+      { assessmentId: assessment.id, publishId: secondPublishId, storage, runtime },
+      { fetchImpl: recovery.fetch },
+    );
     if (!(recovered.ok)) expect.unreachable('Expected recovered.ok');
     expect(recovered.attempt.state._tag).toStrictEqual('Published');
     expect(recovered.attempt.attemptCount).toStrictEqual(2);
@@ -438,12 +436,11 @@ testCase('Canvas publishing is package-backed, idempotent, receipted, and recove
     expect(rejectedCredential.attempt.state._tag).toStrictEqual('RetryCreate');
     expect(credentialHeaders).toStrictEqual(['Bearer expired-token']);
 
-    const repairedCredential = await advanceCanvasPublish(auth, {
-      assessmentId: assessment.id,
-      publishId: credentialPublishId,
-      storage,
-      runtime,
-    }, { fetchImpl: successfulCanvasFetch([]) });
+    const repairedCredential = await advanceCanvasPublish(
+      auth,
+      { assessmentId: assessment.id, publishId: credentialPublishId, storage, runtime },
+      { fetchImpl: successfulCanvasFetch([]) },
+    );
     if (!(repairedCredential.ok)) expect.unreachable('Expected repairedCredential.ok');
     expect(repairedCredential.attempt.state._tag).toStrictEqual('Published');
     expect(repairedCredential.attempt.attemptCount).toStrictEqual(2);

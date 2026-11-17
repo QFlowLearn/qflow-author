@@ -45,9 +45,11 @@ function document(
     const value = result[field];
     if (Array.isArray(value)) {
       if (value.length === 0) delete result[field];
-      else {result[field] = [...value].sort((a, b) =>
+      else {
+        result[field] = [...value].sort((a, b) =>
           canonicalJsonStringify(a).localeCompare(canonicalJsonStringify(b))
-        );}
+        );
+      }
     }
   }
   return result;

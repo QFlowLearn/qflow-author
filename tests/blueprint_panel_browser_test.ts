@@ -51,9 +51,10 @@ async function runLocale(
         return Response.json({ blueprint: body });
       }
       if (requests === 2) {
-        return Response.json({ code: 'unknown', error: 'HOSTILE-UPSTREAM-DETAIL' }, {
-          status: 500,
-        });
+        return Response.json(
+          { code: 'unknown', error: 'HOSTILE-UPSTREAM-DETAIL' },
+          { status: 500 },
+        );
       }
       return Response.json({}, { status: 200 });
     }

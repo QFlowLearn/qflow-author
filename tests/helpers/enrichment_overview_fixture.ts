@@ -45,9 +45,9 @@ export async function assignOverviewFixture(
           operationId: crypto.randomUUID(),
           createdBy: ctx.userId,
           createdAt: new Date(),
-          previousChangeId: previous.find((row) =>
-            row.questionId === question.id && row.dimension === dimension
-          )?.changeId ?? null,
+          previousChangeId:
+            previous.find((row) => row.questionId === question.id && row.dimension === dimension)
+              ?.changeId ?? null,
         });
         await tx.insert(enrichmentAssignments).values({
           tenantId: ctx.tenantId,

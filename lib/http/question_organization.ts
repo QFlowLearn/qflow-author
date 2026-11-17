@@ -42,15 +42,18 @@ export async function handleOrganizationCommand(
   const database = getDb(ctx), auth = requireAuthContext(ctx.state), now = () => new Date();
   const service = new QuestionOrganizationWorkspace(database, now);
   const fail = (code: string, status = 400) =>
-    Response.json({
-      error: ctx.state.i18n.t(
-        code === 'scope_too_large'
-          ? 'items.organization.limit'
-          : code === 'preview_changed'
-          ? 'items.organization.previewChanged'
-          : enrichmentFailureKey(code),
-      ),
-    }, { status });
+    Response.json(
+      {
+        error: ctx.state.i18n.t(
+          code === 'scope_too_large'
+            ? 'items.organization.limit'
+            : code === 'preview_changed'
+            ? 'items.organization.previewChanged'
+            : enrichmentFailureKey(code),
+        ),
+      },
+      { status },
+    );
   const keys = Object.keys(raw).sort().join(',');
   let result;
   let dispatch = false;

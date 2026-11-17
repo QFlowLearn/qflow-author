@@ -71,10 +71,11 @@ testCase(
           bodyHtml: `<p>Question ${index + 1}: Which number is two plus two?${
             rich ? '<strong>Choose.</strong>' : ''
           }</p>`,
-          choices: [{ id: 'first', text: 'Three' }, { id: 'second', text: 'Four' }, {
-            id: 'third',
-            text: 'Five',
-          }],
+          choices: [
+            { id: 'first', text: 'Three' },
+            { id: 'second', text: 'Four' },
+            { id: 'third', text: 'Five' },
+          ],
           correctId: revision === 1 ? 'second' : 'third',
           shuffle: false,
           ...(unsupported ? { correctIds: ['first', 'second'], maxChoices: 2, minChoices: 1 } : {}),

@@ -17,7 +17,7 @@ unchanged.
 ## Dev Containers and GitHub Codespaces
 
 The repository implements the [Development Container specification](https://containers.dev/). Its
-configuration lives in `.devcontainer/`. The workspace image pins Node 24.22.0 and pnpm 10.34.3 on
+configuration lives in `.devcontainer/`. The workspace image pins Node 26.12.0 and pnpm 12.21.0 on
 Debian Bookworm. Compose supplies PostgreSQL 17; the normal frozen install supplies the Cloudflare
 CLI, workerd and Playwright. Container creation installs Chromium and its Linux dependencies,
 prepares local configuration, migrates both databases and runs doctor.
@@ -46,12 +46,11 @@ and macOS dependencies cannot overwrite each other.
 
 Local Dev Containers use the normal `https://127.0.0.1:5173` browser origin. Setup creates and
 trusts a CA **inside the container only**. Your browser on the host still needs to trust its public
-root certificate. In the container, copy it with
-`cp "$(mkcert -CAROOT)/rootCA.pem" .artifacts/local-dev/rootCA.pem`, then export that public file
-and trust it through your host's certificate settings. Never export `rootCA-key.pem`. Forward port
-5173 locally without changing its number; use HTTPS when opening the forwarded address (set the port
-protocol to HTTPS in the Ports panel if necessary). If your host already uses 5173, stop that app
-before starting this workspace.
+root certificate. In the container, copy it with `cp "$(mkcert -CAROOT)/rootCA.pem"
+.artifacts/local-dev/rootCA.pem`, then export that public file and trust it through your host's
+certificate settings. Never export `rootCA-key.pem`. Forward port 5173 locally without changing its
+number; use HTTPS when opening the forwarded address (set the port protocol to HTTPS in the Ports
+panel if necessary). If your host already uses 5173, stop that app before starting this workspace.
 
 ### Docker build troubleshooting
 
@@ -61,7 +60,7 @@ generated Dockerfile with an `additional privileges requested` / `fs.read` error
 verified CLI workaround is:
 
 ```sh
-BUILDX_BAKE_ENTITLEMENTS_FS=0 npm exec --yes --package=@devcontainers/cli@0.89.0 -- \
+BUILDX_BAKE_ENTITLEMENTS_FS=0 npm exec --yes --package=@devcontainers/cli@0.90.0 -- \
   devcontainer up --workspace-folder .
 ```
 
@@ -91,7 +90,7 @@ the actual proxy and browser session. Cloud workspace compute/storage is billed 
 
 ## Native first setup
 
-1. Install the versions in `.node-version` and `package.json`: Node 24.22.0 and pnpm 10.34.3.
+1. Install the versions in `.node-version` and `package.json`: Node 26.12.0 and pnpm 12.21.0.
 2. Install PostgreSQL 17, mkcert and xmllint. Install Playwright's Chromium for browser checks:
    `pnpm exec playwright install chromium` after installing dependencies.
 3. Trust your development CA once with `mkcert -install`. This changes your machine's certificate
@@ -132,6 +131,21 @@ CREATE DATABASE qflow_test OWNER qflow;
 Run `pnpm setup:local` again afterward. Existing databases and questions are preserved. A failed
 schema migration needs investigation; setup never resets data or grants itself privileges.
 
+## Tooling
+
+Use the Node and pnpm versions pinned in `.node-version` and `package.json`. CI and the development
+container use the same versions. Package-manager policy lives in `pnpm-workspace.yaml`, including
+explicit dependency build permissions and reviewed release-age exceptions.
+
+Vite uses its native Oxc and Rolldown configuration. Vitest uses the same JSX transform.
+TypeScript's native compiler checks the Node, Worker, and Worker-test scopes; verification scripts
+use its pinned native API to inspect source and emitted modules.
+
+Tailwind and DaisyUI configuration lives in `static/tailwind.css`. The stylesheet declares source
+directories and both application themes. `pnpm tw:build` generates `static/tw.css`; `pnpm dev` owns
+the stylesheet watcher alongside Vite. Use `pnpm format`, `pnpm lint`, and `pnpm typecheck` before
+full verification.
+
 ## Configuration ownership
 
 - `.env.local` owns local connection settings, app variables, secrets and certificate paths.
@@ -139,7 +153,7 @@ schema migration needs investigation; setup never resets data or grants itself p
   the local development configuration. Vite supplies static assets from `static/` and the client
   build. Setup writes local values to the ignored `.env.local` file.
 - Cloudflare's TypeScript configuration uses `cf` and version 2 of its Vite plugin. These packages
-  are pinned to release candidates; Node 24.22.0 is required.
+  are pinned to release candidates; Node 26.12.0 is required.
 - Hosted production configuration is outside this repository. Setup only manages local
   configuration.
 - `DATABASE_URL` is the only local database URL you configure. Development projects it to the

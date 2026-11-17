@@ -217,9 +217,7 @@ export default function BankEnrichmentSetup(
                           next.delete('subject');
                         }
                       }
-                      setDimensions(ENRICHMENT_DIMENSIONS.filter((d) =>
-                        next.has(d)
-                      ));
+                      setDimensions(ENRICHMENT_DIMENSIONS.filter((d) => next.has(d)));
                     }}
                   />
                   {i18n.t(`items.browse.${dimension}`)}

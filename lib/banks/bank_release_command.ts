@@ -12,9 +12,8 @@ function parseConfirmation(value: unknown): FreezeConfirmation | null {
   for (const entry of value.overrides) {
     if (
       !record(entry) || !exact(entry, ['revisionId', 'reason']) || !uuid(entry.revisionId) ||
-      !bounded(entry.reason, 4000, true) || overrides.some((row) =>
-        row.revisionId === entry.revisionId
-      )
+      !bounded(entry.reason, 4000, true) ||
+      overrides.some((row) => row.revisionId === entry.revisionId)
     ) return null;
     overrides.push({ revisionId: entry.revisionId, reason: entry.reason.trim() });
   }

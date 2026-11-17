@@ -73,10 +73,11 @@ testCase('PDF extraction reads compressed text and counts real pages without OCR
 testCase(
   'mixed PDFs retain readable text and route only real image uncertainty to file reading',
   async () => {
-    const bytes = pdfFixture([{ text: 'A readable curriculum page.' }, { image: true }, {
-      text: 'A caption.',
-      image: true,
-    }]);
+    const bytes = pdfFixture([
+      { text: 'A readable curriculum page.' },
+      { image: true },
+      { text: 'A caption.', image: true },
+    ]);
     const document = await extractStructuredSource({
       filename: 'scan.pdf',
       mimeType: 'application/pdf',

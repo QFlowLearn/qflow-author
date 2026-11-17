@@ -32,13 +32,21 @@ testCase(
           'ready',
         ]);
         for (const item of page.run.items.slice(0, 2)) {
-          await expect(updateMigrationItems(ctx, runId, [item.id], { kind: 'accept' }, {
-            [item.id]: {
-              contentHash: item.contentHash,
-              contextHash: item.contextHash,
-              decision: item.decision,
-            },
-          })).rejects.toThrow('Blocked items must be corrected');
+          await expect(
+            updateMigrationItems(
+              ctx,
+              runId,
+              [item.id],
+              { kind: 'accept' },
+              {
+                [item.id]: {
+                  contentHash: item.contentHash,
+                  contextHash: item.contextHash,
+                  decision: item.decision,
+                },
+              },
+            ),
+          ).rejects.toThrow('Blocked items must be corrected');
         }
         const after = await getMigrationReviewPage(ctx, runId, 1, false);
         if (!after) expect.unreachable('Expected retained migration');
@@ -72,13 +80,19 @@ testCase(
         if (!item) expect.unreachable('Expected item');
         await expect(
           Promise.resolve().then(() =>
-            updateMigrationItems(ctx, runId, [item.id], { kind: 'accept' }, {
-              [item.id]: {
-                contentHash: item.contentHash,
-                contextHash: item.contextHash,
-                decision: item.decision,
+            updateMigrationItems(
+              ctx,
+              runId,
+              [item.id],
+              { kind: 'accept' },
+              {
+                [item.id]: {
+                  contentHash: item.contentHash,
+                  contextHash: item.contextHash,
+                  decision: item.decision,
+                },
               },
-            })
+            )
           ),
         ).rejects.toSatisfy((caught: unknown) =>
           caught instanceof Error && caught.message.includes('Blocked items must be corrected')

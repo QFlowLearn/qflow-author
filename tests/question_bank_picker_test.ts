@@ -310,8 +310,8 @@ testCase(
             sql`INSERT INTO question_revisions (id, question_id, tenant_id, draft_state, revision,
           body, review_suggestions, provenance, content_hash, search_text, compatibility, qti_xml, published_at)
           SELECT gen_random_uuid(), id, tenant_id, 'published', 1, ${
-              JSON.stringify(source.body)
-            }::jsonb,
+            JSON.stringify(source.body)
+          }::jsonb,
             '[]'::jsonb, ${JSON.stringify(source.provenance)}::jsonb, ${source.contentHash},
             title, ${JSON.stringify(source.compatibility)}::jsonb, ${source.qtiXml}, now()
           FROM questions WHERE tenant_id = ${ctx.tenantId} AND id <> ${sourceId}`,

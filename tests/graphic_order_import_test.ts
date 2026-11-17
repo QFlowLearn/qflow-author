@@ -32,21 +32,25 @@ testCase('graphic_order import round-trip: fixture → draft → qti3 export →
 
   const parsed = parseItemXml(xml);
   const draft = draftOfType<GraphicOrderDraft>(parsed, 'graphic_order');
-  const rebuilt = exportQti3TestItemXml('graphic_order', {
-    title: draft.title,
-    promptHtml: draft.promptHtml,
-    bodyHtml: draft.bodyHtml,
-    responseIdentifier: draft.responseIdentifier,
-    graphicOrderBackgroundSrc: draft.graphicOrderBackgroundSrc,
-    graphicOrderBackgroundAlt: draft.graphicOrderBackgroundAlt,
-    graphicOrderBackgroundType: draft.graphicOrderBackgroundType,
-    graphicOrderBackgroundWidth: draft.graphicOrderBackgroundWidth,
-    graphicOrderBackgroundHeight: draft.graphicOrderBackgroundHeight,
-    graphicOrderHotspots: draft.graphicOrderHotspots ?? [],
-    graphicOrderCorrectOrder: draft.graphicOrderCorrectOrder ?? [],
-    minChoices: draft.minChoices,
-    maxChoices: draft.maxChoices,
-  }, { identifier: 'item-graphic-order-roundtrip' });
+  const rebuilt = exportQti3TestItemXml(
+    'graphic_order',
+    {
+      title: draft.title,
+      promptHtml: draft.promptHtml,
+      bodyHtml: draft.bodyHtml,
+      responseIdentifier: draft.responseIdentifier,
+      graphicOrderBackgroundSrc: draft.graphicOrderBackgroundSrc,
+      graphicOrderBackgroundAlt: draft.graphicOrderBackgroundAlt,
+      graphicOrderBackgroundType: draft.graphicOrderBackgroundType,
+      graphicOrderBackgroundWidth: draft.graphicOrderBackgroundWidth,
+      graphicOrderBackgroundHeight: draft.graphicOrderBackgroundHeight,
+      graphicOrderHotspots: draft.graphicOrderHotspots ?? [],
+      graphicOrderCorrectOrder: draft.graphicOrderCorrectOrder ?? [],
+      minChoices: draft.minChoices,
+      maxChoices: draft.maxChoices,
+    },
+    { identifier: 'item-graphic-order-roundtrip' },
+  );
   if (!(rebuilt.includes('data="images/ukair.png"'))) {
     expect.unreachable('Expected rebuilt.includes(\'data="images/ukair.png"\')');
   }

@@ -278,8 +278,10 @@ export async function convertQti3AssessmentPackage(
         code: 'qflow.export.adaptive_sequence_omitted',
         severity: 'warning' as const,
         message: `Exported as a standard quiz with all ${
-          input.document.parts.reduce((count, part) =>
-            count + assessmentQuestionPlacements(part.placements).length, 0)
+          input.document.parts.reduce(
+            (count, part) => count + assessmentQuestionPlacements(part.placements).length,
+            0,
+          )
         } saved questions in order. Adaptive branching and the ${input.document.adaptivePlan.settings.questionCount}-question adaptive path are omitted.`,
         path: 'assessment.xml',
       }]

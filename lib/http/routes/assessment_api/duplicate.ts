@@ -21,9 +21,9 @@ export const duplicateApiRoute = defineHttpRoute('/api/assessments/:id/duplicate
         headers: { 'cache-control': 'private, no-store' },
       });
     }
-    return Response.json({ id: result.id }, {
-      headers: { 'cache-control': 'private, no-store' },
-      status: 201,
-    });
+    return Response.json(
+      { id: result.id },
+      { headers: { 'cache-control': 'private, no-store' }, status: 201 },
+    );
   },
 });

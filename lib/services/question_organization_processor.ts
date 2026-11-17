@@ -110,9 +110,8 @@ export async function processOrganizationStep(
           providerMs += performance.now() - start;
           requestCount++;
           const results = batch.map((question): { claim: ClaimedItem; outcome: ItemOutcome } => {
-            const claim = inference.find((i) =>
-              i.claim.item.questionId === question.questionId
-            )!.claim;
+            const claim =
+              inference.find((i) => i.claim.item.questionId === question.questionId)!.claim;
             if (!result.ok) return { claim, outcome: { kind: 'failure', code: result.code } };
             const decision = result.value.find((r) => r.questionId === question.questionId);
             if (!decision) throw new Error('Validated Clef batch omitted a question.');

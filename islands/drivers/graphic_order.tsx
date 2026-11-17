@@ -304,7 +304,7 @@ export function GraphicOrderContent(props: GraphicOrderContentProps) {
                 spot.id === activeHotspotId ? 'ring-1 ring-primary/40' : ''
               }`}
             >
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicOrderId')}</span>
                 <Input
                   value={spot.id}
@@ -321,7 +321,7 @@ export function GraphicOrderContent(props: GraphicOrderContentProps) {
                   placeholder='A'
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.shape')}</span>
                 <Select
                   value={spot.shape}
@@ -329,10 +329,11 @@ export function GraphicOrderContent(props: GraphicOrderContentProps) {
                   aria-describedby={props.fieldHasIssue('choices')
                     ? `${issueId}-choices`
                     : undefined}
-                  onInput={(e) => props.updateGraphicOrderHotspotShape(
-                    spot.id,
-                    (e.target as HTMLSelectElement).value as GraphicOrderShape,
-                  )}
+                  onInput={(e) =>
+                    props.updateGraphicOrderHotspotShape(
+                      spot.id,
+                      (e.target as HTMLSelectElement).value as GraphicOrderShape,
+                    )}
                 >
                   <option value='rect'>{i18n.t('driver.graphicOrderRect')}</option>
                   <option value='circle'>{i18n.t('driver.circle')}</option>
@@ -341,7 +342,7 @@ export function GraphicOrderContent(props: GraphicOrderContentProps) {
                   <option value='default'>{i18n.t('driver.graphicOrderDefaultShape')}</option>
                 </Select>
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicOrderCoords')}</span>
                 <Input
                   value={spot.coords}
@@ -349,14 +350,15 @@ export function GraphicOrderContent(props: GraphicOrderContentProps) {
                   readOnly
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.label')}</span>
                 <Input
                   value={spot.label ?? ''}
-                  onInput={(e) => props.updateGraphicOrderHotspotLabel(
-                    spot.id,
-                    (e.target as HTMLInputElement).value,
-                  )}
+                  onInput={(e) =>
+                    props.updateGraphicOrderHotspotLabel(
+                      spot.id,
+                      (e.target as HTMLInputElement).value,
+                    )}
                   placeholder={i18n.t('driver.graphicOrderLabelPlaceholder')}
                 />
               </label>
@@ -466,10 +468,12 @@ export function GraphicOrderContent(props: GraphicOrderContentProps) {
                 if ((e as KeyboardEvent).altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
                   e.preventDefault();
                   if (e.key === 'ArrowUp') props.reorderGraphicOrder(index, Math.max(0, index - 1));
-                  else {props.reorderGraphicOrder(
+                  else {
+                    props.reorderGraphicOrder(
                       index,
                       Math.min(props.graphicOrderOrder.length - 1, index + 1),
-                    );}
+                    );
+                  }
                 }
               }}
             >

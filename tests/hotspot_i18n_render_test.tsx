@@ -124,10 +124,11 @@ for (const locale of locales) {
       expect(populated).toContain(i18n.t(`driver.${key}`));
     }
     for (
-      const [value, key] of [['circle', 'circle'], ['rect', 'rectangle'], [
-        'poly',
-        'polygon',
-      ]] as const
+      const [value, key] of [
+        ['circle', 'circle'],
+        ['rect', 'rectangle'],
+        ['poly', 'polygon'],
+      ] as const
     ) {
       if (!(populated.includes(`value="${value}"`))) {
         expect.unreachable('Expected populated.includes(`value="${value}"`)');

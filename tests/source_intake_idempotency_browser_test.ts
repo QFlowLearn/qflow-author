@@ -471,11 +471,10 @@ testCase('source-intake browser harness captures request-scoped multipart contra
       .toStrictEqual([{ scenario: 'conflict-retry', pathname: `/imports/${RUN}` }]);
     expect(await storageKey()).toStrictEqual(null);
     await freshOpen('batch');
-    await page.locator('#bring-source-files').setInputFiles([{
-      name: 'one.pdf',
-      mimeType: 'application/pdf',
-      buffer: Buffer.from('one'),
-    }, { name: 'two.pdf', mimeType: 'application/pdf', buffer: Buffer.from('two') }]);
+    await page.locator('#bring-source-files').setInputFiles([
+      { name: 'one.pdf', mimeType: 'application/pdf', buffer: Buffer.from('one') },
+      { name: 'two.pdf', mimeType: 'application/pdf', buffer: Buffer.from('two') },
+    ]);
     await page.getByRole('button', { name: i18n.t('imports.intake.checkSource') }).click();
     await page.getByRole('button', { name: i18n.t('imports.intake.continueReview') }).waitFor();
     const formatSection = page.locator('section[aria-labelledby="format-heading"]');

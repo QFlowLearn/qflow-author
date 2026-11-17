@@ -26,11 +26,10 @@ testCase(
     }, {
       fetchImpl: () => {
         return Promise.resolve(
-          Response.json({
-            publish: publishView(),
-            message: 'ignored legacy prose',
-            extra: true,
-          }, { status: 502 }),
+          Response.json(
+            { publish: publishView(), message: 'ignored legacy prose', extra: true },
+            { status: 502 },
+          ),
         );
       },
     });
@@ -71,12 +70,17 @@ testCase(
   async () => {
     const result = await resumeCanvasPublish('assessment-1', PUBLISH_ID, {
       fetchImpl: () =>
-        Promise.resolve(Response.json({
-          error: 'legacy/provider-code with spaces',
-          message: 'HOSTILE_SERVER_MESSAGE',
-          setupHint: 'HOSTILE_SETUP_HINT',
-          previewUrl: '/preview',
-        }, { status: 502 })),
+        Promise.resolve(
+          Response.json(
+            {
+              error: 'legacy/provider-code with spaces',
+              message: 'HOSTILE_SERVER_MESSAGE',
+              setupHint: 'HOSTILE_SETUP_HINT',
+              previewUrl: '/preview',
+            },
+            { status: 502 },
+          ),
+        ),
     });
     expect(result).toStrictEqual({
       ok: false,

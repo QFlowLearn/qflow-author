@@ -117,11 +117,10 @@ testCase(
             difficulty: definition.difficulty.map((c) =>
               c.id === 'easy' ? { ...c, label: 'Introductory' } : c
             ),
-            replacements: [{ dimension: 'subject', fromId: 'physical', toId: 'life' }, {
-              dimension: 'topic',
-              fromId: 'energy',
-              toId: 'cells',
-            }],
+            replacements: [
+              { dimension: 'subject', fromId: 'physical', toId: 'life' },
+              { dimension: 'topic', fromId: 'energy', toId: 'cells' },
+            ],
           });
           if (!next) expect.unreachable('Expected next');
           if (
@@ -148,12 +147,10 @@ testCase(
             selected.facets.difficulty.categories.filter((c) => c.id === 'easy').map((
               c,
             ) => [c.version, c.audience, c.label, c.count]),
-          ).toStrictEqual([[2, 'Grade 9 science', 'Introductory', 1], [
-            1,
-            'Grade 6 science',
-            'Easy',
-            1,
-          ]]);
+          ).toStrictEqual([
+            [2, 'Grade 9 science', 'Introductory', 1],
+            [1, 'Grade 6 science', 'Easy', 1],
+          ]);
           expect(selected.facets.subject.categories.find((c) => c.id === 'physical')?.count)
             .toStrictEqual(1);
           const physicalFacets = await browse.read(ctx, query(`&subject=${v1}:physical`), []);

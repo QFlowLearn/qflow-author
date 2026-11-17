@@ -66,9 +66,7 @@ export const createSourceIntakeFailureServer = async (
           const attempt = (inspectAttempts.get(attemptKey) ?? 0) + 1;
           inspectAttempts.set(attemptKey, attempt);
           if (attempt === 1) {
-            return Response.json({ code: 'source_too_large', message: hostile }, {
-              status: 500,
-            });
+            return Response.json({ code: 'source_too_large', message: hostile }, { status: 500 });
           }
           return Response.json({
             purpose: 'recover_existing',

@@ -31,20 +31,24 @@ testCase('select point import round-trip: fixture → draft → qti3 export → 
 
   const parsed = parseItemXml(xml);
   const draft = draftOfType<SelectPointDraft>(parsed, 'select_point');
-  const rebuilt = exportQti3TestItemXml('select_point', {
-    title: draft.title,
-    promptHtml: draft.promptHtml,
-    bodyHtml: draft.bodyHtml,
-    responseIdentifier: draft.responseIdentifier,
-    selectPointImageSrc: draft.selectPointImageSrc,
-    selectPointImageAlt: draft.selectPointImageAlt,
-    selectPointImageWidth: draft.selectPointImageWidth,
-    selectPointImageHeight: draft.selectPointImageHeight,
-    selectPointTargets: draft.selectPointTargets,
-    selectPointCorrectPoints: draft.selectPointCorrectPoints,
-    minChoices: draft.minChoices,
-    maxChoices: draft.maxChoices,
-  }, { identifier: 'item-select-point-roundtrip' });
+  const rebuilt = exportQti3TestItemXml(
+    'select_point',
+    {
+      title: draft.title,
+      promptHtml: draft.promptHtml,
+      bodyHtml: draft.bodyHtml,
+      responseIdentifier: draft.responseIdentifier,
+      selectPointImageSrc: draft.selectPointImageSrc,
+      selectPointImageAlt: draft.selectPointImageAlt,
+      selectPointImageWidth: draft.selectPointImageWidth,
+      selectPointImageHeight: draft.selectPointImageHeight,
+      selectPointTargets: draft.selectPointTargets,
+      selectPointCorrectPoints: draft.selectPointCorrectPoints,
+      minChoices: draft.minChoices,
+      maxChoices: draft.maxChoices,
+    },
+    { identifier: 'item-select-point-roundtrip' },
+  );
 
   if (!(rebuilt.includes('data="images/uk.png"'))) {
     expect.unreachable('Expected rebuilt.includes(\'data="images/uk.png"\')');

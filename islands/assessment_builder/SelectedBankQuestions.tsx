@@ -43,8 +43,7 @@ export default function SelectedBankQuestions(props: {
                 class='h-auto min-h-11 whitespace-normal break-words text-left'
                 aria-expanded={open}
                 aria-controls={`selected-preview-${question.id}`}
-                onClick={() =>
-                  setExpanded(open ? null : question.id)}
+                onClick={() => setExpanded(open ? null : question.id)}
               >
                 {title}
               </Button>
@@ -64,8 +63,7 @@ export default function SelectedBankQuestions(props: {
                     type='button'
                     aria-expanded={open}
                     aria-controls={`selected-preview-${question.id}`}
-                    onClick={() =>
-                      setExpanded(open ? null : question.id)}
+                    onClick={() => setExpanded(open ? null : question.id)}
                   >
                     {i18n.t(
                       open
@@ -93,8 +91,7 @@ export default function SelectedBankQuestions(props: {
                     variant='text'
                     type='button'
                     disabled={props.busy}
-                    onClick={() =>
-                      props.onRemove(question.id)}
+                    onClick={() => props.onRemove(question.id)}
                     aria-label={i18n.t('assessments.builder.library.removeQuestion', { title })}
                   >
                     {i18n.t('assessments.builder.library.remove')}

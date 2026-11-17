@@ -32,17 +32,21 @@ testCase('drawing import round-trip: fixture → draft → qti3 export → re-im
 
   const parsed = parseItemXml(xml);
   const draft = draftOfType<DrawingDraft>(parsed, 'drawing');
-  const rebuilt = exportQti3TestItemXml('drawing', {
-    title: draft.title,
-    promptHtml: draft.promptHtml,
-    bodyHtml: draft.bodyHtml,
-    responseIdentifier: draft.responseIdentifier,
-    drawingImageSrc: draft.drawingImageSrc,
-    drawingImageAlt: draft.drawingImageAlt,
-    drawingImageType: draft.drawingImageType,
-    drawingImageWidth: draft.drawingImageWidth,
-    drawingImageHeight: draft.drawingImageHeight,
-  }, { identifier: 'item-drawing-roundtrip' });
+  const rebuilt = exportQti3TestItemXml(
+    'drawing',
+    {
+      title: draft.title,
+      promptHtml: draft.promptHtml,
+      bodyHtml: draft.bodyHtml,
+      responseIdentifier: draft.responseIdentifier,
+      drawingImageSrc: draft.drawingImageSrc,
+      drawingImageAlt: draft.drawingImageAlt,
+      drawingImageType: draft.drawingImageType,
+      drawingImageWidth: draft.drawingImageWidth,
+      drawingImageHeight: draft.drawingImageHeight,
+    },
+    { identifier: 'item-drawing-roundtrip' },
+  );
   if (!(rebuilt.includes('data="images/house.png"'))) {
     expect.unreachable('Expected rebuilt.includes(\'data="images/house.png"\')');
   }

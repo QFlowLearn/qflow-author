@@ -123,10 +123,10 @@ testCase('an undo scope does not expand when its cancelled AI source is resumed'
           'Expected (await mutationJobs.queueRun(ctx, source, execution, enrichmentConfigFixture)).ok',
         );
       }
-      const first = await processEnrichmentStep({ jobId: source, workflowExecutionId: execution }, {
-        ...mutationWorker,
-        provider: () => enrichmentProviderFixture,
-      });
+      const first = await processEnrichmentStep(
+        { jobId: source, workflowExecutionId: execution },
+        { ...mutationWorker, provider: () => enrichmentProviderFixture },
+      );
       if (!(first.ok && first.value.completed > 0 && first.value.completed < 25)) {
         expect.unreachable(
           'Expected first.ok && first.value.completed > 0 && first.value.completed < 25',

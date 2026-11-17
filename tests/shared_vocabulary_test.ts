@@ -17,23 +17,27 @@ import { vocabularyRoundTrip } from './shared_vocabulary_round_trip.ts';
 const BODY = '<p>Context</p>';
 
 testCase('choice exports emit shared vocabulary classes for single and multi select', () => {
-  const single = exportQti3TestItemXml('single_select', {
-    title: 'Single',
-    bodyHtml: BODY,
-    promptHtml: 'Pick',
-    choices: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
-    correctId: 'A',
-    sharedVocabulary: {
-      labelStyle: 'cjk-ideographic',
-      labelSuffix: 'parenthesis',
-      orientation: 'vertical',
-      choicesStacking: 4,
-      selectionTone: 'dark',
-      inputControlHidden: true,
-      unselectedHidden: true,
-      writingOrientation: 'vertical-rl',
+  const single = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Single',
+      bodyHtml: BODY,
+      promptHtml: 'Pick',
+      choices: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
+      correctId: 'A',
+      sharedVocabulary: {
+        labelStyle: 'cjk-ideographic',
+        labelSuffix: 'parenthesis',
+        orientation: 'vertical',
+        choicesStacking: 4,
+        selectionTone: 'dark',
+        inputControlHidden: true,
+        unselectedHidden: true,
+        writingOrientation: 'vertical-rl',
+      },
     },
-  }, { identifier: 'choice-sv' });
+    { identifier: 'choice-sv' },
+  );
   if (!(single.includes('qti-labels-cjk-ideographic'))) {
     expect.unreachable("Expected single.includes('qti-labels-cjk-ideographic')");
   }
@@ -62,14 +66,18 @@ testCase('choice exports emit shared vocabulary classes for single and multi sel
     expect.unreachable('Expected !single.includes(\' orientation="vertical"\')');
   }
 
-  const multi = exportQti3TestItemXml('multi_select', {
-    title: 'Multi',
-    bodyHtml: BODY,
-    promptHtml: 'Pick',
-    choices: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
-    correctIds: ['A'],
-    sharedVocabulary: { labelStyle: 'lower-alpha', selectionTone: 'light' },
-  }, { identifier: 'multi-sv' });
+  const multi = exportQti3TestItemXml(
+    'multi_select',
+    {
+      title: 'Multi',
+      bodyHtml: BODY,
+      promptHtml: 'Pick',
+      choices: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
+      correctIds: ['A'],
+      sharedVocabulary: { labelStyle: 'lower-alpha', selectionTone: 'light' },
+    },
+    { identifier: 'multi-sv' },
+  );
   if (!(multi.includes('qti-labels-lower-alpha'))) {
     expect.unreachable("Expected multi.includes('qti-labels-lower-alpha')");
   }
@@ -79,20 +87,24 @@ testCase('choice exports emit shared vocabulary classes for single and multi sel
 });
 
 testCase('order and match exports emit placement and tabular shared vocabulary', () => {
-  const order = exportQti3TestItemXml('order', {
-    title: 'Order',
-    bodyHtml: BODY,
-    choices: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
-    correctOrder: ['A', 'B'],
-    minChoicesMessage: 'Place at least one',
-    maxChoicesMessage: 'Place no more than two',
-    sharedVocabulary: {
-      labelStyle: 'upper-alpha',
-      choicesPosition: 'left',
-      choicesContainerWidth: 180,
-      orientation: 'vertical',
+  const order = exportQti3TestItemXml(
+    'order',
+    {
+      title: 'Order',
+      bodyHtml: BODY,
+      choices: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
+      correctOrder: ['A', 'B'],
+      minChoicesMessage: 'Place at least one',
+      maxChoicesMessage: 'Place no more than two',
+      sharedVocabulary: {
+        labelStyle: 'upper-alpha',
+        choicesPosition: 'left',
+        choicesContainerWidth: 180,
+        orientation: 'vertical',
+      },
     },
-  }, { identifier: 'order-sv' });
+    { identifier: 'order-sv' },
+  );
   if (!(order.includes('qti-labels-upper-alpha'))) {
     expect.unreachable("Expected order.includes('qti-labels-upper-alpha')");
   }
@@ -116,20 +128,24 @@ testCase('order and match exports emit placement and tabular shared vocabulary',
     );
   }
 
-  const match = exportQti3TestItemXml('match', {
-    title: 'Match',
-    bodyHtml: BODY,
-    sources: [{ id: 'A', text: 'A' }],
-    targets: [{ id: 'T1', text: 'T1' }],
-    correctPairs: [{ sourceId: 'A', targetId: 'T1' }],
-    sharedVocabulary: {
-      matchTabular: true,
-      matchHeaderHidden: true,
-      matchFirstColumnHeader: 'Terms',
-      choicesPosition: 'right',
-      choicesContainerWidth: 160,
+  const match = exportQti3TestItemXml(
+    'match',
+    {
+      title: 'Match',
+      bodyHtml: BODY,
+      sources: [{ id: 'A', text: 'A' }],
+      targets: [{ id: 'T1', text: 'T1' }],
+      correctPairs: [{ sourceId: 'A', targetId: 'T1' }],
+      sharedVocabulary: {
+        matchTabular: true,
+        matchHeaderHidden: true,
+        matchFirstColumnHeader: 'Terms',
+        choicesPosition: 'right',
+        choicesContainerWidth: 160,
+      },
     },
-  }, { identifier: 'match-sv' });
+    { identifier: 'match-sv' },
+  );
   if (!(match.includes('qti-match-tabular'))) {
     expect.unreachable("Expected match.includes('qti-match-tabular')");
   }
@@ -155,18 +171,22 @@ testCase('gap match export emits interaction and per-gap shared vocabulary', () 
     className: 'qti-gap-marker',
     contentEditable: false,
   });
-  const xml = exportQti3TestItemXml('gap_match', {
-    title: 'Gap',
-    bodyHtml: `<p>${gapMarker}</p>`,
-    gapChoices: [{ id: 'A', kind: 'text', text: 'Alpha', matchMax: 1 }],
-    gaps: [{ id: 'G1', label: 'G1', widthClass: 'qti-input-width-35' }],
-    correctGapPairs: [{ choiceId: 'A', gapId: 'G1' }],
-    sharedVocabulary: {
-      gapPlacement: true,
-      choicesPosition: 'left',
-      choicesContainerWidth: 120,
+  const xml = exportQti3TestItemXml(
+    'gap_match',
+    {
+      title: 'Gap',
+      bodyHtml: `<p>${gapMarker}</p>`,
+      gapChoices: [{ id: 'A', kind: 'text', text: 'Alpha', matchMax: 1 }],
+      gaps: [{ id: 'G1', label: 'G1', widthClass: 'qti-input-width-35' }],
+      correctGapPairs: [{ choiceId: 'A', gapId: 'G1' }],
+      sharedVocabulary: {
+        gapPlacement: true,
+        choicesPosition: 'left',
+        choicesContainerWidth: 120,
+      },
     },
-  }, { identifier: 'gap-sv' });
+    { identifier: 'gap-sv' },
+  );
   if (!(xml.includes('qti-gap-placement'))) {
     expect.unreachable("Expected xml.includes('qti-gap-placement')");
   }
@@ -184,20 +204,24 @@ testCase('gap match export emits interaction and per-gap shared vocabulary', () 
 });
 
 testCase('graphic gap match export uses shared vocabulary only', () => {
-  const xml = exportQti3TestItemXml('graphic_gap_match', {
-    title: 'Graphic Gap',
-    promptHtml: 'Drag labels',
-    graphicBackgroundSrc: 'map.png',
-    graphicBackgroundAlt: 'Map',
-    choices: [{ id: 'A', kind: 'text', text: 'A', matchMax: 1 }],
-    targets: [{ id: 'T1', shape: 'rect', coords: '1,1,2,2', matchMax: 1 }],
-    correctPairs: [{ choiceId: 'A', targetId: 'T1' }],
-    sharedVocabulary: {
-      choicesPosition: 'top',
-      choicesContainerWidth: 320,
-      selectionTone: 'light',
+  const xml = exportQti3TestItemXml(
+    'graphic_gap_match',
+    {
+      title: 'Graphic Gap',
+      promptHtml: 'Drag labels',
+      graphicBackgroundSrc: 'map.png',
+      graphicBackgroundAlt: 'Map',
+      choices: [{ id: 'A', kind: 'text', text: 'A', matchMax: 1 }],
+      targets: [{ id: 'T1', shape: 'rect', coords: '1,1,2,2', matchMax: 1 }],
+      correctPairs: [{ choiceId: 'A', targetId: 'T1' }],
+      sharedVocabulary: {
+        choicesPosition: 'top',
+        choicesContainerWidth: 320,
+        selectionTone: 'light',
+      },
     },
-  }, { identifier: 'graphic-gap-sv' });
+    { identifier: 'graphic-gap-sv' },
+  );
   if (!(xml.includes('qti-choices-top'))) {
     expect.unreachable("Expected xml.includes('qti-choices-top')");
   }
@@ -210,13 +234,17 @@ testCase('graphic gap match export uses shared vocabulary only', () => {
 });
 
 testCase('hottext and hotspot exports emit shared vocabulary classes', () => {
-  const hottext = exportQti3TestItemXml('hottext', {
-    title: 'Hottext',
-    bodyHtml: '<p>Pick <span data-qti-hottext="H1">one</span>.</p>',
-    hottexts: [{ id: 'H1', text: 'one' }],
-    correctIds: ['H1'],
-    sharedVocabulary: { selectionTone: 'dark', unselectedHidden: true },
-  }, { identifier: 'hottext-sv' });
+  const hottext = exportQti3TestItemXml(
+    'hottext',
+    {
+      title: 'Hottext',
+      bodyHtml: '<p>Pick <span data-qti-hottext="H1">one</span>.</p>',
+      hottexts: [{ id: 'H1', text: 'one' }],
+      correctIds: ['H1'],
+      sharedVocabulary: { selectionTone: 'dark', unselectedHidden: true },
+    },
+    { identifier: 'hottext-sv' },
+  );
   if (!(hottext.includes('qti-selections-dark'))) {
     expect.unreachable("Expected hottext.includes('qti-selections-dark')");
   }
@@ -224,33 +252,41 @@ testCase('hottext and hotspot exports emit shared vocabulary classes', () => {
     expect.unreachable("Expected hottext.includes('qti-unselected-hidden')");
   }
 
-  const hotspot = exportQti3TestItemXml('hotspot', {
-    title: 'Hotspot',
-    promptHtml: 'Select region',
-    hotspotImageSrc: 'map.png',
-    hotspotImageAlt: 'Map',
-    choices: [{ id: 'R1', shape: 'rect', coords: '1,1,2,2' }],
-    correctIds: ['R1'],
-    sharedVocabulary: { selectionTone: 'light' },
-  }, { identifier: 'hotspot-sv' });
+  const hotspot = exportQti3TestItemXml(
+    'hotspot',
+    {
+      title: 'Hotspot',
+      promptHtml: 'Select region',
+      hotspotImageSrc: 'map.png',
+      hotspotImageAlt: 'Map',
+      choices: [{ id: 'R1', shape: 'rect', coords: '1,1,2,2' }],
+      correctIds: ['R1'],
+      sharedVocabulary: { selectionTone: 'light' },
+    },
+    { identifier: 'hotspot-sv' },
+  );
   if (!(hotspot.includes('qti-selections-light'))) {
     expect.unreachable("Expected hotspot.includes('qti-selections-light')");
   }
 });
 
 testCase('media export emits shared player controls and pause attributes', () => {
-  const xml = exportQti3TestItemXml('media', {
-    title: 'Media',
-    bodyHtml: BODY,
-    mediaKind: 'audio',
-    mediaSources: [{ src: 'audio.mp3', type: 'audio/mpeg' }],
-    mediaAutostart: false,
-    sharedVocabulary: {
-      mediaPlayerControls: ['captions'],
-      mediaPauseDelay: 0.25,
-      mediaPauseDuration: 1.5,
+  const xml = exportQti3TestItemXml(
+    'media',
+    {
+      title: 'Media',
+      bodyHtml: BODY,
+      mediaKind: 'audio',
+      mediaSources: [{ src: 'audio.mp3', type: 'audio/mpeg' }],
+      mediaAutostart: false,
+      sharedVocabulary: {
+        mediaPlayerControls: ['captions'],
+        mediaPauseDelay: 0.25,
+        mediaPauseDuration: 1.5,
+      },
     },
-  }, { identifier: 'media-sv' });
+    { identifier: 'media-sv' },
+  );
   if (!(xml.includes('data-qti-media-player-controls="captions"'))) {
     expect.unreachable('Expected xml.includes(\'data-qti-media-player-controls="captions"\')');
   }
@@ -263,16 +299,20 @@ testCase('media export emits shared player controls and pause attributes', () =>
 });
 
 testCase('media export emits multiple player control tokens', () => {
-  const xml = exportQti3TestItemXml('media', {
-    title: 'Media',
-    bodyHtml: BODY,
-    mediaKind: 'video',
-    mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
-    mediaAutostart: false,
-    sharedVocabulary: {
-      mediaPlayerControls: ['play', 'captions'],
+  const xml = exportQti3TestItemXml(
+    'media',
+    {
+      title: 'Media',
+      bodyHtml: BODY,
+      mediaKind: 'video',
+      mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
+      mediaAutostart: false,
+      sharedVocabulary: {
+        mediaPlayerControls: ['play', 'captions'],
+      },
     },
-  }, { identifier: 'media-multi-controls' });
+    { identifier: 'media-multi-controls' },
+  );
   if (!(xml.includes('data-qti-media-player-controls="play captions"'))) {
     expect.unreachable('Expected xml.includes(\'data-qti-media-player-controls="play captions"\')');
   }
@@ -355,18 +395,22 @@ testCase(
 );
 
 testCase('choice shared vocabulary round-trips through export and import', () => {
-  const xml = exportQti3TestItemXml('single_select', {
-    title: 'Round trip',
-    bodyHtml: BODY,
-    promptHtml: 'Pick',
-    choices: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
-    correctId: 'A',
-    sharedVocabulary: {
-      labelStyle: 'decimal',
-      orientation: 'vertical',
-      selectionTone: 'light',
+  const xml = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Round trip',
+      bodyHtml: BODY,
+      promptHtml: 'Pick',
+      choices: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
+      correctId: 'A',
+      sharedVocabulary: {
+        labelStyle: 'decimal',
+        orientation: 'vertical',
+        selectionTone: 'light',
+      },
     },
-  }, { identifier: 'round-trip' });
+    { identifier: 'round-trip' },
+  );
   const parsed = parseItemXml(xml);
   assertSharedVocabulary(parsed.draft.sharedVocabulary, {
     labelStyle: 'decimal',

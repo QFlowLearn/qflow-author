@@ -494,7 +494,7 @@ export function TextEntryContent(props: TextEntryContentProps) {
               )}
             </div>
             <div class='grid gap-3 sm:grid-cols-2'>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('driver.label')}</span>
                 <Input
                   value={slot.label}
@@ -503,7 +503,7 @@ export function TextEntryContent(props: TextEntryContentProps) {
                 />
               </label>
               {props.showIdentifiers && (
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span>{i18n.t('driver.identifier')}</span>
                   <Input
                     value={slot.id}
@@ -517,7 +517,7 @@ export function TextEntryContent(props: TextEntryContentProps) {
               )}
             </div>
             <div class='grid gap-3 md:grid-cols-[minmax(0,0.95fr)_minmax(0,0.95fr)_minmax(0,1.15fr)] md:items-start'>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('driver.expectedLength')}</span>
                 <Input
                   type='number'
@@ -528,7 +528,7 @@ export function TextEntryContent(props: TextEntryContentProps) {
                   placeholder={i18n.t('driver.lengthPlaceholder')}
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('driver.width')}</span>
                 <Select
                   value={slot.widthClass ?? ''}
@@ -546,7 +546,7 @@ export function TextEntryContent(props: TextEntryContentProps) {
                   ))}
                 </Select>
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('driver.patternMask')}</span>
                 <Select
                   value={patternSelection}
@@ -593,7 +593,7 @@ export function TextEntryContent(props: TextEntryContentProps) {
               </label>
             </div>
             {patternSelection !== '' && (
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('driver.patternMessage')}</span>
                 <Input
                   value={slot.patternMessage ?? ''}
@@ -611,8 +611,7 @@ export function TextEntryContent(props: TextEntryContentProps) {
                 <Button
                   size='xs'
                   type='button'
-                  onClick={() =>
-                    props.addAnswer(slot.id)}
+                  onClick={() => props.addAnswer(slot.id)}
                 >
                   {i18n.t('driver.addAnswer')}
                 </Button>
@@ -660,8 +659,7 @@ export function TextEntryContent(props: TextEntryContentProps) {
                       variant='danger-ghost'
                       type='button'
                       disabled={slot.answers.length <= 1}
-                      onClick={() =>
-                        props.removeAnswer(slot.id, answer.id)}
+                      onClick={() => props.removeAnswer(slot.id, answer.id)}
                     >
                       {i18n.t('driver.remove')}
                     </Button>

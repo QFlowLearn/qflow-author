@@ -52,9 +52,9 @@ export function OrganizationSourceMappings(props: {
                 ])}
             >
               <option value=''>{i18n.t('items.organization.noSourceMapping')}</option>
-              {definition.topics.filter((t) =>
-                t.label.trim()
-              ).map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
+              {definition.topics.filter((t) => t.label.trim()).map((t) => (
+                <option key={t.id} value={t.id}>{t.label}</option>
+              ))}
             </Select>
           </BankField>
           <p class='text-sm break-words'>

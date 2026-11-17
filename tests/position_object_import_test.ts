@@ -38,27 +38,31 @@ testCase(
 
     const parsed = parseItemXml(xml);
     const draft = draftOfType<PositionObjectDraft>(parsed, 'position_object');
-    const rebuilt = exportQti3TestItemXml('position_object', {
-      title: draft.title,
-      promptHtml: draft.promptHtml,
-      bodyHtml: draft.bodyHtml,
-      responseIdentifier: draft.responseIdentifier,
-      positionStageSrc: draft.positionStageSrc,
-      positionStageAlt: draft.positionStageAlt,
-      positionStageType: draft.positionStageType,
-      positionStageWidth: draft.positionStageWidth,
-      positionStageHeight: draft.positionStageHeight,
-      positionObjectSrc: draft.positionObjectSrc,
-      positionObjectAlt: draft.positionObjectAlt,
-      positionObjectType: draft.positionObjectType,
-      positionObjectWidth: draft.positionObjectWidth,
-      positionObjectHeight: draft.positionObjectHeight,
-      positionCenterPoint: draft.positionCenterPoint,
-      positionTargets: draft.positionTargets,
-      positionCorrectPoints: draft.positionCorrectPoints,
-      minChoices: draft.minChoices,
-      maxChoices: draft.maxChoices,
-    }, { identifier: 'item-position-roundtrip' });
+    const rebuilt = exportQti3TestItemXml(
+      'position_object',
+      {
+        title: draft.title,
+        promptHtml: draft.promptHtml,
+        bodyHtml: draft.bodyHtml,
+        responseIdentifier: draft.responseIdentifier,
+        positionStageSrc: draft.positionStageSrc,
+        positionStageAlt: draft.positionStageAlt,
+        positionStageType: draft.positionStageType,
+        positionStageWidth: draft.positionStageWidth,
+        positionStageHeight: draft.positionStageHeight,
+        positionObjectSrc: draft.positionObjectSrc,
+        positionObjectAlt: draft.positionObjectAlt,
+        positionObjectType: draft.positionObjectType,
+        positionObjectWidth: draft.positionObjectWidth,
+        positionObjectHeight: draft.positionObjectHeight,
+        positionCenterPoint: draft.positionCenterPoint,
+        positionTargets: draft.positionTargets,
+        positionCorrectPoints: draft.positionCorrectPoints,
+        minChoices: draft.minChoices,
+        maxChoices: draft.maxChoices,
+      },
+      { identifier: 'item-position-roundtrip' },
+    );
 
     if (!(rebuilt.includes('data="images/uk.png"'))) {
       expect.unreachable('Expected rebuilt.includes(\'data="images/uk.png"\')');

@@ -168,7 +168,7 @@ export default function MigrationAdminPage(
         <div class='space-y-4 p-5'>
           <h2 class='text-lg font-medium'>{i18n.t('settings.migrations.filterTitle')}</h2>
           <div class='grid gap-4 md:grid-cols-4'>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('settings.migrations.fileOwner')}</span>
               <Input
                 name='q'
@@ -176,7 +176,7 @@ export default function MigrationAdminPage(
                 placeholder={i18n.t('settings.migrations.fileOwnerPlaceholder')}
               />
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('settings.migrations.status')}</span>
               <Select name='status' defaultValue={status}>
                 <option value=''>{i18n.t('settings.migrations.allStatuses')}</option>
@@ -187,7 +187,7 @@ export default function MigrationAdminPage(
                 <option value='failed'>{i18n.t('settings.migrations.failed')}</option>
               </Select>
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('settings.migrations.readiness')}</span>
               <Select name='readiness' defaultValue={readiness}>
                 <option value=''>{i18n.t('settings.migrations.allReadiness')}</option>
@@ -199,7 +199,7 @@ export default function MigrationAdminPage(
                 <option value='failed'>{i18n.t('settings.migrations.failed')}</option>
               </Select>
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('settings.migrations.review')}</span>
               <Select name='review' defaultValue={review}>
                 <option value=''>{i18n.t('settings.migrations.allReview')}</option>

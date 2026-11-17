@@ -57,19 +57,25 @@ async function handle(ctx: HttpRequest) {
 
     const storage = resolveStorage(ctx.runtime);
     if (request.purpose === 'recover_existing') {
-      const batch = await enqueueMigrationBatch(auth, {
-        idempotencyKey,
-        destination: request.destination,
-        purpose: 'recover_existing',
-        sources: selected.map((candidate, index) => {
-          const entry = request.entries[index];
-          if (!entry) throw new Error('Inspected source inventory is inconsistent.');
-          return {
-            source: toImportSource(entry),
-            adapter: candidate.adapter,
-          };
-        }),
-      }, { storage });
+      const batch = await enqueueMigrationBatch(
+        auth,
+        {
+          idempotencyKey,
+          destination: request.destination,
+          purpose: 'recover_existing',
+          sources: selected.map((candidate, index) => {
+            const entry = request.entries[index];
+            if (!entry) {
+              throw new Error('Inspected source inventory is inconsistent.');
+            }
+            return {
+              source: toImportSource(entry),
+              adapter: candidate.adapter,
+            };
+          }),
+        },
+        { storage },
+      );
       const dispatch = await dispatchPendingWorkflowJobs(ctx.runtime, {
         jobIds: batch.runs.map((run) => run.id),
         tenantId: auth.tenantId,
@@ -81,15 +87,18 @@ async function handle(ctx: HttpRequest) {
       if (!firstRun) {
         throw new SourceIntakeRequestError('Add a source before you continue.');
       }
-      return Response.json({
-        purpose: request.purpose,
-        batchId: batch.id,
-        runIds: batch.runs.map((run) => run.id),
-        statusUrl: `/imports/batches/${batch.id}`,
-        redirectTo: batch.runs.length === 1
-          ? `/imports/${firstRun.id}`
-          : `/imports/batches/${batch.id}`,
-      }, { status: 202 });
+      return Response.json(
+        {
+          purpose: request.purpose,
+          batchId: batch.id,
+          runIds: batch.runs.map((run) => run.id),
+          statusUrl: `/imports/batches/${batch.id}`,
+          redirectTo: batch.runs.length === 1
+            ? `/imports/${firstRun.id}`
+            : `/imports/batches/${batch.id}`,
+        },
+        { status: 202 },
+      );
     }
 
     const entry = request.entries[0];
@@ -104,12 +113,16 @@ async function handle(ctx: HttpRequest) {
         bytes: new TextEncoder().encode(entry.input.text),
       }
       : toImportSource(entry);
-    const batch = await enqueueMigrationBatch(auth, {
-      idempotencyKey,
-      destination: request.destination,
-      purpose: 'generate_new',
-      sources: [{ source, adapter: candidate.adapter }],
-    }, { storage });
+    const batch = await enqueueMigrationBatch(
+      auth,
+      {
+        idempotencyKey,
+        destination: request.destination,
+        purpose: 'generate_new',
+        sources: [{ source, adapter: candidate.adapter }],
+      },
+      { storage },
+    );
     const dispatch = await dispatchPendingWorkflowJobs(ctx.runtime, {
       jobIds: batch.runs.map((queuedRun) => queuedRun.id),
       tenantId: auth.tenantId,
@@ -125,13 +138,16 @@ async function handle(ctx: HttpRequest) {
     if (!run) {
       throw new SourceIntakeRequestError('Generate from source requires one source.');
     }
-    return Response.json({
-      purpose: request.purpose,
-      batchId: batch.id,
-      runIds: [run.id],
-      statusUrl: `/imports/batches/${batch.id}`,
-      redirectTo: `/imports/${run.id}`,
-    }, { status: 202 });
+    return Response.json(
+      {
+        purpose: request.purpose,
+        batchId: batch.id,
+        runIds: [run.id],
+        statusUrl: `/imports/batches/${batch.id}`,
+        redirectTo: `/imports/${run.id}`,
+      },
+      { status: 202 },
+    );
   } catch (error: unknown) {
     if (error instanceof WorkflowBindingConfigError) {
       console.error(JSON.stringify({
@@ -146,11 +162,14 @@ async function handle(ctx: HttpRequest) {
       });
     }
     if (error instanceof SourceIntakeRequestError) {
-      return Response.json({
-        error: error.message,
-        code: error.code,
-        ...(error.params ? { params: error.params } : {}),
-      }, { status: error.status });
+      return Response.json(
+        {
+          error: error.message,
+          code: error.code,
+          ...(error.params ? { params: error.params } : {}),
+        },
+        { status: error.status },
+      );
     }
     if (error instanceof SourceSelectionError) {
       return Response.json({ error: error.message, code: error.code }, { status: 422 });

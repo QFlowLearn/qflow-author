@@ -15,7 +15,7 @@ export default function SettingsDisclosure(props: {
       <h3>
         <button
           type='button'
-          class='flex w-full items-start gap-2 rounded py-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+          class='flex w-full items-start gap-2 rounded-sm py-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
           aria-expanded={open}
           aria-controls={id}
           onClick={() => setOpen((value) => !value)}

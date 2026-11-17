@@ -60,7 +60,7 @@ export default function AnswerFeedbackEditor() {
                   )
                   : (
                     <>
-                      <label class='ds-form-control gap-2'>
+                      <label class='flex flex-col gap-2'>
                         <span>{i18n.t('editor.answerFeedback.text')}</span>
                         <Textarea
                           rows={4}
@@ -73,7 +73,7 @@ export default function AnswerFeedbackEditor() {
                       {entry.link
                         ? (
                           <div class='space-y-3'>
-                            <label class='ds-form-control gap-2'>
+                            <label class='flex flex-col gap-2'>
                               <span>{i18n.t('editor.answerFeedback.url')}</span>
                               <Input
                                 type='url'
@@ -90,7 +90,7 @@ export default function AnswerFeedbackEditor() {
                                   })}
                               />
                             </label>
-                            <label class='ds-form-control gap-2'>
+                            <label class='flex flex-col gap-2'>
                               <span>{i18n.t('editor.answerFeedback.label')}</span>
                               <Input
                                 required
@@ -124,7 +124,7 @@ export default function AnswerFeedbackEditor() {
                             {i18n.t('editor.answerFeedback.addLink')}
                           </Button>
                         )}
-                      <label class='ds-form-control gap-2'>
+                      <label class='flex flex-col gap-2'>
                         <span>{i18n.t('editor.answerFeedback.media')}</span>
                         <Select
                           value={entry.media?.kind ?? 'none'}

@@ -79,7 +79,7 @@ export default function PasswordSettingsPage({ data, i18n }: { data: Data; i18n:
           {i18n.t('settings.password.subtitle')}
         </p>
       </div>
-      <form class='ds-card ds-card-bordered max-w-xl' method='post'>
+      <form class='ds-card ds-card-border max-w-xl' method='post'>
         <div class='ds-card-body space-y-4'>
           {data.force && !data.success && (
             <div class='ds-alert text-sm'>
@@ -96,7 +96,7 @@ export default function PasswordSettingsPage({ data, i18n }: { data: Data; i18n:
               {i18n.t('settings.password.updated')}
             </div>
           )}
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('settings.password.current')}</span>
             <Input
               name='currentPassword'
@@ -105,7 +105,7 @@ export default function PasswordSettingsPage({ data, i18n }: { data: Data; i18n:
               required
             />
           </label>
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('settings.password.new')}</span>
             <Input
               id='new-password'

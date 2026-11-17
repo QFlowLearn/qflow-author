@@ -27,11 +27,10 @@ async function fixture(source: string): Promise<string> {
   await writeFile(`${cwd}/package.json`, '{"type":"module"}');
   await writeRootConfig({ root: cwd, buildContext: { mode: 'production', isPreview: false } });
   for (
-    const [directoryName, name, contents] of [['default', 'owned-worker-fixture', source], [
-      'renderer',
-      'owned-print-renderer-fixture',
-      workerSource(),
-    ]]
+    const [directoryName, name, contents] of [
+      ['default', 'owned-worker-fixture', source],
+      ['renderer', 'owned-print-renderer-fixture', workerSource()],
+    ]
   ) {
     const bundle = getWorkerBundleDir(cwd, directoryName);
     await mkdir(bundle, { recursive: true });

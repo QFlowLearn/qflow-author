@@ -107,11 +107,11 @@ globalThis.mount(globalThis.__CONFIG__);
       : mode === 'geometry'
       ? {
         ...baseConfig,
-        choices: [{ id: 'A<&-Ω', shape: 'circle', coords: '50,50,10' }, {
-          id: 'B',
-          shape: 'rect',
-          coords: '10,10,30,30',
-        }, { id: 'C', shape: 'poly', coords: '' }],
+        choices: [
+          { id: 'A<&-Ω', shape: 'circle', coords: '50,50,10' },
+          { id: 'B', shape: 'rect', coords: '10,10,30,30' },
+          { id: 'C', shape: 'poly', coords: '' },
+        ],
       }
       : mode === 'no-active'
       ? { ...baseConfig, choices: [], correctIds: [] }

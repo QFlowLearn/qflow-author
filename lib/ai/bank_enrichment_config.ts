@@ -29,7 +29,7 @@ export function parseEnrichmentAIConfig(value: unknown): EnrichmentAIConfig | nu
   if (!isEnrichmentRecord(value)) return null;
   if (
     Object.keys(value).sort().join(',') !==
-      'inputMicrosPerMillion,model,outputMicrosPerMillion,previewBudgetMicros,promptVersion,provider,runBudgetMicros'
+    'inputMicrosPerMillion,model,outputMicrosPerMillion,previewBudgetMicros,promptVersion,provider,runBudgetMicros'
   ) return null;
   if (value.provider !== 'cloudflare' || value.promptVersion !== 'bank-enrichment-v1') return null;
   // Explicitly supported Workers AI models share the non-streaming chat-completion contract.

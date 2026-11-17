@@ -82,30 +82,38 @@ testCase('QTI item import rejects missing or invalid xml:lang structurally', () 
 });
 
 testCase('parseQtiPackage imports parts and items', async () => {
-  const item1 = exportQti3TestItemXml('single_select', {
-    title: 'Capital',
-    bodyHtml: '<p>Geo prompt body</p>',
-    promptHtml: '<p>What is the capital of France?</p>',
-    choices: [
-      { id: 'A', text: 'Paris' },
-      { id: 'B', text: 'Rome' },
-      { id: 'C', text: 'Berlin' },
-    ],
-    correctId: 'A',
-    shuffle: true,
-  }, { identifier: 'item-1' });
-  const item2 = exportQti3TestItemXml('multi_select', {
-    title: 'Planets',
-    bodyHtml: '<p>Space question body</p>',
-    promptHtml: '<p>Select gas giants.</p>',
-    choices: [
-      { id: 'A', text: 'Mars' },
-      { id: 'B', text: 'Jupiter' },
-      { id: 'C', text: 'Saturn' },
-    ],
-    correctIds: ['B', 'C'],
-    shuffle: false,
-  }, { identifier: 'item-2' });
+  const item1 = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Capital',
+      bodyHtml: '<p>Geo prompt body</p>',
+      promptHtml: '<p>What is the capital of France?</p>',
+      choices: [
+        { id: 'A', text: 'Paris' },
+        { id: 'B', text: 'Rome' },
+        { id: 'C', text: 'Berlin' },
+      ],
+      correctId: 'A',
+      shuffle: true,
+    },
+    { identifier: 'item-1' },
+  );
+  const item2 = exportQti3TestItemXml(
+    'multi_select',
+    {
+      title: 'Planets',
+      bodyHtml: '<p>Space question body</p>',
+      promptHtml: '<p>Select gas giants.</p>',
+      choices: [
+        { id: 'A', text: 'Mars' },
+        { id: 'B', text: 'Jupiter' },
+        { id: 'C', text: 'Saturn' },
+      ],
+      correctIds: ['B', 'C'],
+      shuffle: false,
+    },
+    { identifier: 'item-2' },
+  );
   const testXml = buildAssessmentTestXml({ id: 'demo', title: 'Sample' }, [
     {
       id: 'part-1',
@@ -155,17 +163,21 @@ testCase('parseQtiPackage imports parts and items', async () => {
 });
 
 testCase('parseQtiPackage surfaces assets referenced in content', async () => {
-  let itemXml = exportQti3TestItemXml('single_select', {
-    title: 'Diagram',
-    bodyHtml: '<p>Body with image</p>',
-    promptHtml: '<p>Review the diagram.</p>',
-    choices: [
-      { id: 'A', text: 'One' },
-      { id: 'B', text: 'Two' },
-    ],
-    correctId: 'A',
-    shuffle: false,
-  }, { identifier: 'item-asset' });
+  let itemXml = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Diagram',
+      bodyHtml: '<p>Body with image</p>',
+      promptHtml: '<p>Review the diagram.</p>',
+      choices: [
+        { id: 'A', text: 'One' },
+        { id: 'B', text: 'Two' },
+      ],
+      correctId: 'A',
+      shuffle: false,
+    },
+    { identifier: 'item-asset' },
+  );
   itemXml = itemXml.replace(
     /<qti-prompt>[\s\S]*?<\/qti-prompt>/,
     '<qti-prompt>Diagram <qti-img src="assets/diagram.png" alt="Diagram"/></qti-prompt>',
@@ -249,18 +261,22 @@ testCase('parseQtiPackage stubs unsupported interactions instead of failing impo
 });
 
 testCase('parseQtiPackage imports item-only QTI 3 package without a test resource', async () => {
-  const itemXml = exportQti3TestItemXml('single_select', {
-    title: 'Standalone Item',
-    bodyHtml: '<p>Body only</p>',
-    promptHtml: '<p>What is 2 + 2?</p>',
-    choices: [
-      { id: 'A', text: '3' },
-      { id: 'B', text: '4' },
-      { id: 'C', text: '5' },
-    ],
-    correctId: 'B',
-    shuffle: false,
-  }, { identifier: 'standalone-1' });
+  const itemXml = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Standalone Item',
+      bodyHtml: '<p>Body only</p>',
+      promptHtml: '<p>What is 2 + 2?</p>',
+      choices: [
+        { id: 'A', text: '3' },
+        { id: 'B', text: '4' },
+        { id: 'C', text: '5' },
+      ],
+      correctId: 'B',
+      shuffle: false,
+    },
+    { identifier: 'standalone-1' },
+  );
 
   const manifestXml = `<?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns="http://www.imsglobal.org/xsd/qti/qtiv3p0/imscp_v1p1">
@@ -287,17 +303,21 @@ testCase('parseQtiPackage imports item-only QTI 3 package without a test resourc
 });
 
 testCase('parseQtiPackage preserves typed catalog validation diagnostics', async () => {
-  const baseItemXml = exportQti3TestItemXml('single_select', {
-    title: 'Catalog policy',
-    bodyHtml: '<p>Body</p>',
-    promptHtml: '<p>Choose one.</p>',
-    choices: [
-      { id: 'A', text: 'One' },
-      { id: 'B', text: 'Two' },
-    ],
-    correctId: 'A',
-    shuffle: false,
-  }, { identifier: 'catalog-policy' });
+  const baseItemXml = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Catalog policy',
+      bodyHtml: '<p>Body</p>',
+      promptHtml: '<p>Choose one.</p>',
+      choices: [
+        { id: 'A', text: 'One' },
+        { id: 'B', text: 'Two' },
+      ],
+      correctId: 'A',
+      shuffle: false,
+    },
+    { identifier: 'catalog-policy' },
+  );
   const itemXml = baseItemXml.replace(
     /(<qti-response-processing\b)/,
     `<qti-catalog-info>
@@ -328,17 +348,21 @@ testCase('parseQtiPackage preserves typed catalog validation diagnostics', async
 });
 
 testCase('parseQtiPackage does not hoist section options into part options', async () => {
-  const itemXml = exportQti3TestItemXml('single_select', {
-    title: 'Section Option Item',
-    bodyHtml: '<p>Body</p>',
-    promptHtml: '<p>Prompt</p>',
-    choices: [
-      { id: 'A', text: 'One' },
-      { id: 'B', text: 'Two' },
-    ],
-    correctId: 'A',
-    shuffle: false,
-  }, { identifier: 'section-option-item' });
+  const itemXml = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Section Option Item',
+      bodyHtml: '<p>Body</p>',
+      promptHtml: '<p>Prompt</p>',
+      choices: [
+        { id: 'A', text: 'One' },
+        { id: 'B', text: 'Two' },
+      ],
+      correctId: 'A',
+      shuffle: false,
+    },
+    { identifier: 'section-option-item' },
+  );
 
   const testXml = `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" identifier="test-1" title="Nested Section Options">
@@ -388,18 +412,22 @@ testCase('parseQtiPackage does not hoist section options into part options', asy
 testCase(
   'single-select XML preserves data-ssml and data-reading-type through import parsing',
   () => {
-    const xml = exportQti3TestItemXml('single_select', {
-      title: 'SSML prompt',
-      bodyHtml:
-        '<p><span data-ssml=\'{"break":{"time":"1s"}}\' data-reading-type="screen-reader">Pause</span></p>',
-      promptHtml:
-        '<span data-ssml=\'{"sub":{"alias":"Froyd"}}\' data-reading-type="computer-read-aloud">Freud</span>',
-      choices: [
-        { id: 'A', text: 'Option A' },
-        { id: 'B', text: 'Option B' },
-      ],
-      correctId: 'A',
-    }, { identifier: 'item-ssml' });
+    const xml = exportQti3TestItemXml(
+      'single_select',
+      {
+        title: 'SSML prompt',
+        bodyHtml:
+          '<p><span data-ssml=\'{"break":{"time":"1s"}}\' data-reading-type="screen-reader">Pause</span></p>',
+        promptHtml:
+          '<span data-ssml=\'{"sub":{"alias":"Froyd"}}\' data-reading-type="computer-read-aloud">Freud</span>',
+        choices: [
+          { id: 'A', text: 'Option A' },
+          { id: 'B', text: 'Option B' },
+        ],
+        correctId: 'A',
+      },
+      { identifier: 'item-ssml' },
+    );
 
     expect(xml).toContain('data-ssml=');
     expect(xml).toContain('data-reading-type="computer-read-aloud"');
@@ -414,12 +442,16 @@ testCase(
 );
 
 testCase('a QTI choice prompt is sufficient question content without a separate body', () => {
-  const item = exportQti3TestItemXml('single_select', {
-    title: 'Prompt-only question',
-    promptHtml: '<p>Which is correct?</p>',
-    choices: [{ id: 'A', text: 'Yes' }, { id: 'B', text: 'No' }],
-    correctId: 'A',
-  }, { identifier: 'prompt-only' });
+  const item = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Prompt-only question',
+      promptHtml: '<p>Which is correct?</p>',
+      choices: [{ id: 'A', text: 'Yes' }, { id: 'B', text: 'No' }],
+      correctId: 'A',
+    },
+    { identifier: 'prompt-only' },
+  );
   const draft = draftOfType<SingleSelectDraft>(parseItemXml(item), 'single_select');
   expect(validateSingleSelect(draft)).toStrictEqual([]);
   if (!(validateSingleSelect({ ...draft, bodyHtml: '', promptHtml: '' }).length > 0)) {

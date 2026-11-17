@@ -177,7 +177,7 @@ export function MediaContent(props: MediaContentProps) {
       />
 
       <div class='grid gap-3 sm:grid-cols-2'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.mediaOpeningLabel')}</span>
           <Select
             value={props.mediaKind}
@@ -202,7 +202,7 @@ export function MediaContent(props: MediaContentProps) {
       </div>
 
       {props.mediaKind === 'object' && (
-        <label class='ds-form-control max-w-2xl'>
+        <label class='flex flex-col max-w-2xl'>
           <span>{i18n.t('driver.mediaAccessibleDescription')}</span>
           <Input
             value={props.mediaObjectLabel}
@@ -237,7 +237,7 @@ export function MediaContent(props: MediaContentProps) {
                 key={`media-source-${index}`}
                 class='grid gap-2 rounded-lg border border-base-300 bg-base-100 px-3 py-2 sm:grid-cols-[1fr_1fr_auto] sm:items-center'
               >
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>
                     {index === 0
                       ? i18n.t('driver.mediaPrimarySource')
@@ -251,7 +251,7 @@ export function MediaContent(props: MediaContentProps) {
                     placeholder='assets/media.mp4'
                   />
                 </label>
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('driver.mediaMimeType')}</span>
                   <Input
                     size='sm'
@@ -278,7 +278,7 @@ export function MediaContent(props: MediaContentProps) {
 
       {(props.mediaKind === 'video' || props.mediaKind === 'audio') && (
         <div class='grid gap-3 sm:grid-cols-2'>
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('driver.mediaCaptions')}</span>
             <Input
               value={props.mediaCaptionSrc}
@@ -286,7 +286,7 @@ export function MediaContent(props: MediaContentProps) {
               placeholder='assets/captions.vtt'
             />
           </label>
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('driver.mediaCaptionLanguage')}</span>
             <Input
               value={props.mediaCaptionLang}
@@ -294,7 +294,7 @@ export function MediaContent(props: MediaContentProps) {
               placeholder='en'
             />
           </label>
-          <label class='ds-form-control sm:col-span-2'>
+          <label class='flex flex-col sm:col-span-2'>
             <span>{i18n.t('driver.mediaTranscript')}</span>
             <Textarea
               value={props.mediaTranscript}

@@ -212,12 +212,15 @@ testCase('only full Clef can be configured for organization inference', async ()
     expect(loadClefOrganizationConfig((key) => environment[key])).toStrictEqual(null);
     expect(parseClefOrganizationConfig({ ...config, modelVersion })).toStrictEqual(null);
     let calls = 0;
-    const provider = createClefOrganizationProvider({
-      run() {
-        calls++;
-        return Promise.resolve(null);
+    const provider = createClefOrganizationProvider(
+      {
+        run() {
+          calls++;
+          return Promise.resolve(null);
+        },
       },
-    }, { ...config, modelVersion });
+      { ...config, modelVersion },
+    );
     expect(
       await provider([], enrichmentDefinitionFixture(), [], {
         signal: new AbortController().signal,

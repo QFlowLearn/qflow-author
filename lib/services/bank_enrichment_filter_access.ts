@@ -22,8 +22,8 @@ export async function validBankEnrichmentFilter(
     const rows = await tx.execute(sql`
       SELECT 1 FROM bank_enrichment_scheme_versions ev
       CROSS JOIN LATERAL jsonb_array_elements(ev.definition -> ${
-      ENRICHMENT_VOCABULARY_KEYS[dimension]
-    }) category
+        ENRICHMENT_VOCABULARY_KEYS[dimension]
+      }) category
       WHERE ev.tenant_id = ${tenantId} AND ev.scheme_id = ${filter.schemeId} AND ev.id = ${value.versionId}
         AND category ->> 'id' = ${value.valueId}
     `);

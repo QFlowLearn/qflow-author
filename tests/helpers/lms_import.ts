@@ -25,9 +25,11 @@ export async function analyzeImport(
   imported: ImportResult,
   source: { filename: string; bytes: Uint8Array },
 ) {
-  return buildMigrationAnalysis(imported, { adapter, sniff: await adapter.sniff(source) }, {
-    _tag: 'Assessment',
-  });
+  return buildMigrationAnalysis(
+    imported,
+    { adapter, sniff: await adapter.sniff(source) },
+    { _tag: 'Assessment' },
+  );
 }
 /** Exercise the imported XML and both authoring derivatives through the real scorer. */
 export function expectImportedScore(

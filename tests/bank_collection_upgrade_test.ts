@@ -50,10 +50,10 @@ testCase(
       await connection`INSERT INTO questions(id,tenant_id,stable_key,title,owner_user_id,lifecycle_state) VALUES (${questionId},${tenantId},'source-question-17','Existing question',${userId},'active')`;
       await connection`INSERT INTO question_revisions(id,question_id,tenant_id,revision,body,provenance,qti_xml,content_hash,search_text,compatibility,review_suggestions)
         VALUES (${revisionId},${questionId},${tenantId},1,${
-        connection.json({ promptHtml: '<img src="diagram.png" alt="Cell diagram">' })
-      }, '{"sourceIdentifier":"source-question-17"}', '<qti-assessment-item identifier="source-question-17"/>', ${
-        'a'.repeat(64)
-      }, 'Existing question', '[]', '[]')`;
+          connection.json({ promptHtml: '<img src="diagram.png" alt="Cell diagram">' })
+        }, '{"sourceIdentifier":"source-question-17"}', '<qti-assessment-item identifier="source-question-17"/>', ${
+          'a'.repeat(64)
+        }, 'Existing question', '[]', '[]')`;
       await connection`UPDATE questions SET latest_revision_id=${revisionId} WHERE id=${questionId}`;
       await connection`INSERT INTO question_assets(id,question_revision_id,asset_key,mime_type,r2_url) VALUES (${crypto.randomUUID()},${revisionId},'diagram.png','image/png','https://assets.example.test/diagram.png')`;
       await connection`INSERT INTO assessments(id,tenant_id,slug,title,created_by,blueprint) VALUES (${assessmentId},${tenantId},${assessmentId},'Existing assessment',${userId},'{"_tag":"Unspecified"}')`;

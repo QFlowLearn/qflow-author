@@ -133,7 +133,7 @@ export function PortableCustomContent(props: PortableCustomContentProps) {
       />
 
       <div class='grid gap-3 sm:grid-cols-2'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.portableCustomType')}</span>
           <Input
             value={props.portableCustomTypeIdentifier}
@@ -164,7 +164,7 @@ export function PortableCustomContent(props: PortableCustomContentProps) {
               key={`pci-data-${index}`}
               class='grid gap-2 rounded-lg border border-base-300 bg-base-100 px-3 py-2 sm:grid-cols-[1fr_1fr_auto] sm:items-center'
             >
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.attributeName', { number: index + 1 })}</span>
                 <Input
                   size='sm'
@@ -177,7 +177,7 @@ export function PortableCustomContent(props: PortableCustomContentProps) {
                     )}
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>
                   {i18n.t('driver.attributeValue', { number: index + 1 })}
                 </span>
@@ -207,7 +207,7 @@ export function PortableCustomContent(props: PortableCustomContentProps) {
       </div>
 
       <div class='space-y-2'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.portableCustomMarkup')}</span>
           <Textarea
             class='min-h-[180px] font-mono text-xs'

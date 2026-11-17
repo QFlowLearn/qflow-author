@@ -209,7 +209,7 @@ export async function persistGeneratedConversionItems(
     if (!ownedJob.length) throw new AIGenerationLeaseLostError(completion.jobId);
     if (
       canonicalJsonStringify(ownedJob[0].input) !==
-        canonicalJsonStringify(completion.jobInput)
+      canonicalJsonStringify(completion.jobInput)
     ) {
       throw new Error('AI generation job input changed before completion.');
     }
@@ -235,7 +235,7 @@ export async function persistGeneratedConversionItems(
     );
     if (
       canonicalJsonStringify(lockedBlueprint) !==
-        canonicalJsonStringify(completion.jobInput.blueprint)
+      canonicalJsonStringify(completion.jobInput.blueprint)
     ) {
       throw new Error('AI generation job and conversion blueprint disagree.');
     }

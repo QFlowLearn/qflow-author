@@ -227,10 +227,11 @@ testCase(
             selection,
             excludedQuestions: inspect.excludedQuestions,
             versionId,
-            counts: [{ categoryId: 'easy', count: 5 }, { categoryId: 'moderate', count: 10 }, {
-              categoryId: 'hard',
-              count: 5,
-            }],
+            counts: [
+              { categoryId: 'easy', count: 5 },
+              { categoryId: 'moderate', count: 10 },
+              { categoryId: 'hard', count: 5 },
+            ],
           });
           if (!choose) expect.unreachable('Expected choose');
           const result = await service.run(ctx, assessment.id, choose);

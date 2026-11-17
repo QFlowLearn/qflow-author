@@ -89,7 +89,7 @@ export function CustomInteractionContent(props: CustomInteractionContentProps) {
       />
 
       <div class='grid gap-3 sm:grid-cols-2'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.customInteractionBaseType')}</span>
           <Input
             value={props.customBaseType ?? ''}
@@ -97,7 +97,7 @@ export function CustomInteractionContent(props: CustomInteractionContentProps) {
             placeholder='string'
           />
         </label>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.customInteractionCardinality')}</span>
           <Select
             value={props.customCardinality ?? 'single'}
@@ -112,7 +112,7 @@ export function CustomInteractionContent(props: CustomInteractionContentProps) {
             <option value='record'>{i18n.t('driver.customInteractionRecord')}</option>
           </Select>
         </label>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.customInteractionClass')}</span>
           <Input
             value={props.customClassName ?? ''}
@@ -120,7 +120,7 @@ export function CustomInteractionContent(props: CustomInteractionContentProps) {
             placeholder='qti-custom-interaction'
           />
         </label>
-        <label class='ds-form-control sm:col-span-2'>
+        <label class='flex flex-col sm:col-span-2'>
           <span>{i18n.t('driver.customInteractionDefinition')}</span>
           <Input
             value={props.customDefinition ?? ''}
@@ -150,7 +150,7 @@ export function CustomInteractionContent(props: CustomInteractionContentProps) {
               key={`custom-attr-${index}`}
               class='grid gap-2 rounded-lg border border-base-300 bg-base-100 px-3 py-2 sm:grid-cols-[1fr_1fr_auto] sm:items-center'
             >
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.attributeName', { number: index + 1 })}</span>
                 <Input
                   size='sm'
@@ -160,7 +160,7 @@ export function CustomInteractionContent(props: CustomInteractionContentProps) {
                     props.updateCustomAttributeName(index, (e.target as HTMLInputElement).value)}
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>
                   {i18n.t('driver.attributeValue', { number: index + 1 })}
                 </span>
@@ -187,7 +187,7 @@ export function CustomInteractionContent(props: CustomInteractionContentProps) {
       </div>
 
       <div class='space-y-2'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.customInteractionMarkup')}</span>
           <Textarea
             class='min-h-[180px] font-mono text-xs'

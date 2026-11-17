@@ -6,7 +6,7 @@ services:
     volumes:
       - ..:/workspaces/qflow
       - node_modules:/workspaces/qflow/node_modules
-      - pnpm_store:/workspaces/.pnpm-store
+      - pnpm_store:/home/node/.local/share/pnpm/store
       - mkcert:/home/node/.local/share/mkcert
     network_mode: service:postgres
     depends_on:

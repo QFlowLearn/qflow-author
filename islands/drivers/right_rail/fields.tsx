@@ -35,7 +35,7 @@ export const TextField: FunctionalComponent<{
 }> = ({ label, control, placeholder, tooltip }) => {
   if (!control) return null;
   return (
-    <label class='ds-form-control gap-1'>
+    <label class='flex flex-col gap-1'>
       <span class='inline-flex items-center gap-2'>
         {label}
         {tooltip && <InfoTooltip text={tooltip} />}
@@ -61,7 +61,7 @@ export const NumberField: FunctionalComponent<{
   const issueId = useDomId();
   if (!control) return null;
   return (
-    <label class='ds-form-control gap-1'>
+    <label class='flex flex-col gap-1'>
       <span class='inline-flex items-center gap-2'>
         {label}
         {tooltip && <InfoTooltip text={tooltip} />}
@@ -89,7 +89,7 @@ export const SelectField: FunctionalComponent<{
 }> = ({ label, control, tooltip }) => {
   if (!control) return null;
   return (
-    <label class='ds-form-control gap-1'>
+    <label class='flex flex-col gap-1'>
       <span class='inline-flex items-center gap-2'>
         {label}
         {tooltip && <InfoTooltip text={tooltip} />}
@@ -115,7 +115,7 @@ export const MediaPlayerControlsField: FunctionalComponent<{
   if (!control) return null;
   const selected = new Set(control.value);
   return (
-    <fieldset class='ds-form-control gap-1 border-0 p-0'>
+    <fieldset class='flex flex-col gap-1 border-0 p-0'>
       <legend class='text-sm font-medium'>{label}</legend>
       <div class='flex flex-col gap-1'>
         {control.options.map((opt) => (

@@ -88,7 +88,7 @@ export default function ItemEditorCanvas(props: ItemEditorCanvasProps) {
         );
       }
       return (
-        <div class='ds-card ds-card-bordered border-base-200/70 bg-base-100'>
+        <div class='ds-card ds-card-border border-base-200/70 bg-base-100'>
           <div class='ds-card-body space-y-3'>
             <div>
               <div class='text-xs uppercase text-base-content/60'>{i18n.t('editor.preview')}</div>

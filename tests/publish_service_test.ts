@@ -259,10 +259,14 @@ testCase(
     const baseline = baselineFixture({ contentBasis: 'source', qtiXml: sourceXml });
     const before = structuredClone(baseline);
     for (const maximumScore of [2, undefined]) {
-      const result = await prepareQuestionPublication(auth, { ...validDraft, maximumScore }, {
-        getQuestionPublicationBaseline: () => Promise.resolve(baseline),
-        validateQtiXml: () => Promise.resolve({ ok: true, errors: [] }),
-      });
+      const result = await prepareQuestionPublication(
+        auth,
+        { ...validDraft, maximumScore },
+        {
+          getQuestionPublicationBaseline: () => Promise.resolve(baseline),
+          validateQtiXml: () => Promise.resolve({ ok: true, errors: [] }),
+        },
+      );
       if (result.ok) expect.unreachable('Expected !result.ok');
       expect(result.error.status).toStrictEqual(422);
       expect(result.error.body.error).toStrictEqual('source_points_not_editable');

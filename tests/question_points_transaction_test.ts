@@ -53,11 +53,10 @@ testCase(
           if (!(revised.ok)) expect.unreachable(JSON.stringify(revised));
           expect(revised.value.revision).toStrictEqual(2);
           for (
-            const [revision, type, expected] of [[1, 'single_select', 0], [
-              2,
-              'inline_choice',
-              3.125,
-            ]] as const
+            const [revision, type, expected] of [
+              [1, 'single_select', 0],
+              [2, 'inline_choice', 3.125],
+            ] as const
           ) {
             const saved = await getQuestionRevision(ctx, created.value.itemId, revision);
             if (!saved) expect.unreachable('Expected saved');

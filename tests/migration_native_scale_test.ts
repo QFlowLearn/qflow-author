@@ -73,19 +73,23 @@ testCase('native ARC package persists all 7787 items through bounded checkpoints
     const packagePath = process.env['QFLOW_ARC_PACKAGE'];
     if (!packagePath) expect.unreachable('QFLOW_ARC_PACKAGE must name the intact ARC ZIP');
     const source = await _fs.readFile(packagePath);
-    const batch = await enqueueMigrationBatch(ctx, {
-      idempotencyKey: crypto.randomUUID(),
-      purpose: 'recover_existing',
-      destination: { _tag: 'WorkspaceBank', collectionId: null },
-      sources: [{
-        source: {
-          filename: 'arc-all-7787-qti3.zip',
-          mime: 'application/zip',
-          bytes: source,
-        },
-        adapter: { id: 'qti3', version: '1' },
-      }],
-    }, { storage });
+    const batch = await enqueueMigrationBatch(
+      ctx,
+      {
+        idempotencyKey: crypto.randomUUID(),
+        purpose: 'recover_existing',
+        destination: { _tag: 'WorkspaceBank', collectionId: null },
+        sources: [{
+          source: {
+            filename: 'arc-all-7787-qti3.zip',
+            mime: 'application/zip',
+            bytes: source,
+          },
+          adapter: { id: 'qti3', version: '1' },
+        }],
+      },
+      { storage },
+    );
     expect(batch.runs.length).toStrictEqual(1);
     const runId = batch.runs[0].id;
     const [dispatch] = await db.select({ id: workflowDispatches.id }).from(workflowDispatches)
@@ -161,13 +165,19 @@ testCase('native ARC package persists all 7787 items through bounded checkpoints
     if (!frozenItem) expect.unreachable('Expected frozen item.');
     await expect(
       Promise.resolve().then(() =>
-        updateMigrationItems(ctx, runId, [frozenItem.id], { kind: 'reset_decision' }, {
-          [frozenItem.id]: {
-            contentHash: frozenItem.contentHash,
-            contextHash: frozenItem.contextHash,
-            decision: frozenItem.decision,
+        updateMigrationItems(
+          ctx,
+          runId,
+          [frozenItem.id],
+          { kind: 'reset_decision' },
+          {
+            [frozenItem.id]: {
+              contentHash: frozenItem.contentHash,
+              contextHash: frozenItem.contextHash,
+              decision: frozenItem.decision,
+            },
           },
-        })
+        )
       ),
     ).rejects.toBeInstanceOf(Error);
 

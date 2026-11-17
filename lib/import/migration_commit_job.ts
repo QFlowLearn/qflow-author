@@ -237,14 +237,14 @@ export async function processMigrationCommitBatch(
       await tx.execute(sql`update ${migrationItems} as target set
         created_question_id = patch.question_id, created_revision = patch.revision
         from jsonb_to_recordset(${
-        JSON.stringify(
-          result.itemResults.map((item) => ({
-            href: item.href,
-            question_id: item.questionId,
-            revision: item.revision,
-          })),
-        )
-      }::jsonb)
+          JSON.stringify(
+            result.itemResults.map((item) => ({
+              href: item.href,
+              question_id: item.questionId,
+              revision: item.revision,
+            })),
+          )
+        }::jsonb)
         as patch(href text, question_id uuid, revision integer)
         where target.run_id = ${jobId}::uuid and target.source_href = patch.href`);
       const completed = currentJob.completed + result.itemResults.length;

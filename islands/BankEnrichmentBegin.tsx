@@ -44,13 +44,17 @@ export default function BankEnrichmentBegin(
         setBusy(true);
         setError(null);
         controller.current = new AbortController();
-        const result = await submitEnrichmentAction('/items/organize', {
-          action: 'begin',
-          operationId: props.operationId,
-          scope: { _tag: 'Filtered', queryString: props.queryString },
-          audience,
-          baseVersionId: baseVersionId || null,
-        }, { signal: controller.current.signal });
+        const result = await submitEnrichmentAction(
+          '/items/organize',
+          {
+            action: 'begin',
+            operationId: props.operationId,
+            scope: { _tag: 'Filtered', queryString: props.queryString },
+            audience,
+            baseVersionId: baseVersionId || null,
+          },
+          { signal: controller.current.signal },
+        );
         if (result && 'url' in result) {
           location.assign(result.url);
           return;

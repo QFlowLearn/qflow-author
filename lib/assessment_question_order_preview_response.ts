@@ -78,11 +78,13 @@ export function parseQuestionOrderPreview(
     let beforeQuestionNumber = 1;
     for (const placement of part.placements) {
       if ('itemId' in placement) beforeQuestionNumber++;
-      else {expectedInstructions.push({
+      else {
+        expectedInstructions.push({
           placementId: placement.id,
           beforeQuestionNumber,
           content: placement.content,
-        });}
+        });
+      }
     }
     if (
       !Array.isArray(raw.instructions) || raw.instructions.length !== expectedInstructions.length

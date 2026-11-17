@@ -10,7 +10,7 @@ implementation.
 
 ## Run locally
 
-Use Node 24.22.0 and pnpm 10.34.3. Install PostgreSQL 17, mkcert, and xmllint. For native HTTPS,
+Use Node 26.12.0 and pnpm 12.21.0. Install PostgreSQL 17, mkcert, and xmllint. For native HTTPS,
 trust your mkcert CA once with `mkcert -install`.
 
 ```sh
@@ -52,8 +52,8 @@ pnpm test
 pnpm build
 ```
 
-Tests use the guarded local database. Install browser support with
-`pnpm exec playwright install chromium`. Run `pnpm verify` for the full matrix.
+Tests use the guarded local database. Install browser support with `pnpm exec playwright install
+chromium`. Run `pnpm verify` for the full matrix.
 
 Oxlint checks JavaScript and TypeScript; dprint formats source files. Python is optional and
 confined to the [Respondus fixture generator](tools/respondus-fixtures/).

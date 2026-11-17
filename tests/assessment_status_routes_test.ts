@@ -75,10 +75,11 @@ testCase(
           expect(await unpublished.text()).toStrictEqual('Not published');
           await withEnrichmentWorkspace(async (other) => {
             for (
-              const [handler, review] of [[publication, false], [publication, true], [
-                delivery,
-                false,
-              ]] as const
+              const [handler, review] of [
+                [publication, false],
+                [publication, true],
+                [delivery, false],
+              ] as const
             ) {
               const response = await request(handler, other, assessment.id, review);
               expect(response.status).toStrictEqual(404);
@@ -89,10 +90,11 @@ testCase(
             eq(organizationMemberships.userId, auth.userId),
           );
           for (
-            const [handler, review] of [[publication, false], [publication, true], [
-              delivery,
-              false,
-            ]] as const
+            const [handler, review] of [
+              [publication, false],
+              [publication, true],
+              [delivery, false],
+            ] as const
           ) {
             // The stale owner context must not bypass revoked membership or resolve review storage.
             const response = await request(handler, auth, assessment.id, review);

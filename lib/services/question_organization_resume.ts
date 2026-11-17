@@ -17,7 +17,7 @@ function resumeConditions(context: OrganizationRun) {
   const classifier = context.policy.classifier;
   const canReserve = classifier.kind === 'source_only' ||
     context.run.reservedMicros +
-          Math.ceil(CLEF_INPUT_TOKEN_LIMIT * classifier.config.inputMicrosPerMillion / 1_000_000) <=
+        Math.ceil(CLEF_INPUT_TOKEN_LIMIT * classifier.config.inputMicrosPerMillion / 1_000_000) <=
       classifier.config.budgetMicros;
   const unfinished = sql`(${organizationItems.state} = 'cancelled' OR
     (${organizationItems.state} = 'failed' AND (${organizationItems.decision} IS NOT NULL OR

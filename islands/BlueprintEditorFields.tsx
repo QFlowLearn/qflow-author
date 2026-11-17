@@ -108,7 +108,7 @@ export default function BlueprintEditorFields({ value, onChange, allowedQuestion
               key={outcome.id}
               class='grid gap-3 rounded-lg border border-base-300 p-3 sm:grid-cols-[minmax(0,1fr)_7rem_auto] sm:items-end'
             >
-              <label class='ds-form-control gap-1'>
+              <label class='flex flex-col gap-1'>
                 <span class='text-xs font-medium'>{i18n.t('imports.blueprint.outcome')}</span>
                 <Input
                   value={outcome.title}
@@ -116,7 +116,7 @@ export default function BlueprintEditorFields({ value, onChange, allowedQuestion
                   onInput={(event) => updateOutcome(index, { title: event.currentTarget.value })}
                 />
               </label>
-              <label class='ds-form-control gap-1'>
+              <label class='flex flex-col gap-1'>
                 <span class='text-xs font-medium'>{i18n.t('imports.blueprint.weight')}</span>
                 <Input
                   type='number'
@@ -168,7 +168,7 @@ export default function BlueprintEditorFields({ value, onChange, allowedQuestion
           {value.targets.map((target, index) => (
             <div key={target.id} class='rounded-lg border border-base-300 p-3'>
               <div class='grid gap-3 sm:grid-cols-2 xl:grid-cols-5'>
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-xs font-medium'>{i18n.t('imports.blueprint.outcome')}</span>
                   <Select
                     value={target.outcomeId}
@@ -180,7 +180,7 @@ export default function BlueprintEditorFields({ value, onChange, allowedQuestion
                     ))}
                   </Select>
                 </label>
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-xs font-medium'>
                     {i18n.t('imports.blueprint.cognitiveDemand')}
                   </span>
@@ -198,7 +198,7 @@ export default function BlueprintEditorFields({ value, onChange, allowedQuestion
                     ))}
                   </Select>
                 </label>
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-xs font-medium'>{i18n.t('imports.blueprint.difficulty')}</span>
                   <Select
                     value={target.difficulty}
@@ -214,7 +214,7 @@ export default function BlueprintEditorFields({ value, onChange, allowedQuestion
                     ))}
                   </Select>
                 </label>
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-xs font-medium'>
                     {i18n.t('imports.blueprint.questionType')}
                   </span>
@@ -232,7 +232,7 @@ export default function BlueprintEditorFields({ value, onChange, allowedQuestion
                     ))}
                   </Select>
                 </label>
-                <label class='ds-form-control gap-1'>
+                <label class='flex flex-col gap-1'>
                   <span class='text-xs font-medium'>{i18n.t('imports.blueprint.count')}</span>
                   <Input
                     type='number'
@@ -252,8 +252,7 @@ export default function BlueprintEditorFields({ value, onChange, allowedQuestion
                   variant='ghost'
                   aria-label={i18n.t('imports.blueprint.removeTarget', { index: index + 1 })}
                   disabled={value.targets.length === 1}
-                  onClick={() =>
-                    removeTarget(index)}
+                  onClick={() => removeTarget(index)}
                 >
                   {i18n.t('imports.blueprint.removeTargetLabel')}
                 </Button>

@@ -116,8 +116,8 @@ async function loadBuckets(
       category ->> 'id' AS id, category ->> 'label' AS label
     FROM bank_enrichment_scheme_versions ev
     CROSS JOIN LATERAL jsonb_array_elements(ev.definition -> ${
-    ENRICHMENT_VOCABULARY_KEYS[dimension]
-  })
+      ENRICHMENT_VOCABULARY_KEYS[dimension]
+    })
       WITH ORDINALITY vocab(category, position)
     WHERE ev.tenant_id = ${ctx.tenantId} AND ev.scheme_id = ${scheme.id} AND ${selection}
     ORDER BY ev.version DESC, position

@@ -181,8 +181,8 @@ render(
             <body>
               <div id="root"></div>
               <script>window.__IMAGE_EDITOR_PAYLOAD__ = ${
-        JSON.stringify(payload).replaceAll('<', '\\u003c')
-      };</script>
+                JSON.stringify(payload).replaceAll('<', '\\u003c')
+              };</script>
               <script>window.__IMAGE_SOURCE__ = "/source.svg";</script>
               <script type="module" src="/bundle.js"></script>
             </body>
@@ -232,7 +232,7 @@ render(
           (expected) =>
             [...document.querySelectorAll('[aria-live="polite"]')].some((node) =>
               (node.textContent ?? '').replaceAll('\u00a0', ' ') ===
-                expected.replaceAll('\u00a0', ' ')
+              expected.replaceAll('\u00a0', ' ')
             ),
           zoomAnnouncement,
         );

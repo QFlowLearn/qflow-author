@@ -92,18 +92,22 @@ testCase(
     ];
     const counts = [{ categoryId: 'cells', count: 1 }, { categoryId: 'energy', count: 1 }];
     const result = allocateDistinctQuestions(candidates, counts, () => 0);
-    expect(result.map((c) => [c.identity, c.categoryId])).toStrictEqual([['only-cells', 'cells'], [
-      'shared',
-      'energy',
-    ]]);
+    expect(result.map((c) => [c.identity, c.categoryId])).toStrictEqual([
+      ['only-cells', 'cells'],
+      ['shared', 'energy'],
+    ]);
     expect(allocateDistinctQuestions(candidates.slice(0, 2), counts, () => 0).length).toStrictEqual(
       1,
     );
     expect(
-      allocateDistinctQuestions([...candidates, candidate('only-cells', 'cells')], [{
-        categoryId: 'cells',
-        count: 3,
-      }], () => 0).length,
+      allocateDistinctQuestions(
+        [...candidates, candidate('only-cells', 'cells')],
+        [{
+          categoryId: 'cells',
+          count: 3,
+        }],
+        () => 0,
+      ).length,
     ).toStrictEqual(2);
   },
 );

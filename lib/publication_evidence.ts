@@ -125,9 +125,8 @@ export function validateManifestAttestation(input: unknown, manifest: {
     if (
       !object(entry) || !exact(entry, ['revisionId', 'reason']) ||
       typeof entry.revisionId !== 'string' ||
-      !isCanonicalUuid(entry.revisionId) || !reason(entry.reason) || overrides.some((row) =>
-        row.revisionId === entry.revisionId
-      )
+      !isCanonicalUuid(entry.revisionId) || !reason(entry.reason) ||
+      overrides.some((row) => row.revisionId === entry.revisionId)
     ) return { ok: false, code: 'invalid_input' };
     overrides.push({ revisionId: entry.revisionId, reason: entry.reason.trim() });
   }

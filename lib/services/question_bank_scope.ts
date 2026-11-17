@@ -30,10 +30,10 @@ export function questionBankConditions(
       WHERE filing.tenant_id = ${ctx.tenantId}
         AND filing.question_id = ${questions.id}
         ${
-      query.collection._tag === 'Collection'
-        ? sql`AND filing.collection_id = ${query.collection.collectionId}`
-        : sql``
-    })`;
+          query.collection._tag === 'Collection'
+            ? sql`AND filing.collection_id = ${query.collection.collectionId}`
+            : sql``
+        })`;
     conditions.push(query.collection._tag === 'Unfiled' ? sql`NOT ${filed}` : filed);
   }
   if (query.enrichment) {

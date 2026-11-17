@@ -174,7 +174,7 @@ testCase(
                 await page.waitForFunction(
                   (value) =>
                     document.querySelector<HTMLTextAreaElement>('textarea[name=text]')?.value ===
-                      value,
+                    value,
                   literal,
                 );
                 let placements = await current();

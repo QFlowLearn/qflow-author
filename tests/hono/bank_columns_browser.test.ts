@@ -36,7 +36,7 @@ it('optional bank columns toggle independently and keep headers aligned with cel
             document.querySelector('[data-qflow-root="BankQuestionTable"]')?.getAttribute(
               'data-qflow-state',
             ) ===
-              'ready'
+            'ready'
           );
           await assertNoBlockingA11y(page);
           await page.locator('[data-qflow-root="BankQuestionTable"] details').evaluate((details) =>

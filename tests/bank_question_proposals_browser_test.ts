@@ -49,10 +49,11 @@ testCase(
             );
           }
           for (
-            const [difficultyId, subset] of [['easy', ids.slice(0, 8)], [
-              'moderate',
-              ids.slice(8, 16),
-            ], ['hard', ids.slice(16)]] as const
+            const [difficultyId, subset] of [
+              ['easy', ids.slice(0, 8)],
+              ['moderate', ids.slice(8, 16)],
+              ['hard', ids.slice(16)],
+            ] as const
           ) {
             await assignOverviewFixture(ctx, schemeId, versionId, subset, {
               subject: { state: 'assigned', valueIds: ['life'] },

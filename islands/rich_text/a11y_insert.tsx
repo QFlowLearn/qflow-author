@@ -220,7 +220,7 @@ export function A11yInsertPopover(
         >
           <div class='flex flex-col gap-3'>
             <h2 id={titleId} class='font-semibold'>{i18n.t('editor.a11yTitle')}</h2>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('editor.a11yText')}</span>
               <Input
                 name='a11y-text'
@@ -229,7 +229,7 @@ export function A11yInsertPopover(
                 placeholder={i18n.t('editor.a11yTextPlaceholder')}
               />
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('editor.a11yStyle')}</span>
               <Select
                 value={style}
@@ -241,7 +241,7 @@ export function A11yInsertPopover(
                 <option value='hidden'>{i18n.t('editor.a11yHidden')}</option>
               </Select>
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('editor.a11yRole')}</span>
               <Input
                 value={a11yRole}
@@ -249,7 +249,7 @@ export function A11yInsertPopover(
                 placeholder={i18n.t('editor.a11yRolePlaceholder')}
               />
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('editor.a11yElementId')}</span>
               <Input
                 value={elementId}
@@ -258,7 +258,7 @@ export function A11yInsertPopover(
               />
             </label>
             <div class='grid gap-3 sm:grid-cols-2'>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('editor.a11yAriaLabel')}</span>
                 <Input
                   value={ariaLabel}
@@ -266,7 +266,7 @@ export function A11yInsertPopover(
                   placeholder='data-qti-aria-label'
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('editor.a11yAriaLabelledby')}</span>
                 <Input
                   value={ariaLabelledBy}
@@ -274,7 +274,7 @@ export function A11yInsertPopover(
                   placeholder='data-qti-aria-labelledby'
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('editor.a11yAriaDescribedby')}</span>
                 <Input
                   value={ariaDescribedBy}
@@ -282,7 +282,7 @@ export function A11yInsertPopover(
                   placeholder='data-qti-aria-describedby'
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('editor.a11yCatalogReference')}</span>
                 <Select
                   value={catalogIdRef}
@@ -309,7 +309,7 @@ export function A11yInsertPopover(
               />
               <span>{i18n.t('editor.a11ySuppressTts')}</span>
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('editor.a11ySsml')}</span>
               <Textarea
                 value={ssmlJson}
@@ -317,7 +317,7 @@ export function A11yInsertPopover(
                 placeholder={i18n.t('editor.a11ySsmlPlaceholder')}
               />
             </label>
-            <label class='ds-form-control'>
+            <label class='flex flex-col'>
               <span>{i18n.t('editor.a11yReadingType')}</span>
               <Select
                 value={readingType}

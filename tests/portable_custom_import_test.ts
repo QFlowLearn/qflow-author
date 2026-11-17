@@ -30,24 +30,28 @@ testCase(
 
     const parsed = parseItemXml(xml);
     const draft = draftOfType<PortableCustomDraft>(parsed, 'portable_custom');
-    const rebuilt = exportQti3TestItemXml('portable_custom', {
-      title: draft.title,
-      promptHtml: draft.promptHtml,
-      bodyHtml: draft.bodyHtml,
-      responseIdentifier: draft.responseIdentifier,
-      portableCustomTypeIdentifier: draft.portableCustomTypeIdentifier,
-      portableModule: draft.portableModule,
-      portableClassName: draft.portableClassName,
-      portableLabel: draft.portableLabel,
-      portableBaseType: draft.portableBaseType,
-      portableCardinality: draft.portableCardinality,
-      portableInteractionMarkup: draft.portableInteractionMarkup,
-      portableDataAttributes: draft.portableDataAttributes ?? [],
-      portableInteractionModules: draft.portableInteractionModules ?? [],
-      portableModulesPrimaryConfiguration: draft.portableModulesPrimaryConfiguration,
-      portableModulesSecondaryConfiguration: draft.portableModulesSecondaryConfiguration,
-      portableResponseProcessingXml: draft.portableResponseProcessingXml,
-    }, { identifier: 'item-pci-roundtrip' });
+    const rebuilt = exportQti3TestItemXml(
+      'portable_custom',
+      {
+        title: draft.title,
+        promptHtml: draft.promptHtml,
+        bodyHtml: draft.bodyHtml,
+        responseIdentifier: draft.responseIdentifier,
+        portableCustomTypeIdentifier: draft.portableCustomTypeIdentifier,
+        portableModule: draft.portableModule,
+        portableClassName: draft.portableClassName,
+        portableLabel: draft.portableLabel,
+        portableBaseType: draft.portableBaseType,
+        portableCardinality: draft.portableCardinality,
+        portableInteractionMarkup: draft.portableInteractionMarkup,
+        portableDataAttributes: draft.portableDataAttributes ?? [],
+        portableInteractionModules: draft.portableInteractionModules ?? [],
+        portableModulesPrimaryConfiguration: draft.portableModulesPrimaryConfiguration,
+        portableModulesSecondaryConfiguration: draft.portableModulesSecondaryConfiguration,
+        portableResponseProcessingXml: draft.portableResponseProcessingXml,
+      },
+      { identifier: 'item-pci-roundtrip' },
+    );
 
     if (!(rebuilt.includes('qti-portable-custom-interaction'))) {
       expect.unreachable("Expected rebuilt.includes('qti-portable-custom-interaction')");

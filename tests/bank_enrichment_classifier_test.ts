@@ -141,9 +141,12 @@ testCase(
     expect(prepared.value.correctId).toStrictEqual('a');
     expect(prepared.value.promptHtml).toStrictEqual(body.promptHtml);
     for (
-      const patch of [{ correctId: '' }, { correctId: 'missing' }, {
-        choices: [body.choices[0], body.choices[0]],
-      }, { promptHtml: '<p> </p>' }]
+      const patch of [
+        { correctId: '' },
+        { correctId: 'missing' },
+        { choices: [body.choices[0], body.choices[0]] },
+        { promptHtml: '<p> </p>' },
+      ]
     ) {
       expect(prepareEnrichmentQuestion(questionId, revisionId, { ...body, ...patch }))
         .toStrictEqual({

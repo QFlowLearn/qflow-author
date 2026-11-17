@@ -41,10 +41,12 @@ testCase(
   'completion rejects wrong counts, duplicates, invented keys, extra fields and rewritten supplied keys',
   () => {
     expect(parseQuestionCompletion(completion, question)).toStrictEqual(completion);
-    expect(parseQuestionCompletion({ ...completion, answers: ['John Adams', 'John Adams'] }, {
-      ...question,
-      type: 'multi_select',
-    })).toStrictEqual(null);
+    expect(
+      parseQuestionCompletion(
+        { ...completion, answers: ['John Adams', 'John Adams'] },
+        { ...question, type: 'multi_select' },
+      ),
+    ).toStrictEqual(null);
     for (
       const raw of [
         { ...completion, additionalChoices: ['John Adams'] },

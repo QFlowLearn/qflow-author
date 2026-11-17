@@ -63,11 +63,10 @@ testCase('package export bundles assets, rewrites refs, and aligns manifest', as
     return Promise.resolve(data);
   };
 
-  const collected = await collectPackageAssets({ _tag: 'Items', itemsXml }, {
-    getUploadId,
-    getUpload,
-    readUploadFile,
-  });
+  const collected = await collectPackageAssets(
+    { _tag: 'Items', itemsXml },
+    { getUploadId, getUpload, readUploadFile },
+  );
 
   if (!(collected.ok)) expect.unreachable('Expected collected.ok');
   const { assets, rewrittenXml, assetIdsByItem } = collected.value;

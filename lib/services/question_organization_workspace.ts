@@ -379,11 +379,10 @@ export class QuestionOrganizationWorkspace {
               ['previewed', 'unassigned'].includes(item.state),
             title,
             content,
-            destination: destinations.find((d) =>
-              d.id === context.policy.filing.find((f) =>
-                f.topicId === topicId
-              )?.collectionId
-            )?.name ?? null,
+            destination:
+              destinations.find((d) =>
+                d.id === context.policy.filing.find((f) => f.topicId === topicId)?.collectionId
+              )?.name ?? null,
             state: item.state,
             topic: context.definition.topics.find((t) => t.id === topicId)?.label ?? null,
           };

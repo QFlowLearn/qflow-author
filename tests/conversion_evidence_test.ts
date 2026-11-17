@@ -75,9 +75,10 @@ testCase(
   async () => {
     const document = await extractStructuredSource({
       filename: 'curriculum.pdf',
-      bytes: pdfFixture([{ text: 'Find the area of triangles.' }, {
-        text: 'Use ratio language in a context.',
-      }]),
+      bytes: pdfFixture([
+        { text: 'Find the area of triangles.' },
+        { text: 'Use ratio language in a context.' },
+      ]),
     });
     const prompt = renderSourceForGeneration(document);
     if (!(prompt.includes('[PAGE 1]\nFind the area of triangles.'))) {

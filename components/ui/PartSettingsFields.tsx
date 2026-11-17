@@ -53,7 +53,7 @@ export default function PartSettingsFields(props: {
         </p>
       </div>
       <div class='grid gap-3 sm:grid-cols-2'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span id={`${id}-navigation`}>{i18n.t('assessments.arrange.modal.navigation')}</span>
           <Select
             aria-labelledby={`${id}-navigation`}
@@ -73,7 +73,7 @@ export default function PartSettingsFields(props: {
             <option value='nonlinear'>{i18n.t('assessments.arrange.modal.nonlinear')}</option>
           </Select>
         </label>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span id={`${id}-submission`}>{i18n.t('assessments.arrange.modal.submission')}</span>
           <Select
             aria-labelledby={`${id}-submission`}
@@ -93,14 +93,13 @@ export default function PartSettingsFields(props: {
           </Select>
         </label>
         {(['minTime', 'maxTime'] as const).map((field) => (
-          <label class='ds-form-control' key={field}>
+          <label class='flex flex-col' key={field}>
             <span id={`${id}-${field}-label`}>{i18n.t(`assessments.arrange.modal.${field}`)}</span>
             <Input
               type='text'
               inputMode='numeric'
               pattern='[0-9]*'
-              onBlur={() =>
-                setTimeTouched(true)}
+              onBlur={() => setTimeTouched(true)}
               aria-labelledby={`${id}-${field}-label`}
               aria-invalid={timeIssue ? true : undefined}
               aria-describedby={timeIssue ? `${id}-time-issue` : undefined}
@@ -125,7 +124,7 @@ export default function PartSettingsFields(props: {
           visible={timeTouched}
         />
       )}
-      <label class='ds-form-control gap-2'>
+      <label class='flex flex-col gap-2'>
         <span id={`${id}-answer-feedback-label`}>
           {i18n.t('assessments.partSettings.answerFeedbackRelease')}
         </span>
@@ -156,7 +155,7 @@ export default function PartSettingsFields(props: {
           {i18n.t('assessments.partSettings.feedbackHelp')}
         </span>
       </label>
-      <label class='ds-form-control'>
+      <label class='flex flex-col'>
         <span id={`${id}-instructions`}>{i18n.t('assessments.arrange.modal.instructions')}</span>
         <Textarea
           aria-labelledby={`${id}-instructions`}
@@ -167,13 +166,13 @@ export default function PartSettingsFields(props: {
         />
       </label>
       <details class='space-y-3'>
-        <summary class='cursor-pointer rounded px-2 py-1 hover:bg-base-200/60'>
+        <summary class='cursor-pointer rounded-sm px-2 py-1 hover:bg-base-200/60'>
           <strong>{i18n.t('assessments.arrange.modal.feedback')}</strong>{' '}
           <span class='text-xs text-base-content/70'>
             {i18n.t('assessments.arrange.modal.simpleBlock')}
           </span>
         </summary>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span id={`${id}-outcome`}>{i18n.t('assessments.arrange.modal.outcome')}</span>
           <Input
             aria-labelledby={`${id}-outcome`}
@@ -182,7 +181,7 @@ export default function PartSettingsFields(props: {
             onInput={(event) => changeFeedback('outcomeIdentifier', event.currentTarget.value)}
           />
         </label>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span id={`${id}-feedback`}>{i18n.t('assessments.arrange.modal.feedbackHtml')}</span>
           <Textarea
             aria-labelledby={`${id}-feedback`}

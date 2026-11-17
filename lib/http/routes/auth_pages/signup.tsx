@@ -76,7 +76,7 @@ export default function SignupPage(
         <h1 class='text-3xl font-medium'>{i18n.t('signup.title')}</h1>
         <p class='text-sm text-base-content/70'>{i18n.t('signup.subtitle')}</p>
       </div>
-      <form class='ds-card ds-card-bordered max-w-xl' method='post'>
+      <form class='ds-card ds-card-border max-w-xl' method='post'>
         <div class='ds-card-body space-y-4'>
           <input type='hidden' name='next' value={data.next ?? ''} />
           {error && (
@@ -84,11 +84,11 @@ export default function SignupPage(
               {error}
             </div>
           )}
-          <label class='ds-form-control' for='signup-name'>
+          <label class='flex flex-col' for='signup-name'>
             <span>{i18n.t('signup.name')}</span>
             <Input id='signup-name' name='name' autoComplete='name' value={data.name ?? ''} />
           </label>
-          <label class='ds-form-control' for='signup-email'>
+          <label class='flex flex-col' for='signup-email'>
             <span>{i18n.t('signup.email')}</span>
             <Input
               id='signup-email'
@@ -101,7 +101,7 @@ export default function SignupPage(
               required
             />
           </label>
-          <label class='ds-form-control' for='new-password'>
+          <label class='flex flex-col' for='new-password'>
             <span>{i18n.t('signup.password')}</span>
             <Input
               id='new-password'

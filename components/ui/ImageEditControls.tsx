@@ -73,7 +73,7 @@ export default function ImageEditControls(props: Props) {
       </div>
 
       <div class='grid gap-3 md:grid-cols-2'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span class='text-sm'>{i18n.t('editor.cropRatio')}</span>
           <Select
             size='sm'
@@ -96,7 +96,7 @@ export default function ImageEditControls(props: Props) {
             <option value='sixteen-nine'>{i18n.t('editor.ratioWidescreen')}</option>
           </Select>
         </label>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span class='flex items-center justify-between gap-2 text-sm'>
             {i18n.t('editor.zoom')}
             <output>{i18n.formatPercent(cropZoom(props.state))}</output>
@@ -179,7 +179,7 @@ export default function ImageEditControls(props: Props) {
             {i18n.t('editor.flipVertical')}
           </Button>
         </div>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span class='flex items-center justify-between gap-2 text-sm'>
             {i18n.t('editor.straighten')}
             <output>
@@ -281,7 +281,7 @@ function OutputDimension(
     );
   };
   return (
-    <label class='ds-form-control'>
+    <label class='flex flex-col'>
       <span class='text-sm'>{props.label} (px)</span>
       <Input
         size='sm'

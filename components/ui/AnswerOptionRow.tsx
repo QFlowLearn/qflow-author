@@ -45,7 +45,7 @@ export function AnswerOptionLabelButton(props: {
       type='button'
       title={props.editLabel}
       aria-label={props.editLabel}
-      class='inline-grid min-h-11 min-w-11 max-w-full place-items-center rounded px-2 text-sm font-medium text-base-content/80 hover:bg-base-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary'
+      class='inline-grid min-h-11 min-w-11 max-w-full place-items-center rounded-sm px-2 text-sm font-medium text-base-content/80 hover:bg-base-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary'
       onClick={props.onEdit}
       onFocus={props.onEdit}
     >

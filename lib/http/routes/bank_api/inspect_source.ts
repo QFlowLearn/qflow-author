@@ -20,17 +20,21 @@ async function handle(ctx: HttpRequest) {
     return Response.json({ purpose: request.purpose, inspections });
   } catch (error: unknown) {
     if (error instanceof SourceIntakeRequestError) {
-      return Response.json({
-        error: error.message,
-        code: error.code,
-        ...(error.params ? { params: error.params } : {}),
-      }, { status: error.status });
+      return Response.json(
+        {
+          error: error.message,
+          code: error.code,
+          ...(error.params ? { params: error.params } : {}),
+        },
+        { status: error.status },
+      );
     }
     console.error(
       JSON.stringify({ event: 'source_intake_inspection_failed', cause: safeErrorSummary(error) }),
     );
-    return Response.json({ error: 'Unable to inspect the source.', code: 'unexpected' }, {
-      status: 500,
-    });
+    return Response.json(
+      { error: 'Unable to inspect the source.', code: 'unexpected' },
+      { status: 500 },
+    );
   }
 }

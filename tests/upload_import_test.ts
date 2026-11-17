@@ -29,12 +29,16 @@ testCase('upload import round-trip: fixture → draft → qti3 export → re-imp
 
   const parsed = parseItemXml(xml);
   const draft = draftOfType<UploadDraft>(parsed, 'upload');
-  const rebuilt = exportQti3TestItemXml('upload', {
-    title: draft.title,
-    promptHtml: draft.promptHtml,
-    bodyHtml: draft.bodyHtml,
-    responseIdentifier: draft.responseIdentifier,
-  }, { identifier: 'item-upload-roundtrip' });
+  const rebuilt = exportQti3TestItemXml(
+    'upload',
+    {
+      title: draft.title,
+      promptHtml: draft.promptHtml,
+      bodyHtml: draft.bodyHtml,
+      responseIdentifier: draft.responseIdentifier,
+    },
+    { identifier: 'item-upload-roundtrip' },
+  );
 
   if (!(rebuilt.includes('<qti-upload-interaction'))) {
     expect.unreachable("Expected rebuilt.includes('<qti-upload-interaction')");

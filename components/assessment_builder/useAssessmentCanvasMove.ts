@@ -116,7 +116,7 @@ export function useAssessmentCanvasMove(
     const source = capture.parts.find((part) => part.id === move.partId);
     if (
       source?.placements.findIndex((placement) => placement.id === move.placementId) ===
-        move.position
+      move.position
     ) {
       capture.release();
       return;

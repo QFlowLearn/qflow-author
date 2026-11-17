@@ -59,13 +59,19 @@ testCase(
       expect(edited.importChecks).toStrictEqual(page.importChecks);
       const current = edited.run.items.find((i) => i.id === item.id);
       if (!current) expect.unreachable('Expected current');
-      await updateMigrationItems(ctx, id, [item.id], { kind: 'reject' }, {
-        [item.id]: {
-          contentHash: current.contentHash,
-          contextHash: current.contextHash,
-          decision: current.decision,
+      await updateMigrationItems(
+        ctx,
+        id,
+        [item.id],
+        { kind: 'reject' },
+        {
+          [item.id]: {
+            contentHash: current.contentHash,
+            contextHash: current.contextHash,
+            decision: current.decision,
+          },
         },
-      });
+      );
       const rejected = await getMigrationReviewPage(ctx, id, 1, false);
       if (!(rejected?.importChecks)) expect.unreachable('Expected rejected?.importChecks');
       expect(rejected.importChecks.affected).toStrictEqual(60);

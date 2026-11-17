@@ -82,7 +82,7 @@ export default function ImageUpload(
   }, [onChange, onMetadata]);
 
   return (
-    <div class={['ds-form-control space-y-2', cls || ''].filter(Boolean).join(' ')}>
+    <div class={['flex flex-col space-y-2', cls || ''].filter(Boolean).join(' ')}>
       <span>{label}</span>
       <AssetUpload
         accept='image/*'
@@ -101,8 +101,8 @@ export default function ImageUpload(
                 src={previewUrl}
                 alt={alt ?? ''}
                 class={compact
-                  ? 'h-20 w-auto max-w-full rounded border border-base-200 object-contain'
-                  : 'h-28 w-auto max-w-full rounded border border-base-200 object-contain'}
+                  ? 'h-20 w-auto max-w-full rounded-sm border border-base-200 object-contain'
+                  : 'h-28 w-auto max-w-full rounded-sm border border-base-200 object-contain'}
               />
             )
             : null}
@@ -117,7 +117,7 @@ export default function ImageUpload(
                 </div>
               )
               : (
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('editor.currentUrl')}</span>
                   <Input size='sm' value={value} readOnly />
                 </label>

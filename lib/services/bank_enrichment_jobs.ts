@@ -71,11 +71,11 @@ export class BankEnrichmentJobs {
           );
           return preview && preview.workflowExecutionId === executionId &&
               canonicalJsonStringify({
-                  seed: preview.seed,
-                  baseVersionId: preview.baseVersionId,
-                  audience: preview.audience,
-                  definition: preview.definition,
-                }) === canonicalJsonStringify(command)
+                seed: preview.seed,
+                baseVersionId: preview.baseVersionId,
+                audience: preview.audience,
+                definition: preview.definition,
+              }) === canonicalJsonStringify(command)
             ? { ok: true, value: id } as const
             : { ok: false, code: 'operation_conflict' } as const;
         }

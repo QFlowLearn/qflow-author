@@ -39,7 +39,7 @@ export default function QuestionPointsField(props: {
         </div>
         {props.help && (
           <details class='min-w-0 text-sm text-base-content/80'>
-            <summary class='min-h-8 cursor-pointer content-center rounded px-1 underline decoration-base-content/40 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary'>
+            <summary class='min-h-8 cursor-pointer content-center rounded-sm px-1 underline decoration-base-content/40 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary'>
               {props.helpLabel}
             </summary>
             <p id={`${props.id}-help`} class='max-w-prose py-2'>{props.help}</p>

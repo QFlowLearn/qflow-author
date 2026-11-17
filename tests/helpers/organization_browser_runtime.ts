@@ -93,9 +93,9 @@ export async function organizationBrowserRuntime(
                   throw new Error('Source-only organization must not request AI.');
                 }
                 return fixtureClefProvider((question, _definition, examples) => {
-                  const topicId = examples.find((e) =>
-                    e.question.questionId === question.questionId
-                  )?.topicId ?? 'cells';
+                  const topicId =
+                    examples.find((e) => e.question.questionId === question.questionId)?.topicId ??
+                      'cells';
                   return Promise.resolve({
                     ok: true,
                     value: {

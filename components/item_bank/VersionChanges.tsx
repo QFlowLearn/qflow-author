@@ -38,7 +38,7 @@ export function VersionChanges(props: {
                 })}
               </h4>
               <pre
-                class='max-h-96 overflow-auto whitespace-pre-wrap break-words rounded border border-base-300 p-3 text-xs'
+                class='max-h-96 overflow-auto whitespace-pre-wrap break-words rounded-sm border border-base-300 p-3 text-xs'
                 tabIndex={0}
               >{change.before}</pre>
             </div>
@@ -49,7 +49,7 @@ export function VersionChanges(props: {
                 })}
               </h4>
               <pre
-                class='max-h-96 overflow-auto whitespace-pre-wrap break-words rounded border border-base-300 p-3 text-xs'
+                class='max-h-96 overflow-auto whitespace-pre-wrap break-words rounded-sm border border-base-300 p-3 text-xs'
                 tabIndex={0}
               >{change.after}</pre>
             </div>

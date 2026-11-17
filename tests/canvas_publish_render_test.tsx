@@ -236,10 +236,11 @@ testCase('Canvas publish history renders every load and pagination state', () =>
     const i18n = createI18n(locale, payload.namespaces);
     const publish = publishView('RetryUpload');
     for (
-      const load of [{ _tag: 'Loading' as const }, { _tag: 'Loaded' as const }, {
-        _tag: 'Failed' as const,
-        code: 'CanvasPublishRequestFailed',
-      }]
+      const load of [
+        { _tag: 'Loading' as const },
+        { _tag: 'Loaded' as const },
+        { _tag: 'Failed' as const, code: 'CanvasPublishRequestFailed' },
+      ]
     ) {
       for (
         const pagination of [

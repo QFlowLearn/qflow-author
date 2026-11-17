@@ -13,7 +13,7 @@ type Props = {
 export default function LocaleChooser({ i18n, value, next }: Props) {
   return (
     <form method='post' action='/api/locale' class='space-y-2'>
-      <label class='ds-form-control' for='interface-locale'>
+      <label class='flex flex-col' for='interface-locale'>
         <span>{i18n.t('locale.label')}</span>
         <Select id='interface-locale' name='locale' value={value}>
           <option value='en-US' lang='en-US'>{i18n.t('locale.us')}</option>

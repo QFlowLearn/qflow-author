@@ -46,8 +46,8 @@ it('Vite development renders a PDF with the real compiler inside its module runn
       JSON.stringify(resolve('deploy/cloudflare/print_renderer.entry.ts'))
     };
 export default {fetch(){const result=printRenderer.render(${
-      JSON.stringify(document)
-    });return result.ok ? new Response(result.value.bytes,{headers:{'content-type':'application/pdf'}}) : new Response(result.code,{status:500});}};`,
+  JSON.stringify(document)
+});return result.ok ? new Response(result.value.bytes,{headers:{'content-type':'application/pdf'}}) : new Response(result.code,{status:500});}};`,
   );
   let server: ViteDevServer | undefined;
   try {

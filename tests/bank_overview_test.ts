@@ -210,10 +210,7 @@ testCase(
             row.bucket.filter.kind === 'value' && row.bucket.filter.valueId === 'life'
           )?.topics;
           expect(lifeTopics?.map((topic) => [topic.bucket.category?.label, topic.total]))
-            .toStrictEqual([[
-              'Cells',
-              104,
-            ], ['Genetics', 104]]);
+            .toStrictEqual([['Cells', 104], ['Genetics', 104]]);
           const genetics = await verify(query(`&topic=${v1}:genetics`));
           expect(genetics.total).toStrictEqual(104);
           expect(

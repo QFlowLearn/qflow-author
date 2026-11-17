@@ -93,30 +93,38 @@ testCase('serialized accessibility evidence retains its exact originating releas
 });
 
 testCase('final QTI accessibility reports missing media labels, captions, and transcripts', () => {
-  const video = exportQti3TestItemXml('media', {
-    type: 'media',
-    title: 'Video sample',
-    bodyHtml: '<p>Watch the clip.</p>',
-    promptHtml: '<p>Play the video.</p>',
-    mediaKind: 'video',
-    mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
-    mediaInteractionLabel: '',
-    mediaObjectLabel: '',
-    mediaAutostart: false,
-    mediaLoop: false,
-  }, { identifier: 'item-video' });
-  const object = exportQti3TestItemXml('media', {
-    type: 'media',
-    title: 'Object sample',
-    bodyHtml: '<p>Open the resource.</p>',
-    promptHtml: '<p>Review the object.</p>',
-    mediaKind: 'object',
-    mediaSources: [{ src: 'resource.pdf', type: 'application/pdf' }],
-    mediaInteractionLabel: 'Reference resource',
-    mediaObjectLabel: '',
-    mediaAutostart: false,
-    mediaLoop: false,
-  }, { identifier: 'item-object' });
+  const video = exportQti3TestItemXml(
+    'media',
+    {
+      type: 'media',
+      title: 'Video sample',
+      bodyHtml: '<p>Watch the clip.</p>',
+      promptHtml: '<p>Play the video.</p>',
+      mediaKind: 'video',
+      mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
+      mediaInteractionLabel: '',
+      mediaObjectLabel: '',
+      mediaAutostart: false,
+      mediaLoop: false,
+    },
+    { identifier: 'item-video' },
+  );
+  const object = exportQti3TestItemXml(
+    'media',
+    {
+      type: 'media',
+      title: 'Object sample',
+      bodyHtml: '<p>Open the resource.</p>',
+      promptHtml: '<p>Review the object.</p>',
+      mediaKind: 'object',
+      mediaSources: [{ src: 'resource.pdf', type: 'application/pdf' }],
+      mediaInteractionLabel: 'Reference resource',
+      mediaObjectLabel: '',
+      mediaAutostart: false,
+      mediaLoop: false,
+    },
+    { identifier: 'item-object' },
+  );
 
   const report = validateQti3Accessibility({ video, object });
   const codes = report.findings.map((finding) => finding.code);
@@ -128,11 +136,15 @@ testCase('final QTI accessibility reports missing media labels, captions, and tr
 });
 
 function choiceXml(bodyHtml: string): string {
-  return exportQti3TestItemXml('single_select', {
-    type: 'single_select',
-    title: 'Accessibility sample',
-    bodyHtml,
-    choices: [{ id: 'A', text: 'One' }, { id: 'B', text: 'Two' }],
-    correctId: 'A',
-  }, { identifier: 'item-accessibility' });
+  return exportQti3TestItemXml(
+    'single_select',
+    {
+      type: 'single_select',
+      title: 'Accessibility sample',
+      bodyHtml,
+      choices: [{ id: 'A', text: 'One' }, { id: 'B', text: 'Two' }],
+      correctId: 'A',
+    },
+    { identifier: 'item-accessibility' },
+  );
 }

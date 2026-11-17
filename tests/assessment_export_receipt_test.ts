@@ -226,13 +226,17 @@ async function packageInput() {
     document: DOCUMENT,
     assessmentXml: assessment.xml,
     itemsXml: {
-      single: exportQti3TestItemXml('single_select', {
-        type: 'single_select',
-        title: 'Single',
-        bodyHtml: '<p>Pick one.</p>',
-        choices: [{ id: 'A', text: 'One' }, { id: 'B', text: 'Two' }],
-        correctId: 'A',
-      }, { identifier: 'item-single' }),
+      single: exportQti3TestItemXml(
+        'single_select',
+        {
+          type: 'single_select',
+          title: 'Single',
+          bodyHtml: '<p>Pick one.</p>',
+          choices: [{ id: 'A', text: 'One' }, { id: 'B', text: 'Two' }],
+          correctId: 'A',
+        },
+        { identifier: 'item-single' },
+      ),
     },
     assets: [],
   };

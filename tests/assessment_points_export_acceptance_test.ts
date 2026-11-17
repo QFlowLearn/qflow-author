@@ -49,10 +49,11 @@ testCase(
                   ? 'Three point question'
                   : 'Partial credit question',
                 bodyHtml: '<p>Choose Alpha.</p>',
-                choices: [{ id: 'A', text: 'Alpha' }, { id: 'B', text: 'Beta' }, {
-                  id: 'C',
-                  text: 'Gamma',
-                }],
+                choices: [
+                  { id: 'A', text: 'Alpha' },
+                  { id: 'B', text: 'Beta' },
+                  { id: 'C', text: 'Gamma' },
+                ],
                 maximumScore: type === 'single_select' ? 3 : 2.5,
                 ...(type === 'single_select'
                   ? { correctId: 'A' }
@@ -199,12 +200,15 @@ testCase(
                 }
                 expect(item.draft.maximumScore).toStrictEqual(multiple ? 2.5 : 3);
                 const cases = multiple
-                  ? [[['A'], 1.25], [['A', 'C'], 1.25], [['A', 'B'], 2.5], [['A', 'B', 'C'], 2.5], [
-                    [
+                  ? [
+                    [['A'], 1.25],
+                    [['A', 'C'], 1.25],
+                    [['A', 'B'], 2.5],
+                    [['A', 'B', 'C'], 2.5],
+                    [[
                       'C',
-                    ],
-                    0,
-                  ]] as const
+                    ], 0],
+                  ] as const
                   : [['A', 3], ['B', 0], [null, 0]] as const;
                 for (const [response, expected] of cases) {
                   const scored = scoreQtiItemServerSide({

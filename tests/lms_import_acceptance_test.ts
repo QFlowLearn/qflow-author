@@ -45,24 +45,36 @@ test('persisted LMS review cannot accept omitted scoring rules or invented answe
         const blocked = page.run.items[0];
         expect(blocked.readiness).toBe('blocked');
         await expect(
-          updateMigrationItems(ctx, runId, [blocked.id], { kind: 'accept' }, {
-            [blocked.id]: {
-              contentHash: blocked.contentHash,
-              contextHash: blocked.contextHash,
-              decision: blocked.decision,
+          updateMigrationItems(
+            ctx,
+            runId,
+            [blocked.id],
+            { kind: 'accept' },
+            {
+              [blocked.id]: {
+                contentHash: blocked.contentHash,
+                contextHash: blocked.contextHash,
+                decision: blocked.decision,
+              },
             },
-          }),
+          ),
         ).rejects.toThrow('Blocked items must be corrected');
         const good = page.run.items[1];
         if (good) {
           expect(good.readiness).toBe('ready');
-          await updateMigrationItems(ctx, runId, [good.id], { kind: 'accept' }, {
-            [good.id]: {
-              contentHash: good.contentHash,
-              contextHash: good.contextHash,
-              decision: good.decision,
+          await updateMigrationItems(
+            ctx,
+            runId,
+            [good.id],
+            { kind: 'accept' },
+            {
+              [good.id]: {
+                contentHash: good.contentHash,
+                contextHash: good.contextHash,
+                decision: good.decision,
+              },
             },
-          });
+          );
         }
         const after = await getMigrationReviewPage(ctx, runId, 1, false);
         expect(after?.run.items[0].decision).toBe('pending');

@@ -33,7 +33,7 @@ export default function QuestionRevisionHistoryView(
   },
 ) {
   return (
-    <section aria-labelledby='item-history-heading' class='ds-card ds-card-bordered'>
+    <section aria-labelledby='item-history-heading' class='ds-card ds-card-border'>
       <div class='ds-card-body gap-0 p-0'>
         <div class='border-b border-base-300 px-5 py-4'>
           <h2 id='item-history-heading' class='text-xl font-medium'>

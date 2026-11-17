@@ -54,8 +54,7 @@ export default function BankCollectionOrder({ items, collectionId, operationId, 
               // Keep focus on this control when its question reaches the first position.
               aria-disabled={index === 0}
               aria-label={i18n.t('items.collections.moveUp', { title: item.title })}
-              onClick={() =>
-                move(index, -1)}
+              onClick={() => move(index, -1)}
             >
               {i18n.t('items.collections.up')}
             </Button>
@@ -65,8 +64,7 @@ export default function BankCollectionOrder({ items, collectionId, operationId, 
               disabled={!hydrated}
               aria-disabled={index === ordered.length - 1}
               aria-label={i18n.t('items.collections.moveDown', { title: item.title })}
-              onClick={() =>
-                move(index, 1)}
+              onClick={() => move(index, 1)}
             >
               {i18n.t('items.collections.down')}
             </Button>

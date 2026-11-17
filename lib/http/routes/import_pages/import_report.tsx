@@ -387,9 +387,10 @@ async function handleGET(ctx: HttpRequest) {
   const run = pageData?.run;
   if (!run) return new Response(ctx.state.i18n.t('imports.feedback.notFound'), { status: 404 });
   if (ctx.req.headers.get('accept') === 'application/json') {
-    return Response.json({ state: run.execution._tag }, {
-      headers: { 'cache-control': 'no-store', vary: 'Accept' },
-    });
+    return Response.json(
+      { state: run.execution._tag },
+      { headers: { 'cache-control': 'no-store', vary: 'Accept' } },
+    );
   }
   const batch = await getMigrationBatchReviewContext(auth, run.batchId);
   if (!batch) return new Response(ctx.state.i18n.t('imports.feedback.notFound'), { status: 404 });

@@ -47,7 +47,7 @@ export async function parseCanvasRemoteIdentityResolutionRequest(
 ): Promise<CanvasRemoteIdentityResolutionInput | null> {
   if (
     request.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase() !==
-      'application/json'
+    'application/json'
   ) {
     return null;
   }

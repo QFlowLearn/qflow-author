@@ -39,10 +39,10 @@ test('Canvas media in separate webcontent resources survives native quiz import,
         ccXml: '<questestinterop/>',
         nativeXml: withImage(reference),
         extraResources: mediaResource,
-        extraFiles: [{ name: path, data: png }, {
-          name: 'web_resources/unreferenced.png',
-          data: png,
-        }],
+        extraFiles: [
+          { name: path, data: png },
+          { name: 'web_resources/unreferenced.png', data: png },
+        ],
       }),
     };
     const imported = await imsccAdapter.parse(source);
@@ -54,10 +54,11 @@ test('Canvas media in separate webcontent resources survives native quiz import,
     expect(item.draft.bodyHtml).not.toContain('IMS-CC-FILEBASE');
     expect([...collectImportedAssetReferenceKeys(item.draft, item.href)]).toContain(path);
     expect(
-      buildMigrationAnalysis(imported, {
-        adapter: imsccAdapter,
-        sniff: await imsccAdapter.sniff(source),
-      }, { _tag: 'Assessment' }).items[0].readiness,
+      buildMigrationAnalysis(
+        imported,
+        { adapter: imsccAdapter, sniff: await imsccAdapter.sniff(source) },
+        { _tag: 'Assessment' },
+      ).items[0].readiness,
     ).not.toBe('blocked');
     const preview = buildQtiPreviewXml(item.draft);
     const exported = prepareQuestionXmlDownload(item.draft, item.identifier);
@@ -180,10 +181,11 @@ test('media failures remain visible while independent usable quiz resources impo
   const imported = await imsccAdapter.parse(source);
   expect(imported.items).toHaveLength(1);
   expect(imported.items[0].draft.maximumScore).toBe(2);
-  const analysis = buildMigrationAnalysis(imported, {
-    adapter: imsccAdapter,
-    sniff: await imsccAdapter.sniff(source),
-  }, { _tag: 'Assessment' });
+  const analysis = buildMigrationAnalysis(
+    imported,
+    { adapter: imsccAdapter, sniff: await imsccAdapter.sniff(source) },
+    { _tag: 'Assessment' },
+  );
   expect(
     analysis.items[0].warnings.some((warning) =>
       warning.message.includes('media file') && warning.message.includes('missing')

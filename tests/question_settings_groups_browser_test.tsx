@@ -115,11 +115,14 @@ testCase(
         if (rejectedFields.length > 0) {
           const fields = rejectedFields;
           rejectedFields = [];
-          return Response.json({
-            error: 'invalid_draft',
-            message: 'Untrusted server explanation',
-            issues: fields.map((field) => ({ field, message: 'Untrusted field explanation' })),
-          }, { status: 422 });
+          return Response.json(
+            {
+              error: 'invalid_draft',
+              message: 'Untrusted server explanation',
+              issues: fields.map((field) => ({ field, message: 'Untrusted field explanation' })),
+            },
+            { status: 422 },
+          );
         }
         draft = parsed.command.draft;
         return Response.json({

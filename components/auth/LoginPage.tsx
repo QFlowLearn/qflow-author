@@ -27,7 +27,7 @@ export default function LoginPage(
         <h1 class='text-3xl font-medium'>{i18n.t('login.title')}</h1>
         <p class='text-sm text-base-content/70'>{i18n.t('login.subtitle')}</p>
       </div>
-      <form class='ds-card ds-card-bordered max-w-xl' method='post'>
+      <form class='ds-card ds-card-border max-w-xl' method='post'>
         <div class='ds-card-body space-y-4'>
           {error && (
             <div id='login-error' class='ds-alert ds-alert-error text-sm' role='alert'>
@@ -78,7 +78,7 @@ export default function LoginPage(
           )}
           {!signInUnavailable && <input type='hidden' name='next' value={data.next ?? ''} />}
           {!signInUnavailable && (
-            <label class='ds-form-control' for='login-email'>
+            <label class='flex flex-col' for='login-email'>
               <span>{i18n.t('login.email')}</span>
               <Input
                 id='login-email'
@@ -93,7 +93,7 @@ export default function LoginPage(
             </label>
           )}
           {!signInUnavailable && passwordAllowed && (
-            <label class='ds-form-control' for='current-password'>
+            <label class='flex flex-col' for='current-password'>
               <span>{i18n.t('login.password')}</span>
               <Input
                 id='current-password'

@@ -18,12 +18,11 @@ export const canvasPublishResumeApiRoute = defineHttpRoute(
           { status: 400 },
         );
       }
-      const result = await advanceCanvasPublish(requireAuthContext(ctx.state), {
-        assessmentId: ctx.params.id,
-        publishId,
-        storage: resolveStorage(ctx),
-        runtime: ctx,
-      }, { signal: ctx.req.signal });
+      const result = await advanceCanvasPublish(
+        requireAuthContext(ctx.state),
+        { assessmentId: ctx.params.id, publishId, storage: resolveStorage(ctx), runtime: ctx },
+        { signal: ctx.req.signal },
+      );
       if (!result.ok) {
         const status = result.error._tag === 'CanvasPublishNotFound' ? 404 : 503;
         return Response.json(

@@ -112,7 +112,7 @@ export default function TenantSettingsPage({ data, i18n }: { data: Data; i18n: I
         <h1 class='text-3xl font-medium'>{i18n.t('settings.tenant.title')}</h1>
         <p class='text-sm text-base-content/70'>{i18n.t('settings.tenant.subtitle')}</p>
       </div>
-      <form class='ds-card ds-card-bordered max-w-xl' method='post'>
+      <form class='ds-card ds-card-border max-w-xl' method='post'>
         <div class='ds-card-body space-y-4'>
           {data.success && (
             <div class='ds-alert text-sm' role='status'>{i18n.t('settings.tenant.saved')}</div>
@@ -122,11 +122,11 @@ export default function TenantSettingsPage({ data, i18n }: { data: Data; i18n: I
               {i18n.t(ERROR_MESSAGE_IDS[data.error])}
             </div>
           )}
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('settings.tenant.name')}</span>
             <Input name='name' defaultValue={data.tenant.name} required />
           </label>
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('settings.tenant.slug')}</span>
             <Input value={data.tenant.slug} disabled />
           </label>
@@ -139,7 +139,7 @@ export default function TenantSettingsPage({ data, i18n }: { data: Data; i18n: I
       {data.canManageBankName && (
         <form method='post' action='/settings/tenant/bank-name' class='max-w-xl space-y-3'>
           <h2 class='text-xl font-medium'>{i18n.t('settings.tenant.bankTitle')}</h2>
-          <label class='ds-form-control gap-1' htmlFor='bank-display-name'>
+          <label class='flex flex-col gap-1' htmlFor='bank-display-name'>
             <span>{i18n.t('settings.tenant.bankName')}</span>
             <Input
               id='bank-display-name'

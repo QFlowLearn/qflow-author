@@ -48,7 +48,7 @@ export default function FormattingOverflow(props: {
         aria-expanded={open}
         aria-controls={id}
         onMouseDown={(event) => event.preventDefault()}
-        class='flex h-8 shrink-0 items-center gap-1 rounded px-2 text-sm text-base-content hover:bg-base-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary'
+        class='flex h-8 shrink-0 items-center gap-1 rounded-sm px-2 text-sm text-base-content hover:bg-base-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary'
       >
         {props.label}
         <span aria-hidden='true'>▾</span>

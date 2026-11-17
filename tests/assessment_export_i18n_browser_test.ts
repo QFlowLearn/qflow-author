@@ -640,9 +640,8 @@ globalThis.mount(globalThis.__CONFIG__);
           await page.getByRole('alert').getByText(preflightExpected.get(mode)!).waitFor();
           expect(validateRequests.filter((r) => r.locale === locale && r.mode === mode).length)
             .toStrictEqual(1);
-          const preflightRequest = validateRequests.filter((r) =>
-            r.locale === locale && r.mode === mode
-          )[0];
+          const preflightRequest =
+            validateRequests.filter((r) => r.locale === locale && r.mode === mode)[0];
           expect(Object.fromEntries(new URLSearchParams(preflightRequest.search.slice(1))))
             .toStrictEqual({
               target: 'moodle',

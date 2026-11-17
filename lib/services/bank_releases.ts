@@ -355,7 +355,7 @@ async function freeze(
   if (
     fresh.value.some((item, index) =>
       canonicalJsonStringify(item.eligibility) !==
-        canonicalJsonStringify(manifest.items[index].eligibility)
+      canonicalJsonStringify(manifest.items[index].eligibility)
     )
   ) return { ok: false, code: 'stale_preview' };
   const required = fresh.value.filter((item) => item.eligibility.kind === 'attestation_required');

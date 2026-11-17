@@ -75,9 +75,10 @@ export async function renderOrganizationPage(ctx: HttpRequest, id: string) {
     );
   }
   if (ctx.req.headers.get('Accept') === 'application/json') {
-    return Response.json({ state: run.value.state, undoProcessed: run.value.undoProcessed }, {
-      headers: { 'Cache-Control': 'no-store', Vary: 'Accept' },
-    });
+    return Response.json(
+      { state: run.value.state, undoProcessed: run.value.undoProcessed },
+      { headers: { 'Cache-Control': 'no-store', Vary: 'Accept' } },
+    );
   }
   const rendered = await ctx.render(
     <BankEnrichmentLayout

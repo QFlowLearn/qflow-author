@@ -95,15 +95,19 @@ export async function classifyQuestionStructure(
   });
   try {
     const raw = await awaitWithAbortSignal(
-      binding.run(CLEF_MODEL_ID, {
-        model: CLEF_MODEL_VERSION,
-        state: {
-          text: input.text,
-          spans: spans.map((span) => span.text),
-          recentQuestionStructures: input.recent,
+      binding.run(
+        CLEF_MODEL_ID,
+        {
+          model: CLEF_MODEL_VERSION,
+          state: {
+            text: input.text,
+            spans: spans.map((span) => span.text),
+            recentQuestionStructures: input.recent,
+          },
+          questions,
         },
-        questions,
-      }, { gateway: { id: config.gatewayId, skipCache: true, collectLog: false } }),
+        { gateway: { id: config.gatewayId, skipCache: true, collectLog: false } },
+      ),
       { signal },
     );
     if (

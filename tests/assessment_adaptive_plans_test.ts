@@ -44,11 +44,11 @@ testCase(
         try {
           const ids = await addEnrichmentQuestions(ctx, 285);
           for (
-            const [level, start, end] of [['easy', 0, 100], ['moderate', 100, 195], [
-              'hard',
-              195,
-              285,
-            ]] as const
+            const [level, start, end] of [
+              ['easy', 0, 100],
+              ['moderate', 100, 195],
+              ['hard', 195, 285],
+            ] as const
           ) {
             await assignOverviewFixture(
               ctx,

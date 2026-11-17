@@ -192,7 +192,7 @@ export function SelectPointContent(props: SelectPointContentProps) {
               key={`select-point-target-${index}`}
               class='grid gap-2 rounded-lg border border-base-300 bg-base-100 px-3 py-2 md:grid-cols-[8rem_1fr_8rem_auto]'
             >
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.shape')}</span>
                 <Select
                   size='sm'
@@ -209,7 +209,7 @@ export function SelectPointContent(props: SelectPointContentProps) {
                   <option value='default'>{i18n.t('driver.selectPointDefaultShape')}</option>
                 </Select>
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.coordinates')}</span>
                 <Input
                   size='sm'
@@ -219,7 +219,7 @@ export function SelectPointContent(props: SelectPointContentProps) {
                   placeholder='x,y,r or x1,y1,x2,y2'
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.selectPointMappedValue')}</span>
                 <Input
                   size='sm'

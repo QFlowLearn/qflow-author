@@ -69,25 +69,29 @@ testCase('Respondus TXT and DOCX reach review, commit, and destination-bound exp
 
     const textBytes = await _fs.readFile(new URL('standard-format.txt', FIXTURES));
     const docxBytes = await _fs.readFile(new URL('word-visible-numbering.docx', FIXTURES));
-    const batch = await enqueueMigrationBatch(ctx, {
-      idempotencyKey: crypto.randomUUID(),
-      destination: { _tag: 'Assessment' as const },
-      purpose: 'recover_existing',
-      sources: [
-        {
-          source: { filename: 'standard-format.txt', mime: 'text/plain', bytes: textBytes },
-          adapter: { id: 'respondus-standard', version: '1' },
-        },
-        {
-          source: {
-            filename: 'word-visible-numbering.docx',
-            mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            bytes: docxBytes,
+    const batch = await enqueueMigrationBatch(
+      ctx,
+      {
+        idempotencyKey: crypto.randomUUID(),
+        destination: { _tag: 'Assessment' as const },
+        purpose: 'recover_existing',
+        sources: [
+          {
+            source: { filename: 'standard-format.txt', mime: 'text/plain', bytes: textBytes },
+            adapter: { id: 'respondus-standard', version: '1' },
           },
-          adapter: { id: 'respondus-standard', version: '1' },
-        },
-      ],
-    }, { storage });
+          {
+            source: {
+              filename: 'word-visible-numbering.docx',
+              mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+              bytes: docxBytes,
+            },
+            adapter: { id: 'respondus-standard', version: '1' },
+          },
+        ],
+      },
+      { storage },
+    );
     for (const run of batch.runs) {
       const dispatches = await db.select({ id: workflowDispatches.id }).from(workflowDispatches)
         .where(eq(workflowDispatches.jobId, run.id)).limit(1);

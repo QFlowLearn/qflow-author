@@ -80,15 +80,19 @@ async function withQueuedReviewSource(
 ): Promise<void> {
   await withEnrichmentWorkspace(async (ctx) => {
     const storage = createMemoryObjectStorage();
-    const batch = await enqueueMigrationBatch(ctx, {
-      idempotencyKey: crypto.randomUUID(),
-      purpose: scope.purpose,
-      destination: scope.destination,
-      sources: [{
-        source,
-        adapter: { id: adapterId, version: '1' },
-      }],
-    }, { storage });
+    const batch = await enqueueMigrationBatch(
+      ctx,
+      {
+        idempotencyKey: crypto.randomUUID(),
+        purpose: scope.purpose,
+        destination: scope.destination,
+        sources: [{
+          source,
+          adapter: { id: adapterId, version: '1' },
+        }],
+      },
+      { storage },
+    );
     try {
       const runId = batch.runs[0].id;
       const [dispatch] = await db.select().from(workflowDispatches).where(
@@ -96,10 +100,11 @@ async function withQueuedReviewSource(
       );
       await test(ctx, runId, async () => {
         expect(
-          (await runSourceMigrationWorkflow({ jobId: runId, workflowExecutionId: dispatch.id }, {
-            do: (_name, _config, operation) => operation(),
-            sleep: () => Promise.resolve(),
-          }, { database: db, storage }))._tag,
+          (await runSourceMigrationWorkflow(
+            { jobId: runId, workflowExecutionId: dispatch.id },
+            { do: (_name, _config, operation) => operation(), sleep: () => Promise.resolve() },
+            { database: db, storage },
+          ))._tag,
         ).toStrictEqual('Completed');
       });
     } finally {

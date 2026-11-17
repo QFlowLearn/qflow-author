@@ -28,7 +28,7 @@ export default function AssessmentSidebar({
 
   return (
     <aside class='flex min-w-0 flex-col gap-2 pt-0 mt-0'>
-      <div class='builder-list ds-card ds-card-bordered space-y-2 rounded-[10px] border-base-200/70 bg-base-100 p-3 shadow-none sm:p-4'>
+      <div class='builder-list ds-card ds-card-border space-y-2 rounded-[10px] border-base-200/70 bg-base-100 p-3 shadow-none sm:p-4'>
         <p class='text-sm font-medium text-base-content'>
           {i18n.t('assessments.builder.parts')}
         </p>
@@ -65,7 +65,7 @@ export default function AssessmentSidebar({
           ))}
       </div>
       {recent.length > 0 && (
-        <div class='ds-card ds-card-bordered mt-2 space-y-2 rounded-[10px] border-base-200/70 bg-base-100 p-3 shadow-none sm:p-4'>
+        <div class='ds-card ds-card-border mt-2 space-y-2 rounded-[10px] border-base-200/70 bg-base-100 p-3 shadow-none sm:p-4'>
           <div class='mb-1 text-sm font-medium text-base-content/70'>
             {i18n.t('assessments.builder.recentAssessments')}
           </div>

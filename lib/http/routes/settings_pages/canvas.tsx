@@ -281,11 +281,11 @@ export default function CanvasSettingsPage(
                           name='credentialVersion'
                           value={connection.credentialVersion}
                         />
-                        <label class='ds-form-control'>
+                        <label class='flex flex-col'>
                           <span>{i18n.t('settings.canvas.newClientId')}</span>
                           <Input name='clientId' required maxLength={255} autoComplete='off' />
                         </label>
-                        <label class='ds-form-control'>
+                        <label class='flex flex-col'>
                           <span>{i18n.t('settings.canvas.newClientSecret')}</span>
                           <Input
                             name='clientSecret'
@@ -325,7 +325,7 @@ export default function CanvasSettingsPage(
           <form method='post' class='rounded-lg border border-base-300 bg-base-100 p-5'>
             <input type='hidden' name='action' value='create' />
             <div class='grid gap-4 sm:grid-cols-2'>
-              <label class='ds-form-control sm:col-span-2'>
+              <label class='flex flex-col sm:col-span-2'>
                 <span>{i18n.t('settings.canvas.connectionName')}</span>
                 <Input
                   name='name'
@@ -335,7 +335,7 @@ export default function CanvasSettingsPage(
                   placeholder={i18n.t('settings.canvas.connectionNamePlaceholder')}
                 />
               </label>
-              <label class='ds-form-control sm:col-span-2'>
+              <label class='flex flex-col sm:col-span-2'>
                 <span>{i18n.t('settings.canvas.canvasUrl')}</span>
                 <Input
                   name='baseUrl'
@@ -347,11 +347,11 @@ export default function CanvasSettingsPage(
                   {i18n.t('settings.canvas.canvasUrlHelp')}
                 </span>
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('settings.canvas.clientId')}</span>
                 <Input name='clientId' required maxLength={255} autoComplete='off' />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('settings.canvas.clientSecret')}</span>
                 <Input name='clientSecret' type='password' required autoComplete='new-password' />
               </label>

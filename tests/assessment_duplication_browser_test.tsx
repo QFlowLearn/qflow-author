@@ -149,13 +149,16 @@ testCase(
         }
         if (command._tag === 'Revise') {
           revisions.set(++latestRevision, command.draft);
-          return Response.json({
-            itemId: sourceItemId,
-            placementId: sourcePlacementId,
-            revision: latestRevision,
-            identifier: 'source',
-            fixed: false,
-          }, { status: 201 });
+          return Response.json(
+            {
+              itemId: sourceItemId,
+              placementId: sourcePlacementId,
+              revision: latestRevision,
+              identifier: 'source',
+              fixed: false,
+            },
+            { status: 201 },
+          );
         }
         if (command._tag === 'Variant') {
           const source = revisions.get(command.sourceRevision);

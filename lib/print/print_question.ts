@@ -141,13 +141,15 @@ export function parsePrintQuestion(xml: string): QuestionResult {
     }
     if (!hasGuidance(rubrics)) return blocked('marking_guidance_required');
     scoring = { kind: 'manual', guidance: rubrics, maximum };
-  } else {scoring = parseScoring(
+  } else {
+    scoring = parseScoring(
       processing,
       declaration,
       responseId,
       choices.map((choice) => choice.id),
       maximum,
-    );}
+    );
+  }
   if (!scoring) return blocked('unsupported_scoring');
 
   const marker = document.createElement('qflow-print-response');

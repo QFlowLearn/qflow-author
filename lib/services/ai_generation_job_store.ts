@@ -154,7 +154,7 @@ export async function enqueueAIGenerationJob(
       );
       if (
         canonicalJsonStringify(persistedBlueprint) !==
-          canonicalJsonStringify(input.blueprint)
+        canonicalJsonStringify(input.blueprint)
       ) {
         throw new Error('Active generation job and conversion blueprint disagree.');
       }
@@ -302,15 +302,21 @@ export async function markAIGenerationJobRetry(
   code: RetryableAIGenerationJobErrorCode,
   database: QflowDatabase = db,
 ): Promise<void> {
-  await updateOwnedJob(database, jobId, leaseToken, {
-    status: 'queued',
-    progress: 0,
-    leaseToken: null,
-    error: safeAIGenerationJobErrorMessage(code),
-    startedAt: null,
-    completedAt: null,
-    updatedAt: sql`now()`,
-  }, { workflowExecutionId, status: 'queued' });
+  await updateOwnedJob(
+    database,
+    jobId,
+    leaseToken,
+    {
+      status: 'queued',
+      progress: 0,
+      leaseToken: null,
+      error: safeAIGenerationJobErrorMessage(code),
+      startedAt: null,
+      completedAt: null,
+      updatedAt: sql`now()`,
+    },
+    { workflowExecutionId, status: 'queued' },
+  );
 }
 
 /** Mark an owned failed attempt terminal without discarding provider output. */
@@ -321,14 +327,20 @@ export async function markAIGenerationJobFailed(
   code: TerminalAIGenerationJobErrorCode,
   database: QflowDatabase = db,
 ): Promise<void> {
-  await updateOwnedJob(database, jobId, leaseToken, {
-    status: 'failed',
-    progress: 100,
-    leaseToken: null,
-    error: safeAIGenerationJobErrorMessage(code),
-    completedAt: sql`now()`,
-    updatedAt: sql`now()`,
-  }, { workflowExecutionId, status: 'failed' });
+  await updateOwnedJob(
+    database,
+    jobId,
+    leaseToken,
+    {
+      status: 'failed',
+      progress: 100,
+      leaseToken: null,
+      error: safeAIGenerationJobErrorMessage(code),
+      completedAt: sql`now()`,
+      updatedAt: sql`now()`,
+    },
+    { workflowExecutionId, status: 'failed' },
+  );
 }
 
 /** Execute one claimed job, resuming from a durable provider checkpoint when present. */

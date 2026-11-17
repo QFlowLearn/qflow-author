@@ -84,9 +84,14 @@ testCase(
     );
     if (!selected) expect.unreachable('Expected selected');
     for (
-      const [target, ids] of [['manual', ['replacement']], ['missing', ['replacement']], ['one', [
-        'two',
-      ]], ['one', ['a', 'b']]] as const
+      const [target, ids] of [
+        ['manual', ['replacement']],
+        ['missing', ['replacement']],
+        ['one', [
+          'two',
+        ]],
+        ['one', ['a', 'b']],
+      ] as const
     ) {
       expect(applyBankProposal(
         selected,

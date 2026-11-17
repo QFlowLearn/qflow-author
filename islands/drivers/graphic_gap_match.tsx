@@ -146,7 +146,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
                 </Button>
               </div>
               <div class='grid gap-2 md:grid-cols-[8rem_1fr_7rem]'>
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('driver.graphicGapMatchKind')}</span>
                   <Select
                     size='sm'
@@ -163,7 +163,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
                 </label>
                 {choice.kind === 'text'
                   ? (
-                    <label class='ds-form-control'>
+                    <label class='flex flex-col'>
                       <span class='text-xs'>{i18n.t('driver.graphicGapMatchText')}</span>
                       <Input
                         size='sm'
@@ -195,7 +195,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
                       onChange={(image) => props.updateGraphicChoiceImage(choice.id, image)}
                     />
                   )}
-                <label class='ds-form-control'>
+                <label class='flex flex-col'>
                   <span class='text-xs'>{i18n.t('driver.graphicGapMatchMatchMax')}</span>
                   <Input
                     size='sm'
@@ -215,7 +215,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
                   {i18n.t('driver.graphicGapMatchAdvanced')}
                 </summary>
                 <div class='space-y-2 border-t border-base-300 p-3'>
-                  <label class='ds-form-control'>
+                  <label class='flex flex-col'>
                     <span class='text-xs'>{i18n.t('driver.graphicGapMatchChoiceIdentifier')}</span>
                     <Input
                       value={choice.id}
@@ -228,7 +228,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
                     />
                   </label>
                   {choice.kind === 'text' && (
-                    <label class='ds-form-control'>
+                    <label class='flex flex-col'>
                       <span class='text-xs'>{i18n.t('driver.graphicGapMatchHtmlLabel')}</span>
                       <Textarea
                         rows={2}
@@ -288,7 +288,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
               key={tgt.id}
               selected={tgt.id === activeTargetId}
             >
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicGapMatchTargetId')}</span>
                 <Input
                   value={tgt.id}
@@ -302,7 +302,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
                   placeholder='T1'
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicGapMatchTargetShape')}</span>
                 <Select
                   value={tgt.shape}
@@ -317,7 +317,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
                   <option value='poly'>{i18n.t('driver.graphicGapMatchPoly')}</option>
                 </Select>
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicGapMatchCoords')}</span>
                 <Input
                   value={tgt.coords}
@@ -325,7 +325,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
                   readOnly
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicGapMatchMatchMax')}</span>
                 <Input
                   type='number'
@@ -338,7 +338,7 @@ export function GraphicGapMatchContent(props: GraphicGapMatchContentProps) {
                   }}
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.graphicGapMatchCorrectChoice')}</span>
                 <Select
                   value={correctByTarget.get(tgt.id) ?? ''}

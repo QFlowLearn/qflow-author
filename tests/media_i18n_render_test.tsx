@@ -59,10 +59,10 @@ function media(locale: InterfaceLocale, kind: 'object' | 'video', withSource = f
         responseIdentifier='RESPONSE_Ω'
         mediaKind={kind}
         mediaSources={kind === 'object' || withSource
-          ? [{ src: 'assets/media.mp4', type: 'video/mp4' }, {
-            src: 'https://example.test/alt?x=1&y=2',
-            type: 'audio/ogg',
-          }]
+          ? [
+            { src: 'assets/media.mp4', type: 'video/mp4' },
+            { src: 'https://example.test/alt?x=1&y=2', type: 'audio/ogg' },
+          ]
           : []}
         mediaCaptionSrc='assets/captions.vtt'
         mediaCaptionLang='en'
@@ -108,10 +108,11 @@ for (const locale of locales) {
       expect(html).toContain(i18n.t(`driver.${key}`));
     }
     for (
-      const [value, label] of [['video', i18n.t('driver.mediaVideo')], [
-        'audio',
-        i18n.t('driver.mediaAudio'),
-      ], ['object', i18n.t('driver.mediaImageDocument')]]
+      const [value, label] of [
+        ['video', i18n.t('driver.mediaVideo')],
+        ['audio', i18n.t('driver.mediaAudio')],
+        ['object', i18n.t('driver.mediaImageDocument')],
+      ]
     ) expect(html).toContain(`value="${value}">${label}</option>`);
     expect(html).toContain('value="&lt;b>AUTHORED-LABEL&lt;/b>"');
     expect(html).toContain('value="assets/media.mp4"');

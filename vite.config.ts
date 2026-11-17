@@ -39,13 +39,13 @@ export default defineConfig(({ command, isPreview }) => {
     },
     publicDir: 'static',
     build: { outDir: 'build' },
-    esbuild: { jsx: 'automatic', jsxImportSource: 'preact' },
+    oxc: { jsx: { runtime: 'automatic', importSource: 'preact' } },
     resolve: { alias: { 'preact/debug': resolve('shims/preact_debug.ts') } },
     environments: {
       client: {
         build: {
           manifest: true,
-          rollupOptions: {
+          rolldownOptions: {
             input: {
               bootstrap: resolve('client/entries/bootstrap.ts'),
               AssessmentBuilder: resolve('islands/AssessmentBuilder.tsx'),

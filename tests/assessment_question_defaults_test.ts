@@ -60,11 +60,15 @@ testCase(
   'assessment point defaults reject missing, extra, coercible and nonfinite request fields',
   () => {
     for (
-      const value of [undefined, {}, [], null, { expected: null }, {
-        expected: null,
-        desired: 2,
-        extra: true,
-      }, { desired: 0 }]
+      const value of [
+        undefined,
+        {},
+        [],
+        null,
+        { expected: null },
+        { expected: null, desired: 2, extra: true },
+        { desired: 0 },
+      ]
     ) {
       expect(parseAssessmentQuestionPointDefaultCommand(value)).toStrictEqual({ _tag: 'Invalid' });
     }

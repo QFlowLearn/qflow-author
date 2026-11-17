@@ -325,7 +325,7 @@ function BringFilesIntakeContent(
               />
             )
             : (
-              <label class='ds-form-control gap-2'>
+              <label class='flex flex-col gap-2'>
                 <span class='text-sm font-medium'>{i18n.t('imports.intake.sourceText')}</span>
                 <Textarea
                   rows={10}

@@ -62,19 +62,23 @@ testCase(
         { length: questionCount },
         (_, index) => `::Question ${index + 1}:: What is ${index + 1} plus one? {=${index + 2} ~0}`,
       ).join('\n\n');
-      const batch = await enqueueMigrationBatch(ctx, {
-        idempotencyKey: crypto.randomUUID(),
-        purpose: 'recover_existing',
-        destination: { _tag: 'WorkspaceBank', collectionId: null },
-        sources: [{
-          source: {
-            filename: 'large-bank.gift',
-            mime: 'text/plain',
-            bytes: new TextEncoder().encode(source),
-          },
-          adapter: { id: 'gift', version: '1' },
-        }],
-      }, { storage });
+      const batch = await enqueueMigrationBatch(
+        ctx,
+        {
+          idempotencyKey: crypto.randomUUID(),
+          purpose: 'recover_existing',
+          destination: { _tag: 'WorkspaceBank', collectionId: null },
+          sources: [{
+            source: {
+              filename: 'large-bank.gift',
+              mime: 'text/plain',
+              bytes: new TextEncoder().encode(source),
+            },
+            adapter: { id: 'gift', version: '1' },
+          }],
+        },
+        { storage },
+      );
       expect(batch.runs.length).toStrictEqual(1);
       const runId = batch.runs[0].id;
       const [dispatch] = await db.select({ id: workflowDispatches.id }).from(workflowDispatches)

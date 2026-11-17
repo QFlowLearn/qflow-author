@@ -43,32 +43,40 @@ const DOCUMENT: AssessmentExportDocument = {
 };
 
 const ITEMS_XML = {
-  single: exportQti3TestItemXml('single_select', {
-    type: 'single_select',
-    title: 'Single select',
-    bodyHtml: '<p>Pick one.</p>',
-    choices: [{ id: 'A', text: 'One' }, { id: 'B', text: 'Two' }],
-    correctId: 'A',
-  }, { identifier: 'item-single' }),
-  matching: exportQti3TestItemXml('match', {
-    type: 'match',
-    title: 'Match terms',
-    bodyHtml: '<p>Match each term.</p>',
-    promptHtml: '<p>Match.</p>',
-    sources: [
-      { id: 'A', text: 'Dog', matchMax: 1 },
-      { id: 'B', text: 'Cat', matchMax: 1 },
-    ],
-    targets: [
-      { id: 'T1', text: 'Barks' },
-      { id: 'T2', text: 'Meows' },
-    ],
-    correctPairs: [
-      { sourceId: 'A', targetId: 'T1' },
-      { sourceId: 'B', targetId: 'T2' },
-    ],
-    maxAssociations: 0,
-  }, { identifier: 'item-matching' }),
+  single: exportQti3TestItemXml(
+    'single_select',
+    {
+      type: 'single_select',
+      title: 'Single select',
+      bodyHtml: '<p>Pick one.</p>',
+      choices: [{ id: 'A', text: 'One' }, { id: 'B', text: 'Two' }],
+      correctId: 'A',
+    },
+    { identifier: 'item-single' },
+  ),
+  matching: exportQti3TestItemXml(
+    'match',
+    {
+      type: 'match',
+      title: 'Match terms',
+      bodyHtml: '<p>Match each term.</p>',
+      promptHtml: '<p>Match.</p>',
+      sources: [
+        { id: 'A', text: 'Dog', matchMax: 1 },
+        { id: 'B', text: 'Cat', matchMax: 1 },
+      ],
+      targets: [
+        { id: 'T1', text: 'Barks' },
+        { id: 'T2', text: 'Meows' },
+      ],
+      correctPairs: [
+        { sourceId: 'A', targetId: 'T1' },
+        { sourceId: 'B', targetId: 'T2' },
+      ],
+      maxAssociations: 0,
+    },
+    { identifier: 'item-matching' },
+  ),
 } as const;
 
 testCase(

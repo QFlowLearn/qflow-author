@@ -35,7 +35,11 @@ export function localeMutationResponse(url: URL, form: FormData | null): Respons
 }
 
 /** Shared signed-out locale mutation, preserving the closed JSON error contract. */
-export const localeRoute = defineHttpRoute('/api/locale', { POST: mutateLocale }, {
-  methodNotAllowedBody: JSON.stringify({ code: 'method_not_allowed' }),
-  methodNotAllowedHeaders: { 'content-type': 'application/json' },
-});
+export const localeRoute = defineHttpRoute(
+  '/api/locale',
+  { POST: mutateLocale },
+  {
+    methodNotAllowedBody: JSON.stringify({ code: 'method_not_allowed' }),
+    methodNotAllowedHeaders: { 'content-type': 'application/json' },
+  },
+);

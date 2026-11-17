@@ -21,10 +21,13 @@ testCase('all registered locales construct complete i18n runtimes', () => {
 });
 
 testCase('checker validator reports malformed catalog contracts', () => {
-  const diagnostics = validateCatalogData({ known: {}, orphan: {} }, {
-    'en-US': { core: { known: '{count, plural, one {one}' } },
-    'es-ES': { other: { extra: '' } },
-  });
+  const diagnostics = validateCatalogData(
+    { known: {}, orphan: {} },
+    {
+      'en-US': { core: { known: '{count, plural, one {one}' } },
+      'es-ES': { other: { extra: '' } },
+    },
+  );
   expect(diagnostics.some((item) => item.includes('invalid ICU'))).toStrictEqual(true);
   expect(diagnostics.some((item) => item.includes('namespace mismatch'))).toStrictEqual(true);
   expect(diagnostics.some((item) => item.includes('orphan context'))).toStrictEqual(true);

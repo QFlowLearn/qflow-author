@@ -135,9 +135,8 @@ export class BankQuestionProposals {
               ).map((level) => ({
                 id: level.id,
                 label: level.label,
-                available: new Set((buckets.get(row.id)?.get(level.id) ?? []).map((c) =>
-                  c.identity
-                )).size,
+                available:
+                  new Set((buckets.get(row.id)?.get(level.id) ?? []).map((c) => c.identity)).size,
               })),
             };
           });

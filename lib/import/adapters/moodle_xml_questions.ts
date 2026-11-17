@@ -502,11 +502,13 @@ function buildDdwtos(
     if (choice) {
       correctGapPairs.push({ choiceId: choice.id, gapId: id });
       usage.set(choice.id, (usage.get(choice.id) ?? 0) + 1);
-    } else {warnings.push({
+    } else {
+      warnings.push({
         code: 'DDWTOS_NO_CORRECT',
         message:
           `Source gap references unavailable dragbox ${rawIndex}. Restore the original choice and import again.`,
-      });}
+      });
+    }
     return createGapMarkerHtml({ id, label: `Gap ${gaps.length}` });
   });
   if (!correctGapPairs.length) {

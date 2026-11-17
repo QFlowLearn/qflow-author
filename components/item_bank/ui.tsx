@@ -63,7 +63,7 @@ export function BankField(
   },
 ) {
   return (
-    <label class={`ds-form-control gap-1 ${props.class ?? ''}`}>
+    <label class={`flex flex-col gap-1 ${props.class ?? ''}`}>
       <span class='text-xs font-medium text-base-content/70'>{props.label}</span>
       {props.children}
     </label>

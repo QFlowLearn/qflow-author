@@ -45,7 +45,7 @@ export function EndAttemptContent(props: EndAttemptContentProps) {
       />
 
       <div class='grid gap-3 sm:grid-cols-2'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.buttonLabel')}</span>
           <Input
             value={props.endAttemptTitle}

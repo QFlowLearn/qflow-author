@@ -274,7 +274,7 @@ export default function LoginPolicySettingsCard() {
   }
 
   return (
-    <form class='ds-card ds-card-bordered max-w-4xl' onSubmit={save}>
+    <form class='ds-card ds-card-border max-w-4xl' onSubmit={save}>
       <div class='ds-card-body space-y-4'>
         <LoginPolicyPendingStatus
           loading={loading}
@@ -293,7 +293,7 @@ export default function LoginPolicySettingsCard() {
         {error && <div class='ds-alert ds-alert-error text-sm' role='alert'>{error}</div>}
         {success && <div class='ds-alert text-sm' role='status'>{success}</div>}
 
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('settings.sso.policy.label')}</span>
           <Select
             name='loginPolicy'
@@ -321,7 +321,7 @@ export default function LoginPolicySettingsCard() {
             return (
               <div key={index} class='space-y-3 rounded-box border border-base-200 p-3'>
                 <div class='grid gap-3 md:grid-cols-[2fr,1fr,auto]'>
-                  <label class='ds-form-control'>
+                  <label class='flex flex-col'>
                     <span>{i18n.t('settings.sso.routes.domain')}</span>
                     <Input
                       name={`domainRoute-${index}`}
@@ -338,7 +338,7 @@ export default function LoginPolicySettingsCard() {
                       placeholder={i18n.t('settings.sso.routes.domainPlaceholder')}
                     />
                   </label>
-                  <label class='ds-form-control'>
+                  <label class='flex flex-col'>
                     <span>{i18n.t('settings.sso.routes.provider')}</span>
                     <Select
                       name={`domainProvider-${index}`}

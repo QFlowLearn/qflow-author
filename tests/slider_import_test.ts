@@ -31,20 +31,24 @@ testCase('slider import round-trip: fixture → draft → qti3 export → re-imp
 
   const parsed = parseItemXml(xml);
   const draft = draftOfType<SliderDraft>(parsed, 'slider');
-  const rebuilt = exportQti3TestItemXml('slider', {
-    title: draft.title,
-    promptHtml: draft.promptHtml,
-    bodyHtml: draft.bodyHtml,
-    responseIdentifier: draft.responseIdentifier,
-    sliderLowerBound: draft.sliderLowerBound,
-    sliderUpperBound: draft.sliderUpperBound,
-    sliderStep: draft.sliderStep,
-    sliderStepLabel: draft.sliderStepLabel,
-    sliderOrientation: draft.sliderOrientation,
-    sliderReverse: draft.sliderReverse,
-    sliderCorrectValue: draft.sliderCorrectValue,
-    sliderMappings: draft.sliderMappings,
-  }, { identifier: 'item-slider-roundtrip' });
+  const rebuilt = exportQti3TestItemXml(
+    'slider',
+    {
+      title: draft.title,
+      promptHtml: draft.promptHtml,
+      bodyHtml: draft.bodyHtml,
+      responseIdentifier: draft.responseIdentifier,
+      sliderLowerBound: draft.sliderLowerBound,
+      sliderUpperBound: draft.sliderUpperBound,
+      sliderStep: draft.sliderStep,
+      sliderStepLabel: draft.sliderStepLabel,
+      sliderOrientation: draft.sliderOrientation,
+      sliderReverse: draft.sliderReverse,
+      sliderCorrectValue: draft.sliderCorrectValue,
+      sliderMappings: draft.sliderMappings,
+    },
+    { identifier: 'item-slider-roundtrip' },
+  );
 
   if (!(rebuilt.includes('lower-bound="0"'))) {
     expect.unreachable('Expected rebuilt.includes(\'lower-bound="0"\')');

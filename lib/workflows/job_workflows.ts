@@ -48,7 +48,8 @@ export type DurableDuration = `${number} ${
   | 'day'
   | 'week'
   | 'month'
-  | 'year'}${'' | 's'}`;
+  | 'year'
+}${'' | 's'}`;
 
 /** Explicit retry and timeout policy applied to one Cloudflare Workflow step. */
 export type DurableWorkflowStepConfig = {

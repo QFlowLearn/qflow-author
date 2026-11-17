@@ -216,12 +216,12 @@ export default function AssessmentCanvas(props: AssessmentCanvasProps) {
           {props.movement && part.options?.navigationMode === 'linear' && (
             <QuestionOrderNotice text={i18n.t('assessments.builder.moveConstrained')} />
           )}
-          {props.movement && assessmentQuestionPlacements(part.placements).some((placement) =>
-            placement.fixed === true
-          ) && <QuestionOrderNotice text={i18n.t('assessments.builder.moveFixedPositions')} />}
-          {props.movement && part.placements.some((placement) =>
-            'content' in placement
-          ) && <QuestionOrderNotice text={i18n.t('assessments.builder.contentBlockPositions')} />}
+          {props.movement &&
+            assessmentQuestionPlacements(part.placements).some((placement) =>
+              placement.fixed === true
+            ) && <QuestionOrderNotice text={i18n.t('assessments.builder.moveFixedPositions')} />}
+          {props.movement && part.placements.some((placement) => 'content' in placement) &&
+            <QuestionOrderNotice text={i18n.t('assessments.builder.contentBlockPositions')} />}
 
           <div class='space-y-6'>
             {part.placements.map((placement, itemIndex) => {
@@ -288,9 +288,7 @@ export default function AssessmentCanvas(props: AssessmentCanvasProps) {
                   ? props.authoringState
                   : null;
               const creatingBefore = creating
-                ? part.placements.findIndex((entry) =>
-                  entry.id === creating.beforePlacementId
-                )
+                ? part.placements.findIndex((entry) => entry.id === creating.beforePlacementId)
                 : -1;
               const itemNumber = `${partIndex + 1}.${
                 assessmentQuestionPlacements(part.placements.slice(0, itemIndex)).length + 1 +
@@ -382,8 +380,7 @@ export default function AssessmentCanvas(props: AssessmentCanvasProps) {
                 <Button
                   type='button'
                   class='mt-4'
-                  onClick={() =>
-                    props.onAddQuestion(part.id)}
+                  onClick={() => props.onAddQuestion(part.id)}
                 >
                   {i18n.t('assessments.builder.addFirstQuestion')}
                 </Button>

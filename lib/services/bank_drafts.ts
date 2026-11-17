@@ -110,7 +110,7 @@ export async function publishBankDraft(ctx: RequestContext, input: {
       if (row.publishedQuestionId !== null) {
         if (
           canonicalJsonStringify(row.clientState) !==
-            canonicalJsonStringify(projectJsonPersistenceObject(input.draft))
+          canonicalJsonStringify(projectJsonPersistenceObject(input.draft))
         ) {
           return publishFailure(
             409,

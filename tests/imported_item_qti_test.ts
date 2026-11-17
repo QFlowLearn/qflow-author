@@ -58,16 +58,17 @@ testCase('migration analysis reuses the preview validation result exactly once',
     href,
     sourceFormat: 'examview',
   });
-  const analysis = buildMigrationAnalysis({
-    organizationGroups: [],
-    title: 'Unsafe stylesheet',
-    parts: [{ id: 'part-1', title: 'Part 1', placements: [{ href }] }],
-    items: [item],
-    assets: [],
-  }, {
-    adapter: examViewXmlAdapter,
-    sniff: { supported: true, confidence: 1 },
-  }, { _tag: 'Assessment' });
+  const analysis = buildMigrationAnalysis(
+    {
+      organizationGroups: [],
+      title: 'Unsafe stylesheet',
+      parts: [{ id: 'part-1', title: 'Part 1', placements: [{ href }] }],
+      items: [item],
+      assets: [],
+    },
+    { adapter: examViewXmlAdapter, sniff: { supported: true, confidence: 1 } },
+    { _tag: 'Assessment' },
+  );
 
   expect(analysis.items[0].warnings).toStrictEqual(item.draftValidation.warnings);
   expect(analysis.summary.warningCounts.QFLOW_DRAFT_VALIDATION).toStrictEqual(1);

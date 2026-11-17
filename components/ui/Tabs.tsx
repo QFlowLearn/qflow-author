@@ -91,7 +91,7 @@ export default function Tabs<const Items extends TabItems>({
         role='tablist'
         aria-label={ariaLabel}
         aria-orientation='horizontal'
-        class='ds-tabs ds-tabs-bordered ds-tabs-md w-fit max-w-full overflow-x-auto'
+        class='ds-tabs ds-tabs-border ds-tabs-md w-fit max-w-full overflow-x-auto'
       >
         {items.map((item, index) => {
           const selected = index === selectedIndex;

@@ -44,10 +44,10 @@ testCase(
       await finish(f.params);
       const report = await readOrganizationReport(db, f.ctx, f.runId);
       if (!(report.ok)) expect.unreachable('Expected report.ok');
-      expect(report.value.counts).toStrictEqual([{ state: 'applied', count: 29 }, {
-        state: 'unassigned',
-        count: 2,
-      }]);
+      expect(report.value.counts).toStrictEqual([
+        { state: 'applied', count: 29 },
+        { state: 'unassigned', count: 2 },
+      ]);
       expect(report.value.topics.map((t) => [t.source, t.clef, t.preserved])).toStrictEqual([[
         29,
         0,

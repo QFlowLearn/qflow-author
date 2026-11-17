@@ -57,10 +57,11 @@ testCase(
         toType: 'text_entry' as const,
       },
     };
-    const initial = resolveQuestionRevisionProvenance(author, {
-      _tag: 'Explicit',
-      command: { _tag: 'Variant', origin, contentBasis: 'source' },
-    }, { parent: null, origin: null, entries: new Map() });
+    const initial = resolveQuestionRevisionProvenance(
+      author,
+      { _tag: 'Explicit', command: { _tag: 'Variant', origin, contentBasis: 'source' } },
+      { parent: null, origin: null, entries: new Map() },
+    );
     const history = parseQuestionProvenanceHistory([{ revision: 1, provenance: initial }]);
     expect(hydrateQuestionProvenance(history.origin, initial).event.contentBasis).toStrictEqual(
       'source',
@@ -263,10 +264,11 @@ testCase(
         contentBasis: 'source' as const,
       },
     };
-    const rows = [{ revision: 1, provenance: initial }, { revision: 2, provenance: transformed }, {
-      revision: 3,
-      provenance: restored,
-    }];
+    const rows = [
+      { revision: 1, provenance: initial },
+      { revision: 2, provenance: transformed },
+      { revision: 3, provenance: restored },
+    ];
     expect(parseQuestionProvenanceHistory(rows).entries.get(3)?.event).toStrictEqual(
       restored.event,
     );
@@ -295,10 +297,10 @@ testCase(
       parentRevision: 1,
       parentContentBasis: 'source',
     });
-    const history = parseQuestionProvenanceHistory([{ revision: 1, provenance: initial }, {
-      revision: 2,
-      provenance: parent,
-    }]);
+    const history = parseQuestionProvenanceHistory([
+      { revision: 1, provenance: initial },
+      { revision: 2, provenance: parent },
+    ]);
     const intent = {
       _tag: 'Explicit' as const,
       command: {

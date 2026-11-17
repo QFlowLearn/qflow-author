@@ -64,7 +64,7 @@ export default function ImageAssetEditor(props: Props) {
         onMetadata={applyMetadata}
       />
       <div class='space-y-3'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{props.labels.alt}</span>
           <Input
             size='sm'
@@ -75,7 +75,7 @@ export default function ImageAssetEditor(props: Props) {
         </label>
 
         {hasField('longDescription') && (
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{props.labels.longDescription ?? i18n.t('editor.imageLongDescription')}</span>
             <Textarea
               rows={4}
@@ -90,7 +90,7 @@ export default function ImageAssetEditor(props: Props) {
           props.metadataFooter) && (
           <div class='grid gap-2 sm:grid-cols-2'>
             {hasField('mimeType') && (
-              <label class='ds-form-control sm:col-span-2'>
+              <label class='flex flex-col sm:col-span-2'>
                 <span class='text-xs'>
                   {props.labels.mimeType ?? i18n.t('editor.mimeTypeOptional')}
                 </span>
@@ -136,7 +136,7 @@ function DimensionInput(props: {
   onChange: (value?: number) => void;
 }) {
   return (
-    <label class='ds-form-control'>
+    <label class='flex flex-col'>
       <span class='text-xs'>{props.label}</span>
       <Input
         size='sm'

@@ -32,23 +32,23 @@ export default function Qti3ImportRequirements({ i18n }: { i18n: I18n }) {
             <h2 class='text-xl font-medium'>{i18n.t('help.qti3.basics')}</h2>
             <ul class='list-disc space-y-3 pl-5 text-sm leading-6 text-base-content/80'>
               <li>
-                {i18n.t('help.qti3.zipPrefix')} <code class='rounded bg-base-200 px-1'>.zip</code>
-                {' '}
+                {i18n.t('help.qti3.zipPrefix')}{' '}
+                <code class='rounded-sm bg-base-200 px-1'>.zip</code>{' '}
                 {i18n.t('help.qti3.zipSuffix')}
               </li>
               <li>
                 {i18n.t('help.qti3.manifestPrefix')}{' '}
-                <code class='rounded bg-base-200 px-1'>imsmanifest.xml</code>{' '}
+                <code class='rounded-sm bg-base-200 px-1'>imsmanifest.xml</code>{' '}
                 {i18n.t('help.qti3.manifestSuffix')}
               </li>
               <li>
                 {i18n.t('help.qti3.assetsPrefix')}{' '}
-                <code class='rounded bg-base-200 px-1'>&lt;file&gt;</code>{' '}
+                <code class='rounded-sm bg-base-200 px-1'>&lt;file&gt;</code>{' '}
                 {i18n.t('help.qti3.assetsSuffix')}
               </li>
               <li>
                 {i18n.t('help.qti3.pathsPrefix')}{' '}
-                <code class='rounded bg-base-200 px-1'>assets/diagram.svg</code>
+                <code class='rounded-sm bg-base-200 px-1'>assets/diagram.svg</code>
                 {i18n.t('help.qti3.pathsSuffix')}
               </li>
             </ul>

@@ -11,28 +11,36 @@ import { createPlaceholderHtml } from '../lib/text_entry_placeholders.ts';
 const BODY = '<p>Context</p>';
 
 testCase('single select export emits well-formed XML', async () => {
-  const xml = exportQti3TestItemXml('single_select', {
-    title: 'Test',
-    bodyHtml: BODY,
-    promptHtml: 'What is 2+2?',
-    choices: [{ id: 'A', text: '3' }, { id: 'B', text: '4' }],
-    correctId: 'B',
-    shuffle: true,
-  }, { identifier: 't1' });
+  const xml = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Test',
+      bodyHtml: BODY,
+      promptHtml: 'What is 2+2?',
+      choices: [{ id: 'A', text: '3' }, { id: 'B', text: '4' }],
+      correctId: 'B',
+      shuffle: true,
+    },
+    { identifier: 't1' },
+  );
   if (!xml.includes('<qti-choice-interaction')) throw new Error('missing choice-interaction');
   await assertQtiXmlWellFormed(xml);
 });
 
 testCase('multi select export emits multiple correct values', async () => {
-  const xml = exportQti3TestItemXml('multi_select', {
-    title: 'Test',
-    bodyHtml: BODY,
-    promptHtml: 'Pick all',
-    choices: [{ id: 'A', text: '1' }, { id: 'B', text: '2' }, { id: 'C', text: '3' }],
-    correctIds: ['A', 'C'],
-    minChoices: 1,
-    maxChoices: 0,
-  }, { identifier: 't2' });
+  const xml = exportQti3TestItemXml(
+    'multi_select',
+    {
+      title: 'Test',
+      bodyHtml: BODY,
+      promptHtml: 'Pick all',
+      choices: [{ id: 'A', text: '1' }, { id: 'B', text: '2' }, { id: 'C', text: '3' }],
+      correctIds: ['A', 'C'],
+      minChoices: 1,
+      maxChoices: 0,
+    },
+    { identifier: 't2' },
+  );
   if (!xml.includes('<qti-value>A</qti-value>') || !xml.includes('<qti-value>C</qti-value>')) {
     throw new Error('missing correct values');
   }
@@ -40,14 +48,18 @@ testCase('multi select export emits multiple correct values', async () => {
 });
 
 testCase('single select partial scoring emits map_response mapping', () => {
-  const xml = exportQti3TestItemXml('single_select', {
-    title: 'Test',
-    bodyHtml: BODY,
-    promptHtml: 'Pick one',
-    choices: [{ id: 'A', text: '1' }, { id: 'B', text: '2' }],
-    correctId: 'B',
-    shuffle: false,
-  }, { identifier: 't2b', scoring: 'map_response' });
+  const xml = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Test',
+      bodyHtml: BODY,
+      promptHtml: 'Pick one',
+      choices: [{ id: 'A', text: '1' }, { id: 'B', text: '2' }],
+      correctId: 'B',
+      shuffle: false,
+    },
+    { identifier: 't2b', scoring: 'map_response' },
+  );
   if (!xml.includes('<qti-mapping')) throw new Error('missing mapping');
   if (!xml.includes('rptemplates/map_response')) throw new Error('wrong template');
 });
@@ -75,16 +87,20 @@ testCase('single select required + masking emit spec attributes', () => {
 });
 
 testCase('multi select partial scoring emits map_response mapping entries', () => {
-  const xml = exportQti3TestItemXml('multi_select', {
-    title: 'Test',
-    bodyHtml: BODY,
-    promptHtml: 'Pick many',
-    choices: [{ id: 'A', text: '1' }, { id: 'B', text: '2' }, { id: 'C', text: '3' }],
-    correctIds: ['A', 'C'],
-    minChoices: 1,
-    maxChoices: 0,
-    shuffle: false,
-  }, { identifier: 't2c', scoring: 'map_response' });
+  const xml = exportQti3TestItemXml(
+    'multi_select',
+    {
+      title: 'Test',
+      bodyHtml: BODY,
+      promptHtml: 'Pick many',
+      choices: [{ id: 'A', text: '1' }, { id: 'B', text: '2' }, { id: 'C', text: '3' }],
+      correctIds: ['A', 'C'],
+      minChoices: 1,
+      maxChoices: 0,
+      shuffle: false,
+    },
+    { identifier: 't2c', scoring: 'map_response' },
+  );
   if (!xml.includes('<qti-mapping')) throw new Error('missing mapping');
   if (!xml.includes('<qti-map-entry map-key="A" mapped-value="1"')) {
     throw new Error('missing A map');
@@ -96,15 +112,19 @@ testCase('multi select partial scoring emits map_response mapping entries', () =
 
 testCase('match export emits the same number of qti-value entries as pairs', () => {
   const pairs = [{ sourceId: 'A', targetId: 'T1' }, { sourceId: 'B', targetId: 'T2' }];
-  const xml = exportQti3TestItemXml('match', {
-    title: 'Match',
-    bodyHtml: BODY,
-    promptHtml: '',
-    sources: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
-    targets: [{ id: 'T1', text: '1' }, { id: 'T2', text: '2' }],
-    correctPairs: pairs,
-    maxAssociations: 0,
-  }, { identifier: 't6' });
+  const xml = exportQti3TestItemXml(
+    'match',
+    {
+      title: 'Match',
+      bodyHtml: BODY,
+      promptHtml: '',
+      sources: [{ id: 'A', text: 'A' }, { id: 'B', text: 'B' }],
+      targets: [{ id: 'T1', text: '1' }, { id: 'T2', text: '2' }],
+      correctPairs: pairs,
+      maxAssociations: 0,
+    },
+    { identifier: 't6' },
+  );
   const count = (xml.match(/<qti-value>/g) || []).length;
   if (count !== pairs.length) throw new Error(`expected ${pairs.length} values, saw ${count}`);
 });
@@ -143,39 +163,46 @@ testCase('text entry export emits text-entry interaction', async () => {
     label: slot.label,
     widthClass: slot.widthClass,
   });
-  const xml = exportQti3TestItemXml('text_entry', {
-    title: 'SA',
-    promptHtml: 'Type it',
-    bodyHtml: `<p>${placeholder}</p>`,
-    textEntries: [slot],
-  }, { identifier: 't3' });
+  const xml = exportQti3TestItemXml(
+    'text_entry',
+    { title: 'SA', promptHtml: 'Type it', bodyHtml: `<p>${placeholder}</p>`, textEntries: [slot] },
+    { identifier: 't3' },
+  );
   if (!xml.includes('<qti-text-entry-interaction')) throw new Error('missing text-entry');
   await assertQtiXmlWellFormed(xml);
 });
 
 testCase('order export emits ordered cardinality and order-interaction', async () => {
-  const xml = exportQti3TestItemXml('order', {
-    title: 'Order',
-    bodyHtml: BODY,
-    promptHtml: 'Put in order',
-    choices: [{ id: 'A', text: '1' }, { id: 'B', text: '2' }, { id: 'C', text: '3' }],
-    correctOrder: ['C', 'B', 'A'],
-  }, { identifier: 't4' });
+  const xml = exportQti3TestItemXml(
+    'order',
+    {
+      title: 'Order',
+      bodyHtml: BODY,
+      promptHtml: 'Put in order',
+      choices: [{ id: 'A', text: '1' }, { id: 'B', text: '2' }, { id: 'C', text: '3' }],
+      correctOrder: ['C', 'B', 'A'],
+    },
+    { identifier: 't4' },
+  );
   if (!xml.includes('cardinality="ordered"')) throw new Error('missing ordered cardinality');
   if (!xml.includes('<qti-order-interaction')) throw new Error('missing order-interaction');
   await assertQtiXmlWellFormed(xml);
 });
 
 testCase('match export emits directedPair and match-interaction', async () => {
-  const xml = exportQti3TestItemXml('match', {
-    title: 'Match',
-    bodyHtml: BODY,
-    promptHtml: 'Match',
-    sources: [{ id: 'A', text: 'Dog', matchMax: 1 }],
-    targets: [{ id: 'T1', text: 'Barks' }],
-    correctPairs: [{ sourceId: 'A', targetId: 'T1' }],
-    maxAssociations: 0,
-  }, { identifier: 't5' });
+  const xml = exportQti3TestItemXml(
+    'match',
+    {
+      title: 'Match',
+      bodyHtml: BODY,
+      promptHtml: 'Match',
+      sources: [{ id: 'A', text: 'Dog', matchMax: 1 }],
+      targets: [{ id: 'T1', text: 'Barks' }],
+      correctPairs: [{ sourceId: 'A', targetId: 'T1' }],
+      maxAssociations: 0,
+    },
+    { identifier: 't5' },
+  );
   if (!xml.includes('base-type="directedPair"')) throw new Error('missing directedPair');
   if (!xml.includes('<qti-match-interaction')) throw new Error('missing match-interaction');
   if (!xml.includes('max-associations="0"')) throw new Error('missing max-associations');
@@ -184,16 +211,20 @@ testCase('match export emits directedPair and match-interaction', async () => {
 });
 
 testCase('associate export emits pair base-type and associate-interaction', async () => {
-  const xml = exportQti3TestItemXml('associate', {
-    title: 'Associate',
-    bodyHtml: BODY,
-    promptHtml: 'Pair the items',
-    choices: [{ id: 'A', text: 'Dog', matchMax: 1 }, { id: 'B', text: 'Cat', matchMax: 1 }],
-    correctPairs: [{ sourceId: 'A', targetId: 'B' }],
-    minAssociations: 1,
-    maxAssociations: 2,
-    shuffle: true,
-  }, { identifier: 'assoc-1' });
+  const xml = exportQti3TestItemXml(
+    'associate',
+    {
+      title: 'Associate',
+      bodyHtml: BODY,
+      promptHtml: 'Pair the items',
+      choices: [{ id: 'A', text: 'Dog', matchMax: 1 }, { id: 'B', text: 'Cat', matchMax: 1 }],
+      correctPairs: [{ sourceId: 'A', targetId: 'B' }],
+      minAssociations: 1,
+      maxAssociations: 2,
+      shuffle: true,
+    },
+    { identifier: 'assoc-1' },
+  );
   if (!xml.includes('base-type="pair"')) throw new Error('missing pair base-type');
   if (!xml.includes('<qti-associate-interaction')) throw new Error('missing associate-interaction');
   if (!xml.includes('min-associations="1"')) throw new Error('missing min-associations');

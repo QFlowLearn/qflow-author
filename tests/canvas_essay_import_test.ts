@@ -21,9 +21,11 @@ test('Canvas essays retain rich prompts, manual grading and source-point guidanc
     expect(item.draft.externalScored).toBe('human');
     expect(item.draft.bodyHtml).toContain('<strong>your reasoning</strong>');
     expect(item.draft.rubricHtml).toContain(`Source maximum: ${points} points`);
-    const analysis = buildMigrationAnalysis(imported, { adapter: qti12Adapter, sniff }, {
-      _tag: 'Assessment',
-    });
+    const analysis = buildMigrationAnalysis(
+      imported,
+      { adapter: qti12Adapter, sniff },
+      { _tag: 'Assessment' },
+    );
     expect(analysis.items[0].readiness).toBe('minor_review');
     expect(analysis.items[0].warnings.map((warning) => warning.code)).toContain(
       'QTI12_MANUAL_POINTS_REVIEW',
@@ -63,9 +65,8 @@ test('Canvas manual essays cannot hide automatic scoring or malformed source poi
     const sniff = await qti12Adapter.sniff(source);
     const imported = await qti12Adapter.parse(source);
     expect(
-      buildMigrationAnalysis(imported, { adapter: qti12Adapter, sniff }, {
-        _tag: 'Assessment',
-      }).items[0].readiness,
+      buildMigrationAnalysis(imported, { adapter: qti12Adapter, sniff }, { _tag: 'Assessment' })
+        .items[0].readiness,
     ).toBe('blocked');
   }
 });

@@ -1,3 +1,5 @@
+/** Stylesheets are loaded by Vite for their side effects. */
+declare module '*.css' {}
 declare module '*.bin' {
   const data: ArrayBuffer;
   export default data;

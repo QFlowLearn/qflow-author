@@ -169,13 +169,19 @@ testCase('generated questions and terminal job state commit under one active lea
     const generatedRun = await getMigrationRun(ctx, runId);
     const generatedItem = generatedRun?.items[0];
     if (!generatedItem) throw new Error('Generated item was not persisted.');
-    await updateMigrationItems(ctx, runId, [generatedItem.id], { kind: 'accept' }, {
-      [generatedItem.id]: {
-        contentHash: generatedItem.contentHash,
-        contextHash: generatedItem.contextHash,
-        decision: 'pending',
+    await updateMigrationItems(
+      ctx,
+      runId,
+      [generatedItem.id],
+      { kind: 'accept' },
+      {
+        [generatedItem.id]: {
+          contentHash: generatedItem.contentHash,
+          contextHash: generatedItem.contextHash,
+          decision: 'pending',
+        },
       },
-    });
+    );
     await commitMigrationRun(ctx, runId, {
       storage: NO_ASSET_STORAGE,
       approvedItemIds: [generatedItem.id],

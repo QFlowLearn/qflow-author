@@ -6,17 +6,20 @@ import { parseAssessmentArrangeRequest } from '../lib/assessment_arrangement.ts'
 testCase(
   'ordinary canvas moves preserve frozen placement identities, selectors, settings and other parts',
   () => {
-    const parts = [{
-      id: 'part',
-      title: 'Part',
-      options: { instructionsHtml: '<p>Read.</p>' },
-      placements: ['a', 'b', 'c'].map((id, index) => ({
-        id,
-        itemId: `question-${id}`,
-        snapshotRev: index + 1,
-        blueprintTargetId: 'math',
-      })),
-    }, { id: 'other', title: 'Other', placements: [{ id: 'd', itemId: 'question-d' }] }];
+    const parts = [
+      {
+        id: 'part',
+        title: 'Part',
+        options: { instructionsHtml: '<p>Read.</p>' },
+        placements: ['a', 'b', 'c'].map((id, index) => ({
+          id,
+          itemId: `question-${id}`,
+          snapshotRev: index + 1,
+          blueprintTargetId: 'math',
+        })),
+      },
+      { id: 'other', title: 'Other', placements: [{ id: 'd', itemId: 'question-d' }] },
+    ];
     Object.freeze(parts[0].placements);
     for (const position of [0, 2]) {
       const result = moveAssessmentCanvasPlacement(parts, {

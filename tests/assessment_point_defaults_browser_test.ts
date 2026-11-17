@@ -385,7 +385,7 @@ testCase(
           await submit().waitFor({ state: 'visible' });
           await page.waitForFunction(() =>
             document.querySelector('input[name="maximumScore"]')?.getAttribute('aria-invalid') ===
-              null
+            null
           );
           expect(await field().inputValue()).toStrictEqual('9');
           await write('9');

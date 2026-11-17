@@ -27,7 +27,7 @@ export default function ResetPasswordPage(
         <p class='text-sm text-base-content/70'>{i18n.t('reset.subtitle')}</p>
       </div>
       {data.state === 'form' && (
-        <form class='ds-card ds-card-bordered max-w-xl' action='/password/reset' method='post'>
+        <form class='ds-card ds-card-border max-w-xl' action='/password/reset' method='post'>
           <div class='ds-card-body space-y-4'>
             <Input name='token' type='hidden' value={data.token} />
             {error && (
@@ -35,7 +35,7 @@ export default function ResetPasswordPage(
                 {error}
               </div>
             )}
-            <label class='ds-form-control' for='new-password'>
+            <label class='flex flex-col' for='new-password'>
               <span>{i18n.t('reset.newPassword')}</span>
               <Input
                 id='new-password'

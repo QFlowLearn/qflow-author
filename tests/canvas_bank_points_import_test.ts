@@ -103,13 +103,19 @@ test('unassigned bank points cannot be approved as a 100-point question', async 
       expect(item.itemType).toBe('single_select');
       expect(item.readiness).toBe('blocked');
       await expect(
-        updateMigrationItems(ctx, runId, [item.id], { kind: 'accept' }, {
-          [item.id]: {
-            contentHash: item.contentHash,
-            contextHash: item.contextHash,
-            decision: item.decision,
+        updateMigrationItems(
+          ctx,
+          runId,
+          [item.id],
+          { kind: 'accept' },
+          {
+            [item.id]: {
+              contentHash: item.contentHash,
+              contextHash: item.contextHash,
+              decision: item.decision,
+            },
           },
-        }),
+        ),
       ).rejects.toThrow('Blocked items must be corrected');
       const after = await getMigrationReviewPage(ctx, runId, 1, false);
       expect(after?.run.items[0].acceptedSnapshot).toBe(null);

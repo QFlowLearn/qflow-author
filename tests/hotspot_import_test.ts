@@ -37,20 +37,24 @@ testCase('hotspot import round-trip: fixture → draft → qti3 export → re-im
   const xml = await readQtiFixture(FIXTURE);
   const parsed = parseItemXml(xml);
   const draft = draftOfType<DriverDraft<'hotspot'>>(parsed, 'hotspot');
-  const rebuilt = exportQti3TestItemXml('hotspot', {
-    title: draft.title ?? '',
-    promptHtml: draft.promptHtml,
-    hotspotImageSrc: draft.hotspotImageSrc,
-    hotspotImageAlt: draft.hotspotImageAlt,
-    hotspotImageLongDesc: draft.hotspotImageLongDesc,
-    responseIdentifier: draft.responseIdentifier,
-    maxChoices: draft.maxChoices,
-    minChoices: draft.minChoices,
-    maxChoicesMessage: draft.maxChoicesMessage,
-    minChoicesMessage: draft.minChoicesMessage,
-    choices: draft.choices,
-    correctIds: draft.correctIds ?? [],
-  }, { identifier: 'item-hotspot-roundtrip' });
+  const rebuilt = exportQti3TestItemXml(
+    'hotspot',
+    {
+      title: draft.title ?? '',
+      promptHtml: draft.promptHtml,
+      hotspotImageSrc: draft.hotspotImageSrc,
+      hotspotImageAlt: draft.hotspotImageAlt,
+      hotspotImageLongDesc: draft.hotspotImageLongDesc,
+      responseIdentifier: draft.responseIdentifier,
+      maxChoices: draft.maxChoices,
+      minChoices: draft.minChoices,
+      maxChoicesMessage: draft.maxChoicesMessage,
+      minChoicesMessage: draft.minChoicesMessage,
+      choices: draft.choices,
+      correctIds: draft.correctIds ?? [],
+    },
+    { identifier: 'item-hotspot-roundtrip' },
+  );
   if (!(rebuilt.includes('data="ukair.png"'))) {
     expect.unreachable('Expected rebuilt.includes(\'data="ukair.png"\')');
   }

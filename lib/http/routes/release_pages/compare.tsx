@@ -40,9 +40,7 @@ const methods = {
                   <p class='font-medium'>{manifest.label}</p>
                   <p>{manifest.notes}</p>
                   <p>
-                    {i18n.formatList(manifest.collections.map((c) =>
-                      c.name
-                    ))}
+                    {i18n.formatList(manifest.collections.map((c) => c.name))}
                   </p>
                 </div>
               ))}

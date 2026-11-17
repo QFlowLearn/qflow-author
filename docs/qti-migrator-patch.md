@@ -16,8 +16,8 @@ mismatch after whitespace trimming.
 Canvas multiple-choice and true/false questions use an explicit percentage-to-points conversion: the
 supported source program awards SCORE=100, and valid `points_possible` metadata supplies the
 canonical maximum. Missing/invalid points or unsupported programs remain blocked. Other QTI 1.x
-scoring is not reinterpreted as Canvas percentage scoring. Regression:
-`pnpm test -- canvas_scoring_import_test`.
+scoring is not reinterpreted as Canvas percentage scoring. Regression: `pnpm test --
+canvas_scoring_import_test`.
 
 Canvas essays and explicit Common Cartridge manual-essay profiles retain their prompt and human
 grading. The writer supports an explicit `externalScored: 'human'` declaration, which QFlow retains
@@ -26,8 +26,9 @@ retained in scorer guidance, with an explicit notice to configure the manual poi
 delivery; the essay editor does not model that ceiling as machine scoring. Unsupported scoring
 actions are still blocked. Regression: `pnpm test -- canvas_essay_import_test`.
 
-When upgrading the published packages, verify these behaviors with the existing regressions:
-`pnpm test -- sakai_content_package_import_test qti_migrator_warnings_test qti_migrator_identity_test qti_migration_acceptance_test`.
+When upgrading the published packages, verify these behaviors with the existing regressions: `pnpm
+test -- sakai_content_package_import_test qti_migrator_warnings_test qti_migrator_identity_test
+qti_migration_acceptance_test`.
 
 Canvas native `.xml.qti` payloads are treated as assessment XML rather than binary assets. The
 cartridge adapter follows the quiz's declared associated-content dependency, selects the richer
@@ -64,5 +65,5 @@ choices, answer key and explicitly authored 0–100 percentage program as a bloc
 The original 100-unit scale is retained rather than replacing missing points with an invented
 one-point default. `CANVAS_BANK_POINTS_UNASSIGNED` prevents acceptance: assign points in the source
 bank/assessment and import again. Missing quiz points, malformed point values, duplicate fields and
-unsupported scoring still fail conversion. Regression:
-`pnpm test -- canvas_bank_points_import_test`.
+unsupported scoring still fail conversion. Regression: `pnpm test --
+canvas_bank_points_import_test`.

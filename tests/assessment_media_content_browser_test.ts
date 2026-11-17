@@ -347,9 +347,11 @@ testCase(
                   ).toStrictEqual(true);
                   const violations = await page.evaluate(async () =>
                     await globalThis.axe.run({
-                      include: [['article:has(img[alt="A blue rectangle"])'], [
-                        'article:has(video)',
-                      ], ['article:has(a[href="https://youtu.be/example"])']],
+                      include: [
+                        ['article:has(img[alt="A blue rectangle"])'],
+                        ['article:has(video)'],
+                        ['article:has(a[href="https://youtu.be/example"])'],
+                      ],
                     })
                   );
                   expect(violations.violations.map((violation) => violation.id)).toStrictEqual([]);

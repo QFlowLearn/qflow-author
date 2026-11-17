@@ -69,9 +69,8 @@ render(<I18nProvider payload={globalThis.__PAYLOAD__}><Form/></I18nProvider>, do
         if (url.pathname === '/styles.css') {
           return new Response(css, { headers: { 'content-type': 'text/css' } });
         }
-        const locale = INTERFACE_LOCALES.find((value) =>
-          value === url.searchParams.get('locale')
-        ) ?? 'en-US';
+        const locale =
+          INTERFACE_LOCALES.find((value) => value === url.searchParams.get('locale')) ?? 'en-US';
         return new Response(
           `<!doctype html><html lang="${locale}"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/styles.css"><body><div id="root"></div><script>globalThis.__PAYLOAD__=${
             JSON.stringify(createI18nPayload(locale, catalogForLocale(locale), ['assessments']))

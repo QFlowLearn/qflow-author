@@ -65,10 +65,10 @@ export async function runDevelopment(args: readonly string[]): Promise<void> {
   try {
     const statuses = await Promise.allSettled([
       start(
-        fileURLToPath(new URL('./lib/cli.js', import.meta.resolve('tailwindcss/package.json'))),
+        fileURLToPath(
+          new URL('./dist/index.mjs', import.meta.resolve('@tailwindcss/cli/package.json')),
+        ),
         [
-          '-c',
-          'tailwind.config.cjs',
           '-i',
           'static/tailwind.css',
           '-o',

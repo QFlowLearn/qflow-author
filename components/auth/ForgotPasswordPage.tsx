@@ -17,7 +17,7 @@ export default function ForgotPasswordPage(
         <h1 class='text-3xl font-medium'>{i18n.t('forgot.title')}</h1>
         <p class='text-sm text-base-content/70'>{i18n.t('forgot.subtitle')}</p>
       </div>
-      <form class='ds-card ds-card-bordered max-w-xl' action='/password/forgot' method='post'>
+      <form class='ds-card ds-card-border max-w-xl' action='/password/forgot' method='post'>
         <div class='ds-card-body space-y-4'>
           {error && (
             <div id='forgot-error' class='ds-alert ds-alert-error text-sm' role='alert'>
@@ -29,7 +29,7 @@ export default function ForgotPasswordPage(
               {i18n.t('forgot.success')}
             </div>
           )}
-          <label class='ds-form-control' for='password-reset-email'>
+          <label class='flex flex-col' for='password-reset-email'>
             <span>{i18n.t('login.email')}</span>
             <Input
               name='email'

@@ -251,7 +251,7 @@ export function PositionObjectContent(props: PositionObjectContentProps) {
           fields={['mimeType', 'width', 'height']}
           onChange={props.setObjectImage}
           metadataFooter={
-            <label class='ds-form-control sm:col-span-2'>
+            <label class='flex flex-col sm:col-span-2'>
               <span class='text-xs'>{i18n.t('driver.positionObjectCenterPoint')}</span>
               <Input
                 size='sm'
@@ -282,7 +282,7 @@ export function PositionObjectContent(props: PositionObjectContentProps) {
               key={`pos-target-${index}`}
               class='grid gap-2 rounded-lg border border-base-300 bg-base-100 px-3 py-2 md:grid-cols-[8rem_1fr_8rem_auto]'
             >
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.shape')}</span>
                 <Select
                   size='sm'
@@ -299,7 +299,7 @@ export function PositionObjectContent(props: PositionObjectContentProps) {
                   <option value='default'>{i18n.t('driver.positionObjectDefaultShape')}</option>
                 </Select>
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.positionObjectCoords')}</span>
                 <Input
                   size='sm'
@@ -309,7 +309,7 @@ export function PositionObjectContent(props: PositionObjectContentProps) {
                   placeholder='x,y,r or x1,y1,x2,y2'
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.positionObjectMappedValue')}</span>
                 <Input
                   size='sm'
@@ -382,8 +382,7 @@ export function PositionObjectContent(props: PositionObjectContentProps) {
                 size='xs'
                 variant='danger-ghost'
                 type='button'
-                onClick={() =>
-                  props.removeCorrectPoint(index)}
+                onClick={() => props.removeCorrectPoint(index)}
               >
                 {i18n.t('driver.positionObjectRemovePoint', { number: index + 1 })}
               </Button>

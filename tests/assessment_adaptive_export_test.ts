@@ -56,13 +56,17 @@ testCase(
     const fixture = adaptiveExportFixture();
     const itemsXml = Object.fromEntries(fixture.part.placements.map((placement, index) => [
       placement.itemId,
-      exportQti3TestItemXml('single_select', {
-        type: 'single_select',
-        title: `Pool question ${index + 1}`,
-        bodyHtml: '<p>Pick one.</p>',
-        choices: [{ id: 'A', text: 'Correct answer' }, { id: 'B', text: 'Other answer' }],
-        correctId: 'A',
-      }, { identifier: `pool_item_${index + 1}` }),
+      exportQti3TestItemXml(
+        'single_select',
+        {
+          type: 'single_select',
+          title: `Pool question ${index + 1}`,
+          bodyHtml: '<p>Pick one.</p>',
+          choices: [{ id: 'A', text: 'Correct answer' }, { id: 'B', text: 'Other answer' }],
+          correctId: 'A',
+        },
+        { identifier: `pool_item_${index + 1}` },
+      ),
     ]));
     const target = resolveAssessmentExportTarget('canvas-classic');
     if (!(target.ok)) expect.unreachable('Expected target.ok');

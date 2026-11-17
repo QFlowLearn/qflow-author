@@ -131,10 +131,11 @@ testCase('migration analysis preserves warnings that differ only by detail', () 
     ],
   };
 
-  const analysis = buildMigrationAnalysis(parsed, {
-    adapter: aikenAdapter,
-    sniff: { supported: true, confidence: 1 },
-  }, { _tag: 'Assessment' });
+  const analysis = buildMigrationAnalysis(
+    parsed,
+    { adapter: aikenAdapter, sniff: { supported: true, confidence: 1 } },
+    { _tag: 'Assessment' },
+  );
 
   expect(analysis.items[0].warnings.map((warning) => warning.detail)).toStrictEqual([
     'stylesheets[0].href',

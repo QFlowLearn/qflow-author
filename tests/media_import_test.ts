@@ -29,27 +29,31 @@ testCase('media import round-trip: fixture → draft → qti3 export → re-impo
 
   const parsed = parseItemXml(xml);
   const draft = draftOfType<MediaDraft>(parsed, 'media');
-  const rebuilt = exportQti3TestItemXml('media', {
-    title: draft.title,
-    promptHtml: draft.promptHtml,
-    bodyHtml: draft.bodyHtml,
-    responseIdentifier: draft.responseIdentifier,
-    mediaKind: draft.mediaKind,
-    mediaSources: draft.mediaSources ?? [],
-    mediaInteractionLabel: draft.mediaInteractionLabel,
-    mediaObjectLabel: draft.mediaObjectLabel,
-    mediaCaptionSrc: draft.mediaCaptionSrc,
-    mediaCaptionLang: draft.mediaCaptionLang,
-    mediaTranscript: draft.mediaTranscript,
-    mediaAutostart: draft.mediaAutostart,
-    mediaLoop: draft.mediaLoop,
-    mediaMinPlays: draft.mediaMinPlays,
-    mediaMaxPlays: draft.mediaMaxPlays,
-    mediaCoords: draft.mediaCoords,
-    mediaWidth: draft.mediaWidth,
-    mediaHeight: draft.mediaHeight,
-    sharedVocabulary: draft.sharedVocabulary,
-  }, { identifier: 'item-media-roundtrip' });
+  const rebuilt = exportQti3TestItemXml(
+    'media',
+    {
+      title: draft.title,
+      promptHtml: draft.promptHtml,
+      bodyHtml: draft.bodyHtml,
+      responseIdentifier: draft.responseIdentifier,
+      mediaKind: draft.mediaKind,
+      mediaSources: draft.mediaSources ?? [],
+      mediaInteractionLabel: draft.mediaInteractionLabel,
+      mediaObjectLabel: draft.mediaObjectLabel,
+      mediaCaptionSrc: draft.mediaCaptionSrc,
+      mediaCaptionLang: draft.mediaCaptionLang,
+      mediaTranscript: draft.mediaTranscript,
+      mediaAutostart: draft.mediaAutostart,
+      mediaLoop: draft.mediaLoop,
+      mediaMinPlays: draft.mediaMinPlays,
+      mediaMaxPlays: draft.mediaMaxPlays,
+      mediaCoords: draft.mediaCoords,
+      mediaWidth: draft.mediaWidth,
+      mediaHeight: draft.mediaHeight,
+      sharedVocabulary: draft.sharedVocabulary,
+    },
+    { identifier: 'item-media-roundtrip' },
+  );
 
   if (!(rebuilt.includes('bubble.mp4'))) {
     expect.unreachable("Expected rebuilt.includes('bubble.mp4')");
@@ -65,20 +69,24 @@ testCase('media import round-trip: fixture → draft → qti3 export → re-impo
 });
 
 testCase('media import parses captions track', () => {
-  const xml = exportQti3TestItemXml('media', {
-    title: 'Video with captions',
-    promptHtml: '<p>Watch</p>',
-    bodyHtml: '<p>Body</p>',
-    responseIdentifier: 'RESPONSE',
-    mediaKind: 'video',
-    mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
-    mediaCaptionSrc: 'captions.vtt',
-    mediaCaptionLang: 'en',
-    mediaAutostart: false,
-    mediaLoop: false,
-    mediaMinPlays: 0,
-    mediaMaxPlays: 0,
-  }, { identifier: 'item-media-captioned' });
+  const xml = exportQti3TestItemXml(
+    'media',
+    {
+      title: 'Video with captions',
+      promptHtml: '<p>Watch</p>',
+      bodyHtml: '<p>Body</p>',
+      responseIdentifier: 'RESPONSE',
+      mediaKind: 'video',
+      mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
+      mediaCaptionSrc: 'captions.vtt',
+      mediaCaptionLang: 'en',
+      mediaAutostart: false,
+      mediaLoop: false,
+      mediaMinPlays: 0,
+      mediaMaxPlays: 0,
+    },
+    { identifier: 'item-media-captioned' },
+  );
 
   const parsed = parseItemXml(xml);
   const draft = draftOfType<MediaDraft>(parsed, 'media');
@@ -87,19 +95,23 @@ testCase('media import parses captions track', () => {
 });
 
 testCase('media import round-trip preserves multiple player control tokens', () => {
-  const xml = exportQti3TestItemXml('media', {
-    title: 'Video controls',
-    promptHtml: '<p>Watch</p>',
-    bodyHtml: '<p>Body</p>',
-    responseIdentifier: 'RESPONSE',
-    mediaKind: 'video',
-    mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
-    mediaAutostart: false,
-    mediaLoop: false,
-    mediaMinPlays: 0,
-    mediaMaxPlays: 0,
-    sharedVocabulary: { mediaPlayerControls: ['play', 'captions'] },
-  }, { identifier: 'item-media-controls' });
+  const xml = exportQti3TestItemXml(
+    'media',
+    {
+      title: 'Video controls',
+      promptHtml: '<p>Watch</p>',
+      bodyHtml: '<p>Body</p>',
+      responseIdentifier: 'RESPONSE',
+      mediaKind: 'video',
+      mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
+      mediaAutostart: false,
+      mediaLoop: false,
+      mediaMinPlays: 0,
+      mediaMaxPlays: 0,
+      sharedVocabulary: { mediaPlayerControls: ['play', 'captions'] },
+    },
+    { identifier: 'item-media-controls' },
+  );
 
   if (!(xml.includes('data-qti-media-player-controls="play captions"'))) {
     expect.unreachable('Expected xml.includes(\'data-qti-media-player-controls="play captions"\')');
@@ -110,19 +122,23 @@ testCase('media import round-trip preserves multiple player control tokens', () 
 });
 
 testCase('media import round-trip preserves inline transcript from companion materials', () => {
-  const xml = exportQti3TestItemXml('media', {
-    title: 'Video with transcript',
-    promptHtml: '<p>Watch</p>',
-    bodyHtml: '<p>Body</p>',
-    responseIdentifier: 'RESPONSE',
-    mediaKind: 'video',
-    mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
-    mediaTranscript: 'Transcript content',
-    mediaAutostart: false,
-    mediaLoop: false,
-    mediaMinPlays: 0,
-    mediaMaxPlays: 0,
-  }, { identifier: 'item-media-transcript' });
+  const xml = exportQti3TestItemXml(
+    'media',
+    {
+      title: 'Video with transcript',
+      promptHtml: '<p>Watch</p>',
+      bodyHtml: '<p>Body</p>',
+      responseIdentifier: 'RESPONSE',
+      mediaKind: 'video',
+      mediaSources: [{ src: 'clip.mp4', type: 'video/mp4' }],
+      mediaTranscript: 'Transcript content',
+      mediaAutostart: false,
+      mediaLoop: false,
+      mediaMinPlays: 0,
+      mediaMaxPlays: 0,
+    },
+    { identifier: 'item-media-transcript' },
+  );
 
   const parsed = parseItemXml(xml);
   const draft = draftOfType<MediaDraft>(parsed, 'media');

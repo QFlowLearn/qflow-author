@@ -15,7 +15,7 @@ export default function AuthoringTools(props: {
         role='group'
         aria-label={props.label}
         data-authoring-tools
-        class='sticky top-24 z-20 grid grid-cols-3 w-full gap-1 rounded-xl border border-base-300 bg-base-100 p-1 shadow-sm sm:flex lg:col-start-2 lg:row-start-1 lg:w-fit lg:flex-col [@media(min-width:1024px)_and_(max-height:450px)]:grid [@media(min-width:1024px)_and_(max-height:450px)]:grid-cols-2 [@media(min-width:1024px)_and_(max-height:450px)]:w-full'
+        class='sticky top-24 z-20 grid grid-cols-3 w-full gap-1 rounded-xl border border-base-300 bg-base-100 p-1 shadow-xs sm:flex lg:col-start-2 lg:row-start-1 lg:w-fit lg:flex-col [@media(min-width:1024px)_and_(max-height:450px)]:grid [@media(min-width:1024px)_and_(max-height:450px)]:grid-cols-2 [@media(min-width:1024px)_and_(max-height:450px)]:w-full'
       >
         {props.tools}
       </div>

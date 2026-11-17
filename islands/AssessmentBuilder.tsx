@@ -711,9 +711,7 @@ function AssessmentBuilderInner(props: AssessmentBuilderProps) {
                       aiReviewSuggestions={editingState
                         ? itemMeta[editingState.placementId]?.reviewSuggestions.filter((
                           suggestion,
-                        ) =>
-                          suggestion.source === 'ai'
-                        )
+                        ) => suggestion.source === 'ai')
                         : undefined}
                       advisoryReviewEnabled={inspectorOpen}
                       onBlueprintTargetChange={editingState ? updateBlueprintTarget : undefined}

@@ -154,10 +154,14 @@ for (const itemCount of [2, 200]) {
         };
         await expect(
           Promise.resolve().then(() =>
-            enqueueMigrationBatch(ctx, {
-              ...command,
-              destination: { _tag: 'WorkspaceBank', collectionId: crypto.randomUUID() },
-            }, { storage })
+            enqueueMigrationBatch(
+              ctx,
+              {
+                ...command,
+                destination: { _tag: 'WorkspaceBank', collectionId: crypto.randomUUID() },
+              },
+              { storage },
+            )
           ),
         ).rejects.toSatisfy((caught: unknown) =>
           caught instanceof Error && caught.message.includes('unavailable')
@@ -166,19 +170,22 @@ for (const itemCount of [2, 200]) {
         expect((await enqueueMigrationBatch(ctx, command, { storage })).id).toStrictEqual(batch.id);
         await expect(
           Promise.resolve().then(() =>
-            enqueueMigrationBatch(ctx, { ...command, destination: { _tag: 'Assessment' } }, {
-              storage,
-            })
+            enqueueMigrationBatch(
+              ctx,
+              { ...command, destination: { _tag: 'Assessment' } },
+              { storage },
+            )
           ),
         ).rejects.toBeInstanceOf(MigrationBatchConflictError);
         const runId = batch.runs[0].id;
         const [dispatch] = await db.select({ id: workflowDispatches.id }).from(workflowDispatches)
           .where(eq(workflowDispatches.jobId, runId));
         expect(
-          (await runSourceMigrationWorkflow({ jobId: runId, workflowExecutionId: dispatch.id }, {
-            do: (_name, _config, operation) => operation(),
-            sleep: () => Promise.resolve(),
-          }, { database: db, storage }))._tag,
+          (await runSourceMigrationWorkflow(
+            { jobId: runId, workflowExecutionId: dispatch.id },
+            { do: (_name, _config, operation) => operation(), sleep: () => Promise.resolve() },
+            { database: db, storage },
+          ))._tag,
         ).toStrictEqual('Completed');
         const analyzed = await getMigrationRun(ctx, runId);
         if (!analyzed) expect.unreachable('Expected analyzed');

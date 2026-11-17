@@ -42,12 +42,14 @@ export function runCommand(executable: string, args: readonly string[], options:
     });
     child.once('close', (code, signal) => {
       if (failure) reject(failure);
-      else {resolve({
+      else {
+        resolve({
           success: code === 0 && signal === null,
           code: code ?? 1,
           stdout: new Uint8Array(Buffer.concat(stdout)),
           stderr: new Uint8Array(Buffer.concat(stderr)),
-        });}
+        });
+      }
     });
   });
 }

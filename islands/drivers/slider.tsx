@@ -138,7 +138,7 @@ export function SliderContent(props: SliderContentProps) {
       />
 
       <div class='grid gap-3 sm:grid-cols-2'>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.sliderLowerBound')}</span>
           <Input
             type='number'
@@ -150,7 +150,7 @@ export function SliderContent(props: SliderContentProps) {
             placeholder='0'
           />
         </label>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.sliderUpperBound')}</span>
           <Input
             type='number'
@@ -162,7 +162,7 @@ export function SliderContent(props: SliderContentProps) {
             placeholder='100'
           />
         </label>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.sliderStep')}</span>
           <Input
             type='number'
@@ -175,7 +175,7 @@ export function SliderContent(props: SliderContentProps) {
             placeholder='1'
           />
         </label>
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span>{i18n.t('driver.sliderOrientation')}</span>
           <Select
             value={props.orientation ?? 'horizontal'}
@@ -188,7 +188,7 @@ export function SliderContent(props: SliderContentProps) {
         </label>
       </div>
 
-      <label class='ds-form-control'>
+      <label class='flex flex-col'>
         <span>{i18n.t('driver.sliderCorrectValue')}</span>
         <Input
           type='number'
@@ -226,7 +226,7 @@ export function SliderContent(props: SliderContentProps) {
               key={`slider-map-${index}`}
               class='grid gap-2 rounded-lg border border-base-300 bg-base-100 px-3 py-2 md:grid-cols-[1fr_1fr_auto]'
             >
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.sliderMapKey')}</span>
                 <Input
                   size='sm'
@@ -239,7 +239,7 @@ export function SliderContent(props: SliderContentProps) {
                   placeholder={i18n.t('driver.sliderMapKeyPlaceholder')}
                 />
               </label>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span class='text-xs'>{i18n.t('driver.sliderMappedValue')}</span>
                 <Input
                   size='sm'

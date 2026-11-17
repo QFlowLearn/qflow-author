@@ -231,8 +231,8 @@ async function loadFacet(
       category ->> 'id' AS id, category ->> 'label' AS label, COALESCE(counts.total, 0)::int AS count
     FROM bank_enrichment_scheme_versions ev
     CROSS JOIN LATERAL jsonb_array_elements(ev.definition -> ${
-    ENRICHMENT_VOCABULARY_KEYS[dimension]
-  }) WITH ORDINALITY vocab(category, position)
+      ENRICHMENT_VOCABULARY_KEYS[dimension]
+    }) WITH ORDINALITY vocab(category, position)
     LEFT JOIN counts ON counts.version_id = ev.id AND counts.value_id = category ->> 'id'
     WHERE ev.tenant_id = ${ctx.tenantId} AND ev.scheme_id = ${scheme.id}
       AND (counts.total IS NOT NULL OR ev.id = ${scheme.versionId} OR (${isSelected}))

@@ -68,7 +68,7 @@ export default function ImageEditResultPreview(
       )}
 
       {mode === 'image' && (
-        <label class='ds-form-control'>
+        <label class='flex flex-col'>
           <span class='text-xs'>{i18n.t('editor.previewBackground')}</span>
           <Select
             size='xs'

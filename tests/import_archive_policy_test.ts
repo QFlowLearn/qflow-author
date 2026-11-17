@@ -16,9 +16,10 @@ import { inspectSource } from '../lib/source_intake/registry.ts';
 import { withZipArchive } from '../lib/zip_archive.ts';
 
 testCase('import inspection rejects a ZIP that exceeds the expanded-byte budget', async () => {
-  const bytes = zipSync({
-    'oversized.txt': new Uint8Array(MAX_SOURCE_ARCHIVE_EXPANDED_BYTES + 1),
-  }, { level: 9 });
+  const bytes = zipSync(
+    { 'oversized.txt': new Uint8Array(MAX_SOURCE_ARCHIVE_EXPANDED_BYTES + 1) },
+    { level: 9 },
+  );
   expect(bytes.byteLength < MAX_SOURCE_FILE_BYTES).toStrictEqual(true);
 
   const error = await (async () => {
@@ -106,9 +107,10 @@ testCase('import inspection verifies declared expanded sizes before adapters run
 testCase(
   'import inspection rejects understated expansion metadata before adapters read content',
   async () => {
-    const valid = zipSync({
-      'lying-size.txt': new Uint8Array(MAX_SOURCE_ARCHIVE_EXPANDED_BYTES + 1),
-    }, { level: 9 });
+    const valid = zipSync(
+      { 'lying-size.txt': new Uint8Array(MAX_SOURCE_ARCHIVE_EXPANDED_BYTES + 1) },
+      { level: 9 },
+    );
     const bytes = withCentralUncompressedSize(valid, 1);
 
     const error = await (async () => {

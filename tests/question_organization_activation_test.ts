@@ -61,11 +61,12 @@ testCase(
         ))[0].collectionId,
       ).toStrictEqual(f.originId);
       expect(
-        await setOrganizationActivation(db, { ...f.ctx, userId: crypto.randomUUID() }, {
-          ...enable,
-          operationId: crypto.randomUUID(),
-          expectedRevision: 1,
-        }, organizationNow()),
+        await setOrganizationActivation(
+          db,
+          { ...f.ctx, userId: crypto.randomUUID() },
+          { ...enable, operationId: crypto.randomUUID(), expectedRevision: 1 },
+          organizationNow(),
+        ),
       ).toStrictEqual({ ok: false, code: 'forbidden' });
 
       const [saved] = await db.select().from(organizationSetups).where(

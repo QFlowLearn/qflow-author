@@ -261,10 +261,11 @@ testCase(
           return;
         }
         for (
-          const correction of [{ ...command.corrections[0], topicId: 'missing' }, {
-            ...command.corrections[0],
-            questionId: crypto.randomUUID(),
-          }, { ...command.corrections[0], revisionId: crypto.randomUUID() }]
+          const correction of [
+            { ...command.corrections[0], topicId: 'missing' },
+            { ...command.corrections[0], questionId: crypto.randomUUID() },
+            { ...command.corrections[0], revisionId: crypto.randomUUID() },
+          ]
         ) {
           expect(
             await teachOrganizationPreview(db, f.ctx, preview.value, {

@@ -335,7 +335,7 @@ function resolvePublishXml(
     const sourceFeedback = sourceItem ? readAuthoredAnswerFeedback(sourceItem) : undefined;
     if (
       canonicalJsonStringify(body.answerFeedback ?? null) !==
-        canonicalJsonStringify(sourceFeedback ?? null)
+      canonicalJsonStringify(sourceFeedback ?? null)
     ) {
       return {
         ok: false,

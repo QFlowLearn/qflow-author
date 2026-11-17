@@ -49,10 +49,12 @@ testCase(
   'stored organization groups reject malformed identities and do not recover from delivery parts',
   () => {
     for (
-      const invalid of [undefined, {}, [{ id: 'a', title: 'A', hrefs: [7] }], [
-        { id: 'a', title: 'A', hrefs: [] },
-        { id: 'a', title: 'B', hrefs: [] },
-      ]]
+      const invalid of [
+        undefined,
+        {},
+        [{ id: 'a', title: 'A', hrefs: [7] }],
+        [{ id: 'a', title: 'A', hrefs: [] }, { id: 'a', title: 'B', hrefs: [] }],
+      ]
     ) expect(() => parseImportedOrganizationGroups(invalid)).toThrowError(Error);
   },
 );

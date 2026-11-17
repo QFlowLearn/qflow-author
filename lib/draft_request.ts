@@ -67,11 +67,7 @@ export function draftRequestJson(
   status = 400,
   issues: readonly { field: string; message: string }[] = [],
 ): Response {
-  return Response.json({
-    error: error.code,
-    message: error.message,
-    issues,
-  }, { status });
+  return Response.json({ error: error.code, message: error.message, issues }, { status });
 }
 
 /** Parse publication of a new bank draft; its destination and identity come from the session. */

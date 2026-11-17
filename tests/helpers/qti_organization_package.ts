@@ -9,8 +9,8 @@ export async function qtiOrganizationPackage(
     <qti-assessment-section identifier="cells" title="Cells" visible="true">
       <qti-time-limits max-time="30"/>
       <qti-assessment-section identifier="wrapper" ${
-    options.unnamed ? '' : 'title="Practice"'
-  } visible="true">
+        options.unnamed ? '' : 'title="Practice"'
+      } visible="true">
         <qti-assessment-item-ref identifier="cell-ref" href="../items/cell.xml"/>
       </qti-assessment-section>
     </qti-assessment-section>
@@ -19,10 +19,10 @@ export async function qtiOrganizationPackage(
     <qti-assessment-section identifier="energy" title="Energy" visible="true">
       <qti-assessment-item-ref identifier="energy-ref" href="../items/energy.xml"/>
       ${
-    options.ambiguous
-      ? '<qti-assessment-item-ref identifier="cell-again" href="../items/cell.xml"/>'
-      : ''
-  }
+        options.ambiguous
+          ? '<qti-assessment-item-ref identifier="cell-again" href="../items/cell.xml"/>'
+          : ''
+      }
     </qti-assessment-section>
   </qti-assessment-section>`;
   const assessment = `<?xml version="1.0"?>
@@ -38,20 +38,28 @@ export async function qtiOrganizationPackage(
   <resource identifier="cell" type="imsqti_item_xmlv3p0" href="items/cell.xml"><file href="items/cell.xml"/></resource>
   <resource identifier="energy" type="imsqti_item_xmlv3p0" href="items/energy.xml"><file href="items/energy.xml"/></resource>
 </resources></manifest>`;
-  const cell = exportQti3TestItemXml('single_select', {
-    title: 'Cell nucleus',
-    bodyHtml: '',
-    promptHtml: '<p>Which structure contains DNA?</p>',
-    choices: [{ id: 'a', text: 'Nucleus' }, { id: 'b', text: 'Cell wall' }],
-    correctId: 'a',
-  }, { identifier: 'cell' });
-  const energyItem = exportQti3TestItemXml('single_select', {
-    title: 'Energy explanation',
-    bodyHtml: '',
-    promptHtml: '<p>Which quantity is conserved?</p>',
-    choices: [{ id: 'a', text: 'Energy' }, { id: 'b', text: 'Temperature' }],
-    correctId: 'a',
-  }, { identifier: 'energy' });
+  const cell = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Cell nucleus',
+      bodyHtml: '',
+      promptHtml: '<p>Which structure contains DNA?</p>',
+      choices: [{ id: 'a', text: 'Nucleus' }, { id: 'b', text: 'Cell wall' }],
+      correctId: 'a',
+    },
+    { identifier: 'cell' },
+  );
+  const energyItem = exportQti3TestItemXml(
+    'single_select',
+    {
+      title: 'Energy explanation',
+      bodyHtml: '',
+      promptHtml: '<p>Which quantity is conserved?</p>',
+      choices: [{ id: 'a', text: 'Energy' }, { id: 'b', text: 'Temperature' }],
+      correctId: 'a',
+    },
+    { identifier: 'energy' },
+  );
   const encoder = new TextEncoder();
   return await writeZip([
     { name: 'imsmanifest.xml', data: encoder.encode(manifest) },

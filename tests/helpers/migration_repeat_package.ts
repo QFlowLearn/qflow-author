@@ -6,15 +6,19 @@ export async function migrationRepeatPackage() {
   const encoder = new TextEncoder();
   const entries = Array.from({ length: 131 }, (_, i) => {
     const content = i < 100 ? i : i < 121 ? i - 100 : 0;
-    let xml = exportQti3TestItemXml('single_select', {
-      title: `Question title ${i + 1}`,
-      bodyHtml: i === 128
-        ? '<p>Passage: there are 6 cells.</p>'
-        : '<p>Passage: there are 5 cells.</p>',
-      promptHtml: `<p>Question ${content}: how many cells?</p>`,
-      choices: [{ id: 'A', text: '5' }, { id: 'B', text: '6' }],
-      correctId: i === 127 ? 'B' : 'A',
-    }, { identifier: `item-${i + 1}` });
+    let xml = exportQti3TestItemXml(
+      'single_select',
+      {
+        title: `Question title ${i + 1}`,
+        bodyHtml: i === 128
+          ? '<p>Passage: there are 6 cells.</p>'
+          : '<p>Passage: there are 5 cells.</p>',
+        promptHtml: `<p>Question ${content}: how many cells?</p>`,
+        choices: [{ id: 'A', text: '5' }, { id: 'B', text: '6' }],
+        correctId: i === 127 ? 'B' : 'A',
+      },
+      { identifier: `item-${i + 1}` },
+    );
     if (i === 129) {
       xml = xml.replace(
         '<qti-item-body>',

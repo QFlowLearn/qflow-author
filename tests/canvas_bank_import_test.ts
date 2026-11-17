@@ -28,10 +28,11 @@ test('Canvas standalone banks import alongside quizzes without duplicating nativ
   expect(imported.items.map((item) => item.draft.maximumScore)).toEqual([3, 4]);
   expect(imported.organizationGroups.map((group) => group.title)).toContain('Practice bank');
   expect(
-    buildMigrationAnalysis(imported, {
-      adapter: imsccAdapter,
-      sniff: await imsccAdapter.sniff(source),
-    }, { _tag: 'Assessment' }).items.every((item) => item.readiness !== 'blocked'),
+    buildMigrationAnalysis(
+      imported,
+      { adapter: imsccAdapter, sniff: await imsccAdapter.sniff(source) },
+      { _tag: 'Assessment' },
+    ).items.every((item) => item.readiness !== 'blocked'),
   ).toBe(true);
 });
 
@@ -70,10 +71,11 @@ test('missing or invalid declared banks are disclosed while usable quiz question
         warning.code === 'IMSCC_RESOURCE_UNSUPPORTED' && warning.message.includes('BANK')
       ),
     ).toBe(true);
-    const analysis = buildMigrationAnalysis(imported, {
-      adapter: imsccAdapter,
-      sniff: await imsccAdapter.sniff(source),
-    }, { _tag: 'Assessment' });
+    const analysis = buildMigrationAnalysis(
+      imported,
+      { adapter: imsccAdapter, sniff: await imsccAdapter.sniff(source) },
+      { _tag: 'Assessment' },
+    );
     expect(
       analysis.items[0].warnings.some((warning) => warning.code === 'IMSCC_RESOURCE_UNSUPPORTED'),
     ).toBe(true);

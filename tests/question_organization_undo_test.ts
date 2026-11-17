@@ -99,11 +99,16 @@ testCase(
         ).orderBy(organizationItems.questionId);
         const humanQuestion = ordered[25], changedQuestion = ordered[26];
         if (
-          !((await applyBankCollectionCommand(f.ctx, crypto.randomUUID(), {
-            _tag: 'AddItems',
-            collectionId: f.destinationId,
-            questionIds: [humanQuestion.questionId],
-          }, { database: db, now })).ok)
+          !((await applyBankCollectionCommand(
+            f.ctx,
+            crypto.randomUUID(),
+            {
+              _tag: 'AddItems',
+              collectionId: f.destinationId,
+              questionIds: [humanQuestion.questionId],
+            },
+            { database: db, now },
+          )).ok)
         ) {
           expect.unreachable(
             "Expected (await applyBankCollectionCommand(f.ctx, crypto.randomUUID(), { _tag: 'AddItems', collecti",

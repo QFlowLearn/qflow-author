@@ -56,11 +56,10 @@ for (const locale of locales) {
           />
           <AssociateContent
             {...common}
-            choices={[{ id: 'A', text: 'CHOICE-✓', matchMax: 1 }, {
-              id: 'B',
-              text: 'Choice B',
-              matchMax: 1,
-            }]}
+            choices={[
+              { id: 'A', text: 'CHOICE-✓', matchMax: 1 },
+              { id: 'B', text: 'Choice B', matchMax: 1 },
+            ]}
             addChoice={noop}
             updateChoiceText={noop}
             updateChoiceMatchMax={noop}
@@ -77,11 +76,10 @@ for (const locale of locales) {
             maxAssociations={1}
           />
           <AssociateMatrix
-            choices={[{ id: 'A', text: 'CHOICE-✓', matchMax: 1 }, {
-              id: 'B',
-              text: 'Choice B',
-              matchMax: 1,
-            }]}
+            choices={[
+              { id: 'A', text: 'CHOICE-✓', matchMax: 1 },
+              { id: 'B', text: 'Choice B', matchMax: 1 },
+            ]}
             pairs={[]}
             onChange={noop}
             maxAssociations={1}

@@ -1,12 +1,8 @@
 {
   "name": "qflow-author",
   "private": true,
+  "license": "AGPL-3.0-only",
   "type": "module",
-  "engines": {
-    "node": "24.22.0",
-    "pnpm": "10.34.3"
-  },
-  "packageManager": "pnpm@10.34.3",
   "scripts": {
     "setup:local": "node --import tsx tools/setup_local.ts",
     "doctor": "node --env-file-if-exists=.env.local --import tsx tools/doctor.ts",
@@ -22,8 +18,8 @@
     "check:assessment-bundle": "node --import tsx tools/check_assessment_authoring_bundle.ts",
     "verify": "node --env-file-if-exists=.env.local --import tsx tools/verify.ts --database=qflow_test",
     "verify:ci": "node --import tsx tools/verify.ts --database=qflow_ci_test",
-    "tw:build": "tailwindcss -c tailwind.config.cjs -i static/tailwind.css -o static/tw.css",
-    "tw:watch": "tailwindcss -c tailwind.config.cjs -i static/tailwind.css -o static/tw.css -w",
+    "tw:build": "tailwindcss -i static/tailwind.css -o static/tw.css",
+    "tw:watch": "tailwindcss -i static/tailwind.css -o static/tw.css -w",
     "test": "node --env-file-if-exists=.env.local --import tsx tools/testing/run.ts ordinary --database=qflow_test",
     "test:qa": "node --env-file-if-exists=.env.local --import tsx tools/testing/qa.ts",
     "test:cloudflare:built": "node --env-file-if-exists=.env.local --import tsx tools/testing/run.ts worker --database=qflow_test",
@@ -79,25 +75,30 @@
     "@cloudflare/vite-plugin": "2.0.0-rc.1",
     "@cloudflare/vitest-plugin": "1.8.4",
     "@cloudflare/workers-types": "5.20261117.1",
-    "@dprint/json": "0.21.3",
-    "@dprint/markdown": "0.20.0",
-    "@dprint/typescript": "0.96.1",
-    "@types/node": "24.10.0",
+    "@dprint/json": "0.26.0",
+    "@dprint/markdown": "0.29.0",
+    "@dprint/typescript": "0.101.0",
+    "@tailwindcss/cli": "4.3.5",
+    "@types/node": "26.6.6",
     "ajv": "8.20.0",
-    "axe-core": "4.10.2",
+    "axe-core": "4.14.1",
     "cf": "1.0.0-rc.1",
-    "daisyui": "4.12.10",
-    "dprint": "0.50.2",
-    "esbuild": "0.27.7",
+    "daisyui": "5.8.1",
+    "dprint": "0.65.0",
+    "esbuild": "0.28.2",
     "jsonc-parser": "3.3.1",
     "miniflare": "5.20261117.0-beta",
-    "oxlint": "1.69.0",
-    "playwright": "1.63.0",
-    "tailwindcss": "3.4.19",
-    "tsx": "4.20.6",
-    "typescript": "5.9.3",
-    "vite": "7.3.3",
-    "vitest": "4.1.10"
+    "oxlint": "1.94.0",
+    "playwright": "1.65.1",
+    "tailwindcss": "4.3.5",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
   },
-  "license": "AGPL-3.0-only"
+  "packageManager": "pnpm@12.21.0",
+  "engines": {
+    "node": "26.12.0",
+    "pnpm": "12.21.0"
+  }
 }

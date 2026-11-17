@@ -79,15 +79,15 @@ export function enrichmentBrowseRowsSql(
       ${bankEnrichmentParticipationSql(tenantId, schemeId, sql`q.id`, dimension)} AS participated,
       (SELECT COALESCE(jsonb_agg(jsonb_build_object('id', category ->> 'id', 'label', category ->> 'label')), '[]'::jsonb)
         FROM jsonb_array_elements(ev.definition -> ${
-    ENRICHMENT_VOCABULARY_KEYS[dimension]
-  }) category
+          ENRICHMENT_VOCABULARY_KEYS[dimension]
+        }) category
         WHERE ec.value -> 'valueIds' ? (category ->> 'id')) AS vocabulary
     FROM questions q
     LEFT JOIN bank_enrichment_assignments ea ON ea.tenant_id = q.tenant_id AND ea.question_id = q.id AND ea.scheme_id = ${schemeId} AND ea.dimension = ${dimension}
     LEFT JOIN bank_enrichment_changes ec ON ec.id = ea.change_id
     LEFT JOIN bank_enrichment_scheme_versions ev ON ev.id = ec.version_id
     WHERE q.tenant_id = ${tenantId} AND q.id IN (SELECT value::uuid FROM jsonb_array_elements_text(${
-    JSON.stringify(ids)
-  }::jsonb))
+      JSON.stringify(ids)
+    }::jsonb))
   `;
 }

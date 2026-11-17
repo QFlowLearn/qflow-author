@@ -57,10 +57,11 @@ testCase(
       title: 'Capital of France',
       bodyHtml: '<p>What is the capital of France?</p>',
       promptHtml: 'Choose one.',
-      choices: [{ id: 'A', text: 'Paris', fixed: true }, { id: 'B', text: 'Rome' }, {
-        id: 'C',
-        text: 'Oslo',
-      }],
+      choices: [
+        { id: 'A', text: 'Paris', fixed: true },
+        { id: 'B', text: 'Rome' },
+        { id: 'C', text: 'Oslo' },
+      ],
       correctId: 'B',
       shuffle: true,
       required: false,
@@ -104,13 +105,10 @@ testCase(
           return Response.json({ error: 'unexpected_create' }, { status: 400 });
         }
         revisions.set(++latestRevision, command.draft);
-        return Response.json({
-          itemId,
-          placementId,
-          revision: latestRevision,
-          identifier: 'capital',
-          fixed: false,
-        }, { status: 201 });
+        return Response.json(
+          { itemId, placementId, revision: latestRevision, identifier: 'capital', fixed: false },
+          { status: 201 },
+        );
       }
       const locale = locales.find((candidate) => candidate === url.searchParams.get('locale')) ??
         'en-US';
@@ -152,7 +150,7 @@ testCase(
       await page.waitForFunction(
         (expected) =>
           document.querySelector<HTMLSelectElement>('[name="question-presentation"]')?.value ===
-            expected,
+          expected,
         value,
       );
       await active.locator('[data-choice-id="A"] textarea').waitFor();
@@ -212,7 +210,7 @@ testCase(
       await page.getByRole('button', { name: /^Save item$/i }).click();
       await page.waitForFunction(() =>
         document.querySelector<HTMLSelectElement>('[name="question-presentation"]')?.disabled ===
-          true
+        true
       );
       expect(commands.length).toStrictEqual(1);
       saveGate.resolve();

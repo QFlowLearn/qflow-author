@@ -23,9 +23,11 @@ test('failed QTI 1.x questions keep their own identity in compact and indented a
       'Second question',
       'Essay question',
     ]);
-    const analysis = buildMigrationAnalysis(parsed, { adapter: qti12Adapter, sniff }, {
-      _tag: 'Assessment',
-    });
+    const analysis = buildMigrationAnalysis(
+      parsed,
+      { adapter: qti12Adapter, sniff },
+      { _tag: 'Assessment' },
+    );
     expect(analysis.items.map((item) => item.readiness)).toEqual(['blocked', 'blocked', 'ready']);
   }
 });

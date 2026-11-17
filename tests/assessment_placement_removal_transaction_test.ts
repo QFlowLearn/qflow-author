@@ -441,27 +441,33 @@ testCase(
               ),
             );
           for (
-            const body of [undefined, {}, { removalId, expectedRevision: 1, extra: true }, {
-              removalId: 'bad',
-              expectedRevision: 1,
-            }]
+            const body of [
+              undefined,
+              {},
+              { removalId, expectedRevision: 1, extra: true },
+              { removalId: 'bad', expectedRevision: 1 },
+            ]
           ) {
             expect((await request(removeRoute, 'DELETE', { id, pid }, body)).status).toStrictEqual(
               400,
             );
           }
           expect((await getAssessment(ctx, id))?.targetCount).toStrictEqual(3);
-          const removed = await request(removeRoute, 'DELETE', { id, pid }, {
-            removalId,
-            expectedRevision: 1,
-          });
+          const removed = await request(
+            removeRoute,
+            'DELETE',
+            { id, pid },
+            { removalId, expectedRevision: 1 },
+          );
           expect(removed.status).toStrictEqual(200);
           const receipt: unknown = await removed.json();
           expect(
-            await (await request(removeRoute, 'DELETE', { id, pid }, {
-              removalId,
-              expectedRevision: 1,
-            })).json(),
+            await (await request(
+              removeRoute,
+              'DELETE',
+              { id, pid },
+              { removalId, expectedRevision: 1 },
+            )).json(),
           ).toStrictEqual(receipt);
           const listed = await request(listRoute, 'GET', { id });
           expect(listed.status).toStrictEqual(200);

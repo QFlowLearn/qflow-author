@@ -178,10 +178,13 @@ testCase(
                   expect(await choice.inputValue()).toStrictEqual('Keep this toolbar draft');
                 }
                 for (
-                  const [width, height] of [[320, 844], [390, 844], [1024, 844], [1280, 844], [
-                    1280,
-                    320,
-                  ]]
+                  const [width, height] of [
+                    [320, 844],
+                    [390, 844],
+                    [1024, 844],
+                    [1280, 844],
+                    [1280, 320],
+                  ]
                 ) {
                   await page.setViewportSize({ width, height });
                   await page.evaluate(() => scrollTo(0, 450));

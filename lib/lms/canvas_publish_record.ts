@@ -261,11 +261,11 @@ function receiptMatchesAttempt(
     receipt.targetId === attempt.targetId &&
     JSON.stringify(receipt.destination) === JSON.stringify(attempt.destination) &&
     JSON.stringify(receipt.artifact) === JSON.stringify({
-        filename: attempt.artifact.filename,
-        mediaType: attempt.artifact.mediaType,
-        sha256: attempt.artifact.sha256,
-        byteLength: attempt.artifact.byteLength,
-      }) &&
+      filename: attempt.artifact.filename,
+      mediaType: attempt.artifact.mediaType,
+      sha256: attempt.artifact.sha256,
+      byteLength: attempt.artifact.byteLength,
+    }) &&
     receipt.attemptCount === attempt.attemptCount &&
     receipt.remote.contentMigrationId === attempt.state.remote.contentMigrationId &&
     receipt.publishedAt === attempt.state.publishedAt.toISOString();

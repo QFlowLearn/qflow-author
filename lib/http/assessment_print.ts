@@ -127,10 +127,13 @@ export async function printCreateHttp(ctx: HttpRequest): Promise<Response> {
       tenantId: auth.tenantId,
     });
   }
-  return Response.json({
-    preflight: result.value.preflight,
-    pack: result.value.pack && printPackView(result.value.pack),
-  }, { headers, status: result.value.pack ? 202 : 200 });
+  return Response.json(
+    {
+      preflight: result.value.preflight,
+      pack: result.value.pack && printPackView(result.value.pack),
+    },
+    { headers, status: result.value.pack ? 202 : 200 },
+  );
 }
 /** Restore retained history after navigation without exposing sealed source or keys. */
 export async function printListHttp(ctx: HttpRequest): Promise<Response> {

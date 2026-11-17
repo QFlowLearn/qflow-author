@@ -277,10 +277,7 @@ globalThis.mount=c=>render(h(App,{config:c}),document.getElementById('root'));gl
         expect(await state()).toStrictEqual({
           bodyHtml:
             '<p><span data-qti-hottext="A">FIRST-AUTHORED-Ω</span></p><span data-qti-hottext="B">EDITED-AUTHORED-Ω</span>',
-          hottexts: [{ id: 'A', text: 'FIRST-AUTHORED-Ω' }, {
-            id: 'B',
-            text: 'EDITED-AUTHORED-Ω',
-          }],
+          hottexts: [{ id: 'A', text: 'FIRST-AUTHORED-Ω' }, { id: 'B', text: 'EDITED-AUTHORED-Ω' }],
           correctIds: ['B', 'A'],
           responseIdentifier: 'RESPONSE_Ω',
         });

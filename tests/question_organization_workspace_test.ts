@@ -47,34 +47,38 @@ testCase(
       expect(await workspace.preview(f.ctx, command, { kind: 'clef', config: organizationConfig }))
         .toStrictEqual(preview);
       expect(
-        await workspace.preview(f.ctx, {
-          ...command,
-          definition: { ...command.definition, name: 'Different' },
-        }, { kind: 'clef', config: organizationConfig }),
+        await workspace.preview(
+          f.ctx,
+          { ...command, definition: { ...command.definition, name: 'Different' } },
+          { kind: 'clef', config: organizationConfig },
+        ),
       ).toStrictEqual({ ok: false, code: 'conflict' });
       let calls = 0;
       const finish = async (id: string) => {
         const [run] = await db.select().from(organizationRuns).where(eq(organizationRuns.id, id));
-        return await processOrganizationStep({ jobId: id, workflowExecutionId: run.executionId }, {
-          database: db,
-          now: organizationNow,
-          newId: () => crypto.randomUUID(),
-          provider: () =>
-            fixtureClefProvider(() => {
-              calls++;
-              return Promise.resolve({
-                ok: true,
-                value: {
-                  topicId: 'cells',
-                  confidence: 0.99,
-                  probabilities: { cells: 0.99, energy: 0.01, __no_match__: 0 },
-                  model: 'clef',
-                  inputTokens: 700,
-                  outputTokens: 41,
-                },
-              });
-            }),
-        });
+        return await processOrganizationStep(
+          { jobId: id, workflowExecutionId: run.executionId },
+          {
+            database: db,
+            now: organizationNow,
+            newId: () => crypto.randomUUID(),
+            provider: () =>
+              fixtureClefProvider(() => {
+                calls++;
+                return Promise.resolve({
+                  ok: true,
+                  value: {
+                    topicId: 'cells',
+                    confidence: 0.99,
+                    probabilities: { cells: 0.99, energy: 0.01, __no_match__: 0 },
+                    model: 'clef',
+                    inputTokens: 700,
+                    outputTokens: 41,
+                  },
+                });
+              }),
+          },
+        );
       };
       if (!((await finish(preview.value)).ok)) {
         expect.unreachable('Expected (await finish(preview.value)).ok');
@@ -150,18 +154,22 @@ testCase(
         expect(section.title).toStrictEqual('word-visible-numbering');
         const foreign = await workspace.home({ ...f.ctx, tenantId: crypto.randomUUID() });
         expect(foreign).toStrictEqual({ ok: false, code: 'forbidden' });
-        const preview = await workspace.preview(f.ctx, {
-          operationId: crypto.randomUUID(),
-          collectionId: f.originId,
-          expectedVersion: 1,
-          definition: { ...enrichmentDefinitionFixture(), difficulty: [] },
-          filing: [{ topicId: 'cells', collectionId: f.destinationId }],
-          sourceMappings: [{
-            sourceId: section.sourceId,
-            sectionKey: section.sectionKey,
-            topicId: 'cells',
-          }],
-        }, { kind: 'source_only' });
+        const preview = await workspace.preview(
+          f.ctx,
+          {
+            operationId: crypto.randomUUID(),
+            collectionId: f.originId,
+            expectedVersion: 1,
+            definition: { ...enrichmentDefinitionFixture(), difficulty: [] },
+            filing: [{ topicId: 'cells', collectionId: f.destinationId }],
+            sourceMappings: [{
+              sourceId: section.sourceId,
+              sectionKey: section.sectionKey,
+              topicId: 'cells',
+            }],
+          },
+          { kind: 'source_only' },
+        );
         if (!(preview.ok)) expect.unreachable('Expected preview.ok');
         const finish = async (id: string) => {
           const [run] = await db.select().from(organizationRuns).where(eq(organizationRuns.id, id));
@@ -264,21 +272,25 @@ for (const format of ['moodle', 'qti', 'qti_ambiguous', 'blackboard', 'imscc'] a
           if (!(sections.every((s) => s.count === 1))) {
             expect.unreachable('Expected sections.every((s) => s.count === 1)');
           }
-          const preview = await workspace.preview(f.ctx, {
-            operationId: crypto.randomUUID(),
-            collectionId: f.originId,
-            expectedVersion: 1,
-            definition: { ...enrichmentDefinitionFixture(), difficulty: [] },
-            filing: [{ topicId: 'cells', collectionId: f.destinationId }, {
-              topicId: 'energy',
-              collectionId: f.destinationId,
-            }],
-            sourceMappings: sections.map((s) => ({
-              sourceId: s.sourceId,
-              sectionKey: s.sectionKey,
-              topicId: s.title.replaceAll(' / ', '/') === 'Biology/Cells' ? 'cells' : 'energy',
-            })),
-          }, { kind: 'source_only' });
+          const preview = await workspace.preview(
+            f.ctx,
+            {
+              operationId: crypto.randomUUID(),
+              collectionId: f.originId,
+              expectedVersion: 1,
+              definition: { ...enrichmentDefinitionFixture(), difficulty: [] },
+              filing: [
+                { topicId: 'cells', collectionId: f.destinationId },
+                { topicId: 'energy', collectionId: f.destinationId },
+              ],
+              sourceMappings: sections.map((s) => ({
+                sourceId: s.sourceId,
+                sectionKey: s.sectionKey,
+                topicId: s.title.replaceAll(' / ', '/') === 'Biology/Cells' ? 'cells' : 'energy',
+              })),
+            },
+            { kind: 'source_only' },
+          );
           if (!(preview.ok)) expect.unreachable('Expected preview.ok');
           const finish = async (id: string) => {
             const [run] = await db.select().from(organizationRuns).where(

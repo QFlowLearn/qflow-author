@@ -221,10 +221,10 @@ testCase('assessment API rejects invalid bodies and limits without writing rows'
             .toStrictEqual([]);
         }
         for (
-          const [body, title] of [['{}', 'Untitled Assessment'], [
-            '{"title":"  A title  "}',
-            'A title',
-          ]]
+          const [body, title] of [
+            ['{}', 'Untitled Assessment'],
+            ['{"title":"  A title  "}', 'A title'],
+          ]
         ) {
           const response = await requestCollection(ctx, 'POST', '', body);
           expect(response.status).toStrictEqual(201);

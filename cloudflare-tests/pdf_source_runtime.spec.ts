@@ -8,9 +8,10 @@ import {
 import { pdfFixture } from '../tests/helpers/pdf_fixture.ts';
 
 it('extracts compressed PDF text in workerd with page-grounded generation and no OCR', async () => {
-  const bytes = pdfFixture([{ text: 'Mathematics 6 Essential Curriculum' }, {
-    text: 'Find the area of triangles.',
-  }]);
+  const bytes = pdfFixture([
+    { text: 'Mathematics 6 Essential Curriculum' },
+    { text: 'Find the area of triangles.' },
+  ]);
   const document = await extractStructuredSource({
     filename: 'curriculum.pdf',
     mimeType: 'application/pdf',

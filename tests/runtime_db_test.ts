@@ -38,9 +38,13 @@ testCase(
   'step-owned databases require a complete Hyperdrive binding and never use a direct URL instead',
   async () => {
     for (
-      const QFLOW_DB of [undefined, null, {}, { connectionString: '' }, {
-        connectionString: 'https://db.example/qflow',
-      }]
+      const QFLOW_DB of [
+        undefined,
+        null,
+        {},
+        { connectionString: '' },
+        { connectionString: 'https://db.example/qflow' },
+      ]
     ) {
       await expect(
         Promise.resolve().then(() =>

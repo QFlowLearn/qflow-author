@@ -1,5 +1,6 @@
-import ts from 'typescript';
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { API } from 'typescript/unstable/sync';
+import * as ts from 'typescript/unstable/ast';
+import { mkdir, readdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { loadAndParseConfig } from '@cloudflare/config';
 import { readAuthorBuild } from './cloudflare_build.ts';
@@ -74,20 +75,26 @@ export async function checkConfiguration(): Promise<void> {
       path.endsWith('.wasm')
     ).length !== 1
   ) throw Error('Print Worker must contain one compiler module.');
-  const entry = ts.createSourceFile(
-    'index.js',
-    await readFile(resolve(app.bundleDir, 'index.js'), 'utf8'),
-    ts.ScriptTarget.Latest,
-    true,
-    ts.ScriptKind.JS,
-  );
-  const exported = entry.statements.flatMap((statement) =>
-    ts.isExportDeclaration(statement) && statement.exportClause &&
-      ts.isNamedExports(statement.exportClause)
-      ? statement.exportClause.elements.map((element) => element.name.text)
-      : []
-  );
-  same(exported.filter((name) => name.endsWith('Workflow')).sort(), workflowNames);
+  const api = new API();
+  try {
+    const path = resolve(app.bundleDir, 'index.js');
+    const snapshot = api.updateSnapshot({ openFiles: [path] });
+    try {
+      const entry = snapshot.getDefaultProjectForFile(path)?.program.getSourceFile(path);
+      if (!entry) throw Error('Missing built Worker syntax tree.');
+      const exported = entry.statements.flatMap((statement) =>
+        ts.isExportDeclaration(statement) && statement.exportClause &&
+          ts.isNamedExports(statement.exportClause)
+          ? statement.exportClause.elements.map((element) => element.name.text)
+          : []
+      );
+      same(exported.filter((name) => name.endsWith('Workflow')).sort(), workflowNames);
+    } finally {
+      snapshot.dispose();
+    }
+  } finally {
+    api.close();
+  }
   console.log(
     'Typed configuration, seven Workflows, three schedules, static assets and separate print compiler verified.',
   );

@@ -56,10 +56,10 @@ export function createEnrichmentAIProvider(
     try {
       const raw = await awaitWithAbortSignal(
         binding.run(config.model, {
-          messages: [{ role: 'system', content: request.system }, {
-            role: 'user',
-            content: request.data,
-          }],
+          messages: [
+            { role: 'system', content: request.system },
+            { role: 'user', content: request.data },
+          ],
           response_format: {
             type: 'json_schema',
             json_schema: { name: 'bank_enrichment', strict: true, schema: request.schema },

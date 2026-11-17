@@ -60,14 +60,18 @@ export default function BankEnrichmentCorrection(props: {
     const scope = props.scope._tag === 'Filtered'
       ? { _tag: 'Filtered', queryString: props.scope.queryString }
       : props.scope;
-    const result = await submitEnrichmentAction('/items/organize', {
-      action: 'correct',
-      operationId: props.operationId,
-      versionId: props.versionId,
-      expectedCount: props.count,
-      scope,
-      values,
-    }, { signal: controller.current.signal });
+    const result = await submitEnrichmentAction(
+      '/items/organize',
+      {
+        action: 'correct',
+        operationId: props.operationId,
+        versionId: props.versionId,
+        expectedCount: props.count,
+        scope,
+        values,
+      },
+      { signal: controller.current.signal },
+    );
     if (result && 'url' in result) {
       location.assign(result.url);
       return;
@@ -101,9 +105,7 @@ export default function BankEnrichmentCorrection(props: {
               onChange={(event) => {
                 const next = event.currentTarget.value;
                 const topic = dimension === 'topic'
-                  ? props.definition.topics.find((t) =>
-                    t.id === next
-                  )
+                  ? props.definition.topics.find((t) => t.id === next)
                   : undefined;
                 setSelected({
                   ...selected,

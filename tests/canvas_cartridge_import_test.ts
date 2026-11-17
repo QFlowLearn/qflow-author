@@ -55,10 +55,11 @@ test('cartridge essays retain manual grading and item-owned review notices', asy
     bytes: await canvasCartridge({ ccXml: emptyShell, nativeXml: canvasEssayXml('5') }),
   };
   const imported = await imsccAdapter.parse(source);
-  const analysis = buildMigrationAnalysis(imported, {
-    adapter: imsccAdapter,
-    sniff: await imsccAdapter.sniff(source),
-  }, { _tag: 'Assessment' });
+  const analysis = buildMigrationAnalysis(
+    imported,
+    { adapter: imsccAdapter, sniff: await imsccAdapter.sniff(source) },
+    { _tag: 'Assessment' },
+  );
   expect(analysis.items[0].importedDraft.externalScored).toBe('human');
   expect(analysis.items[0].readiness).toBe('minor_review');
   expect(analysis.items[0].warnings.map((warning) => warning.code)).toContain(
@@ -79,10 +80,11 @@ test('native multi-question review notices stay attached to their questions', as
     bytes: await canvasCartridge({ ccXml: emptyShell, nativeXml }),
   };
   const imported = await imsccAdapter.parse(source);
-  const analysis = buildMigrationAnalysis(imported, {
-    adapter: imsccAdapter,
-    sniff: await imsccAdapter.sniff(source),
-  }, { _tag: 'Assessment' });
+  const analysis = buildMigrationAnalysis(
+    imported,
+    { adapter: imsccAdapter, sniff: await imsccAdapter.sniff(source) },
+    { _tag: 'Assessment' },
+  );
   expect(analysis.items).toHaveLength(2);
   for (const item of analysis.items) {
     expect(item.warnings.map((warning) => warning.code)).toContain('QTI12_MANUAL_POINTS_REVIEW');

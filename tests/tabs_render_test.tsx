@@ -22,9 +22,9 @@ testCase('tabs render linked panels and a roving tab stop', () => {
   expect(html).toContain('role="tablist"');
   expect(html).toContain('aria-label="Editor view"');
   expect(html).toContain('aria-orientation="horizontal"');
-  expect(html).toContain('ds-tabs-bordered');
-  if (html.includes('ds-tabs-boxed')) {
-    expect.unreachable("Expected !html.includes('ds-tabs-boxed')");
+  expect(html).toContain('ds-tabs-border');
+  if (html.includes('ds-tabs-box')) {
+    expect.unreachable("Expected !html.includes('ds-tabs-box')");
   }
 
   const contentTab = startTagForButton(html, 'Content');

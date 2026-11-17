@@ -46,10 +46,10 @@ for (const locale of locales) {
   testCase(`slider populated surface is localized (${locale})`, () => {
     const payload = createI18nPayload(locale, catalogForLocale(locale), ['authoring']);
     const i18n = createI18n(locale, payload.namespaces);
-    const html = renderSlider(locale, [{ mapKey: 10, mappedValue: -2 }, {
-      mapKey: 20,
-      mappedValue: 0,
-    }]);
+    const html = renderSlider(locale, [
+      { mapKey: 10, mappedValue: -2 },
+      { mapKey: 20, mappedValue: 0 },
+    ]);
     for (
       const key of [
         'sliderPrompt',
@@ -74,10 +74,10 @@ for (const locale of locales) {
     expect(html).toContain(`placeholder="${i18n.t('driver.sliderMapKeyPlaceholder')}"`);
     expect(html).toContain(`placeholder="${i18n.t('driver.sliderMappedValuePlaceholder')}"`);
     for (
-      const [value, label] of [['horizontal', i18n.t('driver.sliderHorizontal')], [
-        'vertical',
-        i18n.t('driver.sliderVertical'),
-      ]]
+      const [value, label] of [
+        ['horizontal', i18n.t('driver.sliderHorizontal')],
+        ['vertical', i18n.t('driver.sliderVertical')],
+      ]
     ) expect(html).toContain(`value="${value}">${label}</option>`);
     for (const value of ['0', '100', '1', '50', '10', '-2', '20']) {
       expect(html).toContain(`value="${value}"`);

@@ -16,7 +16,7 @@ export default function Textarea({
 }: Props) {
   const classes = [
     'ds-textarea',
-    'ds-textarea-bordered',
+    '',
     'w-full',
     appearance === 'quiet'
       ? '!border-x-transparent !border-t-transparent !border-b-base-content/50 !bg-base-200/40 hover:!bg-base-200/70 focus:!border-b-secondary aria-[invalid=true]:!border-b-error [&.ds-textarea-error]:!border-b-error'

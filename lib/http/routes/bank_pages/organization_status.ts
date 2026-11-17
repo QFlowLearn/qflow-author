@@ -9,12 +9,14 @@ const methods = {
       ctx.params.id,
     );
     return result.ok
-      ? Response.json({ updatedAt: result.value.updatedAt }, {
-        headers: { 'cache-control': 'no-store' },
-      })
-      : Response.json({ error: 'unavailable' }, {
-        status: result.code === 'forbidden' ? 403 : 404,
-      });
+      ? Response.json(
+        { updatedAt: result.value.updatedAt },
+        { headers: { 'cache-control': 'no-store' } },
+      )
+      : Response.json(
+        { error: 'unavailable' },
+        { status: result.code === 'forbidden' ? 403 : 404 },
+      );
   },
 } satisfies Readonly<Record<string, HttpHandler>>;
 export const bankOrganizationStatusPageRoute = defineHttpRoute('/items/organize/:id/status', {

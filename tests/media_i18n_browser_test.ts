@@ -57,10 +57,10 @@ testCase('media authoring state is localized in every locale', {
       state: {
         responseIdentifier: 'RESPONSE_Ω',
         mediaKind: 'object',
-        mediaSources: [{ src: '/media/video.mp4', type: 'video/mp4' }, {
-          src: '/media/audio.ogg',
-          type: 'audio/ogg',
-        }],
+        mediaSources: [
+          { src: '/media/video.mp4', type: 'video/mp4' },
+          { src: '/media/audio.ogg', type: 'audio/ogg' },
+        ],
         mediaCaptionSrc: '',
         mediaCaptionLang: 'en',
         mediaTranscript: '',
@@ -365,10 +365,10 @@ testCase('media authoring state is localized in every locale', {
           ).count(),
         ).toStrictEqual(0);
         await page.getByRole('button', { name: i18n.t('driver.mediaAddAlternate') }).click();
-        expect((await state()).mediaSources).toStrictEqual([{
-          src: 'assets/alternate.webm',
-          type: 'video/ogg',
-        }, { src: '', type: '' }]);
+        expect((await state()).mediaSources).toStrictEqual([
+          { src: 'assets/alternate.webm', type: 'video/ogg' },
+          { src: '', type: '' },
+        ]);
         expect(
           await page.locator(
             `button[aria-label="${i18n.t('driver.mediaRemoveSource', { number: 1 })}"]`,

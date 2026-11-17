@@ -195,7 +195,7 @@ export default function OidcSettingsCard() {
   }
 
   return (
-    <form class='ds-card ds-card-bordered max-w-4xl' onSubmit={save}>
+    <form class='ds-card ds-card-border max-w-4xl' onSubmit={save}>
       <div class='ds-card-body space-y-5'>
         <OidcPendingStatus loading={loading} saving={saving} />
         <div class='space-y-1'>
@@ -278,7 +278,7 @@ function OidcProviderEditor(
         {i18n.t('settings.sso.oidc.providerLegend', { provider: label })}
       </legend>
       <OidcProviderGuidance provider={provider} redirectUrl={redirectUrl} />
-      <label class='ds-form-control' for={enabledId}>
+      <label class='flex flex-col' for={enabledId}>
         <span class='flex items-center gap-3'>
           <Checkbox
             id={enabledId}
@@ -289,7 +289,7 @@ function OidcProviderEditor(
           <span>{i18n.t('settings.sso.oidc.enable', { provider: label })}</span>
         </span>
       </label>
-      <label class='ds-form-control' for={clientIdId}>
+      <label class='flex flex-col' for={clientIdId}>
         <span>{i18n.t('settings.sso.oidc.clientId', { provider: label })}</span>
         <Input
           id={clientIdId}
@@ -299,7 +299,7 @@ function OidcProviderEditor(
           required={form.enabled}
         />
       </label>
-      <label class='ds-form-control' for={clientSecretId}>
+      <label class='flex flex-col' for={clientSecretId}>
         <span>{i18n.t('settings.sso.oidc.clientSecret', { provider: label })}</span>
         <Input
           id={clientSecretId}
@@ -321,7 +321,7 @@ function OidcProviderEditor(
         </span>
       </label>
       {provider === 'microsoft' && (
-        <label class='ds-form-control' for='microsoft-tenant'>
+        <label class='flex flex-col' for='microsoft-tenant'>
           <span>{i18n.t('settings.sso.oidc.microsoftTenant')}</span>
           <Input
             id='microsoft-tenant'

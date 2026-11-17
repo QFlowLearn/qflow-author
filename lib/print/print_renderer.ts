@@ -33,7 +33,7 @@ export async function createPrintRenderer(
       const input = JSON.stringify({ ...content, images: files });
       if (
         new TextEncoder().encode(input).length +
-            images.reduce((total, image) => total + image.bytes.length, 0) > 2000000
+          images.reduce((total, image) => total + image.bytes.length, 0) > 2000000
       ) {
         return { ok: false, code: 'render_failed' };
       }

@@ -123,7 +123,7 @@ export function InlineChoiceContent(props: InlineChoiceContentProps) {
               </div>
             </div>
             <div class='space-y-2'>
-              <label class='ds-form-control'>
+              <label class='flex flex-col'>
                 <span>{i18n.t('driver.slotLabel')}</span>
                 <Input
                   value={slot.label ?? ''}
@@ -136,8 +136,7 @@ export function InlineChoiceContent(props: InlineChoiceContentProps) {
               </label>
               <ResponseIdentifierDisclosure
                 value={slot.id ?? ''}
-                onChange={(value) =>
-                  props.updateInlineChoiceSlotId(slot.id, value)}
+                onChange={(value) => props.updateInlineChoiceSlotId(slot.id, value)}
                 placeholder='RESPONSE_1'
               />
             </div>
@@ -180,8 +179,7 @@ export function InlineChoiceContent(props: InlineChoiceContentProps) {
                   data-editor-field={options.length === 0 ? 'choices' : undefined}
                   aria-invalid={props.fieldHasIssue('choices') || undefined}
                   aria-describedby={props.fieldHasIssue('choices') ? answersIssueId : undefined}
-                  onClick={() =>
-                    props.addInlineChoiceOption(slot.id)}
+                  onClick={() => props.addInlineChoiceOption(slot.id)}
                 >
                   + {i18n.t('driver.addOption')}
                 </Button>
@@ -220,7 +218,7 @@ export function InlineChoiceContent(props: InlineChoiceContentProps) {
                           onChange={() => props.setInlineChoiceCorrectId(slot.id, opt.id)}
                         />
                       </div>
-                      <label class='ds-form-control'>
+                      <label class='flex flex-col'>
                         <span class='text-xs'>{i18n.t('driver.identifier')}</span>
                         <Input
                           value={opt.id}
@@ -233,7 +231,7 @@ export function InlineChoiceContent(props: InlineChoiceContentProps) {
                           placeholder='A'
                         />
                       </label>
-                      <label class='ds-form-control'>
+                      <label class='flex flex-col'>
                         <span class='text-xs'>{i18n.t('driver.text')}</span>
                         <Input
                           value={opt.text ?? ''}
@@ -254,7 +252,7 @@ export function InlineChoiceContent(props: InlineChoiceContentProps) {
                       {hasMetaColumn && (
                         <div class='space-y-2'>
                           {showScore && (
-                            <label class='ds-form-control'>
+                            <label class='flex flex-col'>
                               <span class='text-xs'>{i18n.t('driver.score')}</span>
                               <Input
                                 type='number'

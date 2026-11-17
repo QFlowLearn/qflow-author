@@ -17,10 +17,10 @@ export default function AccountSettingsPage({ data, i18n }: { data: Data; i18n: 
         <h1 class='text-3xl font-medium'>{i18n.t('settings.title')}</h1>
         <p class='text-sm text-base-content/70'>{i18n.t('settings.subtitle')}</p>
       </div>
-      <form class='ds-card ds-card-bordered max-w-xl' method='post'>
+      <form class='ds-card ds-card-border max-w-xl' method='post'>
         <div class='ds-card-body space-y-4'>
           {data.success && <div class='ds-alert text-sm'>{i18n.t('settings.saved')}</div>}
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('settings.displayName')}</span>
             <Input
               name='displayName'
@@ -28,7 +28,7 @@ export default function AccountSettingsPage({ data, i18n }: { data: Data; i18n: 
               placeholder={i18n.t('settings.displayNamePlaceholder')}
             />
           </label>
-          <label class='ds-form-control'>
+          <label class='flex flex-col'>
             <span>{i18n.t('settings.email')}</span>
             <Input name='email' value={data.user.email} disabled />
           </label>

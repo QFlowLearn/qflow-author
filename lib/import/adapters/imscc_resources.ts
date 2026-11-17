@@ -116,10 +116,12 @@ export async function selectAssessmentResource(
     for (const declared of new Set([entry.href, entry.file, ...entry.fileRefs].filter(Boolean))) {
       const path = existingPath(zip, entry, declared);
       if (path) paths.add(path);
-      else {warnings.push({
+      else {
+        warnings.push({
           code: 'IMSCC_RESOURCE_MISSING',
           message: `Declared resource file ${declared} is missing.`,
-        });}
+        });
+      }
     }
   }
   if (

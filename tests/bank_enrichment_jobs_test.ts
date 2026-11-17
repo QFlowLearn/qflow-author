@@ -245,12 +245,15 @@ testCase('cancellation fences an in-flight result and resume reuses its receipt'
         expect.unreachable('Expected (await run.jobs.resume(ctx, run.runId, executionId)).ok');
       }
       expect(
-        (await finish({ jobId: run.runId, workflowExecutionId: executionId }, {
-          ...services,
-          provider: () => {
-            throw new Error('Resume must reuse the stored provider receipt.');
+        (await finish(
+          { jobId: run.runId, workflowExecutionId: executionId },
+          {
+            ...services,
+            provider: () => {
+              throw new Error('Resume must reuse the stored provider receipt.');
+            },
           },
-        })).completed,
+        )).completed,
       ).toStrictEqual(2);
       const summary = await new BankEnrichmentUsage(db, now).summary(ctx, run.runId);
       if (!(summary.ok)) expect.unreachable('Expected summary.ok');
@@ -491,12 +494,15 @@ testCase(
             'Expected (await run.jobs.queueRun(ctx, id, executionId, enrichmentConfigFixture)).ok',
           );
         }
-        await finish({ jobId: id, workflowExecutionId: executionId }, {
-          ...services,
-          provider: () => {
-            throw new Error('Unsupported content must not call AI.');
+        await finish(
+          { jobId: id, workflowExecutionId: executionId },
+          {
+            ...services,
+            provider: () => {
+              throw new Error('Unsupported content must not call AI.');
+            },
           },
-        });
+        );
         const media = await read.get(ctx, id);
         if (!(media.ok && media.value.kind === 'classify')) {
           expect.unreachable("Expected media.ok && media.value.kind === 'classify'");

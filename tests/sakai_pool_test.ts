@@ -10,17 +10,22 @@ import { exportQti3TestItemXml } from './qti3_writer_test_helpers.ts';
 function question(n: number, corrected = false) {
   return {
     revisionId: `proof-${n}${corrected ? '-b' : ''}`,
-    xml: exportQti3TestItemXml('single_select', {
-      title: `Proof ${n}`,
-      promptHtml: '',
-      bodyHtml: `<p>Question ${n}: Which number is two plus two?</p>`,
-      choices: [{ id: 'first', text: 'Three' }, { id: 'second', text: 'Four' }, {
-        id: 'third',
-        text: 'Five',
-      }],
-      correctId: corrected ? 'third' : 'second',
-      shuffle: false,
-    }, { identifier: `proof-${n}` }),
+    xml: exportQti3TestItemXml(
+      'single_select',
+      {
+        title: `Proof ${n}`,
+        promptHtml: '',
+        bodyHtml: `<p>Question ${n}: Which number is two plus two?</p>`,
+        choices: [
+          { id: 'first', text: 'Three' },
+          { id: 'second', text: 'Four' },
+          { id: 'third', text: 'Five' },
+        ],
+        correctId: corrected ? 'third' : 'second',
+        shuffle: false,
+      },
+      { identifier: `proof-${n}` },
+    ),
   };
 }
 

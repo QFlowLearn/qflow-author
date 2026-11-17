@@ -183,8 +183,11 @@ export function toQti3InlineChoiceAuthoringItem(
   const standalone = standaloneInlineChoice(draft);
   const orderedBody = standalone && prompt
     ? `${sanitizeBodyHtml(standalone.questionHtml)}<div class="qti-inline-prompt">${prompt}</div>${
-      replaceAllMarkers(sanitizeBodyHtml(standalone.suffix), INLINE_CHOICE_MARKER_ATTR, ({ id }) =>
-        `<qti-inline-choice-interaction response-identifier="${id}"/>`).html
+      replaceAllMarkers(
+        sanitizeBodyHtml(standalone.suffix),
+        INLINE_CHOICE_MARKER_ATTR,
+        ({ id }) => `<qti-inline-choice-interaction response-identifier="${id}"/>`,
+      ).html
     }`
     : `${prompt ? `<div class="qti-inline-prompt">${prompt}</div>\n` : ''}${
       bodyWithPlaceholders.trim() || '<p></p>'

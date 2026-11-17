@@ -19,10 +19,10 @@ function question(): Draft {
     bodyHtml: '<p>Which number is four?</p>',
     choices: [{ id: 'A', text: 'Four' }, { id: 'B', text: 'Five' }],
     correctId: 'A',
-    stylesheets: [{ href: '', type: 'text/css' }, {
-      href: '/uploads/valid-style',
-      type: 'text/css',
-    }],
+    stylesheets: [
+      { href: '', type: 'text/css' },
+      { href: '/uploads/valid-style', type: 'text/css' },
+    ],
   };
 }
 

@@ -302,7 +302,18 @@ testCase('assessment authoring starts with a closed flow and loads deferred feat
       await page.locator('[data-authoring-card]').evaluate((el) => el === document.activeElement),
     ).toStrictEqual(true);
     expect(revisionRequestCount).toStrictEqual(0);
-    await existingQuestion.click();
+    // Question content stays outside the button's accessible name, but its full card remains clickable.
+    const previewBounds = await page.getByText('What is the capital of France?', { exact: true })
+      .boundingBox();
+    if (!previewBounds) expect.unreachable('The collapsed question body must be visible.');
+    const buttonBounds = await existingQuestion.boundingBox();
+    if (!buttonBounds) expect.unreachable('The edit control must be visible.');
+    await existingQuestion.click({
+      position: {
+        x: previewBounds.x + previewBounds.width / 2 - buttonBounds.x,
+        y: previewBounds.y + previewBounds.height / 2 - buttonBounds.y,
+      },
+    });
     await page.getByPlaceholder('Choice A').waitFor();
     expect(revisionRequestCount).toStrictEqual(1);
     const firstChoice = page.getByPlaceholder('Choice A');

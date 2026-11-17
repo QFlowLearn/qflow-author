@@ -56,9 +56,10 @@ async function handle(ctx: HttpRequest) {
         event: 'ai_generation_configuration_invalid',
         errorTag: configurationFailureTag(cause),
       }));
-      return Response.json({ error: 'AI generation is not configured for this environment.' }, {
-        status: 503,
-      });
+      return Response.json(
+        { error: 'AI generation is not configured for this environment.' },
+        { status: 503 },
+      );
     }
     throw cause;
   }
@@ -70,9 +71,10 @@ async function handle(ctx: HttpRequest) {
       requestedQuestions: assessmentBlueprintQuestionCount(input.blueprint),
     });
     if (!allowance.allowed) {
-      return Response.json({ error: 'AI generation is not available for this request.' }, {
-        status: 403,
-      });
+      return Response.json(
+        { error: 'AI generation is not available for this request.' },
+        { status: 403 },
+      );
     }
     const job = await enqueueAIGenerationJob(auth, ctx.params.id, input);
     const dispatch = await dispatchPendingWorkflowJobs(ctx.runtime, {
@@ -86,11 +88,14 @@ async function handle(ctx: HttpRequest) {
         errorTag: dispatch.error._tag,
       }));
     }
-    return Response.json({
-      jobId: job.id,
-      status: job.status,
-      pollUrl: `/api/imports/${ctx.params.id}/generate/jobs/${job.id}`,
-    }, { status: 202 });
+    return Response.json(
+      {
+        jobId: job.id,
+        status: job.status,
+        pollUrl: `/api/imports/${ctx.params.id}/generate/jobs/${job.id}`,
+      },
+      { status: 202 },
+    );
   } catch (cause: unknown) {
     if (cause instanceof AIGenerationJobInputError) {
       return Response.json({ error: cause.message }, { status: 422 });

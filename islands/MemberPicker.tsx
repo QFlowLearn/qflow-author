@@ -109,7 +109,7 @@ function MemberPickerContent(
   }, [i18n, query, selection]);
 
   return (
-    <div class='ds-form-control min-w-60 flex-1 gap-1'>
+    <div class='flex flex-col min-w-60 flex-1 gap-1'>
       <label class='text-xs font-medium text-base-content/70' htmlFor={inputId}>{label}</label>
       <input type='hidden' name={name} value={selection?.userId ?? ''} />
       <Input
