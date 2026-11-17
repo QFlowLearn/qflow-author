@@ -250,11 +250,10 @@ export default function BlueprintEditorFields({ value, onChange, allowedQuestion
                   type='button'
                   size='sm'
                   variant='ghost'
-                  aria-label={i18n.t('imports.blueprint.removeTarget', { index: index + 1 })}
                   disabled={value.targets.length === 1}
                   onClick={() => removeTarget(index)}
                 >
-                  {i18n.t('imports.blueprint.removeTargetLabel')}
+                  {i18n.t('imports.blueprint.removeTarget', { index: index + 1 })}
                 </Button>
               </div>
             </div>

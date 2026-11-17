@@ -153,10 +153,10 @@ it('help copy differs between English and Spanish', () => {
 function checkLocaleCase2(locale: InterfaceLocale) {
   const i18n = createI18n(locale, catalogForLocale(locale));
   const qti = render(<Qti3ImportRequirements i18n={i18n} />);
-  assertStringIncludes(qti, '<code class="rounded bg-base-200 px-1">.zip</code>');
-  assertStringIncludes(qti, '<code class="rounded bg-base-200 px-1">imsmanifest.xml</code>');
-  assertStringIncludes(qti, '<code class="rounded bg-base-200 px-1">&lt;file></code>');
-  assertStringIncludes(qti, '<code class="rounded bg-base-200 px-1">assets/diagram.svg</code>');
+  assertStringIncludes(qti, '<code class="rounded-sm bg-base-200 px-1">.zip</code>');
+  assertStringIncludes(qti, '<code class="rounded-sm bg-base-200 px-1">imsmanifest.xml</code>');
+  assertStringIncludes(qti, '<code class="rounded-sm bg-base-200 px-1">&lt;file></code>');
+  assertStringIncludes(qti, '<code class="rounded-sm bg-base-200 px-1">assets/diagram.svg</code>');
   assertStringIncludes(qti, i18n.t('help.qti3.pathsSuffix'));
   const fidelity = render(<QtiFidelity i18n={i18n} />);
   for (

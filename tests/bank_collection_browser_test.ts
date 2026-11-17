@@ -285,6 +285,7 @@ testCase(
         eq(organizationMemberships.userId, userId),
       );
       await page.goto(`${app.baseUrl}/items/${questionId}/edit`);
+      await page.locator('[data-qflow-root=ItemEditor][data-qflow-state=ready]').waitFor();
       await page.getByRole('button', { name: 'Details and standards', exact: true }).click();
       await page.getByRole('textbox', { name: /^Title/ }).fill('Corrected question');
       await page.getByRole('button', { name: 'Save item', exact: true }).click();

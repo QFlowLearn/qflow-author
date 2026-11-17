@@ -30,8 +30,9 @@ export default function Button(
       variant === 'danger-ghost'
         ? 'text-base-content/70 hover:bg-error/10 hover:text-error focus-visible:text-error'
         : '',
-      size === 'xs' ? 'ds-btn-xs' : size === 'sm' ? 'ds-btn-sm' : '',
+      size === 'xs' ? 'ds-btn-xs' : size === 'sm' ? 'ds-btn-sm' : 'h-12 min-h-12',
       square ? 'ds-btn-square' : '',
+      square && size === 'md' ? 'w-12' : '',
       cls || '',
     ].filter(Boolean).join(' ');
   if (href) {
