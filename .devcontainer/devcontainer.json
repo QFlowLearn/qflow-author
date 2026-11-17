@@ -1,0 +1,25 @@
+{
+  "name": "QFlow",
+  "dockerComposeFile": "compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/qflow",
+  "remoteUser": "node",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "QFlow",
+      "onAutoForward": "notify",
+      "requireLocalPort": true
+    },
+    "5432": { "onAutoForward": "ignore" }
+  },
+  "otherPortsAttributes": { "onAutoForward": "ignore" },
+  "containerEnv": { "QFLOW_DEV_CONTAINER": "true" },
+  "postCreateCommand": "sudo chown node:node node_modules /workspaces/.pnpm-store /home/node/.local/share/mkcert && pnpm install --frozen-lockfile && pnpm exec playwright install --with-deps chromium && node --import tsx tools/setup_devcontainer.ts && pnpm setup:local && pnpm run doctor",
+  "waitFor": "postCreateCommand",
+  "hostRequirements": { "cpus": 4, "memory": "8gb", "storage": "32gb" },
+  "customizations": {
+    "codespaces": { "openFiles": ["docs/development.md"] }
+  }
+}

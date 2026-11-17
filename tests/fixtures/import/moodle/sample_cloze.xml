@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="cloze">
+    <name>
+      <text>Cloze Sample</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The first President was {1:SHORTANSWER:=George Washington ~John Adams}.</p>]]></text>
+    </questiontext>
+  </question>
+</quiz>

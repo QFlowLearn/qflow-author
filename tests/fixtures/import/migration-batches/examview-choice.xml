@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<examview type="test" app-version="4.0">
+  <header><title>Evidence contract</title></header>
+  <question type="mc" question-id="item-1">
+    <text>Which value is even?</text>
+    <choices><choice-a>Three</choice-a><choice-b>Four</choice-b></choices>
+    <answer>B</answer>
+  </question>
+</examview>

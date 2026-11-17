@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest identifier="test-graphic-order" title="Graphic Order Package" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <testPart identifier="part1">
+    <assessmentSection identifier="section1">
+      <assessmentItemRef identifier="itemref1" href="item1.xml"/>
+    </assessmentSection>
+  </testPart>
+</assessmentTest>

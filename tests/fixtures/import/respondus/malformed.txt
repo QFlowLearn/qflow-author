@@ -1,0 +1,6 @@
+Type: MA
+Title: Broken boundary
+This line has no required question number.
+1. Select the valid options.
+a. First
+*b. Second

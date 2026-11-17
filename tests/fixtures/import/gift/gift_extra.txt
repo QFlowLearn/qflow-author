@@ -1,0 +1,14 @@
+$CATEGORY: Presidents/Founding
+
+::Cloze Example:: The first President was {1:SHORTANSWER:=George Washington ~John Adams}.
+
+::Numerical:: How many terms did FDR serve? {#4}
+
+::Essay:: Explain the significance of the two-term precedent. {}
+
+::Multi Select:: Select all first-term Presidents. {
+  =George Washington
+  =John Adams
+  ~Abraham Lincoln
+  ~Franklin Roosevelt
+}

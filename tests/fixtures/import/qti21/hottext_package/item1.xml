@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem identifier="hottext1" title="Hottext" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier">
+    <correctResponse><value>H1</value></correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+  <itemBody>
+    <hottextInteraction responseIdentifier="RESPONSE" maxChoices="1">
+      <p>The first President was <hottext identifier="H1">George Washington</hottext>.</p>
+      <p>The second President was <hottext identifier="H2">John Adams</hottext>.</p>
+    </hottextInteraction>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+</assessmentItem>

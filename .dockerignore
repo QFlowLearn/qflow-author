@@ -1,0 +1,14 @@
+.git
+.github
+.do
+.artifacts
+.bv
+.claude
+.env
+.env.local
+.env.production
+.volumes
+_fresh
+history
+node_modules
+plan.out

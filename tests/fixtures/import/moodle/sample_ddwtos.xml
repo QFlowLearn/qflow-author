@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="ddwtos">
+    <name>
+      <text>Drag and Drop Sample</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The first President was [[1]].</p>]]></text>
+    </questiontext>
+    <dragbox>
+      <text>George Washington</text>
+    <group>1</group></dragbox>
+    <dragbox>
+      <text>John Adams</text>
+    <group>1</group></dragbox>
+  </question>
+</quiz>

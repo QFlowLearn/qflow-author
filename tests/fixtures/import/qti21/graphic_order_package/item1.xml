@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem identifier="go1" title="Graphic Order" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <responseDeclaration identifier="RESPONSE" cardinality="ordered" baseType="identifier">
+    <correctResponse>
+      <value>H1</value>
+      <value>H2</value>
+    </correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+  <itemBody>
+    <p>Order the locations.</p>
+    <graphicOrderInteraction responseIdentifier="RESPONSE" maxChoices="2">
+      <prompt>Order the highlighted points.</prompt>
+      <object data="map.png" type="image/png" alt="Map"/>
+      <hotspotChoice identifier="H1" shape="rect" coords="10,10,20,20" hotspotLabel="First"/>
+      <hotspotChoice identifier="H2" shape="rect" coords="30,30,40,40" hotspotLabel="Second"/>
+    </graphicOrderInteraction>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+</assessmentItem>

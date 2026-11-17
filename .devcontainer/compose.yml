@@ -1,0 +1,36 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspaces/qflow
+      - node_modules:/workspaces/qflow/node_modules
+      - pnpm_store:/workspaces/.pnpm-store
+      - mkcert:/home/node/.local/share/mkcert
+    network_mode: service:postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sleep infinity
+    init: true
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: qflow
+      POSTGRES_PASSWORD: qflow
+      POSTGRES_DB: qflow_local
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U qflow -d qflow_local']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  postgres:
+  node_modules:
+  pnpm_store:
+  mkcert:

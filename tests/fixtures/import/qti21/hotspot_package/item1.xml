@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem identifier="hotspot1" title="Hotspot" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+    <correctResponse><value>HS1</value></correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+  <itemBody>
+    <hotspotInteraction responseIdentifier="RESPONSE" maxChoices="1">
+      <object data="map.png" type="image/png" alt="USA map"/>
+      <hotspotChoice identifier="HS1" shape="rect" coords="10,10,20,20"/>
+      <hotspotChoice identifier="HS2" shape="circle" coords="30,30,10"/>
+    </hotspotInteraction>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+</assessmentItem>

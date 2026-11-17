@@ -1,0 +1,16 @@
+{
+  "email.welcome.subject": "Te damos la bienvenida a la beta de QFlowLearn",
+  "email.welcome.greeting": "Hola, {displayName}:",
+  "email.welcome.greetingNoName": "Hola:",
+  "email.welcome.ready": "Te damos la bienvenida a la beta de QFlowLearn. Tu cuenta está lista para crear, organizar, previsualizar y exportar evaluaciones.",
+  "email.welcome.platform": "QFlowLearn funciona con QFlow, el proyecto de código abierto para crear evaluaciones, y se basa en Question and Test Interoperability (QTI) 3.0. QTI 3.0 facilita el intercambio de contenidos y permite experiencias de evaluación accesibles.",
+  "email.welcome.beta": "QFlowLearn aún está en fase beta y mejoramos el servicio cada día. Es posible que encuentres pequeños problemas o que algunas funciones cambien.",
+  "email.welcome.feedback": "Queremos conocer tu opinión. Cuéntanos qué funciona, qué dificultades encuentras y cómo podemos mejorar. Agradecemos tus consejos, ideas y avisos de errores.",
+  "email.welcome.signoff": "Gracias por probar QFlowLearn,\nEl equipo de QFlowLearn",
+  "email.reset.subject": "Restablece tu contraseña de QFlowLearn",
+  "email.reset.requested": "Hemos recibido una solicitud para restablecer la contraseña de tu cuenta de QFlowLearn.",
+  "email.reset.linkText": "Establecer una contraseña nueva",
+  "email.reset.linkInstruction": "Usa este enlace para establecer una contraseña nueva:",
+  "email.reset.expiry": "El enlace caduca en una hora y solo se puede utilizar una vez.",
+  "email.reset.ignore": "Si no has solicitado este cambio, puedes ignorar este correo."
+}

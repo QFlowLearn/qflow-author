@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<examview type="test" platform="Windows" app-version="4.0.3">
+  <header>
+    <title>Synthetic portability check</title>
+  </header>
+
+  <question type="tf" question-id="truth-1">
+    <text>Water freezes at zero degrees Celsius at standard pressure.</text>
+    <answer>T</answer>
+  </question>
+
+  <question type="yn" question-id="yes-no-1">
+    <text>Is nine an even number?</text>
+    <answer>N</answer>
+  </question>
+
+  <question type="mc" question-id="choice-1">
+    <text>Which value is prime?</text>
+    <choices>
+      <choice-a>9</choice-a>
+      <choice-b>11</choice-b>
+      <choice-c>15</choice-c>
+    </choices>
+    <answer>B</answer>
+  </question>
+
+  <question type="co" question-id="completion-1">
+    <text>The chemical symbol for water is blank.</text>
+    <answer>H2O
+water</answer>
+  </question>
+
+  <question type="sa" question-id="short-1">
+    <text>Name the process by which liquid water becomes vapor.</text>
+    <answer>evaporation</answer>
+  </question>
+
+  <question type="nr" question-id="numeric-1">
+    <text>What is 85 divided by 2?</text>
+    <answer>42.5</answer>
+  </question>
+
+  <question type="es" question-id="essay-1">
+    <text>Explain why a control group matters in an experiment.</text>
+    <answer>A strong response explains that the control provides a baseline for comparison.</answer>
+  </question>
+
+  <question type="pr" question-id="problem-1">
+    <text>Show how you would solve the problem.</text>
+    <answer>Responses should show a valid method.</answer>
+  </question>
+
+  <question type="ca" question-id="case-1">
+    <text>Analyze the case and justify a recommendation.</text>
+    <answer>Responses should cite evidence from the case.</answer>
+  </question>
+
+  <question type="ot" question-id="other-1">
+    <text>Describe another valid approach.</text>
+    <answer>Responses will vary.</answer>
+  </question>
+
+  <matching-group group-id="group-1" name="State changes">
+    <text>Match each process to its description.</text>
+    <choices>
+      <choice-a>solid to liquid</choice-a>
+      <choice-b>liquid to gas</choice-b>
+      <choice-c>gas to liquid</choice-c>
+    </choices>
+  </matching-group>
+  <question type="ma" question-id="match-1" group="State changes">
+    <text>melting</text>
+    <answer>A</answer>
+  </question>
+  <question type="ma" question-id="match-2" group="State changes">
+    <text>evaporation</text>
+    <answer>B</answer>
+  </question>
+  <question type="ma" question-id="match-3" group="State changes">
+    <text>condensation</text>
+    <answer>C</answer>
+  </question>
+</examview>

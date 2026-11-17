@@ -1,0 +1,16 @@
+{
+  "id": "gen-123",
+  "model": "openrouter/model-fast",
+  "choices": [
+    {
+      "message": {
+        "content": "[{\"type\":\"single_select\",\"title\":\"Q1\",\"bodyHtml\":\"<p>What is 2+2?</p>\"}]"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 111,
+    "completion_tokens": 222,
+    "total_tokens": 333
+  }
+}

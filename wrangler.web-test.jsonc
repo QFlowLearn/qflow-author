@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "qflow-web-test",
+  "services": [{ "binding": "QFLOW_PRINT_RENDERER", "service": "qflow-test-print-renderer" }],
+  "main": "deploy/cloudflare/worker.entry.ts",
+  "compatibility_date": "2026-06-03",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "QFLOW_APP_ORIGIN": "https://app.example.test",
+    "QFLOW_CREDENTIAL_ENCRYPTION_KEY_V1": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "QFLOW_EMAIL_FROM": "QFlowLearn <hello@qflowlearn.com>"
+  },
+  "send_email": [
+    {
+      "name": "QFLOW_EMAIL",
+      "allowed_sender_addresses": ["hello@qflowlearn.com"]
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "QFLOW_PASSWORD_RESET_ACCOUNT_RATE_LIMIT",
+      "namespace_id": "51001",
+      "simple": { "limit": 3, "period": 60 }
+    },
+    {
+      "name": "QFLOW_PASSWORD_RESET_ORIGIN_RATE_LIMIT",
+      "namespace_id": "51002",
+      "simple": { "limit": 10, "period": 60 }
+    }
+  ]
+}

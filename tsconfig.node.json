@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "tools/**/*.ts",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "components/**/*.tsx",
+    "islands/**/*.tsx",
+    "client/**/*.ts",
+    "lib/**/*.ts",
+    "lib/**/*.tsx",
+    "shims/**/*.ts",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "vitest.cloudflare*.mts",
+    "lib/print/assets.d.ts"
+  ]
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem identifier="ggm1" title="Graphic Gap Match" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
+    <correctResponse>
+      <value>CHOICE1 T1</value>
+    </correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+  <itemBody>
+    <graphicGapMatchInteraction responseIdentifier="RESPONSE" shuffle="false">
+      <prompt>Drag the label to the hotspot.</prompt>
+      <object data="map.png" type="image/png" alt="Map"/>
+      <gapText identifier="CHOICE1" matchMax="1">George Washington</gapText>
+      <associableHotspot identifier="T1" shape="rect" coords="10,10,20,20" matchMax="1"/>
+    </graphicGapMatchInteraction>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+</assessmentItem>

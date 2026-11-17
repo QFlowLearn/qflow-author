@@ -1,0 +1,68 @@
+{
+  "schema": "qflow.typst-compiler-artifact.v1",
+  "id": "typst-ts-404730f-web-pdf-bindgen-0.2.118",
+  "upstream": "https://github.com/Myriad-Dreamin/typst.ts",
+  "commit": "404730ffa34071df78ecc6e5c15233f81e0353fa",
+  "features": [
+    "web",
+    "pdf"
+  ],
+  "rust": "1.92.0",
+  "wasmBindgen": "0.2.118",
+  "target": "wasm32-unknown-unknown",
+  "remapPathPrefix": "<build-root>=/qflow-print-compiler-build",
+  "stripNameAndProducerSections": true,
+  "fontSourceCommit": "94dcb990edb36311ef85162baa26e4a8205e0bf0",
+  "files": [
+    {
+      "name": "typst_ts_web_compiler.js",
+      "bytes": 55083,
+      "sha256": "77823623776ee499b442d8d594c1b40cdc5600c79fb405f4f8802e7d95d61326"
+    },
+    {
+      "name": "typst_ts_web_compiler.d.ts",
+      "bytes": 9269,
+      "sha256": "d370c3593432e719766892960d635a41d4fa99c1e84fd313dc74ae2a015110d1"
+    },
+    {
+      "name": "typst_ts_web_compiler_bg.wasm",
+      "bytes": 32307718,
+      "sha256": "470cddad58e7e5a0d489d96862d68cb4ddfadf8563cdc111ca602fa5f77a976e"
+    },
+    {
+      "name": "NewCM10-Regular.otf.bin",
+      "bytes": 717588,
+      "sha256": "328698d764ccdf7acf6bc1088aefd83a237f6a1d8b812de1e77ac5e4483bf3d1"
+    },
+    {
+      "name": "NewCM10-Bold.otf.bin",
+      "bytes": 629288,
+      "sha256": "40b0b32b63655fe802679ee4a14adb29c762a4712095d9c84cf7df7852b5152e"
+    },
+    {
+      "name": "NewCM10-Italic.otf.bin",
+      "bytes": 721176,
+      "sha256": "a55d07607eec48889b6e7e7d51d7703c3beb915a39690f34fe01b4e2a744a9d6"
+    },
+    {
+      "name": "NewCMMath-Regular.otf.bin",
+      "bytes": 1306268,
+      "sha256": "d66ac1cc91c55c24d3636ae2df1238076debdff51841f9893fc5419cc2df3df7"
+    },
+    {
+      "name": "compiler-LICENSE",
+      "bytes": 11348,
+      "sha256": "06292ffcdd7d313747999255a8411e14933df33e24427a46d169cc5ff845227c"
+    },
+    {
+      "name": "fonts-NOTICE",
+      "bytes": 76850,
+      "sha256": "80ac46fb7d70f1c30bf0c14d3408e6a6f0f9cc9997a00b592aa0d2c8a5243a9d"
+    },
+    {
+      "name": "Cargo.lock",
+      "bytes": 165360,
+      "sha256": "8d52e3adbd1a5cd22f59f943b43fb60cd61253ee651908a59005576230251959"
+    }
+  ]
+}

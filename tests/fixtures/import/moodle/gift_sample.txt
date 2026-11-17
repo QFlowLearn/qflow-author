@@ -1,0 +1,15 @@
+// Sample GIFT questions adapted from Moodle Docs examples.
+
+Who's buried in Grant's tomb?{=Grant ~no one ~Napoleon ~Churchill ~Mother Teresa }
+
+// question: 0 name: TrueStatement using {T} style
+::TrueStatement about Grant::Grant was buried in a tomb in New York City.{T}
+
+Two plus two equals {=four =4}
+
+Match the following countries with their corresponding capitals. {
+   =Canada -> Ottawa
+   =Italy  -> Rome
+   =Japan  -> Tokyo
+   =India  -> New Delhi
+}

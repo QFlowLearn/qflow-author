@@ -1,0 +1,20 @@
+engineStrict: true
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - '@longsightgroup/qti3-fixtures'
+  - '@longsightgroup/qti3-core'
+  - '@longsightgroup/qti3-migrator'
+  - '@longsightgroup/qti3-player'
+  - '@longsightgroup/qti3-pnp'
+  - '@longsightgroup/qti3-transcoder'
+  - '@longsightgroup/qti3-writer'
+onlyBuiltDependencies:
+  - dprint
+  - esbuild
+  - sharp
+  - workerd
+strictPeerDependencies: true
+
+overrides:
+  '@xmldom/xmldom': 0.8.15
+  hono: 4.13.16

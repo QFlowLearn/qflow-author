@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem identifier="inline1" title="Inline Choice" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="identifier">
+    <correctResponse><value>B</value></correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+  <itemBody>
+    <p>Choose
+      <inlineChoiceInteraction responseIdentifier="RESPONSE_1" shuffle="false">
+        <inlineChoice identifier="A">John Adams</inlineChoice>
+        <inlineChoice identifier="B">George Washington</inlineChoice>
+      </inlineChoiceInteraction>
+      to complete the sentence.
+    </p>
+  </itemBody>
+  <responseProcessing>
+    <setOutcomeValue identifier="SCORE"><baseValue baseType="float">0</baseValue></setOutcomeValue>
+    <responseCondition><responseIf><and>
+      <not><isNull><variable identifier="RESPONSE_1"/></isNull></not>
+      <match><variable identifier="RESPONSE_1"/><correct identifier="RESPONSE_1"/></match>
+    </and><setOutcomeValue identifier="SCORE"><baseValue baseType="float">1</baseValue></setOutcomeValue>
+    </responseIf></responseCondition>
+  </responseProcessing>
+</assessmentItem>

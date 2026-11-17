@@ -1,0 +1,26 @@
+{
+  "schema": "qflow.respondus-fixture-corpus.v1",
+  "generator": "tools/generate_respondus_fixture_corpus.py",
+  "files": [
+    {
+      "name": "loose-numbered-quiz.pdf",
+      "bytes": 2054,
+      "sha256": "3a5fcb08c18c84374ba7b2ce88e4ebc726130ed68a5d030ede692c8f6d924c97"
+    },
+    {
+      "name": "word-automatic-numbering.docx",
+      "bytes": 36817,
+      "sha256": "2666f81bd71fbc938f4471200b5e5db38f5bbe9ea15549a31ba895728c69898e"
+    },
+    {
+      "name": "word-embedded-media.docx",
+      "bytes": 39109,
+      "sha256": "ee55afadf2768de88e8867596ddd8dd4af930f0055c98800419a09bc6297fdbe"
+    },
+    {
+      "name": "word-visible-numbering.docx",
+      "bytes": 36793,
+      "sha256": "7a2830acf1407519ab2dd4f0d08346b38bd6e426f8943a461c525bfb8e1b35e4"
+    }
+  ]
+}

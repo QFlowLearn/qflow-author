@@ -1,0 +1,43 @@
+{
+  "lineWidth": 100,
+  "indentWidth": 2,
+  "useTabs": false,
+  "newLineKind": "lf",
+  "typescript": {
+    "deno": true,
+    "quoteStyle": "preferSingle",
+    "lineWidth": 100
+  },
+  "json": {
+    "deno": true,
+    "lineWidth": 100
+  },
+  "markdown": {
+    "deno": true,
+    "lineWidth": 100
+  },
+  "includes": [
+    "**/*.{ts,tsx,mts,js,mjs,cjs,json,jsonc,md}"
+  ],
+  "excludes": [
+    "node_modules",
+    ".git",
+    ".artifacts",
+    ".migration-build",
+    "_fresh",
+    ".migration-inventory",
+    "static/tw.css",
+    "tests/fixtures",
+    "wrangler.jsonc",
+    "deploy/cloudflare/private",
+    "output",
+    "build",
+    "vendor",
+    "pnpm-lock.yaml"
+  ],
+  "plugins": [
+    "./node_modules/@dprint/typescript/plugin.wasm",
+    "./node_modules/@dprint/json/plugin.wasm",
+    "./node_modules/@dprint/markdown/plugin.wasm"
+  ]
+}

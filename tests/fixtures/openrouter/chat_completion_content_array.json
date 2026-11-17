@@ -1,0 +1,19 @@
+{
+  "id": "gen-124",
+  "model": "openrouter/model-thorough",
+  "choices": [
+    {
+      "message": {
+        "content": [
+          { "type": "text", "text": "[{\"type\":\"multi_select\"," },
+          { "type": "text", "text": "\"title\":\"Q2\"}]" }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 50,
+    "completion_tokens": 75,
+    "total_tokens": 125
+  }
+}

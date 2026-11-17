@@ -1,0 +1,1491 @@
+{
+  "demo-presidents-1": {
+    "contentHash": "e7454fea27f7f9333f25d4c9aaaaca3822900ecac55e988684318786d61380d6",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.response_processing.omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      }
+    ]
+  },
+  "demo-presidents-2": {
+    "contentHash": "7b65487b790c7f27fc71ff4a182fec05a74fdf97e3192d3dbc618d3a94234e78",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.canvas.scoring.choice_rebuilt"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.canvas.scoring.choice_rebuilt"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.response_processing.omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.choice",
+          "profile.moodle.xml.scoring.choice_rebuilt"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.scoring.choice_rebuilt"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-9": {
+    "contentHash": "5acc7922ff86a2c737a2529a2d2a57463bb182f03fc39e73b51965d580fa15d6",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice",
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice",
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.inline_choice.text_entry_fallback",
+          "profile.blackboard.inline_choice.text_entry_fallback",
+          "profile.blackboard.response_processing.omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.inline_choice.text_entry_fallback",
+          "profile.brightspace.inline_choice.text_entry_fallback"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.multiple_interactions_manual",
+          "profile.moodle.xml.multiple_interactions_manual"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice",
+          "profile.qti12.fallback.choice"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-10": {
+    "contentHash": "653cb75981b96f4d2de2226cf3cbf30a320ebf98ffe48ae8a801da312c1025e0",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.hot_text.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.hot_text.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-3": {
+    "contentHash": "ea08c1ffb355b89436f72a6e7e02c0e6825f0fed74d25771d2457d4d7e6a7080",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.canvas.classic.sequence_matching"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.order.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.order.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.matching"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      }
+    ]
+  },
+  "demo-presidents-4": {
+    "contentHash": "ee4ecf956435e9585189f72accb1a10f0584031c9c674a6b0efe4331486aa116",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.match.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.match.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      }
+    ]
+  },
+  "demo-presidents-8": {
+    "contentHash": "4ce9edc25e7724f2c900c77052de8ad7efaed98b0ea02e7fa4fcf60f7524f36c",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.associate.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.associate.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.essay"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.scoring.associate_manual"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-17": {
+    "contentHash": "2049775f071da4b527d104e46f55fc5a9bf7e0d3d8ab8a29b14d6e0120e49f7f",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.text-entry"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.text-entry"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.slider.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.slider.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.text-entry"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.text-entry"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-7": {
+    "contentHash": "1861f4f3fac57f22940c470382a012af6fbb3bbc4f0c253df1c184fb35ab6044",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.gap_match.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.gap_match.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti21.gap_match.association_limits_omitted",
+          "profile.qti21.attribute.semantic_not_representable",
+          "profile.qti21.attribute.semantic_not_representable"
+        ]
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-11": {
+    "contentHash": "0bcc4c126ca41901752b69f4b2b1ae6e080372343525ae8b9b5f3bb340af835f",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.hotspot.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.hotspot.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      }
+    ]
+  },
+  "demo-presidents-12": {
+    "contentHash": "9634bf30371ce68120636500214dc32566217738ffb5ee6a809d442aeb800e8c",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.graphic_gap_match.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.graphic_gap_match.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti2.graphic_gap_match.textual_fallback"
+        ]
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti2.graphic_gap_match.textual_fallback",
+          "profile.qti21.attribute.semantic_not_representable",
+          "profile.qti21.attribute.semantic_not_representable",
+          "profile.qti21.attribute.semantic_not_representable"
+        ]
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-13": {
+    "contentHash": "3b5519b8e6d914c7b2578e54e615418f60e2ef1ae276e6154cc10e0543650b6c",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.graphic_associate.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.graphic_associate.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.essay"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.choice"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-14": {
+    "contentHash": "a8cf235d5b9843b347157be1054733adf10fa3f84090a629945fc35f6946ba39",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.canvas.classic.sequence_matching"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.canvas.new_quizzes.graphic_sequence_matching"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.graphic_order.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.graphic_order.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.matching"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      }
+    ]
+  },
+  "demo-presidents-15": {
+    "contentHash": "5618c06668f2c567f77c9ea9eca238ddffae4a95a0f2c6bba1ff854b40ac59af",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.text-entry"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.text-entry"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.position_object.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.position_object.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.text-entry"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.text-entry"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-16": {
+    "contentHash": "c7bc91e6527ea2c58c571bee6094ef45e7785657937ae02fb8a62018b996c054",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.text-entry"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.text-entry"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.select_point.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.select_point.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.text-entry"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.text-entry"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-18": {
+    "contentHash": "379824758b163c36a92f6c7fbe15c10e98a5787042ac9e252d040109539886ec",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.media.manual_fallback"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.media.manual_fallback"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.essay"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-21": {
+    "contentHash": "b6e272e9917775cb89d2b04e63b7206b2f5f0c69d31ba662c7b98b74a8ce9bc5",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.portable_custom.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.portable_custom.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.essay"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "normalized",
+        "diagnosticCodes": [
+          "profile.qti2.portable_custom.preserved"
+        ]
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "normalized",
+        "diagnosticCodes": [
+          "profile.qti2.portable_custom.preserved"
+        ]
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-5": {
+    "contentHash": "2257a0c3001cb7b2d8ce8b15fdae223bd623e05bb61b171c63edbd845452513d",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.response_processing.omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      }
+    ]
+  },
+  "demo-presidents-6": {
+    "contentHash": "6dc1491eb0e60decdfe6754ce308fc19234e8ba47a138da07119356b97c26edc",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      }
+    ]
+  },
+  "demo-presidents-19": {
+    "contentHash": "cd0e27de0c1c3ddc5469933270c99a2dea084dadfda2fc31dca68098aea8fda3",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "normalized",
+        "diagnosticCodes": [
+          "profile.canvas.classic.upload"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "normalized",
+        "diagnosticCodes": [
+          "profile.canvas.new_quizzes.upload"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.upload.manual_fallback"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.upload.manual_fallback"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "normalized",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti21.attribute.semantic_not_representable",
+          "profile.qti21.attribute.semantic_not_representable"
+        ]
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      }
+    ]
+  },
+  "demo-presidents-20": {
+    "contentHash": "99130fbda5e541faaa5fbcdc640c648277ac80a68d3732de52cd5d37b27103e7",
+    "compatibility": [
+      {
+        "targetId": "canvas-classic",
+        "targetContractId": "canvas-classic-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      },
+      {
+        "targetId": "canvas-new-quizzes",
+        "targetContractId": "canvas-new-quizzes@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      },
+      {
+        "targetId": "blackboard-question-banks",
+        "targetContractId": "blackboard-question-banks@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.blackboard.drawing.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "brightspace-course-import",
+        "targetContractId": "brightspace-course-import@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.brightspace.drawing.manual_fallback",
+          "profile.qti21.manual_fallback.response_processing_omitted"
+        ]
+      },
+      {
+        "targetId": "moodle",
+        "targetContractId": "moodle-xml@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.moodle.xml.fallback.essay"
+        ]
+      },
+      {
+        "targetId": "qti3-conformant",
+        "targetContractId": "qti3-conformant@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti22-standard",
+        "targetContractId": "qti22-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti21-standard",
+        "targetContractId": "qti21-standard@1",
+        "outcome": "exact",
+        "diagnosticCodes": []
+      },
+      {
+        "targetId": "qti12-standard",
+        "targetContractId": "qti12-standard@1",
+        "outcome": "lossy",
+        "diagnosticCodes": [
+          "profile.qti12.fallback.extended-text"
+        ]
+      }
+    ]
+  }
+}

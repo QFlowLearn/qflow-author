@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<examview type="bank" platform="Windows" app-version="4.1">
+  <header>
+    <title>Synthetic review cases</title>
+  </header>
+
+  <question type="mc" question-id="bad-key">
+    <text><b>Which diagram shows the intended circuit?</b><picture source="circuit.png"/></text>
+    <choices>
+      <choice-a>Diagram A</choice-a>
+      <choice-b>Diagram B</choice-b>
+    </choices>
+    <answer>Z</answer>
+    <rationale>The closed circuit is the intended answer.</rationale>
+    <topic>Electricity</topic>
+  </question>
+
+  <question type="nr" question-id="fraction">
+    <text>Enter one half as a fraction.</text>
+    <answer>1/2</answer>
+  </question>
+
+  <question type="nr" question-id="scientific-notation">
+    <text>Enter one thousand in scientific notation.</text>
+    <answer>1e3</answer>
+  </question>
+
+  <question type="pr" question-id="problem">
+    <text>Show every step used to solve the problem.</text>
+    <answer>Work varies.</answer>
+  </question>
+
+  <question type="ma" question-id="orphan-match" group="Missing group">
+    <text>Unbound matching member</text>
+    <answer>A</answer>
+  </question>
+</examview>

@@ -1,0 +1,69 @@
+# Editor settings
+/.idea/
+/.vscode/
+
+/node_modules
+.fresh/
+docs/*
+!docs/architecture-map.md
+!docs/authoring-text-assistance.md
+!docs/canvas-direct-publishing.md
+!docs/testing-harbor-delivery.md
+!docs/development.md
+!docs/configuration.md
+!docs/qti-migrator-patch.md
+!docs/auth/
+!docs/auth/google-microsoft-oidc.md
+data/uploads/
+
+.volumes/
+.artifacts/
+.env
+.env.local
+.dev.vars
+.dev.vars.*
+.wrangler/
+wrangler.json
+wrangler.jsonc
+wrangler.local.jsonc
+deploy/cloudflare/private/
+*.orig
+*.pyc
+*.swp
+
+# Fresh build directory
+_fresh/
+
+# Local tool caches
+.bv/
+.claude/
+
+# playwright
+output/playwright
+.playwright-cli/
+
+# Generated CI timing receipts
+/output/ci/
+
+# Temporary migration build artifacts
+.migration-build/
+
+.migration-inventory/
+
+# Generated Node/Vite output
+/build/
+
+# Owned browser fixtures bundle temporary entry modules beside the source tree.
+/.*-browser-*/
+/.rich-text-popovers-*/
+/.source-intake-failure-*/
+/.source-intake-idempotency-*/
+
+/output/
+/planning/
+/plans/
+/history/
+/.local/
+
+*.key
+*.pem

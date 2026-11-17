@@ -1,0 +1,7 @@
+{
+  "explicitAnyCount": 78,
+  "asNeverCount": 0,
+  "maxFileLines": 750,
+  "largeFileWarningLines": 600,
+  "grandfatheredLargeFiles": {}
+}

@@ -1,0 +1,9 @@
+1. Which protocol carries web pages?
+a. HTTP
+b. SMTP
+c. SSH
+
+2. What does HTTP stand for?
+a. Hypertext Transfer Protocol
+b. High Transfer Text Process
+c. Hosted Transmission Protocol

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem identifier="ga1" title="Graphic Associate" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="pair">
+    <correctResponse>
+      <value>A B</value>
+    </correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+  <itemBody>
+    <p>Connect the related locations.</p>
+    <graphicAssociateInteraction responseIdentifier="RESPONSE">
+      <prompt>Draw lines between points.</prompt>
+      <object data="map.png" type="image/png" alt="Map"/>
+      <associableHotspot identifier="A" shape="circle" coords="10,10,5" matchMax="1"/>
+      <associableHotspot identifier="B" shape="circle" coords="30,30,5" matchMax="1"/>
+    </graphicAssociateInteraction>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+</assessmentItem>

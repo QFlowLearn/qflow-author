@@ -1,0 +1,557 @@
+[
+  {
+    "file": "tests/answer_feedback_browser_test.ts",
+    "baselineSeconds": 37,
+    "weightSource": "local Deno 2.9.7 shared production build, five locales/two themes, release controls and save recovery, 2026-10-09"
+  },
+  {
+    "file": "tests/arrange_board_render_test.tsx",
+    "baselineSeconds": 6,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_adaptive_builder_browser_test.ts",
+    "baselineSeconds": 7,
+    "weightSource": "local Deno2.9.7 compiled run after fixture statistics refresh (successful; hosted timing pending)"
+  },
+  {
+    "file": "tests/assessment_arrange_pinned_titles_browser_test.ts",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_arrange_settings_browser_test.ts",
+    "baselineSeconds": 95,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_authoring_async_browser_test.tsx",
+    "baselineSeconds": 14,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_builder_picker_i18n_browser_test.ts",
+    "baselineSeconds": 15,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_canvas_move_browser_test.ts",
+    "baselineSeconds": 155,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_copy_retry_browser_test.ts",
+    "baselineSeconds": 91,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_copy_source_scoring_transaction_test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/assessment_duplication_browser_test.tsx",
+    "baselineSeconds": 8,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_export_i18n_browser_test.ts",
+    "baselineSeconds": 30,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_insertion_toolbar_browser_test.ts",
+    "baselineSeconds": 43,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_media_content_browser_test.ts",
+    "baselineSeconds": 35,
+    "weightSource": "local Deno2.9.7 compiled media acceptance at 4f1fdf91 (successful; hosted timing pending)"
+  },
+  {
+    "file": "tests/assessment_placement_recovery_browser_test.ts",
+    "baselineSeconds": 73,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_point_defaults_browser_test.ts",
+    "baselineSeconds": 21,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_question_order_preview_browser_test.ts",
+    "baselineSeconds": 30,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_settings_browser_test.ts",
+    "baselineSeconds": 92,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_text_actions_browser_test.ts",
+    "baselineSeconds": 84,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_text_edit_browser_test.ts",
+    "baselineSeconds": 38,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_text_insertion_browser_test.ts",
+    "baselineSeconds": 43,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/assessment_text_placement_browser_test.ts",
+    "baselineSeconds": 29,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/auth_locale_i18n_browser_test.tsx",
+    "baselineSeconds": 5,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/authoring_preferences_browser_test.ts",
+    "baselineSeconds": 18,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/bank_authoring_browser_test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/bank_collection_browser_test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/bank_enrichment_browser_test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/bank_enrichment_teaching_browser_test.ts",
+    "baselineSeconds": 4,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/bank_picker_timing_browser_test.ts",
+    "baselineSeconds": 1,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/bank_question_proposals_browser_test.ts",
+    "baselineSeconds": 14,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/bank_releases_browser_test.ts",
+    "baselineSeconds": 13,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/bank_topic_selection_browser_test.ts",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/blueprint_panel_browser_test.ts",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/browser_loading_browser_test.ts",
+    "baselineSeconds": 1,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/canvas_publish_i18n_browser_test.ts",
+    "baselineSeconds": 1,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/choice_paste_browser_test.ts",
+    "baselineSeconds": 25,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/choice_removal_browser_test.ts",
+    "baselineSeconds": 42,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/choice_removal_persistence_browser_test.ts",
+    "baselineSeconds": 143,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/custom_interactions_i18n_browser_test.ts",
+    "baselineSeconds": 4,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/drawing_i18n_browser_test.ts",
+    "baselineSeconds": 2,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/graphic_associate_i18n_browser_test.ts",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/graphic_gap_match_i18n_browser_test.ts",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/graphic_order_i18n_browser_test.ts",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/hono/assessment_builder.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/auth_api.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/auth_lockout_session.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/auth_return_path.test.tsx",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/auth_runtime.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/bank_api.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/bank_category_browser.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/bank_columns_browser.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/bank_content_api.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/bank_overview_browser.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/bank_roots.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/built_app_server.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/conversion_generation_browser.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/dns_runtime.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/fetch_server.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/hydration_browser.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/i18n_help_onboarding_render.test.tsx",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/import_artifact.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/import_editors.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/import_progress.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/local_preview.test.ts",
+    "baselineSeconds": 2,
+    "weightSource": "Initial scheduling estimate for local HTTPS proxy ingress coverage; measure in hosted CI."
+  },
+  {
+    "file": "tests/hono/migration_exact_repeats_browser.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/migration_import_checks_browser.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/migration_review_filter_browser.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/password_reset_request.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/public_pages.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/question_bank_picker_browser.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/question_snapshot.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/root_payload.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/route_order.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hono/runtime.test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/hotspot_i18n_browser_test.ts",
+    "baselineSeconds": 5,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/hottext_i18n_browser_test.ts",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/i18n_dates_browser_test.tsx",
+    "baselineSeconds": 2,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/image_editor_browser_test.ts",
+    "baselineSeconds": 7,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/instructor_defaults_browser_test.ts",
+    "baselineSeconds": 35,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/instructor_points_defaults_browser_test.ts",
+    "baselineSeconds": 15,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/item_editor_canvas_i18n_browser_test.tsx",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/item_editor_deferred_review_browser_test.ts",
+    "baselineSeconds": 1,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/item_language_control_browser_test.ts",
+    "baselineSeconds": 2,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/local_app_browser_browser_test.ts",
+    "baselineSeconds": 6,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/match_family_i18n_browser_test.ts",
+    "baselineSeconds": 22,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/media_i18n_browser_test.ts",
+    "baselineSeconds": 5,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/member_picker_browser_test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/part_settings_validation_browser_test.ts",
+    "baselineSeconds": 12,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/position_object_i18n_browser_test.ts",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/print_pack_browser_test.ts",
+    "baselineSeconds": 29,
+    "weightSource": "Local pinned Node24/workerd built Worker, actual PDF.js multipage and real PDF parser, five locales, stale/repair/failed-build recovery; 28.57 seconds on 2026-10-29"
+  },
+  {
+    "file": "tests/publication_grants_transaction_test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/qti_preview_browser_test.ts",
+    "baselineSeconds": 4,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/question_organization_browser_test.ts",
+    "baselineSeconds": 12,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/question_organization_outline_browser_test.ts",
+    "baselineSeconds": 4,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/question_organization_preview_teaching_browser_test.ts",
+    "baselineSeconds": 7,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/question_organization_resume_browser_test.ts",
+    "baselineSeconds": 4,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/question_organization_undo_browser_test.ts",
+    "baselineSeconds": 13,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/question_points_browser_test.ts",
+    "baselineSeconds": 50,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/question_presentation_browser_test.tsx",
+    "baselineSeconds": 12,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/question_settings_groups_browser_test.tsx",
+    "baselineSeconds": 358,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/question_text_browser_test.ts",
+    "baselineSeconds": 36,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/revision_comparison_transaction_test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "Initial scheduling weight for retained mandatory Node/Worker coverage; measure after the first hosted run."
+  },
+  {
+    "file": "tests/rich_text_popovers_browser_test.ts",
+    "baselineSeconds": 12,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/select_point_i18n_browser_test.ts",
+    "baselineSeconds": 7,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/shared_image_upload_browser_test.ts",
+    "baselineSeconds": 2,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/simple_driver_i18n_browser_test.ts",
+    "baselineSeconds": 4,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/slider_i18n_browser_test.ts",
+    "baselineSeconds": 2,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/source_intake_failure_i18n_browser_test.ts",
+    "baselineSeconds": 32,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/source_intake_i18n_browser_test.ts",
+    "baselineSeconds": 10,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/source_intake_idempotency_browser_test.ts",
+    "baselineSeconds": 3,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/sso_login_policy_browser_test.ts",
+    "baselineSeconds": 2,
+    "weightSource": "37974658999 JUnit (successful suite)"
+  }
+]

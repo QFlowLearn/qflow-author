@@ -1,0 +1,16 @@
+{
+  "email.welcome.subject": "Welcome to QFlowLearn beta",
+  "email.welcome.greeting": "Hi {displayName},",
+  "email.welcome.greetingNoName": "Hi,",
+  "email.welcome.ready": "Welcome to QFlowLearn beta. Your account is ready, so you can start building, arranging, previewing, and exporting assessments.",
+  "email.welcome.platform": "QFlowLearn is powered by QFlow, the open-source assessment authoring project, and built around Question and Test Interoperability (QTI) 3.0. QTI 3.0 helps content move between systems while supporting accessible assessment experiences.",
+  "email.welcome.beta": "QFlowLearn is still in beta, and we improve it every day. You may encounter rough edges or see features change.",
+  "email.welcome.feedback": "We want to hear from you. Tell us what works, what gets in your way, and how we can improve. Tips, ideas, and bug reports are all welcome.",
+  "email.welcome.signoff": "Thanks for trying QFlowLearn,\nThe QFlowLearn team",
+  "email.reset.subject": "Reset your QFlowLearn password",
+  "email.reset.requested": "A password reset was requested for your QFlowLearn account.",
+  "email.reset.linkText": "Set a new password",
+  "email.reset.linkInstruction": "Use this link to set a new password:",
+  "email.reset.expiry": "This link expires in one hour and can only be used once.",
+  "email.reset.ignore": "If you did not request this reset, you can ignore this email."
+}

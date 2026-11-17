@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category"><category><text>Biology/Cells</text></category></question>
+  <question type="multichoice">
+    <name><text>Cell nucleus</text></name>
+    <tags><tag><text>DNA &amp; heredity</text></tag><tag><text> Årskurs 7 </text></tag><tag><text>DNA &amp; heredity</text></tag></tags>
+    <questiontext format="html"><text>Which structure contains DNA?</text></questiontext>
+    <single>true</single>
+    <answer fraction="100"><text>Nucleus</text></answer>
+    <answer fraction="0"><text>Cell wall</text></answer>
+  </question>
+  <question type="category"><category><text>Physics/Energy</text></category></question>
+  <question type="essay">
+    <name><text>Energy explanation</text></name>
+    <tags><tag><text>Written explanation</text></tag></tags>
+    <questiontext format="html"><text>Explain energy conservation.</text></questiontext>
+    <responseformat>editor</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+  </question>
+</quiz>

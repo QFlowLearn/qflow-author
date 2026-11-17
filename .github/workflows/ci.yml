@@ -1,0 +1,293 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ['**']
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-26.04
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: qflow
+          POSTGRES_PASSWORD: qflow
+          POSTGRES_DB: qflow_ci_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U qflow -d qflow_ci_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://qflow:qflow@127.0.0.1:5432/qflow_ci_test
+      QFLOW_WRANGLER_CONFIG: wrangler.example.jsonc
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.16.0
+      - name: Install pinned pnpm
+        run: npm install --global pnpm@10.34.3
+      - parallel:
+          - name: Install frozen dependencies
+            run: pnpm install --frozen-lockfile
+          - name: Install xmllint (libxml2)
+            run: |
+              sudo apt-get -q update
+              sudo apt-get -q install -y libxml2-utils
+      - parallel:
+          - name: QTI schema compliance
+            run: pnpm run validate:corpus
+          - name: Apply DB migrations
+            run: pnpm run db:migrate
+          - name: Type check (source)
+            run: pnpm run typecheck
+          - name: Lint
+            run: pnpm run lint
+          - name: Format check
+            run: pnpm run format:check
+          - name: Browser partition coverage
+            run: pnpm run test:e2e:inventory
+          - name: Catalog and maintainability baselines
+            run: pnpm run check:i18n && pnpm run maintainability
+      - name: Reserve explicit fixture ports from automatic allocation
+        # Keep established fixture origins outside Linux's ephemeral port selection.
+        run: |
+          reserved_ports="$(sysctl -n net.ipv4.ip_local_reserved_ports)"
+          sudo sysctl -w "net.ipv4.ip_local_reserved_ports=${reserved_ports:+${reserved_ports},}55880-55926"
+      - name: Tests
+        run: node --import tsx tools/testing/run.ts ordinary --database=qflow_ci_test
+
+  build:
+    runs-on: ubuntu-26.04
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: qflow
+          POSTGRES_PASSWORD: qflow
+          POSTGRES_DB: qflow_ci_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U qflow -d qflow_ci_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://qflow:qflow@127.0.0.1:5432/qflow_ci_test
+      QFLOW_WRANGLER_CONFIG: wrangler.example.jsonc
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.16.0
+      - name: Install pinned pnpm
+        run: npm install --global pnpm@10.34.3
+      - name: Install frozen dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Apply DB migrations
+        run: pnpm run db:migrate
+      - name: Production asset build
+        run: |
+          pnpm run build
+      - parallel:
+          - name: Type check (Cloudflare)
+            run: pnpm run typecheck
+          - name: Assessment authoring bundle budget
+            run: pnpm run check:assessment-bundle
+          - name: Pinned runtime and emitted dependency graph
+            run: pnpm run check:runtime
+      # Workerd's bounded DB tests must not compete with the complete TypeScript check.
+      - name: Cloudflare runtime tests
+        run: node --import tsx tools/testing/run.ts worker --database=qflow_ci_test
+      - name: Cloudflare deploy bundle
+        run: pnpm run cloudflare:dry-run
+      - name: Share same-commit built assets
+        uses: actions/upload-artifact@v7
+        with:
+          name: built-app-${{ github.sha }}
+          path: |
+            build/
+            static/tw.css
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+
+  browser:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    runs-on: ubuntu-26.04
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: qflow
+          POSTGRES_PASSWORD: qflow
+          POSTGRES_DB: qflow_ci_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U qflow -d qflow_ci_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://qflow:qflow@127.0.0.1:5432/qflow_ci_test
+      QFLOW_WRANGLER_CONFIG: wrangler.example.jsonc
+      QFLOW_CI_BROWSER_PORT: 55880
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.16.0
+      - name: Install pinned pnpm
+        run: npm install --global pnpm@10.34.3
+      - name: Install frozen dependencies
+        run: pnpm install --frozen-lockfile
+      - parallel:
+          - name: Restore same-commit built assets
+            uses: actions/download-artifact@v8.0.2
+            with:
+              name: built-app-${{ github.sha }}
+              path: .
+          - name: Apply DB migrations
+            run: pnpm run db:migrate
+          - name: Install Playwright browsers
+            run: pnpm run test:a11y:install
+      - name: Reserve explicit fixture ports from automatic allocation
+        # Keep established fixture origins outside Linux's ephemeral port selection.
+        run: |
+          reserved_ports="$(sysctl -n net.ipv4.ip_local_reserved_ports)"
+          sudo sysctl -w "net.ipv4.ip_local_reserved_ports=${reserved_ports:+${reserved_ports},}55880-55926"
+      - name: Enable CI database slow-query evidence
+        env:
+          POSTGRES_CONTAINER_ID: ${{ job.services.postgres.id }}
+        run: |
+          docker exec "$POSTGRES_CONTAINER_ID" psql --username=qflow --dbname=qflow_ci_test \
+            --no-psqlrc --set=ON_ERROR_STOP=1 \
+            --command="ALTER SYSTEM SET log_min_duration_statement = '250ms'" \
+            --command="ALTER SYSTEM SET log_parameter_max_length = 0" \
+            --command="SELECT pg_reload_conf()"
+      - name: Browser behavior checks
+        run: pnpm run test:e2e:shard ${{ matrix.shard }}
+      - name: Retain bounded CI database failure evidence
+        if: failure()
+        env:
+          POSTGRES_CONTAINER_ID: ${{ job.services.postgres.id }}
+        run: |
+          mkdir -p output/ci
+          docker logs --tail 2000 "$POSTGRES_CONTAINER_ID" 2>&1 \
+            | tail -c 1048576 > output/ci/postgres-slow-queries.log
+      - name: Retain browser timing and failure evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: browser-shard-${{ matrix.shard }}
+          path: |
+            output/ci/
+            /tmp/qflow-browser-*/
+            /tmp/qflow-written-upload-recovery-*/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  accessibility:
+    needs: build
+    runs-on: ubuntu-26.04
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: qflow
+          POSTGRES_PASSWORD: qflow
+          POSTGRES_DB: qflow_ci_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U qflow -d qflow_ci_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://qflow:qflow@127.0.0.1:5432/qflow_ci_test
+      QFLOW_WRANGLER_CONFIG: wrangler.example.jsonc
+      QFLOW_CI_BROWSER_PORT: 55880
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.16.0
+      - name: Install pinned pnpm
+        run: npm install --global pnpm@10.34.3
+      - name: Install frozen dependencies
+        run: pnpm install --frozen-lockfile
+      - parallel:
+          - name: Restore same-commit built assets
+            uses: actions/download-artifact@v8.0.2
+            with:
+              name: built-app-${{ github.sha }}
+              path: .
+          - name: Apply DB migrations
+            run: pnpm run db:migrate
+          - name: Install Playwright browsers
+            run: pnpm run test:a11y:install
+      - name: Reserve explicit fixture ports from automatic allocation
+        # Keep established fixture origins outside Linux's ephemeral port selection.
+        run: |
+          reserved_ports="$(sysctl -n net.ipv4.ip_local_reserved_ports)"
+          sudo sysctl -w "net.ipv4.ip_local_reserved_ports=${reserved_ports:+${reserved_ports},}55880-55926"
+      - name: Accessibility checks
+        run: node --import tsx tools/testing/run.ts a11y --database=qflow_ci_test
+      - name: Retain accessibility report and timing
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: accessibility-evidence
+          path: |
+            output/ci/
+            output/playwright/a11y/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  validate:
+    if: always()
+    needs: [quality, build, browser, accessibility]
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Require every CI job to succeed
+        env:
+          QUALITY_RESULT: ${{ needs.quality.result }}
+          BUILD_RESULT: ${{ needs.build.result }}
+          BROWSER_RESULT: ${{ needs.browser.result }}
+          ACCESSIBILITY_RESULT: ${{ needs.accessibility.result }}
+        run: |
+          for result in "$QUALITY_RESULT" "$BUILD_RESULT" "$BROWSER_RESULT" "$ACCESSIBILITY_RESULT"; do
+            if [ "$result" != success ]; then
+              echo "A required CI job failed, was cancelled, or was skipped."
+              exit 1
+            fi
+          done

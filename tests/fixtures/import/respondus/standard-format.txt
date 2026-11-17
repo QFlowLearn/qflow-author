@@ -1,0 +1,45 @@
+Points: 2.5
+Title: Speed of light
+1. Who measured the speed of light with an interferometer?
+~ Correct. Albert Michelson refined the measurement.
+@ Review the scientist associated with interferometry.
+a. Albert Einstein
+*b. Albert Michelson
+c. Thomas Edison
+d. Guglielmo Marconi
+
+Title: True or false
+2) The speed of light in a vacuum is constant.
+a) True
+b) False
+
+Type: E
+Title: Explain the experiment
+3. Explain why the Michelson-Morley experiment was important.
+a. Its null result challenged ether theory and influenced modern physics.
+
+Type: F
+Title: Television pioneer
+4) Who is known as a father of electronic television?
+a. Zworykin
+b. Vladimir Zworykin
+c. Vladimir Kosma Zworykin
+
+Type: MT
+Title: Scientific discoveries
+5. Match each person to the contribution.
+a. Michelson = Interferometry
+b. Einstein = Relativity
+c. Marconi = Radio
+
+Type: MA
+Title: Select the physicists
+6) Which people contributed directly to modern theories of light?
+a. Albert Einstein
+b. Thomas Edison
+c. Albert Michelson
+d. Alexander Graham Bell
+
+Answers:
+2. False
+6. A, C

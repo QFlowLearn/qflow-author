@@ -1,0 +1,18 @@
+{
+  "tests/assessment_harbor_order_integration_test.ts": {
+    "flag": "QFLOW_HARBOR_INTEGRATION_TESTS",
+    "reason": "Requires the explicitly configured external local Harbor service."
+  },
+  "tests/bank_collection_upgrade_test.ts": {
+    "flag": "QFLOW_UPGRADE_TESTS",
+    "reason": "Populated-upgrade creates a separate disposable database and remains explicitly opt-in."
+  },
+  "tests/bank_enrichment_scale_test.ts": {
+    "flag": "QFLOW_ENRICHMENT_SCALE_TESTS",
+    "reason": "Optional 7,787-question interruption and scale run."
+  },
+  "tests/migration_native_scale_test.ts": {
+    "flag": "QFLOW_ARC_PACKAGE",
+    "reason": "Requires the external ARC source package explicitly supplied for the 7,787-item scale run."
+  }
+}
