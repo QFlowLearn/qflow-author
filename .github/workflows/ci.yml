@@ -123,7 +123,7 @@ jobs:
         with:
           name: built-app-${{ github.sha }}
           path: |
-            build/
+            .cloudflare/output/
             static/tw.css
           include-hidden-files: true
           if-no-files-found: error

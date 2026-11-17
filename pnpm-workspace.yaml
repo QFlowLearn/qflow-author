@@ -28,5 +28,4 @@ onlyBuiltDependencies:
 strictPeerDependencies: true
 
 overrides:
-  '@xmldom/xmldom': 0.8.15
   hono: 4.13.16

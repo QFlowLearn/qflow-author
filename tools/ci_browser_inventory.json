@@ -553,5 +553,10 @@
     "file": "tests/sso_login_policy_browser_test.ts",
     "baselineSeconds": 2,
     "weightSource": "37974658999 JUnit (successful suite)"
+  },
+  {
+    "file": "tests/hono/print_development.test.ts",
+    "baselineSeconds": 4,
+    "weightSource": "Local Vite/workerd PDF verification, 2026-11-17"
   }
 ]

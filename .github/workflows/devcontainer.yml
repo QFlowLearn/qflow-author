@@ -2,7 +2,7 @@ name: Dev Container
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
     paths:
       - '.devcontainer/**'
@@ -15,6 +15,7 @@ on:
       - 'deploy/cloudflare/worker.entry.ts'
       - 'lib/http/virtual.d.ts'
       - 'vite.config.ts'
+      - 'cloudflare.config.ts'
       - 'tests/local_development_test.ts'
       - 'tests/hono/local_preview.test.ts'
   workflow_dispatch:
