@@ -1,6 +1,6 @@
 # Respondus fixture corpus
 
-This directory is the canonical Task 10 corpus for the Respondus recovery wedge. Install
+This directory contains the generated Word and PDF samples for Respondus import tests. Install
 [uv](https://docs.astral.sh/uv/) and LibreOffice, then set `QFLOW_LIBREOFFICE_BIN` to the absolute
 path of the `soffice` executable.
 
@@ -16,8 +16,7 @@ Check that the committed fixtures still match the pinned generator with:
 pnpm run fixtures:respondus:check
 ```
 
-The Python version and document libraries are pinned in `.python-version`, `pyproject.toml`, and
-`uv.lock`. The generator normalizes DOCX ZIP metadata and creates deterministic PDF metadata before
+The Python generator and its pinned environment live in [`tools/respondus-fixtures/`](../../../../tools/respondus-fixtures/). The generator normalizes DOCX ZIP metadata and creates deterministic PDF metadata before
 it writes the canonical files. The task also opens and saves temporary DOCX copies with LibreOffice,
 then verifies that their extracted text and embedded-image counts did not change. The committed
 fixtures remain the deterministic generator output.

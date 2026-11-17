@@ -7,6 +7,6 @@ type Props = {
 
 /** Renders HTML that has already passed through QFlow's allowlist sanitizer. */
 export default function SafeHtml({ html, class: className }: Props) {
-  // eslint-disable-next-line react/no-danger
+  // oxlint-disable-next-line react/no-danger
   return <div class={className} dangerouslySetInnerHTML={{ __html: html ?? '' }} />;
 }

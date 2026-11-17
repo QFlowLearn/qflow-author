@@ -53,10 +53,10 @@ add request bodies, raw URLs, query strings or credentials to diagnostic events.
 
 ## Before submitting
 
-Run `pnpm typecheck`, `pnpm lint`, `pnpm format:check` and the focused tests for your change. Run
-`pnpm verify` for the complete mandatory matrix before release. Format edits with `pnpm format`. Use
-the pinned Node/pnpm versions and frozen dependency installation; commit intentional lockfile
-changes with dependency updates.
+Run `pnpm typecheck`, `pnpm lint`, `pnpm format:check` and the focused tests for your change. Oxlint
+owns JavaScript and TypeScript linting; dprint owns formatting. Run `pnpm verify` for the complete
+mandatory matrix before release. Format edits with `pnpm format`. Use the pinned Node/pnpm versions
+and frozen dependency installation; commit intentional lockfile changes with dependency updates.
 
 Keep platform bindings at the Worker composition boundary, required configuration explicit, and
 errors free of secret values. Fix the configured path when it fails. Do not add alternate storage,

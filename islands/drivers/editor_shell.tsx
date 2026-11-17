@@ -8,7 +8,7 @@ import type { CommonContentProps, DriverEditorShell } from './types.ts';
 
 export function commonContentProps(editor: DriverEditorShell): CommonContentProps {
   return {
-    // eslint-disable-next-line react/jsx-no-useless-fragment -- The empty editor render slot requires a VNode.
+    // oxlint-disable-next-line react/jsx-no-useless-fragment -- The empty editor render slot requires a VNode.
     renderPromptField: editor.renderPromptField ?? (() => <Fragment />),
     fieldHasIssue: editor.fieldHasIssue ?? (() => false),
     fieldIssueText: editor.fieldIssueText ?? (() => undefined),

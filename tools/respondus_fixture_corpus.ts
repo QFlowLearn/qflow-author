@@ -13,7 +13,8 @@ import { sha256Hex } from '../lib/sha256.ts';
 
 const repoRoot = fromFileUrl(new URL('..', import.meta.url));
 const fixtureDir = join(repoRoot, 'tests', 'fixtures', 'import', 'respondus');
-const generatorPath = join(repoRoot, 'tools', 'generate_respondus_fixture_corpus.py');
+const generatorDir = join(repoRoot, 'tools', 'respondus-fixtures');
+const generatorPath = join(generatorDir, 'generate.py');
 const manifestPath = join(fixtureDir, 'manifest.json');
 
 const generatedFiles = [
@@ -29,7 +30,7 @@ type CorpusMode = 'check' | 'write';
 
 type CorpusManifest = {
   readonly schema: 'qflow.respondus-fixture-corpus.v1';
-  readonly generator: 'tools/generate_respondus_fixture_corpus.py';
+  readonly generator: 'tools/respondus-fixtures/generate.py';
   readonly files: readonly {
     readonly name: (typeof generatedFiles)[number];
     readonly bytes: number;
@@ -86,6 +87,8 @@ function parseLibreOfficeBinary(input: string | undefined): string {
 
 async function runGenerator(outputDir: string): Promise<void> {
   await runCommand('uv', [
+    '--directory',
+    generatorDir,
     'run',
     '--frozen',
     'python',
@@ -158,7 +161,7 @@ async function createManifest(generatedDir: string): Promise<CorpusManifest> {
   }));
   return {
     schema: 'qflow.respondus-fixture-corpus.v1',
-    generator: 'tools/generate_respondus_fixture_corpus.py',
+    generator: 'tools/respondus-fixtures/generate.py',
     files,
   };
 }

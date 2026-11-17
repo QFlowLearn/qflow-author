@@ -49,6 +49,6 @@ export default function Button(
       />
     );
   }
-  // eslint-disable-next-line react/button-has-type -- This primitive forwards the caller's typed attributes, preserving native submit behavior when type is absent.
+  // oxlint-disable-next-line react/button-has-type -- This primitive forwards the caller's typed attributes, preserving native submit behavior when type is absent.
   return <button class={classes} {...rest as JSX.ButtonHTMLAttributes<HTMLButtonElement>} />;
 }

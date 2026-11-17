@@ -1,6 +1,6 @@
 {
   "schema": "qflow.respondus-fixture-corpus.v1",
-  "generator": "tools/generate_respondus_fixture_corpus.py",
+  "generator": "tools/respondus-fixtures/generate.py",
   "files": [
     {
       "name": "loose-numbered-quiz.pdf",

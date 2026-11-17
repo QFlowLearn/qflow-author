@@ -55,10 +55,13 @@ pnpm build
 Tests use the guarded local database. Install browser support with
 `pnpm exec playwright install chromium`. Run `pnpm verify` for the full matrix.
 
+Oxlint checks JavaScript and TypeScript; dprint formats source files. Python is optional and
+confined to the [Respondus fixture generator](tools/respondus-fixtures/).
+
 See [CONTRIBUTING.md](CONTRIBUTING.md). Report vulnerabilities privately through the repository’s
 **Security → Report a vulnerability** form.
 
 ## License
 
-Licensed under the **GNU Affero General Public License v3 (AGPL v3)**. See
-[LICENSE](LICENSE). Third-party components retain their own license notices.
+Licensed under the **GNU Affero General Public License v3 (AGPL v3)**. See [LICENSE](LICENSE).
+Third-party components retain their own license notices.

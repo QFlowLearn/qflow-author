@@ -79,7 +79,7 @@ function record(value: unknown, keys: readonly string[]): value is Record<string
 function literal(value: unknown, maximum: number, empty: boolean): value is string {
   return typeof value === 'string' && Array.from(value).length <= maximum &&
     (empty || !!value.trim()) &&
-    // eslint-disable-next-line no-control-regex -- XML 1.0 cannot represent these code points.
+    // oxlint-disable-next-line no-control-regex -- XML 1.0 cannot represent these code points.
     !/[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF\uD800-\uDFFF]/u.test(value);
 }
 function invalid(): AnswerFeedbackParseResult {

@@ -37,7 +37,7 @@ function parseManifest(input: unknown): FixtureManifest {
   if (
     !manifest ||
     manifest.schema !== 'qflow.respondus-fixture-corpus.v1' ||
-    manifest.generator !== 'tools/generate_respondus_fixture_corpus.py' ||
+    manifest.generator !== 'tools/respondus-fixtures/generate.py' ||
     !Array.isArray(manifest.files)
   ) {
     throw new Error('Respondus fixture manifest envelope is invalid.');

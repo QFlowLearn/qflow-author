@@ -16,7 +16,7 @@ export function HydrationRoot({ payload }: { readonly payload: RootPayload }) {
       <script
         type='application/json'
         data-qflow-payload-for={payload.id}
-        // eslint-disable-next-line react/no-danger -- SAFETY: encodeRootPayload escapes HTML delimiters and Unicode separators in inert JSON script data.
+        // oxlint-disable-next-line react/no-danger -- SAFETY: encodeRootPayload escapes HTML delimiters and Unicode separators in inert JSON script data.
         dangerouslySetInnerHTML={{ __html: encoded }}
       />
     </>

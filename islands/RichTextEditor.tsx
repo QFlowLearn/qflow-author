@@ -1,4 +1,4 @@
-/* eslint-disable react/no-danger */
+/* oxlint-disable react/no-danger */
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'preact/hooks';
 import type { ComponentChildren } from 'preact';
 import { sanitizeBodyHtml, sanitizeInlineHtml } from '../lib/sanitize.ts';

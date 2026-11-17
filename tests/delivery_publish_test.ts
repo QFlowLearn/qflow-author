@@ -73,13 +73,11 @@ testCase(
       expect(response.version.assessmentVersionId).toStrictEqual('version-1');
       expect(calls.length).toStrictEqual(1);
       expect(calls[0].url).toStrictEqual('https://delivery.example/internal/qflow/publish');
-      expect((calls[0].init?.headers as Record<string, string>)['content-type']).toStrictEqual(
-        'application/json',
-      );
-      expect((calls[0].init?.headers as Record<string, string>)['x-harbor-qflow-signature'])
+      const headers = new Headers(calls[0].init?.headers);
+      expect(headers.get('content-type')).toStrictEqual('application/json');
+      expect(headers.get('x-harbor-qflow-signature'))
         .toStrictEqual('36419d02ff69ab86d4e13ea83792735381ca7564cec3022148091b1a937201bb');
-      expect((calls[0].init?.headers as Record<string, string>)['x-qflow-delivery-signature'])
-        .toStrictEqual(undefined);
+      expect(headers.get('x-qflow-delivery-signature')).toBeNull();
     } finally {
       restoreEnv('QFLOW_DELIVERY_PUBLISH_URL', previousUrl);
       restoreEnv('QFLOW_DELIVERY_SIGNING_SECRET', previousSecret);

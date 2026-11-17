@@ -25,7 +25,7 @@ export function parseAssessmentTextContent(value: unknown):
     !('kind' in value) || value.kind !== 'text' ||
     !('text' in value) || typeof value.text !== 'string' ||
     !value.text.trim() || Array.from(value.text).length > 100_000 ||
-    // eslint-disable-next-line no-control-regex -- XML 1.0 forbids these controls and unpaired surrogates.
+    // oxlint-disable-next-line no-control-regex -- XML 1.0 forbids these controls and unpaired surrogates.
     /[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF\uD800-\uDFFF]/u.test(value.text)
   ) return { ok: false, code: 'invalid_text_content' };
   return { ok: true, content: { kind: 'text', text: value.text } };

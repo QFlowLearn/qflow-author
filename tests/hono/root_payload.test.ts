@@ -86,15 +86,13 @@ it('scopes root rendering to each provider and restores the outer renderer after
   const Probe = mountIsland({ component: 'LocalizedTimestamp', View: LocalizedTimestamp });
   const html = renderToString(createElement(RootRendererContext.Provider, {
     value: () => 'outer',
-    children: [
-      createElement(Probe, payload.props),
-      createElement(RootRendererContext.Provider, {
-        value: () => 'inner',
-        children: createElement(Probe, payload.props),
-      }),
-      createElement(Probe, payload.props),
-    ],
-  }));
+  }, [
+    createElement(Probe, payload.props),
+    createElement(RootRendererContext.Provider, {
+      value: () => 'inner',
+    }, createElement(Probe, payload.props)),
+    createElement(Probe, payload.props),
+  ]));
   expect(html).toBe('outerinnerouter');
   expect(() => renderToString(createElement(Probe, payload.props))).toThrow(
     'Hydration root renderer is not configured.',
@@ -125,15 +123,13 @@ it('assigns distinct sibling mount ids and keeps nested mounts inside their owni
       ids.push(payload.id);
       return createElement(HydrationRoot, { payload });
     },
-    children: [createElement(Timestamp, props), createElement(Timestamp, props)],
-  }));
+  }, [createElement(Timestamp, props), createElement(Timestamp, props)]));
   expect(ids).toHaveLength(2);
   expect(new Set(ids).size).toBe(2);
   expect(html.match(/data-qflow-root=/g)).toHaveLength(2);
   const nested = renderToString(createElement(OwnedIsland, {
     id: 'parent',
-    children: createElement(Timestamp, props),
-  }));
+  }, createElement(Timestamp, props)));
   expect(nested).toContain('<time');
   expect(nested).not.toContain('data-qflow-root');
 });

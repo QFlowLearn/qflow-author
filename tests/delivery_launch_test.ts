@@ -144,10 +144,9 @@ testCase('fetchDeliveryAssignmentState posts a signed Harbor state request', asy
     expect(calls[0].init?.body).toStrictEqual(
       '{"assignmentId":"assignment-1","qflowTenantId":"tenant-1"}',
     );
-    expect(typeof (calls[0].init?.headers as Record<string, string>)['x-harbor-qflow-signature'])
-      .toStrictEqual('string');
-    expect((calls[0].init?.headers as Record<string, string>)['x-qflow-delivery-signature'])
-      .toStrictEqual(undefined);
+    const headers = new Headers(calls[0].init?.headers);
+    expect(typeof headers.get('x-harbor-qflow-signature')).toStrictEqual('string');
+    expect(headers.get('x-qflow-delivery-signature')).toBeNull();
   } finally {
     restoreEnv('QFLOW_DELIVERY_STATE_URL', previousUrl);
     restoreEnv('QFLOW_DELIVERY_SIGNING_SECRET', previousSecret);
