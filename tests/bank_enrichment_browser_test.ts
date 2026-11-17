@@ -35,7 +35,7 @@ testCase(
           await saveUserSettings(auth.userId, createInitialUserSettings('en-US'));
           const before = await db.select().from(questionRevisions).where(
             eq(questionRevisions.tenantId, auth.tenantId),
-          );
+          ).orderBy(questionRevisions.id);
           app = await openLocalAppBrowser({
             endpoint: {
               _tag: 'ManagedLocalApp',
@@ -245,7 +245,7 @@ testCase(
           expect(
             await db.select().from(questionRevisions).where(
               eq(questionRevisions.tenantId, auth.tenantId),
-            ),
+            ).orderBy(questionRevisions.id),
           ).toStrictEqual(before);
           await addEnrichmentQuestions(auth, 74);
           await page.getByRole('link', { name: 'View questions', exact: true }).click();

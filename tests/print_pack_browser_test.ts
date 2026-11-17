@@ -111,7 +111,8 @@ test(
                     await page.locator('canvas[aria-label]').getAttribute('width')
                   ).not.toBeNull();
                   await page.waitForFunction(() =>
-                    document.querySelector('[aria-busy="false"] canvas[aria-label]') !== null
+                    document.querySelector('[aria-busy="false"] > div > canvas[aria-label]') !==
+                      null
                   );
                   if (!await next.isEnabled()) break;
                   const text = await page.getByRole('status').filter({ hasText: /[0-9]/ }).last()
