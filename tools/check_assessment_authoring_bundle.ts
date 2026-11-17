@@ -198,7 +198,9 @@ async function gzipByteLength(bytes: Uint8Array): Promise<number> {
 
 if ((process.argv[1] && _path.resolve(process.argv[1]) === _url.fileURLToPath(import.meta.url))) {
   try {
-    const clientRoot = fromFileUrl(new URL('../build/client/', import.meta.url));
+    const clientRoot = fromFileUrl(
+      new URL('../.cloudflare/output/v1/workers/default/assets/', import.meta.url),
+    );
     const measurement = await measureAssessmentAuthoringBundle({
       manifestPath: join(clientRoot, '.vite/manifest.json'),
       clientRoot,

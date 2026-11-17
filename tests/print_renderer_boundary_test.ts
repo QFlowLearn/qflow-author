@@ -64,19 +64,19 @@ test('private renderer boundary preserves projected data and rejects source/staf
 test('compiler deployment requires an explicit separate service target and exposes no public route', () => {
   const main = {
     name: 'app',
-    services: [{ binding: 'QFLOW_PRINT_RENDERER', service: 'app-renderer' }],
-    compatibility_date: '2026-06-03',
-    compatibility_flags: ['nodejs_compat'],
-    limits: { cpu_ms: 300000 },
+    env: { QFLOW_PRINT_RENDERER: { type: 'worker' as const, worker: 'app-renderer' } },
+    compatibilityDate: '2026-06-03',
+    compatibilityFlags: ['nodejs_compat'],
+    limits: { cpuMs: 300000 },
   };
   expect(printWorkerConfig(main)).toMatchObject({
     name: 'app-renderer',
-    workers_dev: false,
-    preview_urls: false,
+    workersDev: false,
+    previewUrls: false,
   });
-  expect(() => printWorkerConfig({ ...main, services: [] })).toThrow();
+  expect(() => printWorkerConfig({ ...main, env: {} })).toThrow();
   expect(() =>
-    printWorkerConfig({ ...main, services: [{ binding: 'QFLOW_PRINT_RENDERER', service: 'app' }] })
+    printWorkerConfig({ ...main, env: { QFLOW_PRINT_RENDERER: { type: 'worker', worker: 'app' } } })
   ).toThrow();
   expect(() => resolvePrintRenderer({})).toThrow('QFLOW_PRINT_RENDERER');
 });

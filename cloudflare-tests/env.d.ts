@@ -1,5 +1,5 @@
 export {};
-/** Bindings supplied by the explicitly selected local Wrangler test projects. */
+/** Bindings supplied by the explicitly selected local Cloudflare test projects. */
 declare global {
   namespace Cloudflare {
     interface Env extends Record<string, unknown> {

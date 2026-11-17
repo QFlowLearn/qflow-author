@@ -1,19 +1,13 @@
 import { afterAll, beforeAll, expect, it } from 'vitest';
-import { mkdir, mkdtemp, rm } from 'node:fs/promises';
-import { relative, resolve } from 'node:path';
 import type { Miniflare } from 'miniflare';
 import { startBuiltWorker } from '../../tools/start_built_worker.ts';
 import { builtWorkerBrowserEnvironment } from '../helpers/built_worker_environment.ts';
 
 const browserOrigin = 'https://qflow-preview-5173.app.github.dev';
 let runtime: Miniflare | undefined;
-let directory: string | undefined;
 
 beforeAll(async () => {
-  await mkdir('.artifacts', { recursive: true });
-  directory = await mkdtemp(resolve('.artifacts/local-preview-'));
-  const scriptPath = resolve(directory, 'worker.mjs');
-  const entry = JSON.stringify(relative(directory, resolve('build/ssr/index.js')));
+  const entry = JSON.stringify('./index.js');
   const script = `import { createLocalWorker } from ${entry};
 export * from ${entry};
 export default createLocalWorker(${JSON.stringify(browserOrigin)});
@@ -26,13 +20,12 @@ export default createLocalWorker(${JSON.stringify(browserOrigin)});
       QFLOW_SECURE_COOKIES: 'true',
       QFLOW_APP_ORIGIN: browserOrigin,
     },
-    workerOverrides: { script, scriptPath },
+    workerOverrides: { script },
   });
 });
 
 afterAll(async () => {
   await runtime?.dispose();
-  if (directory) await rm(directory, { recursive: true, force: true });
 });
 
 it('HTTP preview ingress preserves HTTPS cookies and accepts only the configured browser origin', async () => {

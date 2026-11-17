@@ -6,17 +6,21 @@ development uses https://127.0.0.1:5173; Codespaces uses its private forwarded H
 `qflow_test`; CI uses `qflow_ci_test`. Keep manual work out of test databases.
 
 Vite also runs the private print compiler Worker through the configured `QFLOW_PRINT_RENDERER`
-service binding. `pnpm build` writes the application to `build/ssr` and the compiler to
-`build/print_renderer`; built preview starts both. Build before running Worker tests, which use the
-same compiler artifact under an explicit test-only service name.
+service binding. `pnpm build` writes the application to
+`.cloudflare/output/v1/workers/default/bundle` and the compiler to
+`.cloudflare/output/v1/workers/qflow-print-renderer/bundle`; built preview starts both. Build before
+running Worker tests, which use the same compiler artifact under an explicit test-only service name.
+During development, Vite evaluates modules in a request context. The print adapter supplies static
+versions of Typst's five fixed startup callbacks there; production uses the pinned compiler
+unchanged.
 
 ## Dev Containers and GitHub Codespaces
 
 The repository implements the [Development Container specification](https://containers.dev/). Its
-configuration lives in `.devcontainer/`. The workspace image pins Node 24.16.0 and pnpm 10.34.3 on
-Debian Bookworm. Compose supplies PostgreSQL 17; the normal frozen install supplies Wrangler,
-workerd and Playwright. Container creation installs Chromium and its Linux dependencies, prepares
-local configuration, migrates both databases and runs doctor.
+configuration lives in `.devcontainer/`. The workspace image pins Node 24.22.0 and pnpm 10.34.3 on
+Debian Bookworm. Compose supplies PostgreSQL 17; the normal frozen install supplies the Cloudflare
+CLI, workerd and Playwright. Container creation installs Chromium and its Linux dependencies,
+prepares local configuration, migrates both databases and runs doctor.
 
 ### GitHub Codespaces
 
@@ -87,7 +91,7 @@ the actual proxy and browser session. Cloud workspace compute/storage is billed 
 
 ## Native first setup
 
-1. Install the versions in `.node-version` and `package.json`: Node 24.16.0 and pnpm 10.34.3.
+1. Install the versions in `.node-version` and `package.json`: Node 24.22.0 and pnpm 10.34.3.
 2. Install PostgreSQL 17, mkcert and xmllint. Install Playwright's Chromium for browser checks:
    `pnpm exec playwright install chromium` after installing dependencies.
 3. Trust your development CA once with `mkcert -install`. This changes your machine's certificate
@@ -131,9 +135,11 @@ schema migration needs investigation; setup never resets data or grants itself p
 ## Configuration ownership
 
 - `.env.local` owns local connection settings, app variables, secrets and certificate paths.
-- `wrangler.example.jsonc` is the public resource template. Setup generates ignored
-  `wrangler.local.jsonc` with local identity and bindings, retaining the six Workflow classes and
-  three schedules. Local variables come from `.env.local`.
+- `cloudflare.config.ts` defines the public resource template, seven Workflows, three schedules, and
+  the local development configuration. Vite supplies static assets from `static/` and the client
+  build. Setup writes local values to the ignored `.env.local` file.
+- Cloudflare's TypeScript configuration uses `cf` and version 2 of its Vite plugin. These packages
+  are pinned to release candidates; Node 24.22.0 is required.
 - Hosted production configuration is outside this repository. Setup only manages local
   configuration.
 - `DATABASE_URL` is the only local database URL you configure. Development projects it to the
@@ -151,7 +157,7 @@ configured pair deliberately with mkcert, then rerun doctor. Setup never replace
 
 Local R2 and Workflows use emulated bindings. AI and external LMS/delivery integrations require
 explicit provider configuration and credentials; setup does not provision cloud resources or prove
-those integrations work. Local email uses Wrangler's local email binding rather than sending
+those integrations work. Local email uses Cloudflare's local email binding rather than sending
 production messages. Do not point local integration settings at production while experimenting.
 
 ## Daily use
@@ -218,8 +224,8 @@ database. Optional Harbor, populated-upgrade, ARC and enrichment-scale lanes are
 
 Commands load connection and tool settings from `.env.local`. Before launching tests, runners remove
 local application settings so missing-configuration tests and fixture bindings behave the same on
-your machine and CI. CI supplies settings through the process environment and selects
-`wrangler.example.jsonc`; it does not need local certificates or mkcert.
+your machine and CI. CI supplies settings through the process environment and builds the production
+mode of `cloudflare.config.ts`; it does not need local certificates or mkcert.
 
 ## Request diagnostics
 

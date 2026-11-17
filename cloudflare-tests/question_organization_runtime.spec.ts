@@ -23,7 +23,7 @@ import { settleOrganizationAfterWorkflowTerminal } from '../lib/services/questio
 import { resumeOrganizationRun } from '../lib/services/question_organization_resume.ts';
 import { withOrganizationWorkspace } from '../tests/helpers/organization_workspace.ts';
 
-// SAFETY: the local Wrangler configuration declares this Workflow binding.
+// SAFETY: the local Cloudflare configuration declares this Workflow binding.
 const bindings = env;
 
 it(

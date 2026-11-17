@@ -30,7 +30,7 @@ testCase(
             _tag: 'ManagedLocalApp',
             isolation: 'fixture',
             portRange: { first: 5900, lastExclusive: 5910 },
-            environment: {QFLOW_WRANGLER_CONFIG: 'wrangler.jsonc', DATABASE_URL:'postgres://test:test@127.0.0.1/qflow_test'},
+            environment: {DATABASE_URL:'postgres://test:test@127.0.0.1/qflow_test'},
           },
           headless: true,
         });

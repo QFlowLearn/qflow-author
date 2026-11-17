@@ -444,7 +444,7 @@ testCase(
 /** Resolve the exact compiled hydration module from the required production manifest. */
 async function questionOrganizationProgressModule(baseUrl: string): Promise<string> {
   const manifest: unknown = JSON.parse(
-    await _fs.readFile('build/client/.vite/manifest.json', 'utf8'),
+    await _fs.readFile('.cloudflare/output/v1/workers/default/assets/.vite/manifest.json', 'utf8'),
   );
   if (!(manifest && typeof manifest === 'object' && !Array.isArray(manifest))) {
     expect.unreachable('Built hydration guard requires a client manifest object');

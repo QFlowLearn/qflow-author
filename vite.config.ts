@@ -1,12 +1,10 @@
+import { printCompilerDevelopmentPlugin } from './tools/print_compiler_development.ts';
 import { clientAssetsPlugin } from './tools/client_assets.ts';
 import { printWorkerConfig } from './tools/print_worker_config.ts';
 import { resolve } from 'node:path';
 import { assertSingleLocalEnvironment, localTls, parseLocalConfig } from './tools/local_config.ts';
 import { cloudflare } from '@cloudflare/vite-plugin';
 import { defineConfig } from 'vite';
-
-const configPath = process.env.QFLOW_WRANGLER_CONFIG;
-if (!configPath) throw new Error('QFLOW_WRANGLER_CONFIG is required.');
 
 export default defineConfig(({ command, isPreview }) => {
   if (isPreview) throw Error('Use pnpm preview for the owned local Worker preview.');
@@ -69,13 +67,14 @@ export default defineConfig(({ command, isPreview }) => {
       },
     },
     plugins: [
+      printCompilerDevelopmentPlugin(),
       cloudflare({
-        configPath,
+        types: { generate: false },
         viteEnvironment: { name: 'ssr' },
         remoteBindings: false,
         auxiliaryWorkers: [{
           viteEnvironment: { name: 'print_renderer' },
-          config: (_config, { entryWorkerConfig }) => printWorkerConfig(entryWorkerConfig),
+          config: ({ entryWorkerConfig }) => printWorkerConfig(entryWorkerConfig),
         }],
       }),
       clientAssetsPlugin({

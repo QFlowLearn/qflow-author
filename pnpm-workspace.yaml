@@ -1,6 +1,18 @@
 engineStrict: true
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
+  # Explicit dependencies of the requested Cloudflare configuration release candidate.
+  - cf
+  - wrangler
+  - "@cloudflare/vitest-plugin"
+  - "@cloudflare/config"
+  - "@cloudflare/build-output-utils"
+  - "@cloudflare/runtime-types"
+  - "@cloudflare/workers-types"
+  - "@cloudflare/vite-plugin"
+  - miniflare
+  - workerd
+  - "@cloudflare/workerd-*"
   - '@longsightgroup/qti3-fixtures'
   - '@longsightgroup/qti3-core'
   - '@longsightgroup/qti3-migrator'

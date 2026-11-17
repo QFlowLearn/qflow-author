@@ -51,7 +51,7 @@ Kimi K2.6). This favors a responsive drafting loop.
 ## Cloudflare configuration
 
 Interpretation requires `AI`, `QFLOW_AUTHORING_GATEWAY_ID`, `QFLOW_AUTHORING_MODEL_VERSION`, and
-`QFLOW_AUTHORING_RATE_LIMIT`, as shown in `wrangler.example.jsonc`. Configure gateway spend controls
+`QFLOW_AUTHORING_RATE_LIMIT`, as shown in `cloudflare.config.ts`. Configure gateway spend controls
 and permit `@cf/cloudflare/clef`. Set `QFLOW_AUTHORING_MODEL_VERSION=clef` to select the full model.
 Completion additionally requires `QFLOW_AI_PROVIDER=cloudflare` and the explicit
 `QFLOW_CLOUDFLARE_AI_MODEL`, shared with existing question generation. Missing configuration

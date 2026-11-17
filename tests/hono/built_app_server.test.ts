@@ -1,3 +1,9 @@
+import {
+  getWorkerBundleDir,
+  writeRootConfig,
+  writeWorkerConfig,
+} from '@cloudflare/build-output-utils';
+import { WorkerConfigSchema } from '@cloudflare/config';
 import { expect, it } from 'vitest';
 import { builtWorkerBrowserEnvironment } from '../helpers/built_worker_environment.ts';
 
@@ -16,33 +22,34 @@ export function createLocalWorker() { return worker; }`;
 
 async function fixture(source: string): Promise<string> {
   const cwd = await mkdtemp(join(tmpdir(), 'qflow-built-server-test-'));
-  await mkdir(`${cwd}/build/ssr`, { recursive: true });
-  await mkdir(`${cwd}/build/print_renderer`, { recursive: true });
-  await mkdir(`${cwd}/build/client/.vite`, { recursive: true });
+  await mkdir(`${cwd}/.cloudflare/output/v1/workers/default/assets/.vite`, { recursive: true });
+  await writeFile(`${cwd}/.cloudflare/output/v1/workers/default/assets/.vite/manifest.json`, '{}');
   await writeFile(`${cwd}/package.json`, '{"type":"module"}');
-  await writeFile(`${cwd}/build/ssr/index.js`, source);
-  await writeFile(`${cwd}/build/client/.vite/manifest.json`, '{}');
-  const config = {
-    name: 'owned-worker-fixture',
-    main: 'index.js',
-    compatibility_date: '2026-06-03',
-    compatibility_flags: ['nodejs_compat'],
-    rules: [{ type: 'ESModule', globs: ['**/*.js'] }],
-    userConfigPath: `${cwd}/wrangler.jsonc`,
-  };
-  await writeFile(`${cwd}/build/print_renderer/index.js`, workerSource());
-  await writeFile(
-    `${cwd}/build/print_renderer/wrangler.json`,
-    JSON.stringify({
-      name: 'owned-print-renderer-fixture',
-      main: 'index.js',
-      compatibility_date: config.compatibility_date,
-      compatibility_flags: config.compatibility_flags,
-      rules: config.rules,
-    }),
-  );
-  await writeFile(`${cwd}/build/ssr/wrangler.json`, JSON.stringify(config));
-  await writeFile(`${cwd}/wrangler.jsonc`, '{}');
+  await writeRootConfig({ root: cwd, buildContext: { mode: 'production', isPreview: false } });
+  for (
+    const [directoryName, name, contents] of [['default', 'owned-worker-fixture', source], [
+      'renderer',
+      'owned-print-renderer-fixture',
+      workerSource(),
+    ]]
+  ) {
+    const bundle = getWorkerBundleDir(cwd, directoryName);
+    await mkdir(bundle, { recursive: true });
+    await writeFile(join(bundle, 'index.js'), contents);
+    await writeWorkerConfig({
+      root: cwd,
+      directoryName,
+      config: WorkerConfigSchema.parse({
+        name,
+        compatibilityDate: '2026-06-03',
+        compatibilityFlags: ['nodejs_compat'],
+        env: directoryName === 'default'
+          ? { QFLOW_PRINT_RENDERER: { type: 'worker', worker: 'owned-print-renderer-fixture' } }
+          : {},
+      }),
+      manifest: { type: 'partial', mainModule: 'index.js', modules: {} },
+    });
+  }
   return cwd;
 }
 
@@ -55,7 +62,6 @@ it('built app owns a ready real subprocess and releases its configured port on c
       port: 55891,
       environment: {
         ...builtWorkerBrowserEnvironment,
-        QFLOW_WRANGLER_CONFIG: 'wrangler.jsonc',
         DATABASE_URL: 'postgres://qa:fixture@127.0.0.1:5432/qflow_test',
       },
     });
@@ -81,7 +87,6 @@ it('built startup rejects process exit, missing assets and occupied explicit por
         port: 55892,
         environment: {
           ...builtWorkerBrowserEnvironment,
-          QFLOW_WRANGLER_CONFIG: 'wrangler.jsonc',
           DATABASE_URL: 'postgres://qa:fixture@127.0.0.1:5432/qflow_test',
         },
       }))()).rejects.toBeInstanceOf(Error);
@@ -95,7 +100,6 @@ it('built startup rejects process exit, missing assets and occupied explicit por
           port: 55892,
           environment: {
             ...builtWorkerBrowserEnvironment,
-            QFLOW_WRANGLER_CONFIG: 'wrangler.jsonc',
             DATABASE_URL: 'postgres://qa:fixture@127.0.0.1:5432/qflow_test',
           },
         }))()).rejects.toBeInstanceOf(Error);
@@ -104,7 +108,7 @@ it('built startup rejects process exit, missing assets and occupied explicit por
         listener.close((cause) => cause ? reject(cause) : done())
       );
     }
-    await rm(`${cwd}/build/ssr/index.js`);
+    await rm(join(getWorkerBundleDir(cwd), 'index.js'));
     await expect((() =>
       startBuiltAppServer({
         mode: 'qa',
@@ -112,7 +116,6 @@ it('built startup rejects process exit, missing assets and occupied explicit por
         port: 55892,
         environment: {
           ...builtWorkerBrowserEnvironment,
-          QFLOW_WRANGLER_CONFIG: 'wrangler.jsonc',
           DATABASE_URL: 'postgres://qa:fixture@127.0.0.1:5432/qflow_test',
         },
       }))()).rejects.toBeInstanceOf(Error);
@@ -134,7 +137,6 @@ it(
       port: 55894,
       environment: {
         ...builtWorkerBrowserEnvironment,
-        QFLOW_WRANGLER_CONFIG: 'wrangler.jsonc',
         DATABASE_URL: 'postgres://qa:fixture@127.0.0.1:5432/qflow_test',
       },
       signal: controller.signal,
@@ -166,7 +168,6 @@ it(
         port: 55895,
         environment: {
           ...builtWorkerBrowserEnvironment,
-          QFLOW_WRANGLER_CONFIG: 'wrangler.jsonc',
           DATABASE_URL: 'postgres://qa:fixture@127.0.0.1:5432/qflow_test',
         },
         signal: controller.signal,

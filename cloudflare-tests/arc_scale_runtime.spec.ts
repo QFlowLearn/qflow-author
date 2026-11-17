@@ -146,7 +146,7 @@ it(
         ).where(
           and(eq(workflowDispatches.kind, 'migration_commit'), eq(workflowDispatches.jobId, runId)),
         );
-        // SAFETY: wrangler.workflow-test.jsonc binds this real Workflow class.
+        // SAFETY: tools/testing/cloudflare_workflow.config.ts binds this real Workflow class.
         const workflow = env.QFLOW_MIGRATION_COMMIT_WORKFLOW;
         const instance = await introspectWorkflowInstance(workflow, commitDispatch.id);
         await workflow.create({ id: commitDispatch.id, params: { jobId: runId } });

@@ -1,6 +1,6 @@
 import { printTestWorker } from './tools/print_worker_test.ts';
 import { clientAssetsPlugin } from './tools/client_assets.ts';
-import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
+import { cloudflareTest } from '@cloudflare/vitest-plugin';
 import { defineConfig } from 'vitest/config';
 import { requirePostgresDatabaseUrl } from './tools/test_database_url.ts';
 
@@ -10,9 +10,10 @@ export default defineConfig({
   plugins: [
     clientAssetsPlugin({ edgeBuild: true, mode: 'built' }),
     cloudflareTest({
-      wrangler: { configPath: './wrangler.web-test.jsonc' },
+      config: './tools/testing/cloudflare_web.config.ts',
+      remoteBindings: false,
       miniflare: {
-        workers: [printTestWorker()],
+        workers: [await printTestWorker()],
         hyperdrives: { QFLOW_DB: databaseUrl },
       },
     }),

@@ -16,7 +16,7 @@ export async function checkRevisionComparisonBrowser(
   auth: RequestContext,
   questionId: string,
 ): Promise<void> {
-  const directory = `build/client/comparison-${auth.tenantId}`;
+  const directory = `.cloudflare/output/v1/workers/default/assets/comparison-${auth.tenantId}`;
   await _fs.mkdir(directory);
   let app: LocalAppBrowser | undefined;
   try {

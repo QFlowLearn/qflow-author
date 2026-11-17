@@ -1,5 +1,5 @@
 import { printTestWorker } from './tools/print_worker_test.ts';
-import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
+import { cloudflareTest } from '@cloudflare/vitest-plugin';
 import { defineConfig } from 'vitest/config';
 import { requirePostgresDatabaseUrl } from './tools/test_database_url.ts';
 
@@ -8,9 +8,10 @@ const databaseUrl = requirePostgresDatabaseUrl(process.env.DATABASE_URL);
 export default defineConfig({
   plugins: [
     cloudflareTest({
-      wrangler: { configPath: './wrangler.workflow-test.jsonc' },
+      config: './tools/testing/cloudflare_workflow.config.ts',
+      remoteBindings: false,
       miniflare: {
-        workers: [printTestWorker()],
+        workers: [await printTestWorker()],
         bindings: { DATABASE_URL: databaseUrl },
         hyperdrives: { QFLOW_DB: databaseUrl },
       },

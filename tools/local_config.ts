@@ -7,7 +7,7 @@ export class LocalConfigurationError extends Error {}
 export const localOrigin = 'https://127.0.0.1:5173';
 export const localDatabaseName = 'qflow_local';
 
-/** Reject competing Wrangler environment files before they can override the declared local path. */
+/** Reject competing Cloudflare environment files before they can override the declared local path. */
 export function assertSingleLocalEnvironment(cwd = process.cwd()): void {
   if (
     existsSync(resolve(cwd, '.env')) ||
@@ -28,7 +28,7 @@ export type LocalDevelopmentConfig = {
     readonly keyPath: string;
     readonly caPath: string;
   } | undefined;
-  readonly wranglerConfig: string;
+  readonly cloudflareConfig: string;
 };
 
 /** Local development is explicit and cannot use the databases owned by verification. */
@@ -104,7 +104,6 @@ export function parseLocalConfig(
   }
   for (
     const name of [
-      'QFLOW_WRANGLER_CONFIG',
       'QFLOW_EMAIL_FROM',
     ]
   ) {
@@ -146,7 +145,7 @@ export function parseLocalConfig(
         caPath: resolve(cwd, environment.NODE_EXTRA_CA_CERTS ?? ''),
       }
       : undefined,
-    wranglerConfig: resolve(cwd, environment.QFLOW_WRANGLER_CONFIG ?? ''),
+    cloudflareConfig: resolve(cwd, 'cloudflare.config.ts'),
   };
 }
 

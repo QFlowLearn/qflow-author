@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7
         with:
-          node-version: 24.16.0
+          node-version: 24.22.0
       - name: Create workspace and run its actual lifecycle
         # Compose does not grant access to the CLI-generated Dockerfile outside the build context.
         # Scope the upstream workaround to this isolated build: docker/compose#14285.

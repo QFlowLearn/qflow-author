@@ -27,7 +27,6 @@ const environment = {
   QFLOW_ROOT_DOMAIN: '',
   QFLOW_COOKIE_DOMAIN: '',
   QFLOW_STORAGE_BACKEND: 'r2-binding',
-  QFLOW_WRANGLER_CONFIG: 'wrangler.local.jsonc',
   QFLOW_DEV_TLS_CERT: '.artifacts/local-dev/cert.pem',
   QFLOW_DEV_TLS_KEY: '.artifacts/local-dev/key.pem',
   QFLOW_EMAIL_FROM: 'QFlow <local@example.test>',
@@ -67,7 +66,6 @@ it('verification keeps orchestration settings while excluding developer applicat
   expect(clean.QFLOW_AI_PROVIDER).toBeUndefined();
   expect(clean.QFLOW_SIGNUP_NOTIFY_BCC).toBeUndefined();
   expect(clean.CLOUDFLARE_LOAD_DEV_VARS_FROM_DOT_ENV).toBe('false');
-  expect(clean.QFLOW_WRANGLER_CONFIG).toBe('wrangler.local.jsonc');
   expect(clean.QFLOW_HARBOR_INTEGRATION_TESTS).toBe('1');
   expect(clean.QFLOW_HARBOR_TEST_ORIGIN).toBe('https://harbor.example.test');
   expect(clean.QFLOW_BROWSER_TESTS).toBe('1');
@@ -98,7 +96,7 @@ it('configuration establishes one HTTPS origin and reports several remedies with
   const valid = parseLocalConfig(environment, '/project');
   expect(valid.origin.href).toBe(localOrigin + '/');
   expect(valid.tls?.certificatePath).toBe('/project/.artifacts/local-dev/cert.pem');
-  expect(valid.wranglerConfig).toBe('/project/wrangler.local.jsonc');
+  expect(valid.cloudflareConfig).toBe('/project/cloudflare.config.ts');
   let failure: unknown;
   try {
     parseLocalConfig({
@@ -216,9 +214,7 @@ it('container setup requires explicit provider metadata and leaves native databa
 it('cloud setup writes private reusable configuration without certificates or production resources', async () => {
   const cwd = await mkdtemp(join(tmpdir(), 'qflow-container-setup-'));
   try {
-    for (const name of ['.env.example', 'wrangler.example.jsonc']) {
-      await copyFile(name, join(cwd, name));
-    }
+    await copyFile('.env.example', join(cwd, '.env.example'));
     const settings = devContainerSettings({
       QFLOW_DEV_CONTAINER: 'true',
       CODESPACES: 'true',
@@ -234,10 +230,7 @@ it('cloud setup writes private reusable configuration without certificates or pr
     expect(parseLocalConfig(second, cwd).tls).toBeUndefined();
     expect(parseEnv(await readFile(join(cwd, '.env.local'), 'utf8'))).toEqual(second);
     expect((await stat(join(cwd, '.env.local'))).mode & 0o777).toBe(0o600);
-    const worker: unknown = JSON.parse(await readFile(join(cwd, 'wrangler.local.jsonc'), 'utf8'));
-    expect(worker).toMatchObject({ name: 'qflow-local', vars: {}, workers_dev: false });
-    expect(worker).not.toHaveProperty('routes');
-    expect(worker).not.toHaveProperty('account_id');
+    await expect(stat(join(cwd, 'wrangler.local.jsonc'))).rejects.toMatchObject({ code: 'ENOENT' });
     await expect(stat(join(cwd, '.artifacts/local-dev/cert.pem'))).rejects.toMatchObject({
       code: 'ENOENT',
     });

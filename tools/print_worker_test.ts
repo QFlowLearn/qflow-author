@@ -1,17 +1,41 @@
 import { resolve } from 'node:path';
-import { unstable_getMiniflareWorkerOptions, unstable_readConfig } from 'wrangler';
+import { builtWorkerOptions, readAuthorBuild } from './cloudflare_build.ts';
+import type { LegacyWorkerOptions } from 'miniflare';
 
-/** Explicit test-only name connects both Worker test projects to the real built compiler Worker. */
-export function printTestWorker() {
-  const config = unstable_readConfig({ config: resolve('build/print_renderer/wrangler.json') });
-  const { workerOptions, main } = unstable_getMiniflareWorkerOptions(config, undefined, {
-    overrides: { enableContainers: false },
-  });
-  if (!main) throw Error('Build the print renderer before running Worker tests.');
+/** The test plugin accepts legacy auxiliary module descriptors; source remains the native build. */
+export async function printTestWorker(): Promise<LegacyWorkerOptions> {
+  const { renderer } = await readAuthorBuild();
+  const worker = await builtWorkerOptions(renderer, {});
+  const manifest = worker.config.manifest;
+  if (!manifest || !manifest.modulesRoot) {
+    throw Error('Build the print renderer before running Worker tests.');
+  }
+  const modulesRoot = manifest.modulesRoot;
+  const types = {
+    esm: 'ESModule',
+    cjs: 'CommonJS',
+    wasm: 'CompiledWasm',
+    data: 'Data',
+    text: 'Text',
+  } as const;
   return {
-    ...workerOptions,
     name: 'qflow-test-print-renderer',
-    modules: true as const,
-    scriptPath: main,
+    compatibilityDate: worker.config.compatibilityDate,
+    compatibilityFlags: worker.config.compatibilityFlags,
+    modules: Object.entries(manifest.modules).filter(([, module]) => module.type !== 'sourcemap')
+      .map(
+        ([name, module]) => {
+          if (
+            !(module.type in types) || module.type === 'json' || module.type === 'sourcemap' ||
+            module.type === 'python' || module.type === 'python-requirement'
+          ) throw Error('Unsupported test compiler module.');
+          return {
+            type: types[module.type],
+            path: resolve(modulesRoot, name),
+            contents: module.contents,
+          };
+        },
+      ),
+    modulesRoot: manifest.modulesRoot,
   };
 }

@@ -28,7 +28,7 @@ import {
   withOrganizationScaleImport,
 } from './helpers/organization_scale_fixture.ts';
 
-// SAFETY: both bindings are real Workflow classes in wrangler.workflow-test.jsonc.
+// SAFETY: both bindings are real Workflow classes in tools/testing/cloudflare_workflow.config.ts.
 const bindings = env;
 
 async function completeWorkflow(

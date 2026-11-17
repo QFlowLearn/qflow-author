@@ -1,4 +1,4 @@
-import { access, readFile } from 'node:fs/promises';
+import { access } from 'node:fs/promises';
 import { engines } from '../package.json' with { type: 'json' };
 import { localDatabaseStatus } from './local_database.ts';
 import {
@@ -8,7 +8,7 @@ import {
   localTls,
   parseLocalConfig,
 } from './local_config.ts';
-import { parseJsonc } from './jsonc.ts';
+import { loadAndParseConfig } from '@cloudflare/config';
 import { runCommand } from './process_command.ts';
 import { safeErrorSummary } from '../lib/error_summary.ts';
 
@@ -59,13 +59,13 @@ export async function inspectDevelopment(): Promise<readonly DoctorCheck[]> {
   const selected = config;
   await check(
     'Worker configuration',
-    'Run pnpm setup:local to prepare wrangler.local.jsonc with local bindings.',
+    'Check cloudflare.config.ts and run pnpm setup:local.',
     async () => {
-      const value = parseJsonc(await readFile(selected.wranglerConfig, 'utf8'));
-      if (
-        !value || typeof value !== 'object' || Reflect.get(value, 'name') !== 'qflow-local' ||
-        Reflect.get(value, 'routes') || Reflect.get(value, 'account_id')
-      ) {
+      const { result } = await loadAndParseConfig(selected.cloudflareConfig, {
+        mode: 'development',
+        isPreview: false,
+      });
+      if (!result.success || result.data.worker?.name !== 'qflow-local' || result.data.accountId) {
         throw Error('Select the local Worker configuration.');
       }
     },

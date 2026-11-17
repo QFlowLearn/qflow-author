@@ -5,7 +5,7 @@ import { parseEnv } from 'node:util';
 import postgres from 'postgres';
 import { safeErrorSummary } from '../lib/error_summary.ts';
 import { hasFileErrorCode } from './file_errors.ts';
-import { parseJsonc } from './jsonc.ts';
+import { authorVariables } from '../cloudflare.config.ts';
 import {
   assertSingleLocalEnvironment,
   localCa,
@@ -67,21 +67,7 @@ export async function prepareLocalFiles(
   } catch (cause: unknown) {
     if (!hasFileErrorCode(cause, 'ENOENT')) throw cause;
   }
-  const template = parseJsonc(await readFile(resolve(cwd, 'wrangler.example.jsonc'), 'utf8'));
-  if (!template || typeof template !== 'object' || Array.isArray(template)) {
-    throw new LocalSetupError('Invalid public Worker template.');
-  }
-  const vars: unknown = Reflect.get(template, 'vars');
-  if (!vars || typeof vars !== 'object' || Array.isArray(vars)) {
-    throw new LocalSetupError('Invalid public Worker variables.');
-  }
-  const environment: Record<string, string> = {};
-  for (const [name, value] of Object.entries(vars)) {
-    if (typeof value !== 'string') {
-      throw new LocalSetupError('Worker template variables must be strings.');
-    }
-    environment[name] = value;
-  }
+  const environment: Record<string, string> = { ...authorVariables };
   Object.assign(
     environment,
     parseEnv(await readFile(resolve(cwd, '.env.example'), 'utf8')),
@@ -111,8 +97,8 @@ export async function prepareLocalFiles(
     QFLOW_COOKIE_DOMAIN: '',
     QFLOW_ROOT_DOMAIN: '',
     QFLOW_STORAGE_BACKEND: 'r2-binding',
-    QFLOW_WRANGLER_CONFIG: 'wrangler.local.jsonc',
   });
+  delete environment.QFLOW_WRANGLER_CONFIG;
   delete environment.CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_QFLOW_DB;
   delete environment.QFLOW_LOCAL_TRANSACTIONAL_EMAIL_DISABLED;
   for (const name of ['QFLOW_RUNNER_KEY', 'QFLOW_CREDENTIAL_ENCRYPTION_KEY_V1']) {
@@ -162,20 +148,6 @@ export async function prepareLocalFiles(
   const config = parseLocalConfig(environment, cwd);
   localTls(config);
   localCa(config);
-  const localWorker = {
-    ...template,
-    name: 'qflow-local',
-    services: [{ binding: 'QFLOW_PRINT_RENDERER', service: 'qflow-local-print-renderer' }],
-    vars: {},
-    workers_dev: false,
-  };
-  Reflect.deleteProperty(localWorker, 'account_id');
-  Reflect.deleteProperty(localWorker, 'routes');
-  await writeFile(
-    resolve(cwd, 'wrangler.local.jsonc'),
-    JSON.stringify(localWorker, null, 2) + '\n',
-    { mode: 0o600 },
-  );
   // Stage secrets in an ignored private directory. A failed write must not truncate existing keys.
   const staging = await mkdtemp(resolve(cwd, '.artifacts/local-dev/config-'));
   try {

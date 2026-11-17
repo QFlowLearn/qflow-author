@@ -2,7 +2,6 @@ import optional from './optional.json' with { type: 'json' };
 
 const testSettings = new Set([
   ...Object.values(optional).map((lane) => lane.flag),
-  'QFLOW_WRANGLER_CONFIG',
   'QFLOW_BROWSER_TESTS',
   'QFLOW_BROWSER_APP_MODE',
   'QFLOW_BROWSER_APP_URL',
@@ -31,7 +30,7 @@ export function testEnvironment(environment: Readonly<NodeJS.ProcessEnv>): NodeJ
     ) clean[name] = undefined;
   }
   // Explicit undefined values erase ambient settings when runCommand merges the spawn environment.
-  // Wrangler otherwise reloads the developer's file inside the isolated Worker pool.
+  // Cloudflare otherwise reloads the developer's file inside the isolated Worker pool.
   clean.CLOUDFLARE_LOAD_DEV_VARS_FROM_DOT_ENV = 'false';
   return clean;
 }

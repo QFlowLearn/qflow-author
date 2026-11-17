@@ -33,14 +33,13 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgres://qflow:qflow@127.0.0.1:5432/qflow_ci_test
-      QFLOW_WRANGLER_CONFIG: wrangler.example.jsonc
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24.16.0
+          node-version: 24.22.0
       - name: Install pinned pnpm
         run: npm install --global pnpm@10.34.3
       - parallel:
@@ -91,14 +90,13 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgres://qflow:qflow@127.0.0.1:5432/qflow_ci_test
-      QFLOW_WRANGLER_CONFIG: wrangler.example.jsonc
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24.16.0
+          node-version: 24.22.0
       - name: Install pinned pnpm
         run: npm install --global pnpm@10.34.3
       - name: Install frozen dependencies
@@ -154,7 +152,6 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgres://qflow:qflow@127.0.0.1:5432/qflow_ci_test
-      QFLOW_WRANGLER_CONFIG: wrangler.example.jsonc
       QFLOW_CI_BROWSER_PORT: 55880
     steps:
       - name: Checkout
@@ -162,7 +159,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24.16.0
+          node-version: 24.22.0
       - name: Install pinned pnpm
         run: npm install --global pnpm@10.34.3
       - name: Install frozen dependencies
@@ -232,7 +229,6 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgres://qflow:qflow@127.0.0.1:5432/qflow_ci_test
-      QFLOW_WRANGLER_CONFIG: wrangler.example.jsonc
       QFLOW_CI_BROWSER_PORT: 55880
     steps:
       - name: Checkout
@@ -240,7 +236,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24.16.0
+          node-version: 24.22.0
       - name: Install pinned pnpm
         run: npm install --global pnpm@10.34.3
       - name: Install frozen dependencies

@@ -11,6 +11,7 @@
     "lib/**/*.tsx",
     "shims/**/*.ts",
     "vite.config.ts",
+    "cloudflare.config.ts",
     "vitest.config.ts",
     "vitest.cloudflare*.mts",
     "lib/print/assets.d.ts"

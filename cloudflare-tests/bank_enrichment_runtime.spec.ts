@@ -37,7 +37,7 @@ import {
   withEnrichmentWorkspace,
 } from '../tests/helpers/enrichment_workspace.ts';
 
-// SAFETY: this local test adapter names the Workflow binding declared in wrangler.workflow-test.jsonc.
+// SAFETY: this local test adapter names the Workflow binding declared in tools/testing/cloudflare_workflow.config.ts.
 const bindings = env;
 
 it(

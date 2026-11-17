@@ -26,7 +26,7 @@ export function clientAssetsPlugin(
           }) + ';';
       }
       const manifest: unknown = JSON.parse(
-        readFileSync('build/client/.vite/manifest.json', 'utf8'),
+        readFileSync('.cloudflare/output/v1/workers/default/assets/.vite/manifest.json', 'utf8'),
       );
       if (!manifest || typeof manifest !== 'object') {
         throw new Error('Missing client manifest.');

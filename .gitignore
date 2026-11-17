@@ -67,3 +67,6 @@ output/playwright
 
 *.key
 *.pem
+
+# Cloudflare generated output and local state
+/.cloudflare/

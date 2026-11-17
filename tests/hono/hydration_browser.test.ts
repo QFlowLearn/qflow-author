@@ -10,7 +10,7 @@ import { expect, it } from 'vitest';
 import { HydrationRoot } from '../../lib/server/HydrationRoot.tsx';
 
 it('keeps every island implementation outside the bootstrap static import graph', async () => {
-  const client = resolve('build/client');
+  const client = resolve('.cloudflare/output/v1/workers/default/assets');
   const manifest: unknown = JSON.parse(
     await readFile(resolve(client, '.vite/manifest.json'), 'utf8'),
   );
@@ -49,7 +49,7 @@ it('keeps every island implementation outside the bootstrap static import graph'
 it(
   'hydrates UTC timestamps once, preserves SSR during loading and leaves failed roots readable',
   async () => {
-    const client = resolve('build/client');
+    const client = resolve('.cloudflare/output/v1/workers/default/assets');
     const manifest: unknown = JSON.parse(
       await readFile(resolve(client, '.vite/manifest.json'), 'utf8'),
     );
@@ -152,7 +152,7 @@ it(
 );
 
 it('preserves distinct control and label identities when two independent roots hydrate', async () => {
-  const client = resolve('build/client');
+  const client = resolve('.cloudflare/output/v1/workers/default/assets');
   const manifest: unknown = JSON.parse(
     await readFile(resolve(client, '.vite/manifest.json'), 'utf8'),
   );

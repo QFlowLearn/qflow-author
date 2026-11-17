@@ -1,3 +1,4 @@
+import { Response } from 'miniflare';
 import { resolve } from 'node:path';
 import { build } from 'esbuild';
 import { startBuiltWorker } from '../../tools/start_built_worker.ts';
@@ -31,34 +32,36 @@ describe('production DNS adapter under workerd', () => {
       databaseUrl: null,
       workerOverrides: {
         workflows: {},
-        scriptPath: undefined,
         script: file.text,
-        outboundService: (request) => {
-          const url = new URL(request.url);
-          const name = url.searchParams.get('name');
-          const type = url.searchParams.get('type');
-          requests.push({ name, type });
-          if (url.protocol !== 'https:' || name !== 'qflow-dns.example.test') {
-            return new Response(null, { status: 403 });
-          }
-          const types: Record<string, { type: number; data: string }> = {
-            TXT: { type: 16, data: '"qflow-domain-""verification=owned"' },
-            A: { type: 1, data: '203.0.113.10' },
-            AAAA: { type: 28, data: '2001:db8::10' },
-          };
-          const answer = type === null ? undefined : types[type];
-          if (!answer) return new Response(null, { status: 400 });
-          return Response.json({
-            Status: 0,
-            TC: false,
-            RD: true,
-            RA: true,
-            AD: false,
-            CD: false,
-            Question: [{ name, type: answer.type }],
-            Answer: [{ name, TTL: 60, ...answer }],
-            Authority: [],
-          });
+        outboundService: {
+          type: 'fetcher',
+          handler: (request) => {
+            const url = new URL(request.url);
+            const name = url.searchParams.get('name');
+            const type = url.searchParams.get('type');
+            requests.push({ name, type });
+            if (url.protocol !== 'https:' || name !== 'qflow-dns.example.test') {
+              return new Response(null, { status: 403 });
+            }
+            const types: Record<string, { type: number; data: string }> = {
+              TXT: { type: 16, data: '"qflow-domain-""verification=owned"' },
+              A: { type: 1, data: '203.0.113.10' },
+              AAAA: { type: 28, data: '2001:db8::10' },
+            };
+            const answer = type === null ? undefined : types[type];
+            if (!answer) return new Response(null, { status: 400 });
+            return Response.json({
+              Status: 0,
+              TC: false,
+              RD: true,
+              RA: true,
+              AD: false,
+              CD: false,
+              Question: [{ name, type: answer.type }],
+              Answer: [{ name, TTL: 60, ...answer }],
+              Authority: [],
+            });
+          },
         },
       },
     });

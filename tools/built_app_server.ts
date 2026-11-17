@@ -1,4 +1,4 @@
-import { readFile, realpath, stat } from 'node:fs/promises';
+import { stat } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
 import { get as httpGet } from 'node:http';
@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 import { requireQaDatabaseUrl } from '../tests/helpers/qa_database.ts';
 import { safeErrorSummary } from '../lib/error_summary.ts';
+import { readAuthorBuild } from './cloudflare_build.ts';
 import { localCa, localTls, parseLocalConfig } from './local_config.ts';
 
 /** Owned production runtime process, observed until it exits and awaited during cleanup. */
@@ -29,8 +30,6 @@ export async function startBuiltAppServer(input: {
     throw new Error('Built app port must be an integer from 1 through 65535.');
   }
   const environment = { ...process.env, ...input.environment };
-  const configured = environment.QFLOW_WRANGLER_CONFIG;
-  if (!configured) throw new Error('QFLOW_WRANGLER_CONFIG is required for built browser runs.');
   const local = input.mode === 'development' ? parseLocalConfig(environment, input.cwd) : undefined;
   if (local) {
     localTls(local);
@@ -42,19 +41,12 @@ export async function startBuiltAppServer(input: {
   } else requireQaDatabaseUrl(environment.DATABASE_URL);
   try {
     input.signal?.throwIfAborted();
-    const configPath = resolve(input.cwd, 'build/ssr/wrangler.json');
-    const config: unknown = JSON.parse(await readFile(configPath, 'utf8'));
-    const origin: unknown = config && typeof config === 'object'
-      ? Reflect.get(config, 'userConfigPath')
-      : undefined;
-    if (
-      typeof origin !== 'string' ||
-      await realpath(origin) !== await realpath(resolve(input.cwd, configured))
-    ) {
-      throw new Error('Built Worker does not match the selected Wrangler configuration.');
-    }
+    await readAuthorBuild(input.cwd);
     for (
-      const path of ['build/ssr/index.js', 'build/client/.vite/manifest.json']
+      const path of [
+        '.cloudflare/output/v1/workers/default/bundle/index.js',
+        '.cloudflare/output/v1/workers/default/assets/.vite/manifest.json',
+      ]
     ) {
       const asset = await stat(resolve(input.cwd, path));
       if (!asset.isFile() || asset.size === 0) {

@@ -124,7 +124,7 @@ it('release Workflow builds retained R2 bytes and superseded instances cannot fi
       deps,
     )).ok,
   ).toBe(true);
-  // SAFETY: Wrangler's test configuration provides this concrete Workflow binding.
+  // SAFETY: Cloudflare's test configuration provides this concrete Workflow binding.
   const binding = (env as unknown as {
     QFLOW_RELEASE_BUILD_WORKFLOW: Parameters<typeof introspectWorkflowInstance>[0];
   }).QFLOW_RELEASE_BUILD_WORKFLOW;

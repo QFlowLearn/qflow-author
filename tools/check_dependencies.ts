@@ -13,13 +13,14 @@ function object(value: unknown): Record<string, unknown> {
 /** Check pinned tools, one Preact runtime and Deno/Fresh/JSR-free emitted module dependencies. */
 export async function checkDependencies(): Promise<void> {
   const config = object(JSON.parse(await readFile('package.json', 'utf8')));
-  if (process.versions.node !== '24.16.0' || config.packageManager !== 'pnpm@10.34.3') {
+  if (process.versions.node !== '24.22.0' || config.packageManager !== 'pnpm@10.34.3') {
     throw Error('Pinned runtime tools differ.');
   }
   for (const kind of ['dependencies', 'devDependencies']) {
     for (const [name, version] of Object.entries(object(config[kind]))) {
       if (
-        typeof version !== 'string' || !/^\d+\.\d+\.\d+$/.test(version) ||
+        typeof version !== 'string' ||
+        !/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*)?$/.test(version) ||
         /fresh|^@jsr\//.test(name)
       ) {
         throw Error('Unexpected runtime dependency pin: ' + name);
@@ -77,8 +78,8 @@ export async function checkDependencies(): Promise<void> {
       inspectNode(file);
     }
   }
-  await inspect('build/client');
-  await inspect('build/ssr');
+  await inspect('.cloudflare/output/v1/workers/default/assets');
+  await inspect('.cloudflare/output/v1/workers');
   console.log(
     'Pinned Node/pnpm and one Preact 10 runtime verified; emitted imports contain no retired framework/runtime dependencies.',
   );

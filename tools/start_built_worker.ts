@@ -1,21 +1,20 @@
-import { resolve } from 'node:path';
-import { readFile, realpath, writeFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import { Miniflare, type WorkerOptions } from 'miniflare';
-import { unstable_getMiniflareWorkerOptions, unstable_readConfig } from 'wrangler';
 import { requireQaDatabaseUrl } from '../tests/helpers/qa_database.ts';
 import { localDatabaseUrl, parseLocalConfig } from './local_config.ts';
+import { builtWorkerOptions, readAuthorBuild } from './cloudflare_build.ts';
 
-/** Start the built application with declared capabilities and an explicit QA or development database. */
+/** Start the built application with an explicitly owned QA or development database. */
 export async function startBuiltWorker(options: {
   readonly databaseUrl: string | null;
   readonly mode: 'qa' | 'development';
   readonly port?: number;
   readonly bindings?: Readonly<Record<string, string>>;
-  /** Diagnostic Workers may replace the entry and outbound service, keeping configuration ownership here. */
-  readonly workerOverrides?: Pick<
-    Extract<WorkerOptions, { script: string }>,
-    'script' | 'scriptPath' | 'outboundService' | 'workflows'
-  >;
+  readonly workerOverrides?: {
+    readonly script?: string;
+    readonly workflows?: Record<string, never>;
+    readonly outboundService?: NonNullable<WorkerOptions['dev']>['outboundService'];
+  };
 }): Promise<Miniflare> {
   const databaseUrl = options.databaseUrl === null
     ? null
@@ -23,81 +22,69 @@ export async function startBuiltWorker(options: {
     ? requireQaDatabaseUrl(options.databaseUrl)
     : localDatabaseUrl(options.databaseUrl);
   const local = options.mode === 'development' ? parseLocalConfig(process.env) : undefined;
-  const selected = process.env.QFLOW_WRANGLER_CONFIG;
-  if (!selected) throw new Error('QFLOW_WRANGLER_CONFIG is required.');
-  const generated: unknown = JSON.parse(await readFile('build/ssr/wrangler.json', 'utf8'));
-  const origin: unknown = generated && typeof generated === 'object'
-    ? Reflect.get(generated, 'userConfigPath')
-    : undefined;
-  if (
-    typeof origin !== 'string' ||
-    await realpath(origin) !== await realpath(resolve(selected))
-  ) {
-    throw new Error('Built Worker does not match the selected Wrangler configuration.');
+  const { app, renderer } = await readAuthorBuild();
+  const localEnv = options.mode === 'development'
+    ? Object.fromEntries(
+      Object.entries(process.env).filter((entry): entry is [string, string] =>
+        entry[1] !== undefined
+      ),
+    )
+    : {};
+  // Database selection belongs to this boundary, never to ambient Hyperdrive settings.
+  delete localEnv.CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_QFLOW_DB;
+  const appConfig = { ...app.config, env: { ...app.config.env } };
+  delete appConfig.env.QFLOW_DB;
+  const worker = await builtWorkerOptions({ ...app, config: appConfig }, localEnv);
+  const compiler = await builtWorkerOptions(renderer, {});
+  const manifest = worker.config.manifest;
+  if (!manifest) throw Error('Built Worker entry is required.');
+  const overrides = options.workerOverrides;
+  const main = '__qflow_local_preview.mjs';
+  const wrapper = overrides?.script ?? `import {createLocalWorker} from './${manifest.mainModule}';
+export * from './${manifest.mainModule}';
+export default createLocalWorker(${JSON.stringify(local?.origin.origin)});`;
+  const env: NonNullable<WorkerOptions['config']['env']> = { ...worker.config.env };
+  for (const [name, value] of Object.entries({ ...localEnv, ...options.bindings })) {
+    if (name.startsWith('QFLOW_') || name === 'OPENROUTER_API_KEY') {
+      env[name] = { type: 'text', value };
+    }
   }
-  const config = unstable_readConfig({ config: resolve('build/ssr/wrangler.json') });
-  // Do not let private local connection strings or ambient Hyperdrive overrides select a database.
-  config.hyperdrive = [];
-  const { workerOptions, main, externalWorkers } = unstable_getMiniflareWorkerOptions(
-    config,
-    undefined,
-    { overrides: { enableContainers: false } },
-  );
-  if (!main) throw new Error('Built Worker entry is required.');
-  const rendererConfig = unstable_readConfig({
-    config: resolve('build/print_renderer/wrangler.json'),
-  });
-  const renderer = unstable_getMiniflareWorkerOptions(rendererConfig, undefined, {
-    overrides: { enableContainers: false },
-  });
-  if (!renderer.main) throw new Error('Built print renderer entry is required.');
-  // Miniflare's cf:false still supplies synthetic metadata. Select local provenance in code,
-  // rather than relying on metadata shape or an HTTP/binding override to attest ingress.
-  const localEntry = resolve('build/ssr/local-preview.mjs');
-  await writeFile(
-    localEntry,
-    `import { createLocalWorker } from './index.js';
-export * from './index.js';
-export default createLocalWorker(${JSON.stringify(local?.origin.origin)});\n`,
-  );
+  if (databaseUrl === null) env.QFLOW_DB = { type: 'json', value: null };
+  else {env.QFLOW_DB = {
+      type: 'hyperdrive',
+      id: '00000000000000000000000000000000',
+      dev: { connectionString: databaseUrl },
+    };}
+  if (overrides?.workflows) {
+    for (const [name, binding] of Object.entries(env)) {
+      if (binding.type === 'workflow') delete env[name];
+    }
+  }
   const runtime = new Miniflare({
     host: '127.0.0.1',
     port: options.port ?? 0,
-    ...(local?.tls
-      ? { httpsCertPath: local.tls.certificatePath, httpsKeyPath: local.tls.keyPath }
-      : {}),
     cf: false,
-    workers: [
-      {
-        ...workerOptions,
-        name: config.name,
-        modules: true,
-        scriptPath: localEntry,
-        assets: workerOptions.assets && {
-          ...workerOptions.assets,
-          routerConfig: {
-            ...workerOptions.assets.routerConfig,
-            has_user_worker: true,
-          },
+    ...(local?.tls
+      ? {
+        https: true,
+        httpsCert: await readFile(local.tls.certificatePath, 'utf8'),
+        httpsKey: await readFile(local.tls.keyPath, 'utf8'),
+      }
+      : {}),
+    workers: [{
+      ...worker,
+      config: {
+        ...worker.config,
+        env,
+        exports: overrides?.workflows ? {} : worker.config.exports,
+        manifest: {
+          ...manifest,
+          mainModule: main,
+          modules: { ...manifest.modules, [main]: { type: 'esm', contents: wrapper } },
         },
-        bindings: {
-          // QA owns its fixture values. Vite's generated .dev.vars belongs only to developer preview.
-          ...(options.mode === 'qa' ? config.vars : workerOptions.bindings),
-          ...options.bindings,
-          ...(databaseUrl === null ? { QFLOW_DB: null } : {}),
-        },
-        hyperdrives: databaseUrl === null ? {} : { QFLOW_DB: databaseUrl },
-        ...options.workerOverrides,
       },
-      {
-        ...renderer.workerOptions,
-        name: rendererConfig.name,
-        modules: true,
-        scriptPath: renderer.main,
-      },
-      ...externalWorkers,
-      ...renderer.externalWorkers,
-    ],
+      dev: { ...worker.dev, outboundService: overrides?.outboundService },
+    }, compiler],
   });
   try {
     await runtime.ready;
