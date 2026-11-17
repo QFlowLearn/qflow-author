@@ -45,7 +45,10 @@ export * from './${manifest.mainModule}';
 export default createLocalWorker(${JSON.stringify(local?.origin.origin)});`;
   const env: NonNullable<WorkerOptions['config']['env']> = { ...worker.config.env };
   for (const [name, value] of Object.entries({ ...localEnv, ...options.bindings })) {
-    if (name.startsWith('QFLOW_') || name === 'OPENROUTER_API_KEY') {
+    if (
+      name.startsWith('QFLOW_') || name === 'OPENROUTER_API_KEY' ||
+      Object.hasOwn(options.bindings ?? {}, name)
+    ) {
       env[name] = { type: 'text', value };
     }
   }

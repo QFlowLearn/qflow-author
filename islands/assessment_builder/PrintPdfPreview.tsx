@@ -22,14 +22,20 @@ export default function PrintPdfPreview(
   const [document, setDocument] = useState<PDFDocumentProxy | null>(null),
     [page, setPage] = useState(1),
     [error, setError] = useState(false),
-    [ready, setReady] = useState(false);
+    [renderedPage, setRenderedPage] = useState<
+      {
+        readonly document: PDFDocumentProxy;
+        readonly page: number;
+      } | null
+    >(null);
+  const ready = renderedPage?.document === document && renderedPage?.page === page;
   const visited = useRef(new Set<number>());
   useEffect(() => {
     const controller = new AbortController();
     let task: ReturnType<PdfModule['getDocument']> | undefined;
     setDocument(null);
     setPage(1);
-    setReady(false);
+    setRenderedPage(null);
     setError(false);
     visited.current.clear();
     fetch(url, { credentials: 'same-origin', cache: 'no-store', signal: controller.signal }).then(
@@ -60,7 +66,7 @@ export default function PrintPdfPreview(
     let cancelled = false,
       rendering: ReturnType<Awaited<ReturnType<PDFDocumentProxy['getPage']>>['render']> | undefined,
       textLayer: TextLayer | undefined;
-    setReady(false);
+    setRenderedPage(null);
     document.getPage(page).then(async (pdfPage) => {
       if (cancelled) return;
       const viewport = pdfPage.getViewport({ scale: 1.2 });
@@ -81,7 +87,7 @@ export default function PrintPdfPreview(
       await textLayer.render();
       if (cancelled) return;
       visited.current.add(page);
-      setReady(true);
+      setRenderedPage({ document, page });
       if (visited.current.size === document.numPages) onReviewed();
     }).catch(() => {
       if (!cancelled) setError(true);

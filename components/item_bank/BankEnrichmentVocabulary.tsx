@@ -71,7 +71,12 @@ export function BankEnrichmentVocabulary(
           onChange(removeEnrichmentCategory(draft, dimension, category.id, target));
           const next = target ?? options[0]?.id;
           if (next) {
-            requestAnimationFrame(() => document.getElementById(`category-${next}`)?.focus());
+            requestAnimationFrame(() => {
+              // Restore a removed control's focus without overriding the user's next focus target.
+              if (document.activeElement === document.body) {
+                document.getElementById(`category-${next}`)?.focus();
+              }
+            });
           }
         }}
         onMove={dimension === 'difficulty'

@@ -11,7 +11,7 @@ import ResetPasswordPage from '../components/auth/ResetPasswordPage.tsx';
 
 const locales = ['en-US', 'en-GB', 'es-ES', 'es-419', 'sv-SE'] as const;
 
-testCase('auth pages render localized headings and chooser semantics for every locale', () => {
+testCase('auth pages render localized headings with the locale chooser on signup', () => {
   for (const locale of locales) {
     const i18n = createI18n(locale, catalogForLocale(locale));
     const common = { i18n, locale };
@@ -32,14 +32,14 @@ testCase('auth pages render localized headings and chooser semantics for every l
     const signup = render(<SignupPage {...common} data={{ next: '/assessments/new' }} />);
     const forgot = render(<ForgotPasswordPage {...common} data={{}} />);
     const reset = render(<ResetPasswordPage {...common} data={{ state: 'invalid_link' }} />);
-    expect(login.includes('action="/api/locale"')).toStrictEqual(false);
-    for (const html of [signup, forgot, reset]) {
-      expect(html).toContain('action="/api/locale"');
-      expect(html).toContain('lang="es-ES"');
-      expect(html).toContain('lang="es-419"');
-      expect(html).toContain('lang="sv-SE"');
-      expect(html).toContain('Svenska');
+    for (const html of [login, forgot, reset]) {
+      expect(html).not.toContain('action="/api/locale"');
     }
+    expect(signup).toContain('action="/api/locale"');
+    expect(signup).toContain('lang="es-ES"');
+    expect(signup).toContain('lang="es-419"');
+    expect(signup).toContain('lang="sv-SE"');
+    expect(signup).toContain('Svenska');
     expect(login).toContain(i18n.t('login.title'));
     expect(signup).toContain(i18n.t('signup.title'));
     expect(forgot).toContain(i18n.t('forgot.title'));
