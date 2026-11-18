@@ -21,7 +21,7 @@ export async function checkDependencies(): Promise<void> {
     for (const [name, version] of Object.entries(object(config[kind]))) {
       if (
         typeof version !== 'string' ||
-        !/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*)?$/.test(version) ||
+        !/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*)?$/.test(version) ||
         /fresh|^@jsr\//.test(name)
       ) {
         throw Error('Unexpected runtime dependency pin: ' + name);
