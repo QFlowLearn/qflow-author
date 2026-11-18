@@ -163,7 +163,10 @@ testCase(
           expect.unreachable('Expected assignments.some((row) => row.changeId === changeId)');
         }
         const restored = await db.select().from(enrichmentChanges).where(
-          eq(enrichmentChanges.origin, 'undo'),
+          and(
+            eq(enrichmentChanges.tenantId, f.ctx.tenantId),
+            eq(enrichmentChanges.origin, 'undo'),
+          ),
         );
         expect(restored.length).toStrictEqual(2);
         if (!(restored.every((row) => JSON.stringify(row.value) === '{"state":"absent"}'))) {
