@@ -32,7 +32,7 @@ export type SakaiPoolResult =
   };
 
 /** Adapt the shared QTI 1.2 writer to Sakai's pool envelope and supported scoring extraction. */
-export async function compileSakaiPool(input: SakaiPoolInput): Promise<SakaiPoolResult> {
+export function compileSakaiPool(input: SakaiPoolInput): SakaiPoolResult {
   const blocked: { revisionId: string; code: string }[] = [];
   const items: string[] = [];
   const diagnostics: QtiTranscodeDiagnostic[] = [];
@@ -66,7 +66,7 @@ export async function compileSakaiPool(input: SakaiPoolInput): Promise<SakaiPool
       });
       continue;
     }
-    const result = await transcodeQti3Item({
+    const result = transcodeQti3Item({
       kind: 'xml',
       xml: serializer.serializeToString(canonical),
     }, {

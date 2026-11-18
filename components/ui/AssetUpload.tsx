@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import type { JSX } from 'preact';
 import { useCallback, useRef, useState } from 'preact/hooks';
 
@@ -128,7 +129,7 @@ export default function AssetUpload(
     event.preventDefault();
     event.stopPropagation();
     if (disabled || busy) return;
-    void selectFiles(event.dataTransfer?.files ?? null, 'drop');
+    selectFiles(event.dataTransfer?.files ?? null, 'drop').catch(reportUiError);
   }, [busy, disabled, selectFiles]);
 
   return (
@@ -157,7 +158,7 @@ export default function AssetUpload(
           aria-label={buttonLabel}
           onChange={(event) => {
             const input = event.currentTarget;
-            void selectFiles(input.files, 'select');
+            selectFiles(input.files, 'select').catch(reportUiError);
             input.value = '';
           }}
         />

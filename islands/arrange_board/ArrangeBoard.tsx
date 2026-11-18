@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { assessmentQuestionPlacements } from '../../lib/assessment_content.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useAssessmentArrangementSave } from '../../components/assessment_arrangement/useAssessmentArrangementSave.ts';
@@ -182,7 +183,7 @@ function ArrangeBoardContent(
     sel,
     setSel,
     parts,
-    onSave: save,
+    onSave: uiEvent(save),
     movePart,
     moveItem,
     moveItemTo,
@@ -255,7 +256,7 @@ function ArrangeBoardContent(
           <Button
             size='sm'
             variant='primary'
-            onClick={save}
+            onClick={uiEvent(save)}
             disabled={!dirty || saving || Boolean(invalidPart)}
           >
             {saving ? i18n.t('assessments.arrange.saving') : i18n.t('assessments.arrange.save')}

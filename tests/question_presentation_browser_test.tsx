@@ -334,7 +334,11 @@ testCase(
         const gate = new Promise<void>((resolve) => release = resolve);
         globalThis.requestAnimationFrame = (callback) =>
           original((time) => {
-            void gate.then(() => callback(time));
+            gate.then(() => callback(time)).catch((cause: unknown) => {
+              queueMicrotask(() => {
+                throw cause;
+              });
+            });
           });
         Object.assign(globalThis, {
           releaseAuthoringFrames: () => {

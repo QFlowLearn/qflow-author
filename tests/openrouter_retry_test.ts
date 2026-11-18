@@ -167,8 +167,9 @@ testCase('OpenRouter retries propagate caller cancellation to the active request
     return new Promise<Response>((_resolve, reject) => {
       const stop = () =>
         reject(
-          receivedSignal?.reason ??
-            new DOMException('OpenRouter request aborted.', 'AbortError'),
+          receivedSignal?.reason instanceof Error
+            ? receivedSignal?.reason
+            : new DOMException('OpenRouter request aborted.', 'AbortError'),
         );
       if (receivedSignal?.aborted) {
         stop();

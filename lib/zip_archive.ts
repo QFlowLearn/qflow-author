@@ -263,7 +263,9 @@ class BudgetedUint8ArrayWriter extends Uint8ArrayWriter {
       return super.writeUint8Array(chunk);
     } catch (cause: unknown) {
       this.failure = { cause };
-      return Promise.reject(cause);
+      return Promise.reject(
+        cause instanceof Error ? cause : new Error('ZIP write failed.', { cause }),
+      );
     }
   }
 }

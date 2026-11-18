@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { QtiExecutableTest, QtiTestSession } from '@longsightgroup/qti3-core';
 import { adaptiveItemReferenceId } from '../../lib/assessment_adaptive_export.ts';
@@ -55,7 +56,7 @@ export default function AdaptiveAnswerPreview(
         if (!controller.signal.aborted) setState({ kind: 'failed' });
       }
     }
-    void load();
+    load().catch(reportUiError);
     return () => controller.abort();
   }, [props.assessment.id]);
   const answered = state.kind === 'ready' ? state.session.submissions.length : 0;

@@ -1,3 +1,4 @@
+import { reportUiError, uiEvent } from '../../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../../components/ui/Button.tsx';
 import Input from '../../components/ui/Input.tsx';
@@ -91,13 +92,13 @@ export default function AssessmentPrintPanel(
         if (controller.signal.aborted) return;
         setPack(next);
         if (['preparing', 'queued', 'building'].includes(next.state)) {
-          timer = setTimeout(poll, 1500);
+          timer = setTimeout(uiEvent(poll), 1500);
         }
       } catch {
         if (!controller.signal.aborted) setError('request_failed');
       }
     };
-    timer = setTimeout(poll, 500);
+    timer = setTimeout(uiEvent(poll), 500);
     return () => {
       controller.abort();
       clearTimeout(timer);
@@ -147,7 +148,7 @@ export default function AssessmentPrintPanel(
             <form
               onSubmit={(event) => {
                 event.preventDefault();
-                void run('preview');
+                run('preview').catch(reportUiError);
               }}
             >
               <fieldset disabled={!editable} class='space-y-4'>

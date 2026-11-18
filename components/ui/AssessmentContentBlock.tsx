@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import Button from './Button.tsx';
 import type { AssessmentStandaloneContent } from '../../lib/assessment_standalone_content.ts';
 
@@ -24,7 +25,7 @@ export default function AssessmentContentBlock(props: {
           variant='ghost'
           class='mt-3'
           disabled={props.edit.disabled}
-          onClick={props.edit.run}
+          onClick={uiEvent(props.edit.run)}
         >
           {props.edit.label}
         </Button>

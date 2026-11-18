@@ -1,3 +1,4 @@
+import { reportUiError } from '../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
 import { ASSESSMENT_TOOL_IDS, assessmentToolHref } from '../lib/assessment_authoring_tool.ts';
@@ -258,7 +259,7 @@ function AssessmentActionsMenuInner(
                 disabled={isBusy}
                 onClick={() => {
                   setOpen(false);
-                  handleDeliveryPublish();
+                  handleDeliveryPublish().catch(reportUiError);
                 }}
               >
                 {i18n.t('list.actions.publish')}
@@ -271,7 +272,7 @@ function AssessmentActionsMenuInner(
               disabled={isBusy}
               onClick={() => {
                 setOpen(false);
-                handleDuplicate();
+                handleDuplicate().catch(reportUiError);
               }}
             >
               {i18n.t('list.actions.duplicate')}
@@ -285,7 +286,7 @@ function AssessmentActionsMenuInner(
               disabled={isBusy}
               onClick={() => {
                 setOpen(false);
-                handleDelete();
+                handleDelete().catch(reportUiError);
               }}
             >
               {i18n.t('list.actions.delete')}

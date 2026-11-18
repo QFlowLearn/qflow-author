@@ -1,3 +1,4 @@
+import { reportUiError, uiEvent } from '../lib/client/ui_event.ts';
 import { useEffect, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
 import Checkbox from '../components/ui/Checkbox.tsx';
@@ -71,7 +72,7 @@ function AccountMenuContent() {
         /* ignore settings fetch failures */
       }
       if (active) setSettingsLoading(false);
-    })();
+    })().catch(reportUiError);
     return () => {
       active = false;
     };
@@ -176,7 +177,7 @@ function AccountMenuContent() {
               onChange={() => {
                 const next = activeTheme === 'dark' ? 'wireframe' : 'dark';
                 setActiveTheme(next);
-                applyTheme(next);
+                applyTheme(next).catch(reportUiError);
               }}
             />
           </label>
@@ -222,7 +223,7 @@ function AccountMenuContent() {
         )}
         <li class='ds-divider' />
         <li>
-          <button type='button' class='text-error' onClick={signOut}>
+          <button type='button' class='text-error' onClick={uiEvent(signOut)}>
             {i18n.t('nav.signOut')}
           </button>
         </li>

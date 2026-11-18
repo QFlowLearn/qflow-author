@@ -102,7 +102,11 @@ function decodeImage(src: string, signal?: AbortSignal): Promise<HTMLImageElemen
     const image = new Image();
     const abort = () => {
       image.src = '';
-      reject(signal?.reason ?? new DOMException('Image loading was cancelled.', 'AbortError'));
+      reject(
+        signal?.reason instanceof Error
+          ? signal?.reason
+          : new DOMException('Image loading was cancelled.', 'AbortError'),
+      );
     };
     signal?.addEventListener('abort', abort, { once: true });
     image.onload = () => {

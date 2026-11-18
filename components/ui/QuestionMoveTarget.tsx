@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import type { ComponentChildren, JSX } from 'preact';
 
 /** Stable card wrapper; a full outline and words identify the pending drop without reparenting the editor. */
@@ -12,7 +13,7 @@ export default function QuestionMoveTarget(props: {
     <div
       class={props.active ? 'relative rounded-xl ring-2 ring-primary' : 'relative'}
       onDragOver={props.onDragOver}
-      onDrop={props.onDrop}
+      onDrop={uiEvent(props.onDrop)}
     >
       {props.active && (
         <span class='absolute inset-x-0 top-0 z-10 rounded-t-xl bg-primary px-3 py-1 text-xs text-primary-content pointer-events-none'>

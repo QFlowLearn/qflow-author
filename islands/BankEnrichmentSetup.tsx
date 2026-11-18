@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import LocalizedTimestamp from './LocalizedTimestamp.tsx';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
@@ -108,10 +109,10 @@ export default function BankEnrichmentSetup(
       method='post'
       action={`/items/organize/${props.id}`}
       class='space-y-6'
-      onSubmit={(event) => {
+      onSubmit={uiEvent((event) => {
         event.preventDefault();
         return submit('start');
-      }}
+      })}
     >
       {error && (
         <div ref={errorRef} tabIndex={-1}>
@@ -263,7 +264,7 @@ export default function BankEnrichmentSetup(
             <Button
               type='button'
               disabled={busy || dimensions.length === 0}
-              onClick={() => submit('preview')}
+              onClick={uiEvent(() => submit('preview'))}
             >
               {i18n.t('items.organize.preview')}
             </Button>
@@ -271,7 +272,7 @@ export default function BankEnrichmentSetup(
               <Button
                 type='button'
                 disabled={busy || dimensions.length === 0}
-                onClick={() => submit('preview', 'affected')}
+                onClick={uiEvent(() => submit('preview', 'affected'))}
               >
                 {i18n.t('items.organize.previewAffected')}
               </Button>

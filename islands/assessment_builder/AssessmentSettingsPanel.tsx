@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { assessmentQuestionPlacements } from '../../lib/assessment_content.ts';
 import { useLayoutEffect } from 'preact/hooks';
 import type { RefObject } from 'preact';
@@ -89,7 +90,7 @@ export default function AssessmentSettingsPanel(props: AssessmentSettingsPanelPr
           <Button
             type='button'
             variant='primary'
-            onClick={edit.save}
+            onClick={uiEvent(edit.save)}
             disabled={!edit.dirty || Boolean(edit.invalid) || edit.status === 'saving' ||
               edit.status === 'conflict'}
           >
@@ -116,11 +117,11 @@ export default function AssessmentSettingsPanel(props: AssessmentSettingsPanelPr
           <div>
             <p>{i18n.t(`assessments.settings.${edit.status}`)}</p>
             {edit.status === 'uncertain' && (
-              <Button type='button' onClick={edit.save}>
+              <Button type='button' onClick={uiEvent(edit.save)}>
                 {i18n.t('assessments.builder.tool.retry')}
               </Button>
             )}
-            <Button type='button' onClick={() => navigate(globalThis.location.href)}>
+            <Button type='button' onClick={uiEvent(() => navigate(globalThis.location.href))}>
               {i18n.t('assessments.arrange.reloadSaved')}
             </Button>
           </div>
@@ -137,15 +138,16 @@ export default function AssessmentSettingsPanel(props: AssessmentSettingsPanelPr
         {!props.assessment.adaptivePlan && (
           <Button
             type='button'
-            onClick={() => navigate(`/assessments/${props.assessment.id}/arrange`)}
+            onClick={uiEvent(() => navigate(`/assessments/${props.assessment.id}/arrange`))}
           >
             {i18n.t('assessments.settings.arrange')}
           </Button>
         )}
         <Button
           type='button'
-          onClick={() =>
-            navigate(assessmentToolHref(props.assessment.id, ASSESSMENT_TOOL_IDS.plan))}
+          onClick={uiEvent(() =>
+            navigate(assessmentToolHref(props.assessment.id, ASSESSMENT_TOOL_IDS.plan))
+          )}
         >
           {i18n.t('assessments.settings.plan')}
         </Button>
@@ -227,8 +229,9 @@ export default function AssessmentSettingsPanel(props: AssessmentSettingsPanelPr
               </p>
               <Button
                 type='button'
-                onClick={() =>
-                  navigate(assessmentToolHref(props.assessment.id, ASSESSMENT_TOOL_IDS.export))}
+                onClick={uiEvent(() =>
+                  navigate(assessmentToolHref(props.assessment.id, ASSESSMENT_TOOL_IDS.export))
+                )}
               >
                 {i18n.t('assessments.settings.publish')}
               </Button>

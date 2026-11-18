@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { PDFDocumentProxy, TextLayer } from 'pdfjs-dist';
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
@@ -57,7 +58,7 @@ export default function PrintPdfPreview(
     });
     return () => {
       controller.abort();
-      void task?.destroy();
+      task?.destroy().catch(reportUiError);
     };
   }, [url]);
   useEffect(() => {

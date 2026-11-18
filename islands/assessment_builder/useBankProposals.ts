@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type {
   BankProposalCommand,
@@ -76,7 +77,7 @@ export function useBankProposals(input: {
     }
     setLoaded(null);
     setAction({ kind: 'idle' });
-    void inspect();
+    inspect().catch(reportUiError);
     return () => controller.abort();
   }, [input.assessmentId, key, open, attempt, input.searchLoading]);
   useEffect(() => () => active.current?.abort(), []);

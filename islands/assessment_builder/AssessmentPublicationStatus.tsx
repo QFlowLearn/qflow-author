@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useEffect, useState } from 'preact/hooks';
 import { useI18n } from '../../lib/i18n/context.tsx';
 import type { AssessmentPublicationStatus as PublicationStatus } from '../../lib/assessment_publication_status.ts';
@@ -33,7 +34,7 @@ export default function AssessmentPublicationStatus(props: {
         if (!controller.signal.aborted) setStatus('unavailable');
       }
     }
-    void check();
+    check().catch(reportUiError);
     return () => controller.abort();
   }, [props.assessmentId, props.versionId, props.revisionFingerprint, retry]);
   return (

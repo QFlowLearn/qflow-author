@@ -32,7 +32,7 @@ export async function startFetchServer(
     active.add(operation);
   });
   await new Promise<void>((done, reject) => {
-    const failed = (cause: unknown) => reject(cause);
+    const failed = (cause: Error) => reject(cause);
     server.once('error', failed);
     server.listen(0, '127.0.0.1', () => {
       server.off('error', failed);

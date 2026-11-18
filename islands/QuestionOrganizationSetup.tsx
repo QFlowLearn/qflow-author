@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { canonicalJsonStringify } from '../lib/canonical_json.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
@@ -98,7 +99,7 @@ export default function QuestionOrganizationSetup(
       action='/items/organize'
       method='post'
       class='max-w-2xl space-y-5'
-      onSubmit={async (event) => {
+      onSubmit={uiEvent(async (event) => {
         event.preventDefault();
         const parsed = parseEnrichmentDefinition(definition);
         if (!parsed) {
@@ -116,7 +117,7 @@ export default function QuestionOrganizationSetup(
             parsed.topics.some((t) => t.id === m.topicId)
           ),
         });
-      }}
+      })}
     >
       {error && (
         <div ref={errorRef} tabIndex={-1}>
@@ -153,13 +154,14 @@ export default function QuestionOrganizationSetup(
             <Button
               type='button'
               variant='default'
-              onClick={() =>
+              onClick={uiEvent(() =>
                 send({
                   action: 'organization-activation',
                   collectionId,
                   setupId: null,
                   expectedRevision: activation.revision,
-                })}
+                })
+              )}
             >
               {i18n.t('items.organization.disable')}
             </Button>

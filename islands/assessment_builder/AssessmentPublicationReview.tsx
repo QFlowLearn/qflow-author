@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useEffect, useState } from 'preact/hooks';
 import { useI18n } from '../../lib/i18n/context.tsx';
 import {
@@ -16,7 +17,7 @@ export default function AssessmentPublicationReview(
   useEffect(() => {
     const controller = new AbortController();
     setReview(null);
-    void (async () => {
+    (async () => {
       try {
         const response = await fetch(
           `/api/assessments/${props.assessmentId}/publication-status?review=1`,
@@ -27,7 +28,7 @@ export default function AssessmentPublicationReview(
       } catch {
         if (!controller.signal.aborted) setReview({ status: 'unavailable' });
       }
-    })();
+    })().catch(reportUiError);
     return () => controller.abort();
   }, [props.assessmentId, props.revisionFingerprint, retry]);
   return (

@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../../components/ui/Button.tsx';
 import Select from '../../components/ui/Select.tsx';
@@ -50,7 +51,7 @@ export default function AdaptiveAssessmentSetup(
     setOptions(null);
     setOptionsFailed(false);
     if (!scheme) return () => controller.abort();
-    void (async () => {
+    (async () => {
       try {
         const response = await fetch(
           `/api/assessments/${props.assessmentId}/adaptive-plan?scheme=${
@@ -64,7 +65,7 @@ export default function AdaptiveAssessmentSetup(
       } catch {
         if (!controller.signal.aborted) setOptionsFailed(true);
       }
-    })();
+    })().catch(reportUiError);
     return () => controller.abort();
   }, [scheme, props.assessmentId]);
   useEffect(() => () => active.current?.abort(), []);

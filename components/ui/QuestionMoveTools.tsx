@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { useState } from 'preact/hooks';
 import type { JSX } from 'preact';
 import Button from './Button.tsx';
@@ -67,7 +68,7 @@ export default function QuestionMoveTools(props: {
           props.onDragStart(event);
         }}
         onDragEnd={props.onDragEnd}
-        onKeyDown={async (event) => {
+        onKeyDown={uiEvent(async (event) => {
           if (event.key === 'Escape') {
             event.preventDefault();
             close();
@@ -85,7 +86,7 @@ export default function QuestionMoveTools(props: {
           if (position === undefined) return;
           event.preventDefault();
           await move(position);
-        }}
+        })}
       >
         <svg aria-hidden='true' width='20' height='20' viewBox='0 0 20 20' fill='currentColor'>
           <circle cx='7' cy='4' r='1.5' />
@@ -120,7 +121,7 @@ export default function QuestionMoveTools(props: {
               variant='ghost'
               disabled={props.disabled || action.position < props.bounds.first ||
                 action.position > props.bounds.last || action.position === props.position}
-              onClick={() => move(action.position)}
+              onClick={uiEvent(() => move(action.position))}
             >
               {action.label}
             </Button>

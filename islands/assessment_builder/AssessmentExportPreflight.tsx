@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { useEffect, useReducer, useState } from 'preact/hooks';
 import { useI18n } from '../../lib/i18n/context.tsx';
 import type { I18n } from '../../lib/i18n/messages.ts';
@@ -319,7 +320,7 @@ export default function AssessmentExportPreflight(
               aria-describedby={readyPreflight.overallOutcome === 'warning'
                 ? 'assessment-export-changes'
                 : undefined}
-              onClick={downloadPackage}
+              onClick={uiEvent(downloadPackage)}
             >
               {readyState.download._tag === 'Downloading'
                 ? i18n.t('delivery.package.preparing')

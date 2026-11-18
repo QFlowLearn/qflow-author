@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
 import { BankAlert } from '../components/item_bank/ui.tsx';
@@ -50,9 +51,9 @@ export default function BankEnrichmentJobControls(
           if (!request.signal.aborted) setError(i18n.t('items.organize.errorRefresh'));
         }
       }
-      if (!request.signal.aborted) timer = setTimeout(refresh, 5000);
+      if (!request.signal.aborted) timer = setTimeout(uiEvent(refresh), 5000);
     }
-    timer = setTimeout(refresh, 5000);
+    timer = setTimeout(uiEvent(refresh), 5000);
     return () => {
       request.abort();
       clearTimeout(timer);
@@ -85,7 +86,7 @@ export default function BankEnrichmentJobControls(
         </div>
       )}
       {props.running && (
-        <Button type='button' disabled={busy} onClick={() => act('cancel')}>
+        <Button type='button' disabled={busy} onClick={uiEvent(() => act('cancel'))}>
           {i18n.t('items.organize.cancel')}
         </Button>
       )}
@@ -95,13 +96,13 @@ export default function BankEnrichmentJobControls(
           <p class='max-w-prose py-2 text-sm text-base-content/80'>
             {i18n.t('items.organize.undoHint')}
           </p>
-          <Button type='button' disabled={busy} onClick={() => act('undo')}>
+          <Button type='button' disabled={busy} onClick={uiEvent(() => act('undo'))}>
             {i18n.t('items.organize.confirmUndo')}
           </Button>
         </details>
       )}
       {props.resumable && (
-        <Button type='button' disabled={busy} onClick={() => act('resume')}>
+        <Button type='button' disabled={busy} onClick={uiEvent(() => act('resume'))}>
           {i18n.t('items.organize.resume')}
         </Button>
       )}

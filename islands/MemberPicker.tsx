@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { useDomId } from '../lib/rendering/island_context.tsx';
 import { useEffect, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
@@ -82,26 +83,29 @@ function MemberPickerContent(
       return;
     }
     const controller = new AbortController();
-    const timer = setTimeout(async () => {
-      setStatus(memberPickerStatus(i18n, 'loading'));
-      try {
-        const response = await fetch(`/api/members/search?q=${encodeURIComponent(phrase)}`, {
-          signal: controller.signal,
-        });
-        if (!response.ok) throw new Error('member_search_failed');
-        const members = parseMemberSearchResponse(await response.json());
-        setResults(members);
-        setStatus(
-          members.length === 0
-            ? memberPickerStatus(i18n, 'noResults')
-            : memberPickerStatus(i18n, 'results', members.length),
-        );
-      } catch (cause: unknown) {
-        if (cause instanceof DOMException && cause.name === 'AbortError') return;
-        setResults([]);
-        setStatus(memberPickerStatus(i18n, 'failure'));
-      }
-    }, 250);
+    const timer = setTimeout(
+      uiEvent(async () => {
+        setStatus(memberPickerStatus(i18n, 'loading'));
+        try {
+          const response = await fetch(`/api/members/search?q=${encodeURIComponent(phrase)}`, {
+            signal: controller.signal,
+          });
+          if (!response.ok) throw new Error('member_search_failed');
+          const members = parseMemberSearchResponse(await response.json());
+          setResults(members);
+          setStatus(
+            members.length === 0
+              ? memberPickerStatus(i18n, 'noResults')
+              : memberPickerStatus(i18n, 'results', members.length),
+          );
+        } catch (cause: unknown) {
+          if (cause instanceof DOMException && cause.name === 'AbortError') return;
+          setResults([]);
+          setStatus(memberPickerStatus(i18n, 'failure'));
+        }
+      }),
+      250,
+    );
     return () => {
       clearTimeout(timer);
       controller.abort();

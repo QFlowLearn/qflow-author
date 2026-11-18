@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { assessmentQuestionPlacements } from '../../lib/assessment_content.ts';
 import Button from '../../components/ui/Button.tsx';
 import SettingsDisclosure from '../../components/ui/SettingsDisclosure.tsx';
@@ -23,7 +24,7 @@ export default function AssessmentQuestionOrderPreview(
       <Button
         type='button'
         disabled={props.blocked || empty || preview.busy}
-        onClick={preview.generate}
+        onClick={uiEvent(preview.generate)}
       >
         {i18n.t(
           state.kind === 'ready'

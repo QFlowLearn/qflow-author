@@ -221,7 +221,7 @@ async function runScenario(
     if (pollScenarios.has(scenario)) releaseStartGate();
     if (scenario === 'success') {
       await page.getByRole('button', { name: i18n.t('imports.generation.starting') }).waitFor();
-      expect(await startRequests).toStrictEqual(1);
+      expect(startRequests).toStrictEqual(1);
       const secondDispatch = await page.evaluate(() => {
         const form = document.querySelector('form');
         if (!form) throw new Error('production form missing');

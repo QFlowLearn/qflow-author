@@ -48,7 +48,7 @@ export function createQtiMigratorAdapter(options: MigratorAdapterOptions): Impor
     label: options.label,
     extensions: options.extensions,
     priority: options.priority,
-    sniff: (source) => sniffMigratorSource(source, formats),
+    sniff: (source) => Promise.resolve(sniffMigratorSource(source, formats)),
     parse: async (source) => qtiMigrationResultToImportResult(await migrateQtiSource(source)),
   };
 }
@@ -68,11 +68,11 @@ export async function migrateQtiResourceToImportResult(
   return { ok: true, imported: appendWarnings(imported, validateQtiResourceReview(imported)) };
 }
 
-async function sniffMigratorSource(
+function sniffMigratorSource(
   source: ImportSource,
   formats: Set<QtiMigrationSourceFormat>,
-): Promise<SniffResult> {
-  const detected = await detectQtiMigrationSource(source);
+): SniffResult {
+  const detected = detectQtiMigrationSource(source);
   if (detected.supported && detected.sourceFormat && formats.has(detected.sourceFormat)) {
     return {
       supported: true,

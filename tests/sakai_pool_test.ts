@@ -31,10 +31,10 @@ function question(n: number, corrected = false) {
 
 testCase(
   'Sakai pools reconcile 100 ordered revisions and retain A after one answer correction',
-  async () => {
+  () => {
     const items = Array.from({ length: 100 }, (_, index) => question(index + 1));
-    const a = await compileSakaiPool({ id: 'edition-a', label: 'Edition A', items });
-    const b = await compileSakaiPool({
+    const a = compileSakaiPool({ id: 'edition-a', label: 'Edition A', items });
+    const b = compileSakaiPool({
       id: 'edition-b',
       label: 'Edition B',
       items: [question(1, true), ...items.slice(1)],
@@ -61,11 +61,11 @@ testCase(
       ),
     ).toStrictEqual(Array(100).fill('Correct'));
     expect(a.xml).not.toStrictEqual(b.xml);
-    expect(await compileSakaiPool({ id: 'edition-a', label: 'Edition A', items })).toStrictEqual(a);
+    expect(compileSakaiPool({ id: 'edition-a', label: 'Edition A', items })).toStrictEqual(a);
   },
 );
 
-testCase('Sakai exports supported revisions and identifies every excluded question', async () => {
+testCase('Sakai exports supported revisions and identifies every excluded question', () => {
   const valid = question(1);
   const mutations = [
     valid.xml.replace('max-choices="1"', 'max-choices="2"'),
@@ -81,7 +81,7 @@ testCase('Sakai exports supported revisions and identifies every excluded questi
     valid.xml.replace('<qti-item-body>', '<qti-item-body><qti-object data="passage.xml"/>'),
     '<broken>',
   ];
-  const result = await compileSakaiPool({
+  const result = compileSakaiPool({
     id: 'mixed',
     label: 'Mixed',
     items: [valid, ...mutations.map((xml, index) => ({ revisionId: `blocked-${index}`, xml }))],
@@ -93,7 +93,7 @@ testCase('Sakai exports supported revisions and identifies every excluded questi
   expect(result.excluded.map((item) => item.revisionId)).toStrictEqual(
     mutations.map((_, index) => `blocked-${index}`),
   );
-  const empty = await compileSakaiPool({
+  const empty = compileSakaiPool({
     id: 'empty',
     label: 'No supported questions',
     items: mutations.map((xml, index) => ({ revisionId: `excluded-${index}`, xml })),
@@ -102,15 +102,15 @@ testCase('Sakai exports supported revisions and identifies every excluded questi
   expect(empty.blocked.length).toStrictEqual(mutations.length);
   if ('xml' in empty) expect.unreachable("Expected !('xml' in empty)");
   expect(
-    (await compileSakaiPool({ id: 'duplicate', label: 'Duplicate', items: [valid, valid] })).ok,
+    (compileSakaiPool({ id: 'duplicate', label: 'Duplicate', items: [valid, valid] })).ok,
   ).toStrictEqual(false);
 });
 
-testCase('Sakai text remains literal after XML and HTML decoding', async () => {
+testCase('Sakai text remains literal after XML and HTML decoding', () => {
   const item = question(1);
   const xml = item.xml.replace('Which number is two plus two?', 'Is 2 &lt; 3 &amp; 4 &gt; 3?')
     .replace('Three', '&lt;strong&gt;Three&lt;/strong&gt;');
-  const result = await compileSakaiPool({
+  const result = compileSakaiPool({
     id: 'literal',
     label: 'Literal text',
     items: [{ ...item, xml }],
@@ -127,14 +127,14 @@ testCase('Sakai text remains literal after XML and HTML decoding', async () => {
 
 testCase(
   'Sakai adapts formatting and shuffling while retaining language, keys and original XML',
-  async () => {
+  () => {
     const original = question(1);
     const xml = original.xml.replace('shuffle="false"', 'shuffle="true"')
       .replace('xml:lang="en-US"', 'xml:lang="fr"')
       .replace('Which number is two plus two?', '<strong>Combien font deux plus deux ?</strong>')
       .replace('Three', '<em>Trois</em>').replace('Four', 'Quatre');
     const source = { ...original, xml };
-    const result = await compileSakaiPool({ id: 'adapted', label: 'Adapted', items: [source] });
+    const result = compileSakaiPool({ id: 'adapted', label: 'Adapted', items: [source] });
     if (!(result.ok)) expect.unreachable('Expected result.ok');
     expect(source.xml).toStrictEqual(xml);
     expect(result.excluded).toStrictEqual([]);

@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { useDomId } from '../../lib/rendering/island_context.tsx';
 import { useCallback, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import Button from '../../components/ui/Button.tsx';
@@ -242,7 +243,7 @@ export function ImageInsertPopover(
                 variant='primary'
                 size='sm'
                 disabled={!canSubmit || disabled}
-                onClick={handleSubmit}
+                onClick={uiEvent(handleSubmit)}
               >
                 {busy ? i18n.t('editor.imageUploading') : i18n.t('editor.insert')}
               </Button>

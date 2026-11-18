@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { createPrintRepairAction } from './assessment_builder/print_repair.ts';
 import { useRecentAssessments } from '../lib/client/use_recent_assessments.ts';
 import { emptyAssessmentContentDraft } from '../lib/assessment_standalone_content.ts';
@@ -371,7 +372,7 @@ function AssessmentBuilderInner(props: AssessmentBuilderProps) {
   useAddDialogKeyboard(
     showAdd,
     openGlobalAdd,
-    (type) => continueAuthoring(() => startAuthoring(type)),
+    uiEvent((type) => continueAuthoring(() => startAuthoring(type))),
     !a.adaptivePlan && !adaptiveSetupOpen,
   );
 
@@ -431,10 +432,10 @@ function AssessmentBuilderInner(props: AssessmentBuilderProps) {
       onAdded={bankQuestionsAdded}
       previewContext={{ payload: props.payload, playerCatalog: props.playerCatalog }}
       lastType={lastType}
-      onStartAuthoring={(type) => continueAuthoring(() => startAuthoring(type))}
-      onStartText={() => continueAuthoring(startTextAuthoring)}
+      onStartAuthoring={uiEvent((type) => continueAuthoring(() => startAuthoring(type)))}
+      onStartText={uiEvent(() => continueAuthoring(startTextAuthoring))}
       onReloadControls={() => continueAuthoring(() => globalThis.location.reload())}
-      onStartContent={(target, kind) =>
+      onStartContent={uiEvent((target, kind) =>
         continueAuthoring(() => {
           setInspectorOpen(false);
           setAssessmentSettingsOpen(false);
@@ -449,13 +450,14 @@ function AssessmentBuilderInner(props: AssessmentBuilderProps) {
             placementId: crypto.randomUUID(),
           });
           insertion.finish();
-        })}
+        })
+      )}
     >
       <AssessmentPlacementRecoveryNotice
         recovery={placementRecovery}
         busy={actionBusy !== null}
         i18n={i18n}
-        onReload={() => continueAuthoring(() => globalThis.location.reload())}
+        onReload={uiEvent(() => continueAuthoring(() => globalThis.location.reload()))}
       />
       {questionExportNotice && (
         <QuestionExportFeedback
@@ -494,12 +496,12 @@ function AssessmentBuilderInner(props: AssessmentBuilderProps) {
         parts={parts}
         itemMeta={itemMeta}
         inspectorOpen={inspectorOpen}
-        onEditItem={(...args) => continueAuthoring(() => editItem(...args))}
+        onEditItem={uiEvent((...args) => continueAuthoring(() => editItem(...args)))}
         onOpenInspector={openInspector}
         onAddQuestion={insertion.openAt}
-        onCreateVariant={(type) => continueAuthoring(() => createVariantItem(type))}
+        onCreateVariant={uiEvent((type) => continueAuthoring(() => createVariantItem(type)))}
         onExportXml={exportQuestionXml}
-        onDelete={() => continueAuthoring(deleteItem)}
+        onDelete={uiEvent(() => continueAuthoring(deleteItem))}
       />
     </AssessmentInsertTools>
   );
@@ -610,11 +612,11 @@ function AssessmentBuilderInner(props: AssessmentBuilderProps) {
           activeTool={props.activeTool}
           assessmentId={a.id}
           revisionFingerprint={assessmentRevisionFingerprint(parts, itemMeta)}
-          onRepairPrint={repairPrint}
+          onRepairPrint={uiEvent(repairPrint)}
           deliveryCapability={props.deliveryCapability}
           publishedVersionId={a.delivery?.assessmentVersionId}
           busy={actionBusy === 'deliveryPublish'}
-          onPublish={publishAssessmentForDelivery}
+          onPublish={uiEvent(publishAssessmentForDelivery)}
         />
       )}
       {a.adaptivePlan
@@ -632,11 +634,11 @@ function AssessmentBuilderInner(props: AssessmentBuilderProps) {
                   activeTool={props.activeTool}
                   assessmentId={a.id}
                   revisionFingerprint={assessmentRevisionFingerprint(parts, itemMeta)}
-                  onRepairPrint={repairPrint}
+                  onRepairPrint={uiEvent(repairPrint)}
                   deliveryCapability={props.deliveryCapability}
                   publishedVersionId={a.delivery?.assessmentVersionId}
                   busy={actionBusy === 'deliveryPublish'}
-                  onPublish={publishAssessmentForDelivery}
+                  onPublish={uiEvent(publishAssessmentForDelivery)}
                 />
               )}
             </AssessmentPublication>

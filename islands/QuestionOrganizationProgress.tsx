@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { ORGANIZATION_QUESTION_LIMIT } from '../lib/organization_limits.ts';
 import Select from '../components/ui/Select.tsx';
 import SafeHtml from '../components/ui/SafeHtml.tsx';
@@ -73,9 +74,9 @@ export default function QuestionOrganizationProgress(
           setUndoProcessed(raw.undoProcessed);
         }
       } catch { /* A temporary polling failure leaves the explicit refresh control available. */ }
-      if (!request.signal.aborted) timer = setTimeout(refresh, 3000);
+      if (!request.signal.aborted) timer = setTimeout(uiEvent(refresh), 3000);
     }
-    timer = setTimeout(refresh, 3000);
+    timer = setTimeout(uiEvent(refresh), 3000);
     return () => {
       request.abort();
       clearTimeout(timer);
@@ -153,7 +154,9 @@ export default function QuestionOrganizationProgress(
             type='button'
             variant='primary'
             disabled={disabled}
-            onClick={() => send('organization-resume', { expectedExecutionId: run.executionId })}
+            onClick={uiEvent(() =>
+              send('organization-resume', { expectedExecutionId: run.executionId })
+            )}
           >
             {i18n.t('items.organize.resume')}
           </Button>
@@ -164,7 +167,7 @@ export default function QuestionOrganizationProgress(
               type='button'
               variant='default'
               disabled={disabled}
-              onClick={() => send('organization-cancel')}
+              onClick={uiEvent(() => send('organization-cancel'))}
             >
               {i18n.t('items.organize.cancel')}
             </Button>
@@ -178,7 +181,7 @@ export default function QuestionOrganizationProgress(
             type='button'
             variant='primary'
             disabled={disabled || lessons.length > 0}
-            onClick={() => send('organization-apply')}
+            onClick={uiEvent(() => send('organization-apply'))}
           >
             {i18n.t('items.organization.apply')}
           </Button>
@@ -194,7 +197,9 @@ export default function QuestionOrganizationProgress(
             type='button'
             variant='default'
             disabled={disabled}
-            onClick={() => send('organization-undo', { expectedExecutionId: run.executionId })}
+            onClick={uiEvent(() =>
+              send('organization-undo', { expectedExecutionId: run.executionId })
+            )}
           >
             {i18n.t(
               run.state === 'undo_failed' ? 'items.organization.resumeUndo' : 'items.organize.undo',
@@ -223,13 +228,14 @@ export default function QuestionOrganizationProgress(
             type='button'
             variant='default'
             disabled={disabled || lessons.length > 0}
-            onClick={() =>
+            onClick={uiEvent(() =>
               send('organization-activation', {
                 operationId: props.operationId,
                 collectionId: run.collectionId,
                 expectedRevision: run.activation.revision,
                 setupId: run.activation.setupId === run.setupId ? null : run.setupId,
-              })}
+              })
+            )}
           >
             {i18n.t(
               run.activation.setupId === run.setupId
@@ -262,10 +268,10 @@ export default function QuestionOrganizationProgress(
         <form
           method='post'
           action={`/items/organize/${run.id}?kind=organization`}
-          onSubmit={(event) => {
+          onSubmit={uiEvent((event) => {
             event.preventDefault();
             if (lessons.length) return saveLessons();
-          }}
+          })}
         >
           <ul class='divide-y divide-base-300'>
             {run.sample.map((s) => (

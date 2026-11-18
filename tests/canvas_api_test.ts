@@ -199,7 +199,12 @@ testCase(
         new Promise<Response>((_resolve, reject) => {
           const requestSignal = init?.signal;
           if (!requestSignal) return reject(new Error('Expected request signal.'));
-          requestSignal.addEventListener('abort', () => reject(requestSignal.reason), {
+          requestSignal.addEventListener('abort', () =>
+            reject(
+              requestSignal.reason instanceof Error
+                ? requestSignal.reason
+                : new DOMException('Canvas request aborted.', 'AbortError'),
+            ), {
             once: true,
           });
         }),

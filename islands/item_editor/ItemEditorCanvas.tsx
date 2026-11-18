@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { useDomId } from '../../lib/rendering/island_context.tsx';
 import DeferredAnswerFeedbackEditor from '../../components/item_editor/DeferredAnswerFeedbackEditor.tsx';
 import { h } from 'preact';
@@ -175,7 +176,7 @@ export default function ItemEditorCanvas(props: ItemEditorCanvasProps) {
         </div>
 
         <div class='mt-4 flex flex-wrap gap-2'>
-          <Button variant='primary' disabled={!canSave || saving} onClick={() => save()}>
+          <Button variant='primary' disabled={!canSave || saving} onClick={uiEvent(() => save())}>
             {saving ? i18n.t('editor.saving') : i18n.t('editor.save')}
           </Button>
           {props.persistenceStatusLocation === 'canvas' && <QuestionPersistenceStatus />}

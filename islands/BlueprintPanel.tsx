@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { useHydrated } from '../lib/client/use_hydrated.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
@@ -223,7 +224,12 @@ function BlueprintPanelInner({
           />
           {error && <div class='ds-alert ds-alert-error text-sm' role='alert'>{error}</div>}
           <div class='flex flex-wrap gap-2'>
-            <Button type='button' variant='primary' disabled={state === 'saving'} onClick={save}>
+            <Button
+              type='button'
+              variant='primary'
+              disabled={state === 'saving'}
+              onClick={uiEvent(save)}
+            >
               {state === 'saving'
                 ? i18n.t('imports.blueprint.saving')
                 : i18n.t('imports.blueprint.save')}

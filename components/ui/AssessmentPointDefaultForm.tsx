@@ -1,3 +1,4 @@
+import { reportUiError, uiEvent } from '../../lib/client/ui_event.ts';
 import { useDomId } from '../../lib/rendering/island_context.tsx';
 
 import Button from './Button.tsx';
@@ -27,7 +28,7 @@ export default function AssessmentPointDefaultForm(props: {
           if (field instanceof HTMLElement) field.focus();
           return;
         }
-        void edit.save();
+        edit.save().catch(reportUiError);
       }}
     >
       <label for={`${id}-points`} class='block font-medium'>
@@ -70,7 +71,7 @@ export default function AssessmentPointDefaultForm(props: {
         <div role='alert' class='space-y-2 text-sm'>
           <p>{i18n.t(`assessments.questionDefaults.${edit.status}`)}</p>
           {edit.status !== 'Uncertain' && (
-            <Button type='button' onClick={edit.refresh} disabled={edit.busy}>
+            <Button type='button' onClick={uiEvent(edit.refresh)} disabled={edit.busy}>
               {i18n.t('assessments.questionDefaults.refresh')}
             </Button>
           )}

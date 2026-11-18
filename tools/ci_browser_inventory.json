@@ -558,5 +558,9 @@
     "file": "tests/hono/print_development.test.ts",
     "baselineSeconds": 4,
     "weightSource": "Local Vite/workerd PDF verification, 2026-11-17"
+  },
+  {
+    "file": "tests/ui_event_browser_test.ts",
+    "baselineSeconds": 1
   }
 ]

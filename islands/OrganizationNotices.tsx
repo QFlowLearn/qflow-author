@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
 import { NoticeLabel, NoticePanel, NoticeRow } from '../components/ui/NoticePanel.tsx';
@@ -49,15 +50,18 @@ export default function OrganizationNotices({ payload }: { readonly payload: I18
         if (!controller.signal.aborted) setError(true);
       } finally {
         pending = false;
-        if (!controller.signal.aborted && !document.hidden) timer = setTimeout(read, 60_000);
+        if (!controller.signal.aborted && !document.hidden) {
+          timer = setTimeout(refreshNotices, 60_000);
+        }
       }
     }
-    void read();
-    document.addEventListener('visibilitychange', read);
+    const refreshNotices = uiEvent(read);
+    refreshNotices();
+    document.addEventListener('visibilitychange', refreshNotices);
     return () => {
       controller.abort();
       clearTimeout(timer);
-      document.removeEventListener('visibilitychange', read);
+      document.removeEventListener('visibilitychange', refreshNotices);
     };
   }, [busy, refresh]);
 
@@ -130,14 +134,14 @@ export default function OrganizationNotices({ payload }: { readonly payload: I18
             <NoticeLabel>
               <strong>{notice.collection}</strong> — {t(`core.organizationNotices.${notice.state}`)}
             </NoticeLabel>
-            <Button size='sm' disabled={busy} onClick={() => acknowledge(notice, true)}>
+            <Button size='sm' disabled={busy} onClick={uiEvent(() => acknowledge(notice, true))}>
               {t('core.organizationNotices.open')}
             </Button>
             <Button
               size='sm'
               variant='ghost'
               disabled={busy}
-              onClick={() => acknowledge(notice, false)}
+              onClick={uiEvent(() => acknowledge(notice, false))}
             >
               {t('core.organizationNotices.dismiss')}
             </Button>

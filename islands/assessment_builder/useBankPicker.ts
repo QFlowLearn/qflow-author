@@ -1,3 +1,4 @@
+import { reportUiError, uiEvent } from '../../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { type LibrarySearch, parseLibrarySearchResponse } from '../../lib/question_bank_picker.ts';
 import {
@@ -63,8 +64,8 @@ export function useBankPicker(initialScope = '') {
         if (!controller.signal.aborted) setLoading(false);
       }
     };
-    const timer = timing === 'debounced' ? setTimeout(search, 250) : null;
-    if (timing === 'immediate') void search();
+    const timer = timing === 'debounced' ? setTimeout(uiEvent(search), 250) : null;
+    if (timing === 'immediate') search().catch(reportUiError);
     return () => {
       controller.abort();
       if (timer !== null) clearTimeout(timer);

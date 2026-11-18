@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import type { SourceIntakeDestination } from '../lib/source_intake/entry_context.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
@@ -389,7 +390,7 @@ function BringFilesIntakeContent(
                 type='button'
                 variant='primary'
                 disabled={!canInspect || requestState !== 'idle'}
-                onClick={inspect}
+                onClick={uiEvent(inspect)}
               >
                 {requestState === 'inspecting'
                   ? i18n.t('imports.intake.checking')
@@ -402,7 +403,7 @@ function BringFilesIntakeContent(
                   type='button'
                   variant='primary'
                   disabled={!canContinue || requestState !== 'idle'}
-                  onClick={continueWithSource}
+                  onClick={uiEvent(continueWithSource)}
                 >
                   {requestState === 'executing'
                     ? i18n.t('imports.intake.preparing')

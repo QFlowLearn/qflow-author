@@ -80,7 +80,7 @@ export async function processReleaseBuild(
       now(),
     );
   }
-  const compiled = await compileSakaiPool({
+  const compiled = compileSakaiPool({
     id: claim.releaseId,
     label: claim.manifest.label,
     items,

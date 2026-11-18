@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { useEffect, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
 import ImportStatusPanel from '../components/ui/ImportStatusPanel.tsx';
@@ -44,7 +45,7 @@ export default function ImportProgress(props: {
           case 'Queued':
           case 'Analyzing':
             setState(value.state);
-            timer = setTimeout(refresh, 3000);
+            timer = setTimeout(uiEvent(refresh), 3000);
             return;
           default:
             setInterrupted(true);
@@ -53,7 +54,7 @@ export default function ImportProgress(props: {
         if (!request.signal.aborted) setInterrupted(true);
       }
     }
-    timer = setTimeout(refresh, 3000);
+    timer = setTimeout(uiEvent(refresh), 3000);
     return () => {
       request.abort();
       clearTimeout(timer);

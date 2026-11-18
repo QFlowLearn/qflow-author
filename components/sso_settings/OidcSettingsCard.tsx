@@ -1,3 +1,4 @@
+import { reportUiError, uiEvent } from '../../lib/client/ui_event.ts';
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { useI18n } from '../../lib/i18n/context.tsx';
 import {
@@ -136,7 +137,7 @@ export default function OidcSettingsCard() {
       } finally {
         if (active) setLoading(false);
       }
-    })();
+    })().catch(reportUiError);
     return () => {
       active = false;
     };
@@ -195,7 +196,7 @@ export default function OidcSettingsCard() {
   }
 
   return (
-    <form class='ds-card ds-card-border max-w-4xl' onSubmit={save}>
+    <form class='ds-card ds-card-border max-w-4xl' onSubmit={uiEvent(save)}>
       <div class='ds-card-body space-y-5'>
         <OidcPendingStatus loading={loading} saving={saving} />
         <div class='space-y-1'>

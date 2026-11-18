@@ -141,6 +141,12 @@ Vite uses its native Oxc and Rolldown configuration. Vitest uses the same JSX tr
 TypeScript's native compiler checks the Node, Worker, and Worker-test scopes; verification scripts
 use its pinned native API to inspect source and emitted modules.
 
+Oxlint uses the pinned `tsrs` prerelease for type-aware promise checks. These checks require you to
+await or handle promises, use promises correctly in callbacks, reject with errors, and await work
+inside error handlers. The standard `tsconfig.json` entry points load each runtime's types; the full
+native compiler checks remain separate. UI event callbacks use `uiEvent` to report unexpected
+rejections. Each feature still owns cancellation and expected failures.
+
 Tailwind and DaisyUI configuration lives in `static/tailwind.css`. The stylesheet declares source
 directories and both application themes. `pnpm tw:build` generates `static/tw.css`; `pnpm dev` owns
 the stylesheet watcher alongside Vite. Use `pnpm format`, `pnpm lint`, and `pnpm typecheck` before

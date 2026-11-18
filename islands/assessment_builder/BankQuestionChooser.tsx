@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useDomId } from '../../lib/rendering/island_context.tsx';
 import { useState } from 'preact/hooks';
 import Button from '../../components/ui/Button.tsx';
@@ -88,7 +89,9 @@ export default function BankQuestionChooser(props: {
               onSubmit={(event) => {
                 event.preventDefault();
                 if (!invalid && version && !props.disabled) {
-                  void proposals.choose(version.id, counts.filter((entry) => entry.count > 0));
+                  proposals.choose(version.id, counts.filter((entry) => entry.count > 0)).catch(
+                    reportUiError,
+                  );
                 }
               }}
             >

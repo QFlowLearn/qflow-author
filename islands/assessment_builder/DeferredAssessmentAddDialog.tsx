@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import type { ComponentChildren, ComponentProps } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
 import type AssessmentAddDialog from './AssessmentAddDialog.tsx';
@@ -40,7 +41,7 @@ export default function DeferredAssessmentAddDialog(
     content = (
       <Alert tone='warning' role='alert'>
         <p>{i18n.t('editor.controlsFailed')}</p>
-        <Button type='button' onClick={props.onReloadControls}>
+        <Button type='button' onClick={uiEvent(props.onReloadControls)}>
           {i18n.t('assessments.builder.library.reload')}
         </Button>
         <Button type='button' onClick={props.onClose}>

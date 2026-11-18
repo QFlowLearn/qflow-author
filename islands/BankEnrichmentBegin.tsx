@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
 import Input from '../components/ui/Input.tsx';
@@ -37,7 +38,7 @@ export default function BankEnrichmentBegin(
       method='post'
       action='/items/organize'
       class='max-w-2xl space-y-5'
-      onSubmit={async (event) => {
+      onSubmit={uiEvent(async (event) => {
         event.preventDefault();
         if (pending.current) return;
         pending.current = true;
@@ -64,7 +65,7 @@ export default function BankEnrichmentBegin(
         );
         pending.current = false;
         setBusy(false);
-      }}
+      })}
     >
       {error && (
         <div ref={errorRef} tabIndex={-1}>

@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import type { QtiAttemptStateV1 } from '@longsightgroup/qti3-core';
 import { useEffect, useState } from 'preact/hooks';
 import Button from '../../components/ui/Button.tsx';
@@ -49,7 +50,7 @@ export default function BankQuestionPreview(
       }
     }
     // The effect owns cancellation; load handles every rejected request.
-    void load();
+    load().catch(reportUiError);
     return () => controller.abort();
   }, [props.itemId, props.revision, attempt]);
   if (state.kind === 'loading') {

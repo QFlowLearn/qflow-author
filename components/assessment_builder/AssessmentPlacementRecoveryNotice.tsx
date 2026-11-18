@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useEffect, useLayoutEffect, useState } from 'preact/hooks';
 import ActionNotice from '../ui/ActionNotice.tsx';
 import Button from '../ui/Button.tsx';
@@ -101,9 +102,10 @@ export default function AssessmentPlacementRecoveryNotice(props: {
             onClick={() => {
               if (busy) return;
               if (notice._tag === 'Pending') {
-                if (!expired && !terminal) void recovery.restore(notice.receipt);
-              } else if (notice._tag === 'HistoryFailed') void recovery.retryHistory();
-              else dismiss();
+                if (!expired && !terminal) recovery.restore(notice.receipt).catch(reportUiError);
+              } else if (notice._tag === 'HistoryFailed') {
+                recovery.retryHistory().catch(reportUiError);
+              } else dismiss();
             }}
           >
             {notice._tag === 'Pending'

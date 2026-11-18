@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { useEffect, useLayoutEffect, useRef } from 'preact/hooks';
 import type { ComponentChildren, RefObject } from 'preact';
 import { standaloneInlineChoice } from '../../lib/types/inline_choice.ts';
@@ -133,7 +134,7 @@ export default function AssessmentRightRail({
           class='mt-3 w-full'
           variant='primary'
           disabled={!canSave || saveStatus === 'saving'}
-          onClick={() => save()}
+          onClick={uiEvent(() => save())}
         >
           {saveStatus === 'saving'
             ? i18n.t('editor.saving')

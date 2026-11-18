@@ -1,3 +1,4 @@
+import { reportUiError, uiEvent } from '../../lib/client/ui_event.ts';
 import LocalizedTimestamp from '../../islands/LocalizedTimestamp.tsx';
 import { useEffect, useState } from 'preact/hooks';
 import { useI18n } from '../../lib/i18n/context.tsx';
@@ -179,7 +180,7 @@ export default function LoginPolicySettingsCard() {
       } finally {
         if (active) setLoading(false);
       }
-    })();
+    })().catch(reportUiError);
     return () => {
       active = false;
     };
@@ -274,7 +275,7 @@ export default function LoginPolicySettingsCard() {
   }
 
   return (
-    <form class='ds-card ds-card-border max-w-4xl' onSubmit={save}>
+    <form class='ds-card ds-card-border max-w-4xl' onSubmit={uiEvent(save)}>
       <div class='ds-card-body space-y-4'>
         <LoginPolicyPendingStatus
           loading={loading}
@@ -402,7 +403,7 @@ export default function LoginPolicySettingsCard() {
                     <Button
                       type='button'
                       size='sm'
-                      onClick={() => runDomainVerificationAction(route.domain, 'prepare')}
+                      onClick={uiEvent(() => runDomainVerificationAction(route.domain, 'prepare'))}
                       disabled={verificationSavingDomain !== null &&
                         verificationSavingDomain === domain}
                       aria-label={i18n.t('settings.sso.routes.prepareFor', {
@@ -414,7 +415,9 @@ export default function LoginPolicySettingsCard() {
                     <Button
                       type='button'
                       size='sm'
-                      onClick={() => runDomainVerificationAction(route.domain, 'verify_dns')}
+                      onClick={uiEvent(() =>
+                        runDomainVerificationAction(route.domain, 'verify_dns')
+                      )}
                       disabled={verificationSavingDomain !== null &&
                         verificationSavingDomain === domain}
                       aria-label={i18n.t('settings.sso.routes.verifyDnsFor', {
@@ -426,7 +429,9 @@ export default function LoginPolicySettingsCard() {
                     <Button
                       type='button'
                       size='sm'
-                      onClick={() => runDomainVerificationAction(route.domain, 'verify_https')}
+                      onClick={uiEvent(() =>
+                        runDomainVerificationAction(route.domain, 'verify_https')
+                      )}
                       disabled={verificationSavingDomain !== null &&
                         verificationSavingDomain === domain}
                       aria-label={i18n.t('settings.sso.routes.verifyHttpsFor', {

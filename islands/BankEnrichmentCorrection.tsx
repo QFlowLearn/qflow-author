@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
 import Select from '../components/ui/Select.tsx';
@@ -89,7 +90,12 @@ export default function BankEnrichmentCorrection(props: {
         !selected.subject || selected.subject === t.subjectId
       );
   return (
-    <form method='post' action='/items/organize' onSubmit={submit} class='max-w-2xl space-y-5'>
+    <form
+      method='post'
+      action='/items/organize'
+      onSubmit={uiEvent(submit)}
+      class='max-w-2xl space-y-5'
+    >
       {error && (
         <div ref={errorRef} tabIndex={-1}>
           <BankAlert tone='error'>{error}</BankAlert>

@@ -1,3 +1,4 @@
+import { uiEvent } from '../lib/client/ui_event.ts';
 import { useHydrated } from '../lib/client/use_hydrated.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
@@ -131,7 +132,7 @@ function ConversionGenerationInner(
   }
 
   return (
-    <form class='mx-auto max-w-4xl text-left' onSubmit={generate}>
+    <form class='mx-auto max-w-4xl text-left' onSubmit={uiEvent(generate)}>
       <fieldset disabled={!hydrated} class='min-w-0 space-y-6'>
         <BlueprintEditorFields
           value={blueprint}
@@ -210,7 +211,11 @@ function waitForPoll(signal: AbortSignal): Promise<void> {
     signal.throwIfAborted();
     const cancel = () => {
       clearTimeout(timer);
-      reject(signal.reason);
+      reject(
+        signal.reason instanceof Error
+          ? signal.reason
+          : new DOMException('Generation polling cancelled.', 'AbortError'),
+      );
     };
     const timer = setTimeout(() => {
       signal.removeEventListener('abort', cancel);

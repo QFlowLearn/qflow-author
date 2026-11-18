@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { useI18n } from '../../lib/i18n/context.tsx';
 import { useRetryableModule } from '../../islands/useRetryableModule.ts';
 import type { AssessmentContentEditorProps } from './AssessmentContentEditor.tsx';
@@ -21,7 +22,9 @@ export default function DeferredAssessmentContentEditor(props: AssessmentContent
     return (
       <Alert tone='warning' role='alert'>
         <p>{i18n.t('editor.controlsFailed')}</p>
-        <Button type='button' onClick={props.onReload}>{i18n.t('editor.reloadControls')}</Button>
+        <Button type='button' onClick={uiEvent(props.onReload)}>
+          {i18n.t('editor.reloadControls')}
+        </Button>
       </Alert>
     );
   }

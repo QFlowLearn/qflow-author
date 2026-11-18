@@ -44,8 +44,8 @@ export async function runDevelopment(args: readonly string[]): Promise<void> {
     const child = spawn(process.execPath, [entry, ...commandArgs], { stdio: 'inherit' });
     children.push(child);
     return new Promise<number>((resolve, reject) => {
-      let failure: unknown;
-      child.once('error', (cause: unknown) => {
+      let failure: Error | undefined;
+      child.once('error', (cause: Error) => {
         failure = cause;
         stop();
       });

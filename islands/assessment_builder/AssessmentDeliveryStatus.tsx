@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useEffect, useState } from 'preact/hooks';
 import { useI18n } from '../../lib/i18n/context.tsx';
 import {
@@ -17,7 +18,7 @@ export default function AssessmentDeliveryStatus(
   useEffect(() => {
     const controller = new AbortController();
     setState('loading');
-    void (async () => {
+    (async () => {
       try {
         const response = await fetch(`/api/assessments/${props.assessmentId}/delivery-status`, {
           signal: controller.signal,
@@ -29,7 +30,7 @@ export default function AssessmentDeliveryStatus(
       } catch {
         if (!controller.signal.aborted) setState('unavailable');
       }
-    })();
+    })().catch(reportUiError);
     return () => controller.abort();
   }, [props.assessmentId, props.versionId, refresh]);
   return (

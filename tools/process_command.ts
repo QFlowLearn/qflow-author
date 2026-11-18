@@ -34,10 +34,10 @@ export function runCommand(executable: string, args: readonly string[], options:
       ],
     });
     const stdout: Buffer[] = [], stderr: Buffer[] = [];
-    let failure: unknown;
+    let failure: Error | undefined;
     child.stdout?.on('data', (chunk: Buffer) => stdout.push(chunk));
     child.stderr?.on('data', (chunk: Buffer) => stderr.push(chunk));
-    child.once('error', (cause: unknown) => {
+    child.once('error', (cause: Error) => {
       failure = cause;
     });
     child.once('close', (code, signal) => {

@@ -1,3 +1,4 @@
+import { reportUiError } from './ui_event.ts';
 import { useEffect, useState } from 'preact/hooks';
 import { isCanonicalUuid } from '../uuid.ts';
 
@@ -20,7 +21,7 @@ export function useRecentAssessments(assessmentId: string): readonly RecentAsses
         // Quick switching is optional; the current assessment remains usable on request failure.
       }
     }
-    void load();
+    load().catch(reportUiError);
     return () => request.abort();
   }, [assessmentId]);
   return recent;

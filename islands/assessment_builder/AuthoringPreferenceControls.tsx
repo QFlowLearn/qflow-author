@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import type { AssessmentQuestionPointDefault } from '../../lib/assessment_question_defaults.ts';
 import Checkbox from '../../components/ui/Checkbox.tsx';
 import Button from '../../components/ui/Button.tsx';
@@ -89,7 +90,7 @@ export default function AuthoringPreferenceControls(
       <Button variant='text' size='sm' href='/settings/editor'>
         {t('assessments.builder.editInstructorDefaults')}
       </Button>
-      <Button type='button' variant='ghost' size='sm' onClick={onReset}>
+      <Button type='button' variant='ghost' size='sm' onClick={uiEvent(onReset)}>
         {t('assessments.builder.resetRememberedSettings')}
       </Button>
       {resetState === 'saved' && (

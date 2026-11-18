@@ -450,7 +450,7 @@ testCase('source-intake browser harness captures request-scoped multipart contra
     );
     expect(new URL(page.url()).pathname).toStrictEqual('/');
     expect(await storageKey()).toStrictEqual(conflictKey);
-    expect(await capturesFor(captures, 'conflict-retry', 'execute').length).toStrictEqual(1);
+    expect(capturesFor(captures, 'conflict-retry', 'execute').length).toStrictEqual(1);
     const firstConflictCapture = capturesFor(captures, 'conflict-retry', 'execute')[0];
     expect(firstConflictCapture).toStrictEqual({
       scenario: 'conflict-retry',

@@ -1,6 +1,16 @@
 engineStrict: true
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
+  # Exact backend cohort for the requested type-aware promise lint trial.
+  - "tsrs@0.25.0-ts7.1.0-beta"
+  - "@tsrs/darwin-arm64@0.25.0-ts7.1.0-beta"
+  - "@tsrs/darwin-x64@0.25.0-ts7.1.0-beta"
+  - "@tsrs/linux-arm64-gnu@0.25.0-ts7.1.0-beta"
+  - "@tsrs/linux-arm64-musl@0.25.0-ts7.1.0-beta"
+  - "@tsrs/linux-x64-gnu@0.25.0-ts7.1.0-beta"
+  - "@tsrs/linux-x64-musl@0.25.0-ts7.1.0-beta"
+  - "@tsrs/win32-arm64@0.25.0-ts7.1.0-beta"
+  - "@tsrs/win32-x64@0.25.0-ts7.1.0-beta"
   # Explicit dependencies of the requested Cloudflare configuration release candidate.
   - cf
   - wrangler

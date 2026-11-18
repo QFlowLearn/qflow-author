@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { useEffect, useState } from 'preact/hooks';
 import { useI18n } from '../../lib/i18n/context.tsx';
 import type { JSX } from 'preact';
@@ -86,7 +87,7 @@ export default function CanvasDirectPublish({ assessmentId, selection, preflight
       connectionId,
       destination,
     };
-    void send(command);
+    send(command).catch(reportUiError);
   };
 
   const history = (

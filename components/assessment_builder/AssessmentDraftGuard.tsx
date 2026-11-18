@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { type RefObject } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../ui/Button.tsx';
@@ -107,12 +108,12 @@ export function AssessmentDraftSwitchGuard(props: {
         <Button
           variant='primary'
           disabled={!persistence.canSave || saving}
-          onClick={async () => {
+          onClick={uiEvent(async () => {
             continuingSave.current = true;
             const saved = await persistence.save();
             continuingSave.current = false;
             if (saved) finish(true);
-          }}
+          })}
         >
           {saving ? i18n.t('editor.saving') : i18n.t('assessments.builder.saveAndContinue')}
         </Button>

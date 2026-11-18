@@ -1,3 +1,4 @@
+import { reportUiError } from '../../lib/client/ui_event.ts';
 import { QuestionCompletionSession } from './question_completion_session.ts';
 import {
   needsQuestionComposition,
@@ -266,7 +267,7 @@ export default function QuestionTextAssistance(
   useEffect(() => {
     if (composing || !text.trim() || text === lastText.current || protectedFields.current) return;
     const timer = setTimeout(() => {
-      void prepare(text, true);
+      prepare(text, true).catch(reportUiError);
     }, 800);
     return () => clearTimeout(timer);
   }, [text, composing]);
@@ -317,8 +318,9 @@ export default function QuestionTextAssistance(
     explicitRef.current = type;
     setExplicitType(type);
     // Selecting a type locks future inference; existing field edits require explicit replacement.
-    if (!protectedFields.current && textRef.current.trim()) void prepare(textRef.current, false);
-    else if (protectedFields.current) {
+    if (!protectedFields.current && textRef.current.trim()) {
+      prepare(textRef.current, false).catch(reportUiError);
+    } else if (protectedFields.current) {
       completionSession.cancel();
       current.current.content.setAssistancePending(true);
       setStatus('edited');
@@ -360,7 +362,7 @@ export default function QuestionTextAssistance(
         setStatus('edited');
       }}
       onPrepare={() => {
-        void prepare(text, false);
+        prepare(text, false).catch(reportUiError);
       }}
       onUndo={undoDraft ? () => restore(undoDraft, 'undo') : undefined}
       onRedo={redoDraft ? () => restore(redoDraft, 'redo') : undefined}

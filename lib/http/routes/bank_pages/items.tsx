@@ -123,7 +123,7 @@ const methods = {
           page.code === 'forbidden' ? 403 : page.code === 'not_found' ? 404 : 500,
         );
       }
-      return ctx.render(
+      return await ctx.render(
         <ItemsPage
           {...page.value}
           bankDisplayName={tenant.bankDisplayName}

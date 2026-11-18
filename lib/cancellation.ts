@@ -56,8 +56,9 @@ export async function sleepWithSignal(
         return;
       }
       reject(
-        options.signal?.reason ??
-          new DOMException('Sleep aborted.', 'AbortError'),
+        options.signal?.reason instanceof Error
+          ? options.signal?.reason
+          : new DOMException('Sleep aborted.', 'AbortError'),
       );
     };
     const stop = () => finish('aborted');

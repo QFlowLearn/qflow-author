@@ -1,3 +1,4 @@
+import { reportUiError } from '../lib/client/ui_event.ts';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { BankEnrichmentFilters } from '../components/item_bank/BankEnrichmentFilters.tsx';
 import { parseEnrichmentQuestionsView } from '../lib/bank_enrichment_browse_response.ts';
@@ -117,7 +118,7 @@ export default function BankCategoryFilters(props: {
         }
       }
     };
-    void refresh();
+    refresh().catch(reportUiError);
   }
 
   if (state.view.schemes.length === 0) return null;

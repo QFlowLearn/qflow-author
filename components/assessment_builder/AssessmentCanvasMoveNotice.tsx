@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import Alert from '../ui/Alert.tsx';
 import Button from '../ui/Button.tsx';
 import type { CanvasMoveStatus } from './useAssessmentCanvasMove.ts';
@@ -47,11 +48,11 @@ export default function AssessmentCanvasMoveNotice(props: {
               )}
             </p>
             {status.kind === 'uncertain' && (
-              <Button type='button' onClick={props.onRetry}>
+              <Button type='button' onClick={uiEvent(props.onRetry)}>
                 {i18n.t('assessments.builder.tool.retry')}
               </Button>
             )}
-            <Button type='button' onClick={props.onReload}>
+            <Button type='button' onClick={uiEvent(props.onReload)}>
               {i18n.t('assessments.arrange.reloadSaved')}
             </Button>
           </div>

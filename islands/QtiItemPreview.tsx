@@ -1,3 +1,4 @@
+import { reportUiError } from '../lib/client/ui_event.ts';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Button from '../components/ui/Button.tsx';
 import type { QtiAttemptStateV1, QtiDiagnostic } from '@longsightgroup/qti3-core';
@@ -143,7 +144,7 @@ function LocalizedPreview(
       }
     };
 
-    void load();
+    load().catch(reportUiError);
     return () => {
       active = false;
       events.abort();

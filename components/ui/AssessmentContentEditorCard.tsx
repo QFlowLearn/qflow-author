@@ -1,3 +1,4 @@
+import { uiEvent } from '../../lib/client/ui_event.ts';
 import { useEffect, useRef } from 'preact/hooks';
 import Button from './Button.tsx';
 import type { ComponentChildren } from 'preact';
@@ -42,10 +43,10 @@ export default function AssessmentContentEditorCard(props: {
       <form
         method='post'
         action={props.action}
-        onSubmit={async (event) => {
+        onSubmit={uiEvent(async (event) => {
           event.preventDefault();
           await props.onSave();
-        }}
+        })}
       >
         {props.children}
         {props.error && (
@@ -55,15 +56,15 @@ export default function AssessmentContentEditorCard(props: {
           <Button type='submit' variant='primary' disabled={!props.canSave}>
             {props.saveLabel}
           </Button>
-          <Button type='button' disabled={props.busy} onClick={props.onClose}>
+          <Button type='button' disabled={props.busy} onClick={uiEvent(props.onClose)}>
             {props.cancelLabel}
           </Button>
           {props.structuralActions && (
             <>
-              <Button type='button' disabled={props.busy} onClick={props.onDuplicate}>
+              <Button type='button' disabled={props.busy} onClick={uiEvent(props.onDuplicate)}>
                 {props.duplicateLabel}
               </Button>
-              <Button type='button' disabled={props.busy} onClick={props.onRemove}>
+              <Button type='button' disabled={props.busy} onClick={uiEvent(props.onRemove)}>
                 {props.removeLabel}
               </Button>
             </>
@@ -71,15 +72,15 @@ export default function AssessmentContentEditorCard(props: {
           {props.retryLabel && (
             <Button
               type='button'
-              onClick={async () => {
+              onClick={uiEvent(async () => {
                 await props.onSave();
-              }}
+              })}
             >
               {props.retryLabel}
             </Button>
           )}
           {props.reloadLabel && (
-            <Button type='button' onClick={props.onReload}>{props.reloadLabel}</Button>
+            <Button type='button' onClick={uiEvent(props.onReload)}>{props.reloadLabel}</Button>
           )}
           <QuestionPersistenceNotice
             message={props.message}
