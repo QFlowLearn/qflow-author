@@ -2,15 +2,15 @@ engineStrict: true
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
   # Exact backend cohort for the requested type-aware promise lint trial.
-  - "tsrs@0.25.0-ts7.1.0-beta"
-  - "@tsrs/darwin-arm64@0.25.0-ts7.1.0-beta"
-  - "@tsrs/darwin-x64@0.25.0-ts7.1.0-beta"
-  - "@tsrs/linux-arm64-gnu@0.25.0-ts7.1.0-beta"
-  - "@tsrs/linux-arm64-musl@0.25.0-ts7.1.0-beta"
-  - "@tsrs/linux-x64-gnu@0.25.0-ts7.1.0-beta"
-  - "@tsrs/linux-x64-musl@0.25.0-ts7.1.0-beta"
-  - "@tsrs/win32-arm64@0.25.0-ts7.1.0-beta"
-  - "@tsrs/win32-x64@0.25.0-ts7.1.0-beta"
+  - "tsrs@7.1.0-beta.tsrs3"
+  - "@tsrs/darwin-arm64@7.1.0-beta.tsrs3"
+  - "@tsrs/darwin-x64@7.1.0-beta.tsrs3"
+  - "@tsrs/linux-arm64-gnu@7.1.0-beta.tsrs3"
+  - "@tsrs/linux-arm64-musl@7.1.0-beta.tsrs3"
+  - "@tsrs/linux-x64-gnu@7.1.0-beta.tsrs3"
+  - "@tsrs/linux-x64-musl@7.1.0-beta.tsrs3"
+  - "@tsrs/win32-arm64@7.1.0-beta.tsrs3"
+  - "@tsrs/win32-x64@7.1.0-beta.tsrs3"
   # Explicit dependencies of the requested Cloudflare configuration release candidate.
   - cf
   - wrangler
@@ -30,6 +30,18 @@ minimumReleaseAgeExclude:
   - '@longsightgroup/qti3-pnp'
   - '@longsightgroup/qti3-transcoder'
   - '@longsightgroup/qti3-writer'
+  # Required packages of the coordinated Cloudflare RC2 release.
+  - "@cloudflare/kv-asset-handler@0.5.1"
+  - "@cloudflare/workers-utils@0.55.0"
+
+  # Security patch for AJV URI handling.
+  - "fast-uri@3.1.9"
+
+  # Current Vitest patch cohort.
+  - "vitest@5.1.1"
+  - "@vitest/mocker@5.1.1"
+  - "@vitest/spy@5.1.1"
+
   # Exact current tooling releases reviewed for this upgrade.
   - "@dprint/android-arm64@0.65.0"
   - "@dprint/android-x64@0.65.0"
@@ -86,4 +98,5 @@ allowBuilds:
 strictPeerDependencies: true
 
 overrides:
+  "fast-uri@>=3 <3.1.9": 3.1.9
   hono: 4.13.16

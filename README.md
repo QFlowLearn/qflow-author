@@ -10,7 +10,7 @@ implementation.
 
 ## Run locally
 
-Use Node 26.12.0 and pnpm 12.21.0. Install PostgreSQL 17, mkcert, and xmllint. For native HTTPS,
+Use Node 26.13.1 and pnpm 12.21.0. Install PostgreSQL 17, mkcert, and xmllint. For native HTTPS,
 trust your mkcert CA once with `mkcert -install`.
 
 ```sh

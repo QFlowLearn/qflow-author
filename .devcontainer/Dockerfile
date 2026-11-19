@@ -1,4 +1,4 @@
-FROM node:26.12.0-bookworm
+FROM node:26.13.1-bookworm
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates git libxml2-utils mkcert sudo \

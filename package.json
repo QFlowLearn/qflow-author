@@ -70,11 +70,11 @@
     "unpdf": "1.8.1"
   },
   "devDependencies": {
-    "@cloudflare/build-output-utils": "1.0.0-rc.1",
-    "@cloudflare/config": "1.0.0-rc.1",
-    "@cloudflare/vite-plugin": "2.0.0-rc.1",
-    "@cloudflare/vitest-plugin": "1.8.4",
-    "@cloudflare/workers-types": "5.20261117.1",
+    "@cloudflare/build-output-utils": "1.0.0-rc.2",
+    "@cloudflare/config": "1.0.0-rc.2",
+    "@cloudflare/vite-plugin": "2.0.0-rc.2",
+    "@cloudflare/vitest-plugin": "1.8.5",
+    "@cloudflare/workers-types": "5.20261119.1",
     "@dprint/json": "0.26.0",
     "@dprint/markdown": "0.29.0",
     "@dprint/typescript": "0.101.0",
@@ -82,24 +82,24 @@
     "@types/node": "26.6.6",
     "ajv": "8.20.0",
     "axe-core": "4.14.1",
-    "cf": "1.0.0-rc.1",
+    "cf": "1.0.0-rc.2",
     "daisyui": "5.8.1",
     "dprint": "0.65.0",
     "esbuild": "0.28.2",
     "jsonc-parser": "3.3.1",
-    "miniflare": "5.20261117.0-beta",
+    "miniflare": "5.20261118.0-beta",
     "oxlint": "1.94.0",
     "playwright": "1.65.1",
     "tailwindcss": "4.3.5",
-    "tsrs": "0.25.0-ts7.1.0-beta",
+    "tsrs": "7.1.0-beta.tsrs3",
     "tsx": "4.23.15",
     "typescript": "7.0.2",
     "vite": "8.3.8",
-    "vitest": "5.1.0"
+    "vitest": "5.1.1"
   },
   "packageManager": "pnpm@12.21.0",
   "engines": {
-    "node": "26.12.0",
+    "node": "26.13.1",
     "pnpm": "12.21.0"
   }
 }

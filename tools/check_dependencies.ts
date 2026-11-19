@@ -14,7 +14,7 @@ function object(value: unknown): Record<string, unknown> {
 /** Check pinned tools, one Preact runtime and Deno/Fresh/JSR-free emitted module dependencies. */
 export async function checkDependencies(): Promise<void> {
   const config = object(JSON.parse(await readFile('package.json', 'utf8')));
-  if (process.versions.node !== '26.12.0' || config.packageManager !== 'pnpm@12.21.0') {
+  if (process.versions.node !== '26.13.1' || config.packageManager !== 'pnpm@12.21.0') {
     throw Error('Pinned runtime tools differ.');
   }
   for (const kind of ['dependencies', 'devDependencies']) {

@@ -7,7 +7,7 @@ import { dryRun } from './check_configuration.ts';
 
 /** Run the mandatory local/CI matrix in dependency order, with one fresh CSS/application build. */
 export async function verify(selection: string): Promise<void> {
-  if (process.versions.node !== '26.12.0') throw Error('Use pinned Node 26.12.0.');
+  if (process.versions.node !== '26.13.1') throw Error('Use pinned Node 26.13.1.');
   const databaseUrl = await qaDatabase(selection);
   const environment = { ...process.env, DATABASE_URL: databaseUrl, QFLOW_CI_BROWSER_PORT: '55880' };
   process.env.DATABASE_URL = databaseUrl;

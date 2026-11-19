@@ -17,7 +17,7 @@ unchanged.
 ## Dev Containers and GitHub Codespaces
 
 The repository implements the [Development Container specification](https://containers.dev/). Its
-configuration lives in `.devcontainer/`. The workspace image pins Node 26.12.0 and pnpm 12.21.0 on
+configuration lives in `.devcontainer/`. The workspace image pins Node 26.13.1 and pnpm 12.21.0 on
 Debian Bookworm. Compose supplies PostgreSQL 17; the normal frozen install supplies the Cloudflare
 CLI, workerd and Playwright. Container creation installs Chromium and its Linux dependencies,
 prepares local configuration, migrates both databases and runs doctor.
@@ -90,7 +90,7 @@ the actual proxy and browser session. Cloud workspace compute/storage is billed 
 
 ## Native first setup
 
-1. Install the versions in `.node-version` and `package.json`: Node 26.12.0 and pnpm 12.21.0.
+1. Install the versions in `.node-version` and `package.json`: Node 26.13.1 and pnpm 12.21.0.
 2. Install PostgreSQL 17, mkcert and xmllint. Install Playwright's Chromium for browser checks:
    `pnpm exec playwright install chromium` after installing dependencies.
 3. Trust your development CA once with `mkcert -install`. This changes your machine's certificate
@@ -159,7 +159,7 @@ full verification.
   the local development configuration. Vite supplies static assets from `static/` and the client
   build. Setup writes local values to the ignored `.env.local` file.
 - Cloudflare's TypeScript configuration uses `cf` and version 2 of its Vite plugin. These packages
-  are pinned to release candidates; Node 26.12.0 is required.
+  are pinned to release candidates; Node 26.13.1 is required.
 - Hosted production configuration is outside this repository. Setup only manages local
   configuration.
 - `DATABASE_URL` is the only local database URL you configure. Development projects it to the
