@@ -80,7 +80,7 @@ export async function assertCanvasMoveFailureMessages(
     if (failure === 'uncertain') await route.abort('failed');
     else if (failure === 'rejected') {
       await route.continue({
-        headers: { ...route.request().headers(), origin: 'https://untrusted.example' },
+        postData: '{',
       });
     } else {
       await route.continue({
