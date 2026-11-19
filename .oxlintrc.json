@@ -116,7 +116,8 @@
       "error",
       "error-handling-correctness-only"
     ],
-    "typescript/prefer-promise-reject-errors": "error"
+    "typescript/prefer-promise-reject-errors": "error",
+    "landmines-testing/no-test-doubles": "error"
   },
   "overrides": [
     {
@@ -249,5 +250,11 @@
   },
   "options": {
     "typeAware": true
-  }
+  },
+  "jsPlugins": [
+    {
+      "name": "landmines-testing",
+      "specifier": "@interfere/landmines/testing"
+    }
+  ]
 }

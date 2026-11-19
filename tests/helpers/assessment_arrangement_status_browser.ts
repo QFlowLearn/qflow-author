@@ -36,7 +36,14 @@ export async function assertSettingsFailureMessages(
   await page.route(endpoint, async (route) => {
     intercepted++;
     if (failure === 'uncertain') await route.abort('failed');
-    else await route.fulfill({ status: 409, json: { ok: false } });
+    else {
+      await route.continue({
+        postData: JSON.stringify({
+          ...route.request().postDataJSON(),
+          expectedVersion: '0'.repeat(64),
+        }),
+      });
+    }
   });
   try {
     await maximum.fill(String(Number(current) + 50));
@@ -71,7 +78,18 @@ export async function assertCanvasMoveFailureMessages(
   await page.route(endpoint, async (route) => {
     intercepted++;
     if (failure === 'uncertain') await route.abort('failed');
-    else await route.fulfill({ status: failure === 'rejected' ? 403 : 409, json: { ok: false } });
+    else if (failure === 'rejected') {
+      await route.continue({
+        headers: { ...route.request().headers(), origin: 'https://untrusted.example' },
+      });
+    } else {
+      await route.continue({
+        postData: JSON.stringify({
+          ...route.request().postDataJSON(),
+          expectedVersion: '0'.repeat(64),
+        }),
+      });
+    }
   });
   const status = (message: 'moveUncertain' | 'moveRejected' | 'moveConflict') =>
     page.getByRole('status').filter({ hasText: i18n.t(`assessments.builder.${message}`) });

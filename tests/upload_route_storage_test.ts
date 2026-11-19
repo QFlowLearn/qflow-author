@@ -1,3 +1,4 @@
+import { diagnosticConsole } from './helpers/diagnostic_console.ts';
 import { expect, test as testCase } from 'vitest';
 
 import { uploadBankRoute as uploadHandlerEndpoint } from '../lib/http/routes/bank_api/upload.ts';
@@ -10,17 +11,21 @@ const uploadHandler = uploadHandlerEndpoint.handle;
 
 function uploadContext(
   req: Request,
-  state: { readonly auth?: RequestContext; readonly storage?: Partial<ObjectStorage> },
+  state: {
+    readonly auth?: RequestContext;
+    readonly storage?: Partial<ObjectStorage>;
+    readonly diagnostics?: Pick<Console, 'error'>;
+  },
 ): Parameters<typeof uploadHandler>[0] {
   return makeHttpRequest(req, {
     auth: state.auth,
     omitAuth: !state.auth,
-    state: { storage: state.storage },
+    state: { storage: state.storage, runtime: { diagnostics: state.diagnostics } },
   });
 }
 
 testCase('/api/uploads removes staged objects when metadata persistence fails', async () => {
-  const originalConsoleError = console.error;
+  const diagnostics = diagnosticConsole();
   const writes: Array<{ key: string; data: Uint8Array; contentType?: string }> = [];
   const deletes: string[] = [];
   const storage: ObjectWriteLifecycle = {
@@ -53,15 +58,11 @@ testCase('/api/uploads removes staged objects when metadata persistence fails', 
     body: form,
   });
 
-  let response: Response;
-  try {
-    console.error = () => {};
-    const result = await uploadHandler(uploadContext(req, { auth, storage }));
-    if (!(result instanceof Response)) throw new Error('Expected upload handler response.');
-    response = result;
-  } finally {
-    console.error = originalConsoleError;
-  }
+  const result = await uploadHandler(
+    uploadContext(req, { auth, storage, diagnostics: diagnostics.console }),
+  );
+  if (!(result instanceof Response)) throw new Error('Expected upload handler response.');
+  const response = result;
 
   expect(response.status).toStrictEqual(500);
   expect(writes.length).toStrictEqual(1);
@@ -81,7 +82,7 @@ testCase('/api/uploads removes staged objects when metadata persistence fails', 
 });
 
 testCase('/api/uploads accepts audio and preserves its media type', async () => {
-  const originalConsoleError = console.error;
+  const diagnostics = diagnosticConsole();
   const writes: Array<{ key: string; data: Uint8Array; contentType?: string }> = [];
   const storage: ObjectWriter = {
     putObject(input) {
@@ -104,15 +105,11 @@ testCase('/api/uploads accepts audio and preserves its media type', async () => 
     method: 'POST',
     body: form,
   });
-
-  try {
-    console.error = () => {};
-    const result = await uploadHandler(uploadContext(req, { auth, storage }));
-    if (!(result instanceof Response)) throw new Error('Expected upload handler response.');
-    expect(result.status).toStrictEqual(500);
-  } finally {
-    console.error = originalConsoleError;
-  }
+  const result = await uploadHandler(
+    uploadContext(req, { auth, storage, diagnostics: diagnostics.console }),
+  );
+  if (!(result instanceof Response)) throw new Error('Expected upload handler response.');
+  expect(result.status).toStrictEqual(500);
 
   expect(writes.length).toStrictEqual(1);
   expect(writes[0].contentType).toStrictEqual('audio/mpeg');
@@ -120,9 +117,8 @@ testCase('/api/uploads accepts audio and preserves its media type', async () => 
 });
 
 testCase('/api/uploads records safe cleanup identity when object compensation fails', async () => {
-  const originalConsoleError = console.error;
+  const diagnostics = diagnosticConsole();
   const writes: Array<{ key: string; data: Uint8Array; contentType?: string }> = [];
-  const loggedFields: unknown[] = [];
   const storage: ObjectWriteLifecycle = {
     putObject(input) {
       writes.push(input);
@@ -152,31 +148,26 @@ testCase('/api/uploads records safe cleanup identity when object compensation fa
     body: form,
   });
 
-  let response: Response;
-  try {
-    console.error = (_message: unknown, fields: unknown) => loggedFields.push(fields);
-    const result = await uploadHandler(uploadContext(req, { auth, storage }));
-    if (!(result instanceof Response)) throw new Error('Expected upload handler response.');
-    response = result;
-  } finally {
-    console.error = originalConsoleError;
-  }
+  const result = await uploadHandler(
+    uploadContext(req, { auth, storage, diagnostics: diagnostics.console }),
+  );
+  if (!(result instanceof Response)) throw new Error('Expected upload handler response.');
+  const response = result;
 
   expect(response.status).toStrictEqual(500);
   expect(writes.length).toStrictEqual(1);
-  const fields = loggedFields[0];
-  if (!(fields !== null && typeof fields === 'object')) {
-    expect.unreachable("Expected fields !== null && typeof fields === 'object'");
-  }
-  const record = Object.fromEntries(Object.entries(fields));
-  expect(record.tenantId).toStrictEqual(auth.tenantId);
-  expect(record.userId).toStrictEqual(auth.userId);
-  expect(record.cause).toStrictEqual('UploadCleanupRequiredError');
-  expect(record.cleanupRequired).toStrictEqual(true);
-  expect(record.uploadId).toStrictEqual(writes[0].key.split('/').at(-1));
-  expect(record.objectKey).toStrictEqual(writes[0].key);
-  expect(record.persistenceCause).toStrictEqual('Error');
-  expect(record.cleanupCause).toStrictEqual('Error');
+  const output = diagnostics.text();
+  for (const field of [
+    auth.tenantId,
+    auth.userId,
+    'UploadCleanupRequiredError',
+    'cleanupRequired: true',
+    writes[0].key.split('/').at(-1) ?? '',
+    writes[0].key,
+    "persistenceCause: 'Error'",
+    "cleanupCause: 'Error'",
+  ]) expect(output).toContain(field);
+  expect(output).not.toContain('private-name.png');
   expect(writes[0].key.includes('private-name.png')).toStrictEqual(false);
 });
 
@@ -245,7 +236,7 @@ testCase('/api/uploads rejects executable bytes mislabeled as an image', async (
 testCase(
   '/api/uploads accepts inspected m4a bytes when the browser omits MIME metadata',
   async () => {
-    const originalConsoleError = console.error;
+    const diagnostics = diagnosticConsole();
     const writes: Array<{ key: string; data: Uint8Array; contentType?: string }> = [];
     const storage: ObjectWriter = {
       putObject(input) {
@@ -279,15 +270,11 @@ testCase(
       method: 'POST',
       body: form,
     });
-
-    try {
-      console.error = () => {};
-      const result = await uploadHandler(uploadContext(req, { auth, storage }));
-      if (!(result instanceof Response)) throw new Error('Expected upload handler response.');
-      expect(result.status).toStrictEqual(500);
-    } finally {
-      console.error = originalConsoleError;
-    }
+    const result = await uploadHandler(
+      uploadContext(req, { auth, storage, diagnostics: diagnostics.console }),
+    );
+    if (!(result instanceof Response)) throw new Error('Expected upload handler response.');
+    expect(result.status).toStrictEqual(500);
 
     expect(writes.length).toStrictEqual(1);
     expect(writes[0].contentType).toStrictEqual('audio/mp4');

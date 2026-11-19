@@ -161,7 +161,7 @@ async function handle(ctx: HttpRequest) {
     };
     return json(payload, 201);
   } catch (cause: unknown) {
-    console.error('file upload failed', {
+    (ctx.runtime.diagnostics ?? console).error('file upload failed', {
       tenantId: auth.tenantId,
       userId: auth.userId,
       ...uploadFailureLogFields(cause),

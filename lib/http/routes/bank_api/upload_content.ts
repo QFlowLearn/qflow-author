@@ -35,12 +35,18 @@ async function handleGET(ctx: HttpRequest) {
       try {
         await object.body.cancel();
       } catch (cause: unknown) {
-        console.error('failed to cancel upload body after metadata mismatch', {
-          ...mismatchFields,
-          cause: safeErrorSummary(cause),
-        });
+        (ctx.runtime.diagnostics ?? console).error(
+          'failed to cancel upload body after metadata mismatch',
+          {
+            ...mismatchFields,
+            cause: safeErrorSummary(cause),
+          },
+        );
       }
-      console.error('upload storage metadata mismatch', mismatchFields);
+      (ctx.runtime.diagnostics ?? console).error(
+        'upload storage metadata mismatch',
+        mismatchFields,
+      );
       return new Response('Internal Server Error', { status: 500 });
     }
     return new Response(object.body, {
@@ -54,7 +60,7 @@ async function handleGET(ctx: HttpRequest) {
       },
     });
   } catch (cause: unknown) {
-    console.error('failed to read upload', {
+    (ctx.runtime.diagnostics ?? console).error('failed to read upload', {
       tenantId: auth.tenantId,
       uploadId: upload.id,
       cause: safeErrorSummary(cause),

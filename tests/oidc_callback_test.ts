@@ -1,3 +1,5 @@
+import { http } from 'msw/http';
+import { setupServer } from 'msw/node';
 import { expect, test as testCase } from 'vitest';
 
 import { getUserSettings, saveUserSettings } from '../lib/services/user_settings.ts';
@@ -29,7 +31,8 @@ testCase('oidc callback exchanges code, validates token, and creates session', a
   const rootDomain = 'example.test';
   const previousRootDomain = process.env['QFLOW_ROOT_DOMAIN'];
 
-  const originalFetch = globalThis.fetch;
+  const network = setupServer();
+  network.listen({ onUnhandledFrame: 'error' });
   let linkedUserId: string | null = null;
 
   try {
@@ -77,24 +80,13 @@ testCase('oidc callback exchanges code, validates token, and creates session', a
       name: 'Teacher Example',
     }, 'kid-1');
 
-    globalThis.fetch = ((input: Request | URL | string, init?: RequestInit) => {
-      const url = typeof input === 'string'
-        ? input
-        : (input instanceof URL ? input.toString() : input.url);
-      if (url === 'https://oauth2.googleapis.com/token') {
-        return new Response(JSON.stringify({ id_token: idToken }), {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
-        });
-      }
-      if (url === 'https://www.googleapis.com/oauth2/v3/certs') {
-        return new Response(JSON.stringify({ keys: [publicJwk] }), {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
-        });
-      }
-      return originalFetch(input as RequestInfo | URL, init);
-    }) as typeof fetch;
+    network.use(
+      http.post('https://oauth2.googleapis.com/token', () => Response.json({ id_token: idToken })),
+      http.get(
+        'https://www.googleapis.com/oauth2/v3/certs',
+        () => Response.json({ keys: [publicJwk] }),
+      ),
+    );
 
     const callbackReq = new Request(
       `https://${slug}.${rootDomain}/auth/oidc/callback?code=fake-code&state=${
@@ -150,18 +142,12 @@ testCase('oidc callback exchanges code, validates token, and creates session', a
       email,
       email_verified: true,
     }, 'kid-1');
-    const firstFetch = globalThis.fetch;
-    globalThis.fetch = ((input: Request | URL | string, init?: RequestInit) => {
-      const url = typeof input === 'string'
-        ? input
-        : input instanceof URL
-        ? input.toString()
-        : input.url;
-      if (url === 'https://oauth2.googleapis.com/token') {
-        return Promise.resolve(Response.json({ id_token: returningToken }));
-      }
-      return firstFetch(input, init);
-    }) as typeof fetch;
+    network.use(
+      http.post(
+        'https://oauth2.googleapis.com/token',
+        () => Response.json({ id_token: returningToken }),
+      ),
+    );
     const returningResponse = await invokeHttpRoute(
       oidcCallbackHandler,
       makeHttpRequest(
@@ -197,7 +183,7 @@ testCase('oidc callback exchanges code, validates token, and creates session', a
     expect(successAudit.length).toStrictEqual(1);
     expect(successAudit[0].action).toStrictEqual('login_success');
   } finally {
-    globalThis.fetch = originalFetch;
+    network.close();
     restoreEnv('QFLOW_ROOT_DOMAIN', previousRootDomain);
     try {
       if (linkedUserId) {
@@ -216,7 +202,8 @@ testCase('oidc callback rejects invalid audience', async () => {
   const slug = `t-${tenantId.slice(0, 8)}`;
   const rootDomain = 'example.test';
   const previousRootDomain = process.env['QFLOW_ROOT_DOMAIN'];
-  const originalFetch = globalThis.fetch;
+  const network = setupServer();
+  network.listen({ onUnhandledFrame: 'error' });
 
   try {
     await db.insert(tenants).values({ id: tenantId, slug, name: 'OIDC Tenant 2' });
@@ -261,24 +248,13 @@ testCase('oidc callback rejects invalid audience', async () => {
       email_verified: true,
     }, 'kid-2');
 
-    globalThis.fetch = ((input: Request | URL | string, init?: RequestInit) => {
-      const url = typeof input === 'string'
-        ? input
-        : (input instanceof URL ? input.toString() : input.url);
-      if (url === 'https://oauth2.googleapis.com/token') {
-        return new Response(JSON.stringify({ id_token: idToken }), {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
-        });
-      }
-      if (url === 'https://www.googleapis.com/oauth2/v3/certs') {
-        return new Response(JSON.stringify({ keys: [publicJwk] }), {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
-        });
-      }
-      return originalFetch(input as RequestInfo | URL, init);
-    }) as typeof fetch;
+    network.use(
+      http.post('https://oauth2.googleapis.com/token', () => Response.json({ id_token: idToken })),
+      http.get(
+        'https://www.googleapis.com/oauth2/v3/certs',
+        () => Response.json({ keys: [publicJwk] }),
+      ),
+    );
 
     const callbackReq = new Request(
       `https://${slug}.${rootDomain}/auth/oidc/callback?code=fake-code&state=${
@@ -305,7 +281,7 @@ testCase('oidc callback rejects invalid audience', async () => {
       expect.unreachable("Expected !callbackRes.headers.get('set-cookie')");
     }
   } finally {
-    globalThis.fetch = originalFetch;
+    network.close();
     restoreEnv('QFLOW_ROOT_DOMAIN', previousRootDomain);
     try {
       await db.delete(tenants).where(eq(tenants.id, tenantId));
@@ -323,7 +299,8 @@ testCase(
     const publicSubject = `public-sub-${crypto.randomUUID()}`;
     const publicEmail = `public-user-${crypto.randomUUID()}@example.com`;
     const previousPublicTenantSlug = process.env['QFLOW_PUBLIC_OIDC_TENANT_SLUG'];
-    const originalFetch = globalThis.fetch;
+    const network = setupServer();
+    network.listen({ onUnhandledFrame: 'error' });
     let linkedUserId: string | null = null;
     let createdWorkspaceTenantId: string | null = null;
     const sentEmails: SentEmailMessage[] = [];
@@ -376,24 +353,16 @@ testCase(
         name: 'Public User',
       }, 'kid-public');
 
-      globalThis.fetch = ((input: Request | URL | string, init?: RequestInit) => {
-        const url = typeof input === 'string'
-          ? input
-          : (input instanceof URL ? input.toString() : input.url);
-        if (url === 'https://oauth2.googleapis.com/token') {
-          return new Response(JSON.stringify({ id_token: idToken }), {
-            status: 200,
-            headers: { 'content-type': 'application/json' },
-          });
-        }
-        if (url === 'https://www.googleapis.com/oauth2/v3/certs') {
-          return new Response(JSON.stringify({ keys: [publicJwk] }), {
-            status: 200,
-            headers: { 'content-type': 'application/json' },
-          });
-        }
-        return originalFetch(input as RequestInfo | URL, init);
-      }) as typeof fetch;
+      network.use(
+        http.post(
+          'https://oauth2.googleapis.com/token',
+          () => Response.json({ id_token: idToken }),
+        ),
+        http.get(
+          'https://www.googleapis.com/oauth2/v3/certs',
+          () => Response.json({ keys: [publicJwk] }),
+        ),
+      );
 
       const callbackReq = new Request(
         `https://app.example.test/auth/oidc/callback?code=fake-code&state=${
@@ -513,7 +482,7 @@ testCase(
       expect(secondCallbackRes.headers.get('location')).toStrictEqual('/assessments');
       expect(sentEmails.length).toStrictEqual(1);
     } finally {
-      globalThis.fetch = originalFetch;
+      network.close();
       restoreEnv('QFLOW_PUBLIC_OIDC_TENANT_SLUG', previousPublicTenantSlug);
       try {
         if (linkedUserId) {

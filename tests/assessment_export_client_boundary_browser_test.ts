@@ -1,7 +1,32 @@
-import { expect, test as testCase } from 'vitest';
+import { afterEach, beforeEach, expect, test } from 'vitest';
+import { clientBrowser } from './helpers/client_browser.ts';
+const testCase = test.skipIf(process.env['QFLOW_BROWSER_TESTS'] !== '1');
+let fixture: Awaited<ReturnType<typeof clientBrowser>>;
+beforeEach(async () => {
+  fixture = await clientBrowser(
+    "export { loadAssessmentExportPreflight } from './lib/export/assessment_export_preflight_client.ts'; export { downloadAssessmentExportPackage } from './lib/client/assessment_export_package.ts';",
+  );
+});
+afterEach(async () => {
+  await fixture?.close();
+});
 
-import { loadAssessmentExportPreflight } from '../lib/export/assessment_export_preflight_client.ts';
-import { downloadAssessmentExportPackage } from '../lib/client/assessment_export_package.ts';
+import type { loadAssessmentExportPreflight as LoadPreflight } from '../lib/export/assessment_export_preflight_client.ts';
+const loadAssessmentExportPreflight: typeof LoadPreflight = (...args) =>
+  fixture.page.evaluate(async (args) => {
+    const client: typeof import('../lib/export/assessment_export_preflight_client.ts') = Reflect
+      .get(window, 'qflowClient');
+    return await client.loadAssessmentExportPreflight(...args);
+  }, args);
+import type { downloadAssessmentExportPackage as DownloadPackage } from '../lib/client/assessment_export_package.ts';
+const downloadAssessmentExportPackage: typeof DownloadPackage = (input) =>
+  fixture.page.evaluate(async (input) => {
+    const client: typeof import('../lib/client/assessment_export_package.ts') = Reflect.get(
+      window,
+      'qflowClient',
+    );
+    return await client.downloadAssessmentExportPackage(input);
+  }, input);
 import { parseAssessmentExportPreflightId } from '../lib/export/assessment_export_http.ts';
 import type { AssessmentExportSelection } from '../lib/client/assessment_export_workflow.ts';
 
@@ -13,21 +38,10 @@ const selection: AssessmentExportSelection = {
 const parsedId = parseAssessmentExportPreflightId('a'.repeat(64));
 if (!parsedId.ok) throw new Error('Test preflight ID must be valid.');
 
-function installFetch(response: Response | (() => Promise<Response>)) {
-  const originalFetch = globalThis.fetch;
-  const originalLocation = globalThis.location;
-  globalThis.fetch = () => typeof response === 'function' ? response() : Promise.resolve(response);
-  Object.defineProperty(globalThis, 'location', {
-    configurable: true,
-    value: { origin: 'https://example.test' },
-  });
-  return () => {
-    globalThis.fetch = originalFetch;
-    Object.defineProperty(globalThis, 'location', {
-      configurable: true,
-      value: originalLocation,
-    });
-  };
+async function installResponse(response: Response | null) {
+  if (response) fixture.respond(response);
+  else await fixture.disconnect();
+  return () => fixture.reconnect();
 }
 
 function preflightPayload(repair: unknown) {
@@ -56,7 +70,7 @@ testCase('preflight client preserves legacy diagnostic codes without server pros
     ' whitespace ',
   ];
   for (const error of codes) {
-    const restore = installFetch(
+    const restore = await installResponse(
       new Response(JSON.stringify({ error, message: 'UPSTREAM_SECRET' }), { status: 409 }),
     );
     try {
@@ -74,15 +88,15 @@ testCase('preflight client preserves legacy diagnostic codes without server pros
         expect(result.error.diagnosticCode).toStrictEqual(error);
       }
     } finally {
-      restore();
+      await restore();
     }
   }
-  const restore = installFetch(() => Promise.reject(new Error('UPSTREAM_SECRET')));
+  const restore = await installResponse(null);
   try {
     expect(await loadAssessmentExportPreflight('assessment-1', 'moodle', selection.requirements))
       .toStrictEqual({ ok: false, error: { code: 'PreflightRequestFailed' } });
   } finally {
-    restore();
+    await restore();
   }
 });
 
@@ -93,7 +107,7 @@ testCase('preflight client rejects crossed repairs and discards legacy repair pr
       { _tag: 'AcceptDiagnosedFallbacks', id: 'accept-manual-scoring', affectedItemIds: [] },
     ]
   ) {
-    const restore = installFetch(new Response(JSON.stringify(preflightPayload(repair))));
+    const restore = await installResponse(new Response(JSON.stringify(preflightPayload(repair))));
     try {
       const result = await loadAssessmentExportPreflight(
         'assessment-1',
@@ -102,10 +116,10 @@ testCase('preflight client rejects crossed repairs and discards legacy repair pr
       );
       expect(result).toStrictEqual({ ok: false, error: { code: 'InvalidPreflightResponse' } });
     } finally {
-      restore();
+      await restore();
     }
   }
-  const restore = installFetch(
+  const restore = await installResponse(
     new Response(JSON.stringify(preflightPayload({
       _tag: 'AcceptManualScoring',
       id: 'accept-manual-scoring',
@@ -129,7 +143,7 @@ testCase('preflight client rejects crossed repairs and discards legacy repair pr
       });
     }
   } finally {
-    restore();
+    await restore();
   }
 });
 
@@ -153,7 +167,7 @@ testCase('preflight client requires legacy repair labels while discarding them',
       },
     ]
   ) {
-    const restore = installFetch(new Response(JSON.stringify(preflightPayload(repair))));
+    const restore = await installResponse(new Response(JSON.stringify(preflightPayload(repair))));
     try {
       const result = await loadAssessmentExportPreflight(
         'assessment-1',
@@ -162,7 +176,7 @@ testCase('preflight client requires legacy repair labels while discarding them',
       );
       expect(result).toStrictEqual({ ok: false, error: { code: 'InvalidPreflightResponse' } });
     } finally {
-      restore();
+      await restore();
     }
   }
 });
@@ -181,14 +195,8 @@ testCase('package client separates request failure from rejected responses', asy
     repairs: [],
     artifact: { filename: 'export.xml', mediaType: 'application/xml', byteLength: 1 },
   };
-  const originalFetch = globalThis.fetch;
-  const originalLocation = globalThis.location;
-  Object.defineProperty(globalThis, 'location', {
-    configurable: true,
-    value: { origin: 'https://example.test' },
-  });
   try {
-    globalThis.fetch = () => Promise.reject(new Error('UPSTREAM_SECRET'));
+    await fixture.disconnect();
     expect(
       await downloadAssessmentExportPackage({ assessmentId: 'assessment-1', selection, preflight }),
     ).toStrictEqual({
@@ -203,10 +211,10 @@ testCase('package client separates request failure from rejected responses', asy
         ['legacy/provider code', 'legacy/provider code'],
       ] as const
     ) {
-      globalThis.fetch = () =>
-        Promise.resolve(
-          new Response(JSON.stringify({ error, message: 'UPSTREAM_SECRET' }), { status: 409 }),
-        );
+      await fixture.reconnect();
+      fixture.respond(
+        new Response(JSON.stringify({ error, message: 'UPSTREAM_SECRET' }), { status: 409 }),
+      );
       const result = await downloadAssessmentExportPackage({
         assessmentId: 'assessment-1',
         selection,
@@ -222,7 +230,6 @@ testCase('package client separates request failure from rejected responses', asy
       }
     }
   } finally {
-    globalThis.fetch = originalFetch;
-    Object.defineProperty(globalThis, 'location', { configurable: true, value: originalLocation });
+    await fixture.reconnect();
   }
 });

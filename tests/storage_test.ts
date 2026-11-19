@@ -1,3 +1,5 @@
+import { http } from 'msw/http';
+import { setupServer } from 'msw/node';
 import { expect, test as testCase } from 'vitest';
 
 import { resolveStorage } from '../lib/storage.ts';
@@ -20,7 +22,7 @@ testCase('createS3CompatibleStorage signs path-style R2 uploads', async () => {
   const body = new TextEncoder().encode('hello');
   const calls: Array<{ url: string; init: RequestInit }> = [];
 
-  await withFetchStub((input, init) => {
+  await withStorageResponses((input, init) => {
     calls.push({ url: toUrlString(input), init: init ?? {} });
     return new Response(null, { status: 200 });
   }, async () => {
@@ -56,7 +58,7 @@ testCase('createS3CompatibleStorage signs idempotent object deletes', async () =
   });
   const requests: Array<{ url: string; init: RequestInit }> = [];
 
-  await withFetchStub((input, init) => {
+  await withStorageResponses((input, init) => {
     requests.push({ url: toUrlString(input), init: init ?? {} });
     return new Response(null, { status: 404 });
   }, () => storage.deleteObject('uploads/tenant/file name.png'));
@@ -83,7 +85,7 @@ testCase(
     const sha256 = '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824';
     let requestHeaders = new Headers();
 
-    await withFetchStub((_input, init) => {
+    await withStorageResponses((_input, init) => {
       requestHeaders = new Headers(init?.headers);
       return new Response(null, { status: 200 });
     }, () =>
@@ -112,7 +114,7 @@ testCase(
     });
     let fetchCalled = false;
 
-    await withFetchStub(() => {
+    await withStorageResponses(() => {
       fetchCalled = true;
       return new Response(null, { status: 200 });
     }, async () => {
@@ -144,7 +146,7 @@ testCase('createS3CompatibleStorage accepts only an exact immutable replay', asy
   const sha256 = '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824';
   let headMatches = true;
 
-  await withFetchStub((_input, init) => {
+  await withStorageResponses((_input, init) => {
     if (init?.method === 'PUT') return new Response(null, { status: 412 });
     return new Response(null, {
       status: 200,
@@ -182,7 +184,7 @@ testCase('createS3CompatibleStorage signs vhost-style R2 reads', async () => {
   });
   const calls: Array<{ url: string; init: RequestInit }> = [];
 
-  const bytes = await withFetchStub((input, init) => {
+  const bytes = await withStorageResponses((input, init) => {
     calls.push({ url: toUrlString(input), init: init ?? {} });
     return new Response(new Uint8Array([1, 2, 3]), { status: 200 });
   }, async () => await storage.readObject('nested/image.png'));
@@ -209,7 +211,7 @@ testCase(
       secretAccessKey: 'test-secret',
       bucket: 'test-bucket',
     });
-    const streamed = await withFetchStub(
+    const streamed = await withStorageResponses(
       () =>
         new Response(Uint8Array.of(4, 5, 6), {
           headers: {
@@ -237,7 +239,7 @@ testCase('createS3CompatibleStorage maps 404 responses to StorageObjectNotFoundE
     bucket: 'test-bucket',
     forcePathStyle: true,
   });
-  await withFetchStub(
+  await withStorageResponses(
     () => new Response('missing', { status: 404 }),
     async () => {
       await expect(Promise.resolve().then(() => storage.readObject('missing.txt'))).rejects
@@ -414,7 +416,7 @@ testCase(
     const state: { storage?: ObjectStorage } = {};
     const calls: Array<{ url: string; init: RequestInit }> = [];
 
-    await withFetchStub((input, init) => {
+    await withStorageResponses((input, init) => {
       calls.push({ url: toUrlString(input), init: init ?? {} });
       return new Response(new Uint8Array([4, 5, 6]), { status: 200 });
     }, async () => {
@@ -553,16 +555,28 @@ function fakeR2Bucket(stored: Map<string, Uint8Array>) {
   };
 }
 
-async function withFetchStub<T>(
-  stub: (input: RequestInfo | URL, init?: RequestInit) => Response | Promise<Response>,
+async function withStorageResponses<T>(
+  respond: (input: RequestInfo | URL, init?: RequestInit) => Response | Promise<Response>,
   fn: () => Promise<T>,
 ): Promise<T> {
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = stub as typeof fetch;
+  const network = setupServer(
+    http.all(
+      /^https:\/\/(?:(?:test-bucket\.)?example|runtime)\.r2\.test\//,
+      async ({ request }) => {
+        const body = request.body ? await request.arrayBuffer() : undefined;
+        return await respond(request.url, {
+          method: request.method,
+          headers: request.headers,
+          body,
+        });
+      },
+    ),
+  );
+  network.listen({ onUnhandledFrame: 'error' });
   try {
     return await fn();
   } finally {
-    globalThis.fetch = originalFetch;
+    network.close();
   }
 }
 

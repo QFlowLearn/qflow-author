@@ -1,7 +1,7 @@
+import { diagnosticConsole } from './helpers/diagnostic_console.ts';
 import { expect, test as testCase } from 'vitest';
 
 import { parseUploadApiError } from '../lib/http/upload_api_contract.ts';
-import { uploadFile, UploadRequestError } from '../lib/client/upload_file.ts';
 import { uploadBankRoute as uploadHandlerEndpoint } from '../lib/http/routes/bank_api/upload.ts';
 import { MAX_UPLOAD_BYTES, MAX_UPLOAD_REQUEST_BYTES } from '../lib/upload_policy.ts';
 import { invokeHttpRoute, makeHttpRequest } from './helpers/http_route.ts';
@@ -54,77 +54,6 @@ testCase('upload API error parser accepts only closed codes and safe params', ()
       .toStrictEqual(code);
   }
 });
-
-testCase('uploadFile exposes typed coded failures and stable fallbacks', async () => {
-  const originalFetch = globalThis.fetch;
-  try {
-    globalThis.fetch = () =>
-      Promise.resolve(
-        new Response(
-          JSON.stringify({
-            error: true,
-            code: 'kind_too_large',
-            params: { kind: 'image', maxMebibytes: 8 },
-          }),
-          { status: 400 },
-        ),
-      );
-    await assertRejectsCode(new File(['x'], 'x.png'), 'kind_too_large', {
-      kind: 'image',
-      maxMebibytes: 8,
-    });
-    globalThis.fetch = () =>
-      Promise.resolve(
-        new Response(JSON.stringify({ error: true, code: 'unknown', message: 'secret' }), {
-          status: 500,
-        }),
-      );
-    await assertRejectsCode(new File(['x'], 'x.png'), 'request_failed');
-    globalThis.fetch = () => Promise.reject(new Error('network prose'));
-    await assertRejectsCode(new File(['x'], 'x.png'), 'request_failed');
-    globalThis.fetch = () =>
-      Promise.resolve(
-        new Response(
-          JSON.stringify({
-            id: 'id',
-            name: 'x.png',
-            type: 'image/png',
-            size: 1,
-            url: '/uploads/id',
-            createdAt: 'now',
-          }),
-          { status: 201 },
-        ),
-      );
-    expect(await uploadFile(new File(['x'], 'x.png'))).toStrictEqual({
-      id: 'id',
-      name: 'x.png',
-      type: 'image/png',
-      size: 1,
-      url: '/uploads/id',
-      createdAt: 'now',
-    });
-    globalThis.fetch = () =>
-      Promise.resolve(new Response(JSON.stringify({ id: 'x' }), { status: 201 }));
-    await assertRejectsCode(new File(['x'], 'x.png'), 'invalid_response');
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
-});
-
-async function assertRejectsCode(file: File, code: string, params?: unknown) {
-  try {
-    await uploadFile(file);
-    expect.unreachable('expected upload failure');
-  } catch (error) {
-    if (!(error instanceof UploadRequestError)) {
-      expect.unreachable('Expected error instanceof UploadRequestError');
-    }
-    expect(error.code).toStrictEqual(code);
-    expect(error.message).toStrictEqual(code);
-    if (params !== undefined) expect(error.params).toStrictEqual(params);
-  }
-}
 
 testCase('upload route emits exact coded JSON for every failure code', async () => {
   const auth = { auth: { tenantId: 'contract-tenant', userId: 'contract-user', role: 'owner' } };
@@ -285,31 +214,27 @@ testCase('upload route emits exact coded JSON for every failure code', async () 
     params: { kind: 'image', maxMebibytes: 8 },
     message: 'Images must be 8 MB or smaller.',
   });
-  const originalError = console.error;
-  try {
-    console.error = () => {};
-    const storageFailed = await make(
-      new Request('http://local/api/uploads', {
-        ...{ duplex: 'half' },
-        method: 'POST',
-        body: form(new File([png], 'x.png', { type: 'image/png' })),
-      }),
-      {
-        auth: auth.auth,
-        storage: {
-          putObject() {
-            throw new Error('storage');
-          },
+  const diagnostics = diagnosticConsole();
+  const storageFailed = await make(
+    new Request('http://local/api/uploads', {
+      ...{ duplex: 'half' },
+      method: 'POST',
+      body: form(new File([png], 'x.png', { type: 'image/png' })),
+    }),
+    {
+      auth: auth.auth,
+      runtime: { diagnostics: diagnostics.console },
+      storage: {
+        putObject() {
+          throw new Error('storage');
         },
       },
-    );
-    expect(storageFailed.status).toStrictEqual(500);
-    expect(await storageFailed.json()).toStrictEqual({
-      error: true,
-      code: 'storage_failed',
-      message: 'Failed to store upload. Please try again later.',
-    });
-  } finally {
-    console.error = originalError;
-  }
+    },
+  );
+  expect(storageFailed.status).toStrictEqual(500);
+  expect(await storageFailed.json()).toStrictEqual({
+    error: true,
+    code: 'storage_failed',
+    message: 'Failed to store upload. Please try again later.',
+  });
 });

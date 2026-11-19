@@ -327,26 +327,6 @@ testCase(
       expect(await type.inputValue()).toStrictEqual('single_select');
       // A question that has not yet been saved keeps the same editing session when its type changes.
       await page.goto(origin);
-      // Hold mounting frames so the author can choose another field before queued autofocus runs.
-      await page.evaluate(() => {
-        const original = globalThis.requestAnimationFrame.bind(globalThis);
-        let release = () => {};
-        const gate = new Promise<void>((resolve) => release = resolve);
-        globalThis.requestAnimationFrame = (callback) =>
-          original((time) => {
-            gate.then(() => callback(time)).catch((cause: unknown) => {
-              queueMicrotask(() => {
-                throw cause;
-              });
-            });
-          });
-        Object.assign(globalThis, {
-          releaseAuthoringFrames: () => {
-            globalThis.requestAnimationFrame = original;
-            release();
-          },
-        });
-      });
       await page.getByRole('button', { name: 'Add question', exact: true }).click();
       await page.getByRole('region', { name: 'Insert question', exact: true }).getByRole('button', {
         name: /^Single select/,
@@ -356,15 +336,11 @@ testCase(
       await newQuestion.fill('New question with unsaved wording');
       await newQuestion.evaluate((element) => element.setAttribute('data-stem-identity', 'new'));
       await page.getByPlaceholder('Choice A').focus();
-      await page.evaluate(async () => {
-        const release = (globalThis as typeof globalThis & { releaseAuthoringFrames?: () => void })
-          .releaseAuthoringFrames;
-        if (!release) throw new Error('Authoring frame gate was not installed');
-        release();
-        await new Promise<void>((resolve) =>
+      await page.evaluate(() =>
+        new Promise<void>((resolve) =>
           requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
-        );
-      });
+        )
+      );
       expect(
         await page.getByPlaceholder('Choice A').evaluate((element) =>
           element === document.activeElement

@@ -1,3 +1,4 @@
+import { startFetchServer } from '../helpers/fetch_server.ts';
 import { createI18nPayload } from '../../lib/i18n/payload.ts';
 import { catalogForLocale } from '../../lib/i18n/catalogs.ts';
 import { readFile } from 'node:fs/promises';
@@ -69,6 +70,7 @@ it(
       }));
     const browser = await chromium.launch({ headless: true });
     let release: () => void = () => {};
+    let closeServer: (() => Promise<void>) | undefined;
     try {
       const context: import('playwright').BrowserContext = await browser.newContext({
         timezoneId: 'America/Los_Angeles',
@@ -82,31 +84,31 @@ it(
         requested = resolve;
       });
       let failModule = false;
-      await page.route('https://root-fixture.example/**', async (route) => {
-        const url = new URL(route.request().url());
+      const server = await startFetchServer(async (request) => {
+        const url = new URL(request.url);
         if (url.pathname === '/') {
-          await route.fulfill({
-            contentType: 'text/html',
-            body: '<!DOCTYPE html><html><body>' + rootHtml('qf-time-1') + rootHtml('qf-time-2') +
+          return new Response(
+            '<!DOCTYPE html><html><body>' + rootHtml('qf-time-1') + rootHtml('qf-time-2') +
               `<script type="module" src="${bootstrap}"></script></body></html>`,
-          });
-          return;
-        }
-        if (url.pathname.includes('/LocalizedTimestamp-')) {
-          requested();
-          await delayed;
-          if (failModule) {
-            await route.abort('failed');
-            return;
-          }
+            { headers: { 'content-type': 'text/html' } },
+          );
         }
         const path = resolve(client, '.' + url.pathname);
         if (!path.startsWith(client + sep)) {
-          throw new Error('Fixture asset escaped the built client directory.');
+          throw Error('Fixture asset escaped the built client directory.');
         }
-        await route.fulfill({ contentType: 'text/javascript', body: await readFile(path) });
+        return new Response(await readFile(path), {
+          headers: { 'content-type': 'text/javascript' },
+        });
       });
-      await page.goto('https://root-fixture.example/', { waitUntil: 'commit' });
+      closeServer = () => server.close();
+      await page.route('**/LocalizedTimestamp-*', async (route) => {
+        requested();
+        await delayed;
+        if (failModule) await route.abort('failed');
+        else await route.continue();
+      });
+      await page.goto(server.origin, { waitUntil: 'commit' });
       await requestedModule;
       expect(await page.locator('#qf-time-1').getAttribute('data-qflow-state')).toBe('pending');
       expect(await page.locator('#qf-time-1').textContent()).toBe('Oct 20, 2026');
@@ -146,6 +148,7 @@ it(
     } finally {
       release();
       await browser.close();
+      await closeServer?.();
     }
   },
   30_000,
@@ -171,29 +174,33 @@ it('preserves distinct control and label identities when two independent roots h
     );
   const browser = await chromium.launch({ headless: true });
   let release: () => void = () => {};
+  let closeServer: (() => Promise<void>) | undefined;
   try {
     const context = await browser.newContext();
     const page = await context.newPage();
     const delayed = new Promise<void>((resolve) => {
       release = resolve;
     });
-    await page.route('https://identity-fixture.example/**', async (route) => {
-      const url = new URL(route.request().url());
+    const server = await startFetchServer(async (request) => {
+      const url = new URL(request.url);
       if (url.pathname === '/') {
-        await route.fulfill({
-          contentType: 'text/html',
-          body: '<!doctype html><html><body>' + root('qf-first-member', 'First reviewer') +
+        return new Response(
+          '<!doctype html><html><body>' + root('qf-first-member', 'First reviewer') +
             root('qf-second-member', 'Second reviewer') +
             `<script type="module" src="${bootstrap}"></script></body></html>`,
-        });
-        return;
+          { headers: { 'content-type': 'text/html' } },
+        );
       }
-      if (url.pathname === bootstrap) await delayed;
       const path = resolve(client, '.' + url.pathname);
       if (!path.startsWith(client + sep)) throw Error('Escaped fixture asset.');
-      await route.fulfill({ contentType: 'text/javascript', body: await readFile(path) });
+      return new Response(await readFile(path), { headers: { 'content-type': 'text/javascript' } });
     });
-    await page.goto('https://identity-fixture.example/', { waitUntil: 'commit' });
+    closeServer = () => server.close();
+    await page.route('**' + bootstrap, async (route) => {
+      await delayed;
+      await route.continue();
+    });
+    await page.goto(server.origin, { waitUntil: 'commit' });
     const first = page.getByLabel('First reviewer', { exact: true }),
       second = page.getByLabel('Second reviewer', { exact: true });
     const before = await Promise.all([first.getAttribute('id'), second.getAttribute('id')]);
@@ -211,5 +218,6 @@ it('preserves distinct control and label identities when two independent roots h
   } finally {
     release();
     await browser.close();
+    await closeServer?.();
   }
 });

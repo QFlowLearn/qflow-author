@@ -1,3 +1,4 @@
+import { diagnosticConsole } from './helpers/diagnostic_console.ts';
 import { expect, test as testCase } from 'vitest';
 
 import { runWithRequestRuntime } from '../lib/server/request_runtime_context.ts';
@@ -93,29 +94,27 @@ testCase('OIDC errors require valid state and never forward provider description
 testCase(
   'unexpected OIDC callback failures return a closed client error without exposing diagnostics',
   async () => {
-    const errors: unknown[][] = [];
-    const originalError = console.error;
-    console.error = (...args: unknown[]) => errors.push(args);
-    try {
-      const runtime = { bindings: { QFLOW_DB: { connectionString: 'private-invalid-url' } } };
-      const response = await runWithRequestRuntime(runtime, () =>
-        invokeHttpRoute(
-          oidcCallbackHandler,
-          makeHttpRequest(
-            new Request('http://local/auth/oidc/callback?state=invalid-state'),
-            { omitAuth: true, state: { runtime } },
-          ),
-        ));
-      expect(response.status).toStrictEqual(302);
-      expect(response.headers.get('location')).toStrictEqual('/login?error=sign_in_unavailable');
-      if (!((JSON.stringify(errors).includes('private-invalid-url')) === false)) {
-        expect.unreachable(
-          "Expected JSON.stringify(errors).includes('private-invalid-url') to be false",
-        );
-      }
-      expect(errors.length).toStrictEqual(1);
-    } finally {
-      console.error = originalError;
+    const diagnostics = diagnosticConsole();
+
+    const runtime = {
+      diagnostics: diagnostics.console,
+      bindings: { QFLOW_DB: { connectionString: 'private-invalid-url' } },
+    };
+    const response = await runWithRequestRuntime(runtime, () =>
+      invokeHttpRoute(
+        oidcCallbackHandler,
+        makeHttpRequest(
+          new Request('http://local/auth/oidc/callback?state=invalid-state'),
+          { omitAuth: true, state: { runtime } },
+        ),
+      ));
+    expect(response.status).toStrictEqual(302);
+    expect(response.headers.get('location')).toStrictEqual('/login?error=sign_in_unavailable');
+    if (!((diagnostics.text().includes('private-invalid-url')) === false)) {
+      expect.unreachable(
+        'Expected diagnostics to omit the private database URL',
+      );
     }
+    expect(diagnostics.text().trim().split('\n').length).toStrictEqual(1);
   },
 );

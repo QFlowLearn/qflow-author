@@ -1,3 +1,5 @@
+import { inspect } from 'node:util';
+import { diagnosticConsole } from './helpers/diagnostic_console.ts';
 import { expect, test as testCase } from 'vitest';
 
 import { and, eq } from 'drizzle-orm';
@@ -185,51 +187,49 @@ testCase(
       expect(uploadReadCount).toStrictEqual(1);
 
       let mismatchBodyCancelled = false;
-      const mismatchLogs: unknown[][] = [];
-      const originalConsoleError = console.error;
-      try {
-        console.error = (...args: unknown[]) => mismatchLogs.push(args);
-        const mismatchedUploadRes = await invokeHttpMethod(
-          uploadHandler as HttpEndpoint,
-          'GET',
-          makeHttpRequest(uploadReq, {
-            params: { id: uploadId },
-            auth: ctxA,
-            state: {
-              storage: {
-                readObjectStream() {
-                  return Promise.resolve({
-                    body: new ReadableStream<Uint8Array>({
-                      cancel() {
-                        mismatchBodyCancelled = true;
-                      },
-                    }),
-                    contentLength: 4,
-                    contentType: 'application/octet-stream',
-                    contentSha256: null,
-                  });
-                },
+      const diagnostics = diagnosticConsole();
+      const mismatchedUploadRes = await invokeHttpMethod(
+        uploadHandler as HttpEndpoint,
+        'GET',
+        makeHttpRequest(uploadReq, {
+          params: { id: uploadId },
+          auth: ctxA,
+          state: {
+            runtime: { diagnostics: diagnostics.console },
+            storage: {
+              readObjectStream() {
+                return Promise.resolve({
+                  body: new ReadableStream<Uint8Array>({
+                    cancel() {
+                      mismatchBodyCancelled = true;
+                    },
+                  }),
+                  contentLength: 4,
+                  contentType: 'application/octet-stream',
+                  contentSha256: null,
+                });
               },
             },
-          }),
-        );
-        expect(mismatchedUploadRes.status).toStrictEqual(500);
-        expect(await mismatchedUploadRes.text()).toStrictEqual('Internal Server Error');
-      } finally {
-        console.error = originalConsoleError;
-      }
+          },
+        }),
+      );
+      expect(mismatchedUploadRes.status).toStrictEqual(500);
+      expect(await mismatchedUploadRes.text()).toStrictEqual('Internal Server Error');
+
       expect(mismatchBodyCancelled).toStrictEqual(true);
-      expect(mismatchLogs).toStrictEqual([[
-        'upload storage metadata mismatch',
-        {
-          tenantId: tenantA,
-          uploadId,
-          expectedContentLength: 3,
-          actualContentLength: 4,
-          expectedContentType: 'text/plain',
-          actualContentType: 'application/octet-stream',
-        },
-      ]]);
+      expect(diagnostics.text().trim()).toStrictEqual(
+        'upload storage metadata mismatch ' + inspect(
+          {
+            tenantId: tenantA,
+            uploadId,
+            expectedContentLength: 3,
+            actualContentLength: 4,
+            expectedContentType: 'text/plain',
+            actualContentType: 'application/octet-stream',
+          },
+          { depth: null, colors: false },
+        ),
+      );
 
       const exportReq = new Request(`http://local/api/assessments/${assessmentId}/package`, {
         method: 'GET',

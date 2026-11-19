@@ -1,3 +1,4 @@
+import { startFetchServer } from './helpers/fetch_server.ts';
 import { expect, test as testCase } from 'vitest';
 
 import { tmpdir } from 'node:os';
@@ -14,22 +15,24 @@ testCase(
     const browser = await chromium.launch({ headless: true });
     try {
       const page: import('playwright').Page = await browser.newPage();
-      const origin = 'http://qflow-loading.example';
-      await page.route('**/*', async (route) => {
-        const url = new URL(route.request().url());
-        if (url.pathname === '/reset.js') return await route.abort('connectionreset');
-        if (url.pathname === '/aborted.js') return await route.abort('aborted');
-        if (url.pathname === '/unavailable.js') {
-          return await route.fulfill({ status: 503, contentType: 'text/javascript', body: '' });
-        }
-        if (url.pathname === '/') {
-          return await route.fulfill({
-            contentType: 'text/html',
-            body: '<main>Loading fixture</main>',
+      const server = await startFetchServer((request) => {
+        const path = new URL(request.url).pathname;
+        if (path === '/') {
+          return new Response('<main>Loading fixture</main>', {
+            headers: { 'content-type': 'text/html' },
           });
         }
-        await route.fulfill({ contentType: 'text/javascript', body: 'void 0;' });
+        return new Response(path === '/unavailable.js' ? '' : 'void 0;', {
+          status: path === '/unavailable.js' ? 503 : 200,
+          headers: { 'content-type': 'text/javascript' },
+        });
       });
+      const externalServer = await startFetchServer(() => new Response('void 0;', {
+        headers: { 'content-type': 'text/javascript' },
+      }));
+      const origin = server.origin;
+      await page.route('**/reset.js*', (route) => route.abort('connectionreset'));
+      await page.route('**/aborted.js', (route) => route.abort('aborted'));
       const loading = observeBrowserLoading(page, origin, () => 'fixture');
       try {
         await page.goto(origin);
@@ -51,7 +54,7 @@ testCase(
           }, 0);
         });
         await pageError;
-        await inject('http://external-loading.example/private-script-path?token=secret-external');
+        await inject(`${externalServer.origin}/private-script-path?token=secret-external`);
         const external = loading.snapshot().recentEvents.find((event) =>
           event.event === 'script_response' && event.path === '[external script]'
         );
@@ -134,6 +137,8 @@ testCase(
         }
       } finally {
         loading.stop();
+        await server.close();
+        await externalServer.close();
       }
     } finally {
       await browser.close();

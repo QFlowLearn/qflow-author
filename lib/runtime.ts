@@ -14,6 +14,8 @@ export type QflowRuntimeState = {
 export type QflowRuntime = {
   state?: QflowRuntimeState;
   bindings?: QflowRuntimeBindings;
+  /** Request-owned diagnostic sink; uses the platform console when absent. */
+  diagnostics?: Pick<Console, 'error'>;
 };
 
 /** Request, workflow, or test source that can resolve to the canonical runtime. */
@@ -43,6 +45,7 @@ export function normalizeRuntime(runtime?: RuntimeSource): QflowRuntime {
 
   const nested = runtime.state?.runtime;
   return {
+    diagnostics: runtime.diagnostics ?? nested?.diagnostics ?? requestRuntimeStore()?.diagnostics,
     state: runtime.state ?? nested?.state,
     bindings: runtime.bindings ?? nested?.bindings ?? requestRuntimeStore()?.bindings,
   };
@@ -54,6 +57,7 @@ export function installRuntime(runtime: QflowRuntime): QflowRuntime {
   const state = runtime.state;
   const installed: QflowRuntime = {
     bindings: resolved.bindings,
+    diagnostics: resolved.diagnostics,
     state,
   };
   if (state) state.runtime = installed;
@@ -98,7 +102,7 @@ export function resolveRequestDatabase(
 }
 
 function isRuntimeState(source: QflowRuntime | QflowRuntimeState): source is QflowRuntimeState {
-  return !('bindings' in source) && !('state' in source);
+  return !('bindings' in source) && !('state' in source) && !('diagnostics' in source);
 }
 
 function requestRuntimeStore(): QflowRuntime | undefined {

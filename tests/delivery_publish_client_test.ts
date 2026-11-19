@@ -1,6 +1,32 @@
-import { expect, test as testCase } from 'vitest';
-
+import { afterEach, beforeEach, expect, test as testCase } from 'vitest';
 import { requestAssessmentDeliveryPublication } from '../lib/client/delivery_publish.ts';
+import { http, HttpResponse } from 'msw/http';
+import { setupServer } from 'msw/node';
+const network = setupServer();
+beforeEach(() => network.listen({ onUnhandledFrame: 'error' }));
+afterEach(() => {
+  network.close();
+  network.resetHandlers();
+});
+
+function deliveryNetwork(
+  respond: (input: RequestInfo | URL, init?: RequestInit) => Response | Promise<Response>,
+): typeof fetch {
+  network.use(
+    http.post(
+      'https://qflow.example/api/assessments/assessment-1/publish/delivery',
+      async ({ request }) => {
+        const body = request.body ? await request.text() : undefined;
+        return await respond(request.url, {
+          method: request.method,
+          headers: request.headers,
+          body: body || undefined,
+        });
+      },
+    ),
+  );
+  return (input, init) => fetch(new URL(String(input), 'https://qflow.example'), init);
+}
 
 const PREFLIGHT_ID = 'a'.repeat(64);
 const ACKNOWLEDGEMENT = 'b'.repeat(64);
@@ -9,7 +35,7 @@ testCase(
   'delivery publish discloses package warnings and retries with exact approval',
   async () => {
     const requests: Request[] = [];
-    const fetchImpl: typeof fetch = (input, init) => {
+    const respond = (input: RequestInfo | URL, init?: RequestInit) => {
       const request = new Request(new URL(String(input), 'https://qflow.example'), init);
       requests.push(request);
       if (requests.length === 1) {
@@ -37,7 +63,7 @@ testCase(
     const warningCodes = ['qti3_conformance.not_run', 'future.warning-2'];
 
     const result = await requestAssessmentDeliveryPublication('assessment-1', {
-      fetchImpl,
+      fetchImpl: deliveryNetwork(respond),
       formatWarnings(codes) {
         formatterCount += 1;
         expect(codes).toStrictEqual(warningCodes);
@@ -84,7 +110,7 @@ testCase('delivery publish stops without a second request when warnings are decl
   let confirmation = '';
   let confirmCount = 0;
   const result = await requestAssessmentDeliveryPublication('assessment-1', {
-    fetchImpl() {
+    fetchImpl: deliveryNetwork(function () {
       requestCount += 1;
       return Promise.resolve(jsonResponse({
         error: 'delivery_export_warnings_not_acknowledged',
@@ -94,7 +120,7 @@ testCase('delivery publish stops without a second request when warnings are decl
           warningCodes: ['qti3_conformance.not_run', 'future.warning-2'],
         },
       }, 409));
-    },
+    }),
     confirmWarnings: (message) => {
       confirmCount += 1;
       confirmation = message;
@@ -119,13 +145,13 @@ testCase(
   async () => {
     let confirmationCount = 0;
     const result = await requestAssessmentDeliveryPublication('assessment-1', {
-      fetchImpl() {
+      fetchImpl: deliveryNetwork(function () {
         return Promise.resolve(jsonResponse({
           error: 'delivery_export_preflight_blocked',
           qflowTenantId: 'tenant-123',
           message: 'The target cannot preserve required scoring.',
         }, 422));
-      },
+      }),
       confirmWarnings() {
         confirmationCount += 1;
         return true;
@@ -148,9 +174,9 @@ testCase(
   'delivery publish rejects a successful HTTP response without a version identity',
   async () => {
     const result = await requestAssessmentDeliveryPublication('assessment-1', {
-      fetchImpl() {
+      fetchImpl: deliveryNetwork(function () {
         return Promise.resolve(jsonResponse({}));
-      },
+      }),
       formatWarnings: () => 'unused',
     });
 
@@ -178,13 +204,13 @@ testCase('delivery publish rejects malformed warning approvals before confirmati
     let formatter = 0;
     let confirm = 0;
     const result = await requestAssessmentDeliveryPublication('assessment-1', {
-      fetchImpl() {
+      fetchImpl: deliveryNetwork(function () {
         requests += 1;
         return Promise.resolve(jsonResponse({
           error: 'delivery_export_warnings_not_acknowledged',
           preflight,
         }, 409));
-      },
+      }),
       formatWarnings: () => {
         formatter += 1;
         return 'unexpected';
@@ -211,8 +237,9 @@ testCase(
   async () => {
     for (const publishedAt of [undefined, null, '', 'invalid-date', 123]) {
       const result = await requestAssessmentDeliveryPublication('assessment-1', {
-        fetchImpl: () =>
-          Promise.resolve(jsonResponse({ assessmentVersionId: 'version-1', publishedAt })),
+        fetchImpl: deliveryNetwork(() =>
+          Promise.resolve(jsonResponse({ assessmentVersionId: 'version-1', publishedAt }))
+        ),
         formatWarnings: () => 'unused',
       });
       expect(result._tag).toBe('Failed');
@@ -227,7 +254,7 @@ testCase('delivery publish accepts a direct successful response once', async () 
   let formatter = 0;
   let confirmation = 0;
   const result = await requestAssessmentDeliveryPublication('assessment-1', {
-    async fetchImpl(input, init) {
+    fetchImpl: deliveryNetwork(async function (input, init) {
       requests += 1;
       const request = new Request(new URL(String(input), 'https://qflow.example'), init);
       expect(request.url).toStrictEqual(
@@ -244,7 +271,7 @@ testCase('delivery publish accepts a direct successful response once', async () 
         previewUrl: 'https://delivery.example/preview',
         adminUrl: 'https://delivery.example/admin',
       }));
-    },
+    }),
     formatWarnings: () => {
       formatter += 1;
       return 'unused';
@@ -270,7 +297,7 @@ testCase('delivery publish accepts a direct successful response once', async () 
 
 testCase('delivery publish preserves exactly both validated failure identifiers', async () => {
   const result = await requestAssessmentDeliveryPublication('assessment-1', {
-    fetchImpl() {
+    fetchImpl: deliveryNetwork(function () {
       return Promise.resolve(jsonResponse({
         error: 'delivery_publish_failed',
         qflowTenantId: 'tenant-ok',
@@ -281,7 +308,7 @@ testCase('delivery publish preserves exactly both validated failure identifiers'
         assessmentVersionId: 'HOSTILE_VERSION',
         unexpected: 'HOSTILE_EXTRA',
       }, 422));
-    },
+    }),
     formatWarnings: () => {
       throw new Error('unexpected formatter call');
     },
@@ -310,8 +337,9 @@ testCase(
       ]
     ) {
       const result = await requestAssessmentDeliveryPublication('assessment-1', {
-        fetchImpl: () =>
-          Promise.resolve(jsonResponse({ error, qflowTenantId: 'tenant-hostile' }, 422)),
+        fetchImpl: deliveryNetwork(() =>
+          Promise.resolve(jsonResponse({ error, qflowTenantId: 'tenant-hostile' }, 422))
+        ),
         formatWarnings: () => 'unused',
       });
       expect(result._tag).toStrictEqual('Failed');
@@ -320,13 +348,14 @@ testCase(
       }
     }
     const result = await requestAssessmentDeliveryPublication('assessment-1', {
-      fetchImpl: () =>
+      fetchImpl: deliveryNetwork(() =>
         Promise.resolve(
           jsonResponse(
             { error: 'delivery_publish_not_configured', qflowTenantId: 'tenant-ok' },
             503,
           ),
-        ),
+        )
+      ),
       formatWarnings: () => 'unused',
     });
     expect(result._tag).toStrictEqual('Failed');
@@ -343,7 +372,7 @@ testCase(
   'delivery publish reports fetch rejection without synthetic HTTP status control flow',
   async () => {
     const result = await requestAssessmentDeliveryPublication('assessment-1', {
-      fetchImpl: () => Promise.reject(new Error('network secret')),
+      fetchImpl: deliveryNetwork(() => HttpResponse.error()),
       formatWarnings: () => 'unused',
     });
     expect(result).toStrictEqual({
@@ -357,7 +386,7 @@ testCase(
 
 testCase('delivery publish rejects malformed JSON for error and success responses', async () => {
   const errorResult = await requestAssessmentDeliveryPublication('assessment-1', {
-    fetchImpl: () => Promise.resolve(new Response('{', { status: 422 })),
+    fetchImpl: deliveryNetwork(() => Promise.resolve(new Response('{', { status: 422 }))),
     formatWarnings: () => 'unused',
   });
   expect(errorResult).toStrictEqual({
@@ -366,7 +395,7 @@ testCase('delivery publish rejects malformed JSON for error and success response
     reason: 'publishFailed',
   });
   const successResult = await requestAssessmentDeliveryPublication('assessment-1', {
-    fetchImpl: () => Promise.resolve(new Response('{', { status: 200 })),
+    fetchImpl: deliveryNetwork(() => Promise.resolve(new Response('{', { status: 200 }))),
     formatWarnings: () => 'unused',
   });
   expect(successResult).toStrictEqual({
@@ -385,7 +414,7 @@ testCase('delivery publish omits invalid failure identifiers and all server pros
   ];
   for (const candidate of cases) {
     const result = await requestAssessmentDeliveryPublication('assessment-1', {
-      fetchImpl() {
+      fetchImpl: deliveryNetwork(function () {
         return Promise.resolve(jsonResponse({
           ...candidate,
           message: 'HOSTILE_MESSAGE',
@@ -394,7 +423,7 @@ testCase('delivery publish omits invalid failure identifiers and all server pros
           adminUrl: 'https://hostile.example/admin',
           assessmentVersionId: 'HOSTILE_VERSION',
         }, 422));
-      },
+      }),
       formatWarnings: () => {
         throw new Error('unexpected warning formatting');
       },

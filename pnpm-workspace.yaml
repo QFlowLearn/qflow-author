@@ -1,6 +1,11 @@
 engineStrict: true
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
+  # Network fixtures use the same MSW release as Deliver.
+  - "msw@3.0.7"
+  - "@msw/url@0.1.3"
+  # Requested lint rule, matching Deliver.
+  - "@interfere/landmines@0.1.1"
   # Exact backend cohort for the requested type-aware promise lint trial.
   - "tsrs@7.1.0-beta.tsrs3"
   - "@tsrs/darwin-arm64@7.1.0-beta.tsrs3"

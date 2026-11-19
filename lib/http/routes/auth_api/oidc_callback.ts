@@ -72,7 +72,7 @@ async function handleOidcCallback(ctx: HttpRequest): Promise<Response> {
       redirectUri,
     });
   } catch (cause: unknown) {
-    console.error(JSON.stringify({
+    (ctx.runtime.diagnostics ?? console).error(JSON.stringify({
       event: 'oidc_token_exchange_failed',
       cause: safeErrorSummary(cause),
     }));
@@ -87,7 +87,7 @@ async function handleOidcCallback(ctx: HttpRequest): Promise<Response> {
       nonce: loginState.nonce,
     });
   } catch (cause: unknown) {
-    console.error(JSON.stringify({
+    (ctx.runtime.diagnostics ?? console).error(JSON.stringify({
       event: 'oidc_identity_verification_failed',
       cause: safeErrorSummary(cause),
     }));
@@ -105,7 +105,7 @@ async function handleOidcCallback(ctx: HttpRequest): Promise<Response> {
   });
 
   if (linkResult._tag === 'StoreUnavailable') {
-    console.error(JSON.stringify({
+    (ctx.runtime.diagnostics ?? console).error(JSON.stringify({
       event: 'oidc_identity_store_unavailable',
       operation: linkResult.operation,
       cause: safeErrorSummary(linkResult.cause),
@@ -199,7 +199,7 @@ async function handle(ctx: HttpRequest) {
   try {
     return await handleOidcCallback(ctx);
   } catch (cause: unknown) {
-    console.error(JSON.stringify({
+    (ctx.runtime.diagnostics ?? console).error(JSON.stringify({
       event: 'oidc_callback_error',
       hostname: ctx.url.hostname,
       cause: safeErrorSummary(cause),

@@ -562,5 +562,13 @@
   {
     "file": "tests/ui_event_browser_test.ts",
     "baselineSeconds": 1
+  },
+  {
+    "file": "tests/assessment_export_client_boundary_browser_test.ts",
+    "baselineSeconds": 3
+  },
+  {
+    "file": "tests/client_failure_contract_browser_test.ts",
+    "baselineSeconds": 3
   }
 ]

@@ -8,11 +8,7 @@ import {
   itemEditorFailureMessage,
   itemEditorFieldIssues,
 } from '../islands/item_editor/ItemEditorProvider.tsx';
-import {
-  parseItemEditorFailureCode,
-  publishDraftRequest,
-  PublishRequestFailure,
-} from '../islands/item_editor/useItemEditorPersistence.ts';
+import { parseItemEditorFailureCode } from '../islands/item_editor/useItemEditorPersistence.ts';
 import { publishFailure, publishHttpResponse } from '../lib/services/publish.ts';
 
 for (const locale of ['en-US', 'en-GB', 'es-ES', 'es-419', 'sv-SE'] as const) {
@@ -93,59 +89,4 @@ testCase('publish HTTP serialization and client parsing omit hostile diagnostics
     { field: 'itemId', message: 'HOSTILE-ID-MESSAGE' },
     { field: 'itemId', message: 'DUPLICATE-ID-MESSAGE' },
   ]);
-
-  const originalFetch = globalThis.fetch;
-  try {
-    globalThis.fetch = () =>
-      Promise.resolve(
-        new Response(
-          JSON.stringify({
-            error: 'invalid_draft',
-            message: 'HOSTILE-TOP-LEVEL-MESSAGE',
-            issues: [{ field: 'title', message: 'HOSTILE-FIELD-MESSAGE' }],
-          }),
-          { status: 422 },
-        ),
-      );
-    const failure = await (async () => {
-      const caught: unknown = await Promise.resolve().then(() =>
-        publishDraftRequest('/api/drafts/id/publish', {})
-      ).then(() => expect.unreachable('Expected a rejection.'), (cause: unknown) => cause);
-      if (!(caught instanceof PublishRequestFailure)) {
-        expect.unreachable('Expected PublishRequestFailure');
-      }
-      return caught;
-    })();
-    expect(failure.code).toStrictEqual('save_failed');
-    expect(failure.issues).toStrictEqual([{ field: 'title', code: 'invalid_field' }]);
-
-    globalThis.fetch = () =>
-      Promise.resolve(
-        new Response(JSON.stringify({ message: 'HOSTILE-MALFORMED-SUCCESS' }), { status: 200 }),
-      );
-    const malformed = await (async () => {
-      const caught: unknown = await Promise.resolve().then(() =>
-        publishDraftRequest('/api/drafts/id/publish', {})
-      ).then(() => expect.unreachable('Expected a rejection.'), (cause: unknown) => cause);
-      if (!(caught instanceof PublishRequestFailure)) {
-        expect.unreachable('Expected PublishRequestFailure');
-      }
-      return caught;
-    })();
-    expect(malformed.code).toStrictEqual('save_failed');
-
-    globalThis.fetch = () =>
-      Promise.resolve(
-        new Response(JSON.stringify({ itemId: 'item-1', rev: 2, identifier: 'q-2' }), {
-          status: 201,
-        }),
-      );
-    expect(await publishDraftRequest('/api/drafts/id/publish', {})).toStrictEqual({
-      itemId: 'item-1',
-      rev: 2,
-      identifier: 'q-2',
-    });
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
 });

@@ -1,4 +1,12 @@
-import { expect, test as testCase } from 'vitest';
+import { http } from 'msw/http';
+import { setupServer } from 'msw/node';
+import { afterEach, beforeEach, expect, test as testCase } from 'vitest';
+const network = setupServer();
+beforeEach(() => network.listen({ onUnhandledFrame: 'error' }));
+afterEach(() => {
+  network.close();
+  network.resetHandlers();
+});
 
 import {
   buildOpenRouterHeaders,
@@ -86,18 +94,18 @@ testCase('createOpenRouterClient.postChatCompletions maps mode to configured mod
   let calledUrl = '';
   let calledInit: RequestInit | undefined;
 
-  const fetchImpl: typeof fetch = (input: RequestInfo | URL, init?: RequestInit) => {
-    calledUrl = String(input);
-    calledInit = init;
+  network.use(http.post('https://openrouter.ai/api/v1/chat/completions', async ({ request }) => {
+    calledUrl = request.url;
+    calledInit = { method: request.method, body: await request.text(), headers: request.headers };
     return Promise.resolve(
       new Response(JSON.stringify({ ok: true }), {
         status: 200,
         headers: { 'content-type': 'application/json' },
       }),
     );
-  };
+  }));
 
-  const client = createOpenRouterClient(config, fetchImpl);
+  const client = createOpenRouterClient(config);
   await client.postChatCompletions({
     mode: 'fast',
     messages: [{ role: 'user', content: 'Generate 3 questions' }],
@@ -129,17 +137,17 @@ testCase(
     const config = loadOpenRouterConfig(envReader(validEnv()));
     let calledInit: RequestInit | undefined;
 
-    const fetchImpl: typeof fetch = (_input: RequestInfo | URL, init?: RequestInit) => {
-      calledInit = init;
+    network.use(http.post('https://openrouter.ai/api/v1/chat/completions', async ({ request }) => {
+      calledInit = { method: request.method, body: await request.text(), headers: request.headers };
       return Promise.resolve(
         new Response(JSON.stringify({ ok: true }), {
           status: 200,
           headers: { 'content-type': 'application/json' },
         }),
       );
-    };
+    }));
 
-    const client = createOpenRouterClient(config, fetchImpl);
+    const client = createOpenRouterClient(config);
     await client.postChatCompletions({
       mode: 'fast',
       messages: [{
