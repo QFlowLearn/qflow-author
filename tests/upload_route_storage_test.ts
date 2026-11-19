@@ -1,3 +1,4 @@
+import { inspect } from 'node:util';
 import { diagnosticConsole } from './helpers/diagnostic_console.ts';
 import { expect, test as testCase } from 'vitest';
 
@@ -157,16 +158,22 @@ testCase('/api/uploads records safe cleanup identity when object compensation fa
   expect(response.status).toStrictEqual(500);
   expect(writes.length).toStrictEqual(1);
   const output = diagnostics.text();
-  for (const field of [
-    auth.tenantId,
-    auth.userId,
-    'UploadCleanupRequiredError',
-    'cleanupRequired: true',
-    writes[0].key.split('/').at(-1) ?? '',
-    writes[0].key,
-    "persistenceCause: 'Error'",
-    "cleanupCause: 'Error'",
-  ]) expect(output).toContain(field);
+  expect(output.trim()).toStrictEqual(
+    'file upload failed ' +
+      inspect(
+        {
+          tenantId: auth.tenantId,
+          userId: auth.userId,
+          cause: 'UploadCleanupRequiredError',
+          cleanupRequired: true,
+          uploadId: writes[0].key.split('/').at(-1),
+          objectKey: writes[0].key,
+          persistenceCause: 'Error',
+          cleanupCause: 'Error',
+        },
+        { depth: null, colors: false },
+      ),
+  );
   expect(output).not.toContain('private-name.png');
   expect(writes[0].key.includes('private-name.png')).toStrictEqual(false);
 });
